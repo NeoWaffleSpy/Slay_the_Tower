@@ -63,7 +63,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         this.allowPitchControls = this.withOptionalArg("allowPitchControls", "spaceship controls: forward allow to go toward look direction even if up in the air", ArgTypes.BOOLEAN);
         this.displayCursor = this.withOptionalArg("displayCursor", "Display the cursor outside of menues, [WARNING: NEED <--rotationType Custom> to be useable]", ArgTypes.BOOLEAN);
         /**/this.displayReticle = this.withOptionalArg("displayReticle", "Unsure of what it is used for", ArgTypes.BOOLEAN);
-        this.mouseInputTargetType = this.withOptionalArg("mouseInputTargetType", "Values: " + Arrays.toString(MouseInputTargetType.VALUES) + "\n define valid target for the mouse", ArgTypes.STRING);
+        this.mouseInputTargetType = this.withOptionalArg("mouseInputTargetType", "Values: " + Arrays.toString(MouseInputTargetType.VALUES) + "\nDefine valid target for the mouse", ArgTypes.STRING);
         /**/this.sendMouseMotion = this.withOptionalArg("sendMouseMotion", "Unsure of what it is used for", ArgTypes.BOOLEAN);
         this.skipCharacterPhysics = this.withOptionalArg("skipCharacterPhysics", "Ignore player collision and gravity", ArgTypes.BOOLEAN);
         this.isFirstPerson = this.withOptionalArg("isFirstPerson", "Hide the player model so that in FPS, it does not obstruct vision", ArgTypes.BOOLEAN);
@@ -75,7 +75,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         this.positionDistanceOffsetType = this.withOptionalArg("positionDistanceOffsetType", "Values: " + Arrays.toString(PositionDistanceOffsetType.VALUES) + "\nDistanceOffset: Camera will phase through blocks to keep a constant offset\nDistanceOffsetRaycast: The camera will collide with blocks and dynamically change to never phase through blocks\nNone: disable third person POV", ArgTypes.STRING);
         this.positionOffset = this.withOptionalArg("positionOffset", "Offset camera position", ArgTypes.ROTATION);
         this.rotationOffset = this.withOptionalArg("rotationOffset", "Range: [-360,360]\nOffset camera rotation", ArgTypes.ROTATION);
-        this.positionType = this.withOptionalArg("positionType", "Values: " + Arrays.toString(PositionType.VALUES) + "\n\nAttachedToPlusOffset: The camera will translate along with the player head\nCustom: set a fixed camera position defined by <--position x y z>", ArgTypes.STRING);
+        this.positionType = this.withOptionalArg("positionType", "Values: " + Arrays.toString(PositionType.VALUES) + "\nAttachedToPlusOffset: The camera will translate along with the player head\nCustom: set a fixed camera position defined by <--position x y z>", ArgTypes.STRING);
         this.position = this.withOptionalArg("position", "Set a fixed camera position when <--positionType Custom>", ArgTypes.RELATIVE_POSITION);
         this.rotationType = this.withOptionalArg("rotationType", "Values: " + Arrays.toString(RotationType.VALUES) + "\nAttachedToPlusOffset: The camera will rotate along with the player head\nCustom: set a fixed camera rotation defined by <--rotation x y z>", ArgTypes.STRING);
         this.rotation = this.withOptionalArg("rotation", "Range: [-360,360]\nSet a fixed camera rotation when <--rotationType Custom>", ArgTypes.ROTATION);

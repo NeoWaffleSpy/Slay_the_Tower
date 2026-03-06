@@ -52,7 +52,7 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
             commandContext.sendMessage(Message.raw("Invalid Pack Name"));
             return;
         }
-        Path path = instanceDir(mypack, name + ".json");
+        Path path = CameraInitializer.instanceDir(mypack, name + ".json");
         if (!Files.exists(path.getParent(), new LinkOption[0])) {
             try {
                 Files.createDirectories(path.getParent());
@@ -73,10 +73,7 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
         }
         CameraInitializer.set(name, settings);
         new CameraInitializer(name);
-    }
-
-    private Path instanceDir(AssetPack pack, String instanceName) {
-        return pack.getRoot().resolve("Server").resolve("CameraSettings").resolve(instanceName);
+        pPOV.setPOVName(name);
     }
 
     private String parse(ServerCameraSettings settings) {

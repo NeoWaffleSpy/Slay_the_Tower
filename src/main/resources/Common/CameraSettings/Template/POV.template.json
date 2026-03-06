@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "com.Team_Berry.Slay.schemas.POV.template.json",
+  "type": "object",
+  "title": "POV Schema",
+  "description": "Template for POV Schema validation",
+  "properties": {
+    "distance": {
+      "type": "number",
+      "default": 0,
+      "description": "Define camera distance from the player"
+    },
+    "positionType": {
+      "type": "string",
+      "default": "AttachedToPlusOffset",
+      "enum": ["AttachedToPlusOffset", "Custom"],
+      "description": "AttachedToPlusOffset: The camera will translate along with the player head\nCustom: set a fixed camera position defined by <--position x y z>"
+    },
+    "applyMovementType": {
+      "type": "string",
+      "default": "CharacterController",
+      "enum": ["CharacterController", "Position"],
+      "description": "Unsure of what it is used for"
+    },
+    "attachedToEntityId": {
+      "type": "integer",
+      "default": 0,
+      "description": "Is related to attachedToType"
+    },
+    "rotationType": {
+      "type": "string",
+      "default": "AttachedToPlusOffset",
+      "enum": ["AttachedToPlusOffset", "Custom"],
+      "description": "AttachedToPlusOffset: The camera will rotate along with the player head\nCustom: set a fixed camera rotation defined by <--rotation x y z>"
+    },
+    "sendMouseMotion": {
+      "type": "boolean",
+      "default": false,
+      "description": "Unsure of what it is used for"
+    },
+    "movementForceRotation": {
+      "type": "object",
+      "properties": {
+        "roll": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        },
+        "pitch": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        },
+        "yaw": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        }
+      },
+      "description": "Define relative movement anchor if <--movementForceRotationType Custom>"
+    },
+    "rotationOffset": {
+      "type": "object",
+      "properties": {
+        "roll": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        },
+        "pitch": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        },
+        "yaw": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        }
+      },
+      "description": "Offset camera rotation"
+    },
+    "speedModifier": {
+      "type": "number",
+      "default": 1.0,
+      "description": "Unsure of what it is used for"
+    },
+    "rotationLerpSpeed": {
+      "type": "number",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Rotation Smoothening for the camera"
+    },
+    "displayReticle": {
+      "type": "boolean",
+      "default": false,
+      "description": "Unsure of what it is used for"
+    },
+    "mouseInputTargetType": {
+      "type": "string",
+      "default": "Any",
+      "enum": ["Any", "Block", "Entity", "None"],
+      "description": "Define valid target for the mouse"
+    },
+    "movementForceRotationType": {
+      "type": "string",
+      "default": "AttachedToHead",
+      "enum": ["AttachedToHead", "CameraRotation", "Custom"],
+      "description": "AttachedToHead: Player move relative to head orientation.\nCameraRotation: Player move relative to the camera.\nCustom: Relative movement direction defined by movementForceRotationType"
+    },
+    "canMoveType": {
+      "type": "string",
+      "default": "AttachedToLocalPlayer",
+      "enum": ["AttachedToLocalPlayer", "Always"],
+      "description": "Unsure of what it is used for"
+    },
+    "planeNormal": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "default": 0.0,
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "y": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "z": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      },
+      "description": "if <--mouseInputType LookAtPlane> then define a plane centered on the player model as a valid raycast target (see sideView POV for reference)"
+    },
+    "displayCursor": {
+      "type": "boolean",
+      "default": false,
+      "description": "Display the cursor outside of menues, [WARNING: NEED <--rotationType Custom> to be useable]"
+    },
+    "allowPitchControls": {
+      "type": "boolean",
+      "default": false,
+      "description": "spaceship controls: forward allow to go toward look direction even if up in the air"
+    },
+    "applyLookType": {
+      "type": "string",
+      "default": "LocalPlayerLookOrientation",
+      "enum": ["LocalPlayerLookOrientation", "Rotation"],
+      "description": "Unsure of what it is used for"
+    },
+    "skipCharacterPhysics": {
+      "type": "boolean",
+      "default": false,
+      "description": "Ignore player collision and gravity"
+    },
+    "rotation": {
+      "type": "object",
+      "properties": {
+        "roll": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        },
+        "pitch": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        },
+        "yaw": {
+          "type": "number",
+          "default": 0,
+          "minimum": -6.28,
+          "maximum": 6.28
+        }
+      },
+      "description": "Define relative movement anchor if <--movementForceRotationType Custom>"
+    },
+    "positionDistanceOffsetType": {
+      "type": "string",
+      "default": "DistanceOffset",
+      "enum": ["DistanceOffset", "DistanceOffsetRaycast", "None"],
+      "description": "DistanceOffset: Camera will phase through blocks to keep a constant offset\nDistanceOffsetRaycast: The camera will collide with blocks and dynamically change to never phase through blocks\nNone: disable third person POV"
+    },
+    "mouseInputType": {
+      "type": "string",
+      "default": "LookAtTarget",
+      "enum": ["LookAtTarget", "LookAtTargetBlock", "LookAtTargetEntity", "LookAtPlane"],
+      "description": "Define a valid raycast target for the mouse cursor"
+    },
+    "positionOffset": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "default": 0
+        },
+        "y": {
+          "type": "number",
+          "default": 0
+        },
+        "z": {
+          "type": "number",
+          "default": 0
+        }
+      },
+      "description": "Offset camera position"
+    },
+    "movementMultiplier": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "default": 1.0
+        },
+        "y": {
+          "type": "number",
+          "default": 1.0
+        },
+        "z": {
+          "type": "number",
+          "default": 1.0
+        }
+      },
+      "description": "Multiplies movement vector, set to 0 to restrict a movement axis"
+    },
+    "isFirstPerson": {
+      "type": "boolean",
+      "default": true,
+      "description": "Hide the player model so that in FPS, it does not obstruct vision"
+    },
+    "lookMultiplier": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "default": 100
+        },
+        "y": {
+          "type": "number",
+          "default": 100
+        }
+      },
+      "description": "Change mouse sensitivity"
+    },
+    "positionLerpSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Translation Smoothening for the camera"
+    },
+    "attachedToType": {
+      "type": "string",
+      "default": "LocalPlayer",
+      "enum": ["LocalPlayer", "EntityId", "None"],
+      "description": "TODO"
+    },
+    "eyeOffset": {
+      "type": "boolean",
+      "default": false,
+      "description": "Offset camera in third person to be centered on the head of the player instead of the feets"
+    },
+    "position": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "default": 0.0
+        },
+        "y": {
+          "type": "number",
+          "default": 0.0
+        },
+        "z": {
+          "type": "number",
+          "default": 0.0
+        }
+      },
+      "description": "Set a fixed world coordinates camera position when <--positionType Custom>"
+    }
+  }
+}

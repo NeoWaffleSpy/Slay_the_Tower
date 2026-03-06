@@ -79,6 +79,10 @@ public class CameraInitializer {
         templateDict.put(key, value);
     }
 
+    public static ServerCameraSettings getTemplate (String key) {
+        return templateDict.get(key);
+    }
+
     public static CameraInitializer get(String key) {
         CameraInitializer cam =  camDict.get(key);
         if (cam == null) {
@@ -195,8 +199,8 @@ public class CameraInitializer {
         return String.join(", ", Collections.list(camDict.keys()));
     }
 
-    private static Path instanceDir(AssetPack pack, String instanceName) {
-        return pack.getRoot().resolve("Server").resolve("CameraSettings").resolve(instanceName);
+    public static Path instanceDir(AssetPack pack, String instanceName) {
+        return pack.getRoot().resolve("Common").resolve("CameraSettings").resolve(instanceName);
     }
 
     private static ServerCameraSettings loadCameraSettings(Path p, String name) throws IOException, ParseException {

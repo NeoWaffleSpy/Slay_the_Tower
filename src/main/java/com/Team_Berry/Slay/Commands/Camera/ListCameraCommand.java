@@ -1,6 +1,6 @@
-package com.Varrell.gamemodeAPI.Commands.Camera;
+package com.Team_Berry.Slay.Commands.Camera;
 
-import com.Varrell.gamemodeAPI.Component.Data.PlayerPOVComponent;
+import com.Team_Berry.Slay.Camera.CameraInitializer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -12,18 +12,18 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
 
 
-public class GetCameraCommand extends AbstractPlayerCommand {
-    public GetCameraCommand() {
-        super("get", " the currently applied camera");
+public class ListCameraCommand extends AbstractPlayerCommand {
+    public ListCameraCommand() {
+        super("list", "List all available cameras");
     }
 
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
-        PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-        if (pPOV == null)
-            commandContext.sendMessage(Message.raw("You do not have any custom POV applied"));
+        String s = CameraInitializer.getCameraList();
+        if (s == null)
+            commandContext.sendMessage(Message.raw("You do not have any custom POV"));
         else
-            commandContext.sendMessage(Message.raw(pPOV.getPOVName()));
+            commandContext.sendMessage(Message.raw(s));
     }
 }
 

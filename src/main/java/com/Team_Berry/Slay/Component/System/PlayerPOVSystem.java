@@ -1,8 +1,8 @@
-package com.Varrell.gamemodeAPI.Component.System;
+package com.Team_Berry.Slay.Component.System;
 
-import com.Varrell.gamemodeAPI.Camera.CameraInitializer;
-import com.Varrell.gamemodeAPI.Component.Data.PlayerPOVComponent;
-import com.Varrell.gamemodeAPI.GamemodeAPI;
+import com.Team_Berry.Slay.Camera.CameraInitializer;
+import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
+import com.Team_Berry.Slay.SlayTheTower;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefChangeSystem;
@@ -19,7 +19,7 @@ public class PlayerPOVSystem extends RefChangeSystem<EntityStore, PlayerPOVCompo
 
     @Override
     public @NonNull ComponentType<EntityStore, PlayerPOVComponent> componentType() {
-        return GamemodeAPI.get().getPlayerPOVComponentType();
+        return SlayTheTower.get().getPlayerPOVComponentType();
     }
 
     @Override

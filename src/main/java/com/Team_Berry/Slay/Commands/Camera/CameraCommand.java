@@ -1,4 +1,4 @@
-package com.Varrell.gamemodeAPI.Commands.Camera;
+package com.Team_Berry.Slay.Commands.Camera;
 
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;

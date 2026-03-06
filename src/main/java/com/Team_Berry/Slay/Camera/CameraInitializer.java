@@ -1,9 +1,9 @@
-package com.Varrell.gamemodeAPI.Camera;
+package com.Team_Berry.Slay.Camera;
 
-import com.Varrell.gamemodeAPI.Camera.MouseControl.DefaultMouseControl;
-import com.Varrell.gamemodeAPI.Camera.MouseControl.AbstractMouseControl;
-import com.Varrell.gamemodeAPI.Component.Data.PlayerPOVComponent;
-import com.Varrell.gamemodeAPI.GamemodeAPI;
+import com.Team_Berry.Slay.Camera.MouseControl.DefaultMouseControl;
+import com.Team_Berry.Slay.Camera.MouseControl.AbstractMouseControl;
+import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
+import com.Team_Berry.Slay.SlayTheTower;
 import com.hypixel.hytale.assetstore.AssetPack;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.protocol.*;
@@ -97,11 +97,11 @@ public class CameraInitializer {
                 try {
                     return loadCameraSettings(p, key);
                 } catch (IOException | ParseException e) {
-                    GamemodeAPI.LOGGER.atSevere().log("Failed to load Camera settings " + key, e);
+                    SlayTheTower.LOGGER.atSevere().log("Failed to load Camera settings " + key, e);
                 }
             }
         }
-        GamemodeAPI.LOGGER.atSevere().log("Could not find matching camera settings " + key);
+        SlayTheTower.LOGGER.atSevere().log("Could not find matching camera settings " + key);
         return null;
     }
 
@@ -170,7 +170,7 @@ public class CameraInitializer {
             try {
                 pPOV = playerRef.getHolder().getComponent(PlayerPOVComponent.getComponentType());
             } catch (NullPointerException npe2) {
-                GamemodeAPI.LOGGER.atSevere().log("PlayerPOVComponent.getComponentType() is null for " + playerRef.getUsername());
+                SlayTheTower.LOGGER.atSevere().log("PlayerPOVComponent.getComponentType() is null for " + playerRef.getUsername());
                 return null;
             }
         }

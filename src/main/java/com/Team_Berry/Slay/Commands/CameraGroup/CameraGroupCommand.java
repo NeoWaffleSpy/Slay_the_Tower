@@ -1,8 +1,5 @@
-package com.Varrell.gamemodeAPI.Commands.CameraGroup;
+package com.Team_Berry.Slay.Commands.CameraGroup;
 
-import com.Varrell.gamemodeAPI.Commands.Camera.GetCameraCommand;
-import com.Varrell.gamemodeAPI.Commands.Camera.ResetCameraCommand;
-import com.Varrell.gamemodeAPI.Commands.Camera.SetCameraCommand;
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 

@@ -1,6 +1,6 @@
-package com.Varrell.gamemodeAPI.Commands.CameraGroup;
+package com.Team_Berry.Slay.Commands.CameraGroup;
 
-import com.Varrell.gamemodeAPI.Camera.CameraInitializer;
+import com.Team_Berry.Slay.Camera.CameraInitializer;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
@@ -10,12 +10,12 @@ import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nonnull;
 
-public class DeactivateCameraGroupCommand extends CommandBase {
+public class ActivateCameraGroupCommand extends CommandBase {
     @Nonnull
     private final RequiredArg<String> nameArg;
-    public DeactivateCameraGroupCommand() {
-        super("deactivate", "server.commands.worlds.desc");
-        this.addAliases("d");
+    public ActivateCameraGroupCommand() {
+        super("activate", "server.commands.worlds.desc");
+        this.addAliases("a");
         this.nameArg = this.withRequiredArg("cameraName", "The camera name already set in the system", ArgTypes.STRING);
     }
 
@@ -27,10 +27,10 @@ public class DeactivateCameraGroupCommand extends CommandBase {
             commandContext.sendMessage(Message.raw(name + " is not a valid POV"));
             return;
         }
-        if (!cam.isActive) {
-            commandContext.sendMessage(Message.raw("POV " + name + " is already deactivated"));
+        if (cam.isActive) {
+            commandContext.sendMessage(Message.raw("POV " + name + " is already active"));
             return;
         }
-        cam.deactivate();
+        cam.activate();
     }
 }

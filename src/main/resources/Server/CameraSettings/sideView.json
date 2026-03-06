@@ -1,0 +1,63 @@
+{
+  "distance": 15.0,
+  "positionType": "AttachedToPlusOffset",
+  "applyMovementType": "CharacterController",
+  "attachedToEntityId": 0,
+  "rotationType": "Custom",
+  "sendMouseMotion": false,
+  "movementForceRotation": {
+    "roll": 0.0,
+    "pitch": 0.0,
+    "yaw": 0.0
+  },
+  "rotationOffset": {
+    "roll": 0.0,
+    "pitch": 0.0,
+    "yaw": 0.0
+  },
+  "speedModifier": 1.0,
+  "rotationLerpSpeed": 0.2,
+  "displayReticle": false,
+  "mouseInputTargetType": "Any",
+  "movementForceRotationType": "Custom",
+  "canMoveType": "AttachedToLocalPlayer",
+  "planeNormal": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 1.0
+  },
+  "displayCursor": true,
+  "allowPitchControls": false,
+  "applyLookType": "LocalPlayerLookOrientation",
+  "skipCharacterPhysics": false,
+  "rotation": {
+    "roll": 0.0,
+    "pitch": 0.0,
+    "yaw": 0.0
+  },
+  "positionDistanceOffsetType": "DistanceOffsetRaycast",
+  "mouseInputType": "LookAtPlane",
+  "positionOffset": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "movementMultiplier": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 0.0
+  },
+  "isFirstPerson": false,
+  "lookMultiplier": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "positionLerpSpeed": 0.2,
+  "attachedToType": "LocalPlayer",
+  "eyeOffset": true,
+  "position": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  }
+}

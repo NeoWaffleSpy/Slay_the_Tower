@@ -1,0 +1,13 @@
+{
+  "Type": "Variant",
+  "Reference": "Golem_Firesteel",
+  "Modify": {
+    "NameTranslationKey": { "Compute": "NameTranslationKey" }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.MyTestNpc.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

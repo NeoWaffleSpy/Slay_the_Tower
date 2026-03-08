@@ -2,6 +2,7 @@ package com.Team_Berry.Slay.Camera;
 
 import com.Team_Berry.Slay.Camera.MouseControl.DefaultMouseControl;
 import com.Team_Berry.Slay.Camera.MouseControl.AbstractMouseControl;
+import com.Team_Berry.Slay.Camera.MouseControl.UltMouseControl;
 import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Slay.SlayTheTower;
 import com.hypixel.hytale.assetstore.AssetPack;
@@ -61,6 +62,8 @@ public class CameraInitializer {
         get("isometric");
         get("shoulder");
         new CameraInitializer("isometric2", new DefaultMouseControl(), false, "isometric");
+        new CameraInitializer("ultCam", new UltMouseControl(), false, "topDown");
+
     }
 
     public static void editCameraSettings(PlayerRef playerRef, ServerCameraSettings newSettings) {

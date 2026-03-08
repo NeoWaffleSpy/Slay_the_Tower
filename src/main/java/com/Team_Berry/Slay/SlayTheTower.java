@@ -5,8 +5,10 @@ import com.Team_Berry.Slay.Commands.Camera.CameraCommand;
 import com.Team_Berry.Slay.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Slay.Component.System.PlayerPOVSystem;
+import com.Team_Berry.Slay.Interactions.UltInteraction;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -38,6 +40,9 @@ public class SlayTheTower extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
+        this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
+
+
     }
 
     @Override

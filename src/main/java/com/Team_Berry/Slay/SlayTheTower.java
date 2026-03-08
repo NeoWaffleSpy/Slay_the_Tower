@@ -35,9 +35,13 @@ public class SlayTheTower extends JavaPlugin {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
-        CameraInitializer.init();
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
+    }
+
+    @Override
+    protected void start() {
+        CameraInitializer.init();
     }
 }

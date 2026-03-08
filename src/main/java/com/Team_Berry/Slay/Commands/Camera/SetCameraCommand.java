@@ -32,13 +32,16 @@ public class SetCameraCommand extends AbstractPlayerCommand {
             commandContext.sendMessage(Message.raw(name + " is not a valid POV"));
             return;
         }
-        PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-        if (pPOV != null)
-            CameraInitializer.deletePOV(playerRef);
         if (!cam.isActive) {
             commandContext.sendMessage(Message.raw("The " + name + " POV is disabled"));
             return;
         }
+        CameraInitializer.setPlayerPov(name, playerRef);
+        /*
+        PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
+        if (pPOV != null)
+            CameraInitializer.deletePOV(playerRef);
         store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent(name));
+         */
     }
 }

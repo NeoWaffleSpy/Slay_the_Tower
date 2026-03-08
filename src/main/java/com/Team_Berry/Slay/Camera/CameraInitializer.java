@@ -5,6 +5,7 @@ import com.Team_Berry.Slay.Camera.MouseControl.AbstractMouseControl;
 import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Slay.SlayTheTower;
 import com.hypixel.hytale.assetstore.AssetPack;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
@@ -14,6 +15,7 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerInteractEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nimbusds.jose.util.JSONObjectUtils;
 
 import javax.annotation.Nonnull;
@@ -77,6 +79,14 @@ public class CameraInitializer {
 
     public static void set (String key, ServerCameraSettings value) {
         templateDict.put(key, value);
+    }
+
+    public static void setPlayerPov(String povName, PlayerRef playerRef) {
+        CameraInitializer cam = CameraInitializer.get(povName);
+        PlayerPOVComponent pPOV = getPOV(playerRef);
+        if (pPOV != null)
+            CameraInitializer.deletePOV(playerRef);
+        playerRef.getReference().getStore().addComponent(playerRef.getReference(), PlayerPOVComponent.getComponentType(), new PlayerPOVComponent(povName));
     }
 
     public static ServerCameraSettings getTemplate (String key) {

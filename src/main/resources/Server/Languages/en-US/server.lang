@@ -1,1 +1,14 @@
-items.Example_Block.name=Example Block
+GearAffix.affix.MAX_HEALTH=Max Health
+GearAffix.affix.MAX_STAMINA=Max Stamina
+GearAffix.affix.MAX_ENERGY=Max Energy
+GearAffix.affix.REGEN_HEALTH=Health Regen
+GearAffix.affix.REGEN_STAMINA=Stamina Regen
+GearAffix.affix.REGEN_ENERGY=Energy Regen
+GearAffix.affix.FLAT_ARMOR=Damage Negation
+GearAffix.affix.PERCENT_ARMOR=Armor Value
+GearAffix.affix.JUMP_HEIGHT=Jump Height
+GearAffix.affix.FEATHER_FALLING=Feather Falling
+GearAffix.affix.PLAYER_SPEED=Movement Speed
+GearAffix.affix.ATTACK_SPEED=Attack Speed
+GearAffix.affix.ATTACK_DAMAGE=Bonus Damage
+GearAffix.affix.ULTIMATE_DAMAGE=Ultimate Bonus Damage

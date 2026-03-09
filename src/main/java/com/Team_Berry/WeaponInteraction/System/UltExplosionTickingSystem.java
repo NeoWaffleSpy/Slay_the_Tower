@@ -1,6 +1,6 @@
-package com.Team_Berry.WeaponInteraction.System.Ult;
+package com.Team_Berry.WeaponInteraction.System;
 
-import com.Team_Berry.WeaponInteraction.Component.Ult.UltExplosionComponent;
+import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -28,13 +28,14 @@ public class UltExplosionTickingSystem extends EntityTickingSystem<EntityStore> 
     public @Nullable Query<EntityStore> getQuery() {
         return this.ultExplosionComponentComponentType;
     }
+
     private static class MyUltExplosionConfig extends ExplosionConfig {
         public MyUltExplosionConfig() {
             this.damageEntities = true;
             this.damageBlocks = true;
             this.blockDamageRadius = 5;
             this.blockDamageFalloff = 1.0F;
-            this.entityDamageRadius = 7.0F;
+            this.entityDamageRadius = 5.0F;
             this.entityDamage = 50.0F;
             this.entityDamageFalloff = 0F;
             this.blockDropChance = 1.0F;

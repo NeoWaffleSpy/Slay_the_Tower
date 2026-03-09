@@ -1,6 +1,6 @@
 package com.Team_Berry.Camera.Camera.MouseControl;
 
-import com.Team_Berry.WeaponInteraction.Component.Ult.UltExplosionComponent;
+import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;

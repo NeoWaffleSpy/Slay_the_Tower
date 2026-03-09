@@ -5,8 +5,8 @@ import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.Team_Berry.WeaponInteraction.Component.Ult.UltExplosionComponent;
-import com.Team_Berry.WeaponInteraction.System.Ult.UltExplosionTickingSystem;
+import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
+import com.Team_Berry.WeaponInteraction.System.UltExplosionTickingSystem;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class WeaponInteractionPlugin extends JavaPlugin {

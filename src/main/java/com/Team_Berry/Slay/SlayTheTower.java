@@ -5,6 +5,7 @@ import com.Team_Berry.Slay.Commands.Camera.CameraCommand;
 import com.Team_Berry.Slay.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Slay.Component.System.PlayerPOVSystem;
+import com.Team_Berry.Slay.Component.Ult.UltExplosionComponent;
 import com.Team_Berry.Slay.Interactions.UltInteraction;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -17,6 +18,8 @@ public class SlayTheTower extends JavaPlugin {
     private static SlayTheTower instance;
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private ComponentType<EntityStore, PlayerPOVComponent> playerPOVComponentType;
+    private static ComponentType<EntityStore, UltExplosionComponent> ultExplosionComponentComponentType;
+
 
     public static SlayTheTower get() {
         return instance;
@@ -37,10 +40,13 @@ public class SlayTheTower extends JavaPlugin {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
+        ultExplosionComponentComponentType = getEntityStoreRegistry().registerComponent(UltExplosionComponent.class, UltExplosionComponent::new);
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
+
+
 
 
     }

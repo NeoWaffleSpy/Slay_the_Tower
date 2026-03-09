@@ -37,4 +37,8 @@ public class UltExplosionComponent  implements Component<EntityStore> {
     public boolean delayPassed(long now) {
         return now >= explosionDelayStart + explosionDelay;
     }
+
+    public Vector3d getExplosionPosition() {
+        return explosionPosition;
+    }
 }

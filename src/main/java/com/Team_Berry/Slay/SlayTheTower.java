@@ -1,12 +1,14 @@
 package com.Team_Berry.Slay;
 
 import com.Team_Berry.Slay.Camera.CameraInitializer;
+import com.Team_Berry.Slay.Camera.MouseControl.UltMouseControl;
 import com.Team_Berry.Slay.Commands.Camera.CameraCommand;
 import com.Team_Berry.Slay.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Slay.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Slay.Component.System.PlayerPOVSystem;
 import com.Team_Berry.Slay.Component.Ult.UltExplosionComponent;
 import com.Team_Berry.Slay.Interactions.UltInteraction;
+import com.Team_Berry.Slay.System.Ult.UltExplosionTickingSystem;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -45,8 +47,9 @@ public class SlayTheTower extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
+        UltMouseControl.ULT_EXPLOSION_COMPONENT_TYPE = ultExplosionComponentComponentType;
 
-
+        getEntityStoreRegistry().registerSystem(new UltExplosionTickingSystem(ultExplosionComponentComponentType));
 
 
     }

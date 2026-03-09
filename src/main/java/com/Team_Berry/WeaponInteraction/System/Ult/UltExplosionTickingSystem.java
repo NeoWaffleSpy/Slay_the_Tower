@@ -1,6 +1,6 @@
-package com.Team_Berry.Slay.System.Ult;
+package com.Team_Berry.WeaponInteraction.System.Ult;
 
-import com.Team_Berry.Slay.Component.Ult.UltExplosionComponent;
+import com.Team_Berry.WeaponInteraction.Component.Ult.UltExplosionComponent;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;

@@ -1,6 +1,6 @@
 package com.Team_Berry.Camera.Camera.MouseControl;
 
-import com.Team_Berry.Slay.Component.Ult.UltExplosionComponent;
+import com.Team_Berry.WeaponInteraction.Component.Ult.UltExplosionComponent;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -13,9 +13,6 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UltMouseControl extends AbstractMouseControl{
     private long lastClickTime = 0;

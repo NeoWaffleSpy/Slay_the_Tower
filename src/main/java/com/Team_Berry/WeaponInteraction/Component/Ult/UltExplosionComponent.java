@@ -1,4 +1,4 @@
-package com.Team_Berry.Slay.Component.Ult;
+package com.Team_Berry.WeaponInteraction.Component.Ult;
 
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.math.vector.Vector3d;

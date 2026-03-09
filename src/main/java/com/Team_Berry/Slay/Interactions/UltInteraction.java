@@ -32,11 +32,11 @@ public class UltInteraction extends SimpleInstantInteraction {
         World world = commandBuffer.getExternalData().getWorld();
         PlayerRef playerRef = commandBuffer.getComponent(ref, PlayerRef.getComponentType());
         playerRef.sendMessage(Message.raw("Weapon in hand is : " + interactionContext.getHeldItem().getItemId()));
+        world.execute(() -> CameraInitializer.setPlayerPov("ultCam", playerRef));
 
         TransformComponent transformComponent = commandBuffer.getComponent(ref, TransformComponent.getComponentType());
         Vector3d playerPosition = transformComponent.getPosition();
         ParticleUtil.spawnParticleEffect("Explosion_Medium", playerPosition, commandBuffer);
-        //world.execute(() -> CameraInitializer.setPlayerPov("topDown", playerRef));
         List<Ref<EntityStore>> nearbyEntities = TargetUtil.getAllEntitiesInSphere(playerPosition, 5d, commandBuffer);
 
         for (Ref<EntityStore> entityRef : nearbyEntities) {

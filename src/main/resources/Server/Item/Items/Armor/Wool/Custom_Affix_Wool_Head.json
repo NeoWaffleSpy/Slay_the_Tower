@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Armor_Wool_Head.name"
+    "Name": "server.items.Armor_Wool_Head.name",
+    "Description": "items.Weapon_Battleaxe_Custom.description"
   },
   "Parent": "Armor_Iron_Head",
   "Recipe": {

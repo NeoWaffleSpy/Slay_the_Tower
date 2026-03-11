@@ -132,9 +132,5 @@ public class TooltipInjector {
                 .append("Will it be a blessing, or a curse ?")
                 .endColor();
         setItemTranslation("items.Weapon_Battleaxe_Custom.description", sf2);
-        //<color is="#00ffff">This <color is="#ff0000"><b>WEAPON</b><color is="#00ffff"> of mass destruction is said to have been given by the <color is="#808080"><u>Doom Reaper</u><color is="#00ffff"> to it's strongest warrior: <b><color is="#a83232">D<color is="#a86932">O<color is="#a4a832">O<color is="#46a832">M<color is="#32a887">S<color is="#3262a8">T<color is="#7332a8">A<color is="#a83289">C<color is="#a83232">K</b>
-        //
-        //<color is="#ff00ff">Somehow it fell into your hand...
-        //Will it be a blessing, or a curse ?</color>
     }
 }

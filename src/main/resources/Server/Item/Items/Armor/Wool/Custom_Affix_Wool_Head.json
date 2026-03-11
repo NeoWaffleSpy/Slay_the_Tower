@@ -1,7 +1,7 @@
 {
   "TranslationProperties": {
     "Name": "server.items.Armor_Wool_Head.name",
-    "Description": "items.Weapon_Battleaxe_Custom.description"
+    "Description": "server.items.Armor_Wool_Head.name"
   },
   "Parent": "Armor_Iron_Head",
   "Recipe": {
@@ -37,7 +37,7 @@
     "DamageResistance": {
       "Physical": [
         {
-          "Amount": 0.05,
+          "Amount": 0.2,
           "CalculationType": "Multiplicative"
         }
       ],
@@ -55,7 +55,7 @@
           "CalculationType": "Additive"
         }
       ],
-      "Energy": [
+      "Energy_Stat": [
         {
           "CalculationType": "Additive",
           "Amount": 20
@@ -63,7 +63,7 @@
       ]
     }
   },
-  "MaxDurability": 200,
+  "MaxDurability": -1,
   "Tags": {
     "Type": [
       "Armor"

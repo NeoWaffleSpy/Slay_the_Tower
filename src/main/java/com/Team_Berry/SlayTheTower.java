@@ -1,8 +1,10 @@
 package com.Team_Berry;
 
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.command.commands.player.GameModeCommand;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 
 public class SlayTheTower extends JavaPlugin {
     public static SlayTheTower instance;

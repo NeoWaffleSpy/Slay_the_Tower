@@ -1,17 +1,20 @@
-package com.Team_Berry.Camera.Commands.Camera;
+package com.Team_Berry.Camera.Commands.Cinematic;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Camera.MouseControl.DefaultMouseControl;
+import com.Team_Berry.Camera.Cinematic.CinemaPoint;
+import com.Team_Berry.Camera.Cinematic.CinematicManager;
+import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
-import com.hypixel.hytale.math.vector.Vector2i;
-import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Vector2i;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
+import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.arguments.types.RelativeDoublePosition;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
@@ -20,9 +23,13 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
 
+import java.awt.Color;
 import java.util.Arrays;
 
-public class CustomCameraCommand extends AbstractPlayerCommand {
+public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
+    private final RequiredArg<String> nameArg;
+    private final RequiredArg<Integer> keyFrame;
+
     private final OptionalArg<Float> positionLerpSpeed;
     private final OptionalArg<Float> rotationLerpSpeed;
     private final OptionalArg<Float> distance;
@@ -55,8 +62,11 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
     private final OptionalArg<String> mouseInputType;
     private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> planeNormal;
 
-    public CustomCameraCommand() {
-        super("setCustom", "edit your custom camera");
+    public EditCinemaKeyframeCommand() {
+        super("edit", "edit your cinema keyframe");
+        this.nameArg = this.withRequiredArg("name", "The name of the cinemaPlayer to edit", ArgTypes.STRING);
+        this.keyFrame = this.withRequiredArg("keyframe", "the Keyframe to edit", ArgTypes.INTEGER);
+
         this.positionLerpSpeed = this.withOptionalArg("positionLerpSpeed", "Range: [0,1]\nTranslation Smoothening for the camera", ArgTypes.FLOAT);
         this.rotationLerpSpeed = this.withOptionalArg("rotationLerpSpeed", "Range: [0,1]\nRotation Smoothening for the camera", ArgTypes.FLOAT);
         this.distance = this.withOptionalArg("distance", "Range: No Limit\nDefine camera distance from the player", ArgTypes.FLOAT);
@@ -92,21 +102,20 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
 
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
-        PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-        ServerCameraSettings settings = parseSettings(commandContext, pPOV, world, store);
-        if (settings == null) { return; }
-        if (pPOV == null)
-            store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent("custom", settings, new DefaultMouseControl()));
-        else
-            CameraInitializer.editCameraSettings(playerRef, settings);
+        CinematicPlayer c = CinematicManager.getCinematic(this.nameArg.get(commandContext));
+        if (c == null) {
+            commandContext.sendMessage(Message.raw("No cinematic player named " + nameArg.get(commandContext)).color(Color.RED));
+            return;
+        }
+        ServerCameraSettings settings = parseSettings(commandContext, c.getCinemaPoint(this.keyFrame.get(commandContext)), world, store);
+        if (settings == null) {
+            commandContext.sendMessage(Message.raw("Error while parsing settings").color(Color.RED));
+            return;
+        }
+        c.editCinemaPoint(this.keyFrame.get(commandContext), settings);
     }
 
-    private ServerCameraSettings parseSettings(@NonNull CommandContext commandContext, PlayerPOVComponent pPOV, World world, ComponentAccessor<EntityStore> componentAccessor) {
-        ServerCameraSettings settings;
-        if (pPOV == null)
-            settings = new ServerCameraSettings();
-        else
-            settings = pPOV.getCamSettings();
+    private ServerCameraSettings parseSettings(@NonNull CommandContext commandContext, ServerCameraSettings settings, World world, ComponentAccessor<EntityStore> componentAccessor) {
 
         MouseInputTargetType mitt = parseEnum((String)this.mouseInputTargetType.get(commandContext), MouseInputTargetType.class, settings.mouseInputTargetType, commandContext);
         if (mitt == null) return null;
@@ -196,7 +205,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
     private Position getPositionFromRelativeCoord(Position toAssign, RelativeDoublePosition pos, CommandContext commandContext, World world, ComponentAccessor<EntityStore> accessor) {
         if (pos == null)
             return toAssign;
-        Vector3d tmp = pos.getRelativePosition(commandContext, world, accessor);
+        com.hypixel.hytale.math.vector.Vector3d tmp = pos.getRelativePosition(commandContext, world, accessor);
         return new Position((float) tmp.x, (float) tmp.y, (float) tmp.z);
     }
 

@@ -112,25 +112,17 @@ public class TooltipInjector {
 
     public static void injectTooltips() {
         TooltipInjector.reloadLanguages();
+        StringFormatter sf = new StringFormatter();
         setItemTranslation("items.Weapon_Battleaxe_Custom.name", "Doomer");
-        StringFormatter sf2 = new StringFormatter()
-                .color(Color.CYAN).append("This weapon of mass destruction is said to have been given by the ")
+        sf.clear().color(Color.CYAN).append("This weapon of mass destruction is said to have been given by the ")
                 .color(Color.GRAY).setUnder().append("Doom Reaper").setUnder(false)
                 .color(Color.CYAN).append(" to it's strongest warrior: ")
-                .setBold()
-                .color("#a83232").append("D")
-                .color("#a86932").append("O")
-                .color("#a4a832").append("O")
-                .color("#46a832").append("M")
-                .color("#32a887").append("S")
-                .color("#3262a8").append("T")
-                .color("#7332a8").append("A")
-                .color("#a83289").append("C")
-                .color("#a83232").append("K")
-                .append("\n\n")
+                .color(Color.RED).setBold().append("DOOMSTACK").setBold(false).append("\n\n")
                 .color(Color.MAGENTA).append("Somehow it fell into your hand...\n")
                 .append("Will it be a blessing, or a curse ?")
                 .endColor();
-        setItemTranslation("items.Weapon_Battleaxe_Custom.description", sf2);
+        setItemTranslation("items.Weapon_Battleaxe_Custom.description", sf);
+        setItemTranslation("client.itemTooltip.damageCauseResistance.environmental", "Environmental Resistance");
+
     }
 }

@@ -1,12 +1,13 @@
-package com.Team_Berry.Camera.Commands.Camera;
+package com.Team_Berry.Camera.Commands.Cinematic;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
-import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
+import com.Team_Berry.Camera.Cinematic.CinemaPoint;
+import com.Team_Berry.Camera.Cinematic.CinematicManager;
+import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
 import com.Team_Berry.Utils.Files.FileUtils;
 import com.hypixel.hytale.assetstore.AssetPack;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.AssetModule;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -20,34 +21,34 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import org.jspecify.annotations.NonNull;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ExportCameraCommand extends AbstractPlayerCommand {
-    private final RequiredArg<String> name;
+public class ExportCinematic extends AbstractPlayerCommand {
+    @Nonnull private final RequiredArg<String> nameArg;
     private final OptionalArg<String> packName;
     private final OptionalArg<Boolean> force;
-    public ExportCameraCommand() {
-        super("export", "Export your current camera settings as JSON");
-        this.name = this.withRequiredArg("name", "Your camera name", ArgTypes.STRING);
+
+    protected ExportCinematic() {
+        super("export", "Export a selected cinematic to JSON");
+        this.nameArg = this.withRequiredArg("name", "the Cinematic name", ArgTypes.STRING);
         this.packName = this.withOptionalArg("packName", "The name of you pack", ArgTypes.STRING);
         this.force = this.withOptionalArg("force", "Your camera name", ArgTypes.BOOLEAN);
     }
 
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
-        PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-        if (pPOV == null) {
-            commandContext.sendMessage(Message.raw("You do not have any custom POV applied"));
-            return;
-        }
-        ServerCameraSettings settings = pPOV.getCamSettings();
-        String json = parse(settings);
-        String name = this.name.get(commandContext);
+        CinematicPlayer cp = CinematicManager.getCinematic(this.nameArg.get(commandContext));
+
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(parse(cp));
+        String name = this.nameArg.get(commandContext);
         String pack = this.packName.get(commandContext);
         Path path;
         if (pack != null) {
@@ -56,10 +57,10 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
                 commandContext.sendMessage(Message.raw("Invalid Pack Name"));
                 return;
             }
-            path = FileUtils.instanceDirCamera(mypack, name + ".json");
+            path = FileUtils.instanceDirCinema(mypack, name + ".json");
         }
         else
-            path = FileUtils.instanceDirCamera(FileUtils.getBasePack(), name + ".json");
+            path = FileUtils.instanceDirCinema(FileUtils.getBasePack(), name + ".json");
         if (!Files.exists(path.getParent(), new LinkOption[0])) {
             try {
                 Files.createDirectories(path.getParent());
@@ -69,7 +70,7 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
             }
         }
         if (Files.exists(path, new LinkOption[0]) && !this.force.get(commandContext)) {
-            commandContext.sendMessage(Message.raw("A POV with this name already exists, use <--force true> to overwrite"));
+            commandContext.sendMessage(Message.raw("A Cinematic with this name already exists, use <--force true> to overwrite"));
             return;
         }
         try {
@@ -78,13 +79,26 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
         } catch (IOException e) {
             commandContext.sendMessage(Message.raw("Error while creating configuration: " + e.getMessage()));
         }
-        CameraInitializer.set(name, settings);
-        new CameraInitializer(name);
-        pPOV.setPOVName(name);
     }
 
-    private String parse(ServerCameraSettings settings) {
+    private Map<String, Object> parse(CinematicPlayer cp) {
         Map<String, Object> data = new HashMap<>();
+        Map<String, Object> position = new HashMap<>();
+        position.put("x", cp.origin != null ? cp.origin.x : 0);
+        position.put("y", cp.origin != null ? cp.origin.y : 0);
+        position.put("z", cp.origin != null ? cp.origin.z : 0);
+        data.put("origin", position);
+        List<Map<String, Object>> timeline = new ArrayList<>();
+        for (int i = 0; i < cp.timeline.size(); i++) {
+            timeline.add(i, parsePoint(cp.timeline.get(i)));
+        }
+        data.put("timeline", timeline);
+        return data;
+    }
+
+    private Map<String, Object> parsePoint(CinemaPoint settings) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("transitionTime", settings.transitionTime);
         data.put("positionLerpSpeed", settings.positionLerpSpeed);
         data.put("rotationLerpSpeed", settings.rotationLerpSpeed);
         data.put("distance", settings.distance);
@@ -158,6 +172,6 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
         planeNormal.put("z", settings.planeNormal != null ? settings.planeNormal.z : 0);
         data.put("planeNormal", planeNormal);
 
-        return new GsonBuilder().setPrettyPrinting().create().toJson(data);
+        return data;
     }
 }

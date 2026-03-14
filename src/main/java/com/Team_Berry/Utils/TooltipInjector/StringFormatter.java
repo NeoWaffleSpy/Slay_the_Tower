@@ -84,6 +84,11 @@ public class StringFormatter {
         return this;
     }
 
+    public StringFormatter clear() {
+        sb.setLength(0);
+        return this;
+    }
+
     public String toString() {
         if (isColorOpen) this.endColor();
         if (isItalicOpen) this.setItalic(false);

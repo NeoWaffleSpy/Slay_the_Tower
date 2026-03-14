@@ -1,14 +1,18 @@
 package com.Team_Berry;
 
 import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.server.core.command.commands.player.GameModeCommand;
+import com.hypixel.hytale.registry.Registration;
+import com.hypixel.hytale.server.core.command.system.CommandRegistration;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.hypixel.hytale.server.npc.entities.NPCEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SlayTheTower extends JavaPlugin {
     public static SlayTheTower instance;
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private final List<CommandRegistration> commands = new ArrayList<>();
 
     public static SlayTheTower get() {
         return instance;
@@ -22,5 +26,13 @@ public class SlayTheTower extends JavaPlugin {
 
     @Override
     protected void setup() {
+    }
+
+    @Override
+    protected void shutdown() {
+        LOGGER.atInfo().log("%s shutting down", this.getName());
+        commands.forEach(Registration::unregister);
+        commands.clear();
+        super.shutdown();
     }
 }

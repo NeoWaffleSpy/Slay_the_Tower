@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
@@ -24,12 +25,12 @@ import javax.annotation.Nonnull;
 public class RunCinematicCommand extends AbstractPlayerCommand {
     @Nonnull private final RequiredArg<String> nameArg;
     private final OptionalArg<RelativeDoublePosition> positionArg;
-    private final OptionalArg<Boolean> isDebugMode;
+    private final DefaultArg<Boolean> isDebugMode;
     public RunCinematicCommand() {
         super("run", "Run a cinematic");
         this.nameArg = this.withRequiredArg("Cinematic Name", "The name of the cinematic", ArgTypes.STRING);
         this.positionArg = this.withOptionalArg("origin", "Origin point of the cinematic", ArgTypes.RELATIVE_POSITION);
-        this.isDebugMode = this.withOptionalArg("debug", "give keyframe feedback in the chatbox", ArgTypes.BOOLEAN);
+        this.isDebugMode = this.withDefaultArg("debug", "give keyframe feedback in the chatbox", ArgTypes.BOOLEAN, false, "false");
     }
 
     @Override

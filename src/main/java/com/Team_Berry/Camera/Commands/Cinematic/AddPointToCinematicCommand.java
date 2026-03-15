@@ -41,12 +41,12 @@ public class AddPointToCinematicCommand extends AbstractPlayerCommand {
             commandContext.sendMessage(Message.raw("Cinematic Player Not Found: " + this.nameArg.get(commandContext)));
             return;
         }
-        if (pPOV == null) {
-            commandContext.sendMessage(Message.raw("You do not have any custom POV applied"));
-            return;
-        }
+        ServerCameraSettings cameraSettings;
+        if (pPOV == null)
+            cameraSettings = new ServerCameraSettings();
+        else
+            cameraSettings = pPOV.getCamSettings().clone();
 
-        ServerCameraSettings cameraSettings = pPOV.getCamSettings().clone();
         TransformComponent transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
         HeadRotation headRotation = store.getComponent(ref, HeadRotation.getComponentType());
         if (cameraSettings.positionType != PositionType.Custom) {

@@ -1,11 +1,7 @@
 package com.Team_Berry.Camera.Commands.Cinematic;
 
-import com.Team_Berry.Camera.Camera.CameraInitializer;
-import com.Team_Berry.Camera.Camera.MouseControl.DefaultMouseControl;
-import com.Team_Berry.Camera.Cinematic.CinemaPoint;
 import com.Team_Berry.Camera.Cinematic.CinematicManager;
 import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
-import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -13,6 +9,7 @@ import com.hypixel.hytale.math.vector.Vector2i;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
@@ -29,6 +26,7 @@ import java.util.Arrays;
 public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
     private final RequiredArg<String> nameArg;
     private final RequiredArg<Integer> keyFrame;
+    private final DefaultArg<Boolean> isRecursive;
 
     private final OptionalArg<Float> positionLerpSpeed;
     private final OptionalArg<Float> rotationLerpSpeed;
@@ -66,6 +64,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         super("edit", "edit your cinema keyframe");
         this.nameArg = this.withRequiredArg("name", "The name of the cinemaPlayer to edit", ArgTypes.STRING);
         this.keyFrame = this.withRequiredArg("keyframe", "the Keyframe to edit", ArgTypes.INTEGER);
+        this.isRecursive = this.withDefaultArg("recursive", "Apply modifications to all following keyframes", ArgTypes.BOOLEAN, false, "false");
 
         this.positionLerpSpeed = this.withOptionalArg("positionLerpSpeed", "Range: [0,1]\nTranslation Smoothening for the camera", ArgTypes.FLOAT);
         this.rotationLerpSpeed = this.withOptionalArg("rotationLerpSpeed", "Range: [0,1]\nRotation Smoothening for the camera", ArgTypes.FLOAT);
@@ -107,12 +106,16 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
             commandContext.sendMessage(Message.raw("No cinematic player named " + nameArg.get(commandContext)).color(Color.RED));
             return;
         }
-        ServerCameraSettings settings = parseSettings(commandContext, c.getCinemaPoint(this.keyFrame.get(commandContext)), world, store);
-        if (settings == null) {
-            commandContext.sendMessage(Message.raw("Error while parsing settings").color(Color.RED));
-            return;
+        int keyframe = this.keyFrame.get(commandContext);
+        int maxLength = this.isRecursive.get(commandContext) ? c.timeline.size() - 1 : keyframe;
+        for (int i = keyframe; i <= maxLength; i++) {
+            ServerCameraSettings settings = parseSettings(commandContext, c.getCinemaPoint(i), world, store);
+            if (settings == null) {
+                commandContext.sendMessage(Message.raw("Error while parsing settings for keyframe " + i).color(Color.RED));
+                return;
+            }
+            c.editCinemaPoint(i, settings);
         }
-        c.editCinemaPoint(this.keyFrame.get(commandContext), settings);
     }
 
     private ServerCameraSettings parseSettings(@NonNull CommandContext commandContext, ServerCameraSettings settings, World world, ComponentAccessor<EntityStore> componentAccessor) {

@@ -177,7 +177,7 @@ public class CameraInitializer {
         if (pPOV != null)
             CameraInitializer.setPlayerPov(pPOV.getPOVName(), playerRef);
         else
-            CameraInitializer.resetCamera(playerRef);
+            CameraInitializer.deletePOV(playerRef);
     }
 
     public static void resetCamera(PlayerRef playerRef) {

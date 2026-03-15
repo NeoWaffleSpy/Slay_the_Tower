@@ -34,6 +34,8 @@ public class CinematicPlayer {
             commandContext.sendMessage(Message.raw("Starting Cinematic Player").color(Color.GREEN));
         AtomicReference<Long> delta = new AtomicReference<>(0L);
         AtomicReference<Integer> index = new AtomicReference<>(1);
+
+        /* Cinematic Player */
         timeline.forEach(point -> {
             scheduler.schedule(() -> {
                 if (commandContext != null)
@@ -47,6 +49,23 @@ public class CinematicPlayer {
             }, delta.get(), TimeUnit.MILLISECONDS);
             delta.updateAndGet(v -> v + point.transitionTime);
         });
+
+        /* Transition back to the Player */
+        ServerCameraSettings s;
+        if (pPOV != null)
+            s = pPOV.getCamSettings();
+        else {
+            s = new ServerCameraSettings();
+            s.eyeOffset = true;
+        }
+        s.rotationLerpSpeed = 0.05f;
+        s.positionLerpSpeed = 0.05f;
+        scheduler.schedule(() -> world.execute(() -> {
+            CameraInitializer.editCameraSettings(player, s);
+        }), delta.get(), TimeUnit.MILLISECONDS);
+        delta.updateAndGet(v -> v + 1000);
+
+        /* Reload original Camera */
         scheduler.schedule(() -> {
             if (commandContext != null)
                 commandContext.sendMessage(Message.raw("Stopping Cinematic Player").color(Color.RED));

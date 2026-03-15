@@ -28,6 +28,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
     private final RequiredArg<Integer> keyFrame;
     private final DefaultArg<Boolean> isRecursive;
 
+    private final OptionalArg<Integer> transitionTime;
     private final OptionalArg<Float> positionLerpSpeed;
     private final OptionalArg<Float> rotationLerpSpeed;
     private final OptionalArg<Float> distance;
@@ -66,6 +67,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         this.keyFrame = this.withRequiredArg("keyframe", "the Keyframe to edit", ArgTypes.INTEGER);
         this.isRecursive = this.withDefaultArg("recursive", "Apply modifications to all following keyframes", ArgTypes.BOOLEAN, false, "false");
 
+        this.transitionTime = this.withOptionalArg("transitionTime", "Transition in millisecond for the camera", ArgTypes.INTEGER);
         this.positionLerpSpeed = this.withOptionalArg("positionLerpSpeed", "Range: [0,1]\nTranslation Smoothening for the camera", ArgTypes.FLOAT);
         this.rotationLerpSpeed = this.withOptionalArg("rotationLerpSpeed", "Range: [0,1]\nRotation Smoothening for the camera", ArgTypes.FLOAT);
         this.distance = this.withOptionalArg("distance", "Range: No Limit\nDefine camera distance from the player", ArgTypes.FLOAT);

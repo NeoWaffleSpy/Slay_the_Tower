@@ -30,7 +30,7 @@ public class AddPointToCinematicCommand extends AbstractPlayerCommand {
     public AddPointToCinematicCommand() {
         super("addPoint", "Add a keyframe to the cinematic");
         this.nameArg = this.withRequiredArg("Cinematic Name", "The name of the cinematic", ArgTypes.STRING);
-        this.transitionTime = this.withRequiredArg("Transition Time", "length of time spent before starting the next keyframe", ArgTypes.INTEGER);
+        this.transitionTime = this.withRequiredArg("Transition Time", "length of time in milliseconds spent before starting the next keyframe", ArgTypes.INTEGER);
     }
 
     @Override

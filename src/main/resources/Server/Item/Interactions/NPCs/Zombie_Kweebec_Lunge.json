@@ -1,0 +1,67 @@
+{
+  "Type": "Simple",
+  "$Comment": "Prepare Delay before damage is applied via selector",
+  "RunTime": 1,
+  "Next": {
+    "Type": "ApplyForce",
+    "Direction": {},
+    "ChangeVelocityType": "Set",
+    "VelocityConfig": {
+      "Style": "Exp",
+      "GroundResistance": 0.884
+    },
+    "RaycastMode": "FollowLook",
+    "Forces": [
+      {
+        "Direction": {
+          "Y": 1
+        },
+        "Force": 9
+      },
+      {
+        "Direction": {
+          "Z": -1
+        },
+        "Force": 700
+      }
+    ],
+    "Effects": {
+      "ItemPlayerAnimationsId": "Zombie_Kweebec",
+      "ItemAnimationId": "Lunge"
+    },
+    "Next": {
+      "Type": "Selector",
+      "RunTime": 0.3,
+      "Effects": {
+        "ItemPlayerAnimationsId": "Zombie_Kweebec",
+        "ItemAnimationId": "LungeGetup"
+      },
+      "Selector": {
+        "Id": "AOECircle",
+        "Range": 1
+      },
+      "HitEntity": {
+        "Interactions": [
+          {
+            "Type": "Replace",
+            "Var": "Melee_Damage",
+            "DefaultValue": {
+              "Interactions": [
+                "NPC_Attack_Melee_Damage"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "RunTime": 0.2
+  },
+  "Effects": {
+    "ItemAnimationId": "LungeCharge",
+    "ItemPlayerAnimationsId": "Zombie_Kweebec",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "ClearAnimationOnFinish": true
+  }
+}

@@ -10,5 +10,8 @@ public class CinematicCommand extends AbstractCommandCollection {
         addSubCommand(new RunCinematicCommand());
         addSubCommand(new EditCinemaKeyframeCommand());
         addSubCommand(new ExportCinematic());
+        addSubCommand(new PeekKeyframeCommand());
+        addSubCommand(new StopCinematicCommand());
+        addSubCommand(new DeletePointToCinematicCommand());
     }
 }

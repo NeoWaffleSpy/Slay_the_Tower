@@ -29,7 +29,7 @@ public class JSONParser {
         return new Direction(getFloat(myData.get("yaw")), getFloat(myData.get("pitch")), getFloat(myData.get("roll")));
     }
 
-    public static float getFloat(Object n) { return ((Number) n).floatValue(); }
-    public static Integer getInt(Object n) { return ((Number) n).intValue(); }
-    public static long getLong(Object n) { return ((Number) n).longValue(); }
+    public static Float getFloat(Object n) { return n != null ? ((Number) n).floatValue() : null; }
+    public static Integer getInt(Object n) { return n != null ? ((Number) n).intValue() : null; }
+    public static Long getLong(Object n) { return n != null ? ((Number) n).longValue() : null; }
 }

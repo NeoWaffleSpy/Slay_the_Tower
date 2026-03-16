@@ -96,7 +96,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         ServerCameraSettings settings = parseSettings(commandContext, pPOV, world, store);
         if (settings == null) { return; }
         if (pPOV == null)
-            store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent("custom", settings, new DefaultMouseControl()));
+            store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent("custom", settings, null));
         else
             CameraInitializer.editCameraSettings(playerRef, settings);
     }

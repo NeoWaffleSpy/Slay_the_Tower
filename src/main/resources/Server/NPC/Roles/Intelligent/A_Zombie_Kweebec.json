@@ -1,6 +1,6 @@
 {
   "Type": "Variant",
-  "Reference": "Template_Intelligent_Kweebec",
+  "Reference": "Template_Intelligent",
   "Modify": {
     "Appearance": "Zombie_Kweebec",
     "WanderRadius": 5,

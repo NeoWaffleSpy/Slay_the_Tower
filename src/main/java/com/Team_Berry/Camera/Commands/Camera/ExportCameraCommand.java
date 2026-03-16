@@ -34,7 +34,7 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
     public ExportCameraCommand() {
         super("export", "Export your current camera settings as JSON");
         this.name = this.withRequiredArg("name", "Your camera name", ArgTypes.STRING);
-        this.packName = this.withOptionalArg("name", "The name of you pack", ArgTypes.STRING);
+        this.packName = this.withOptionalArg("packName", "The name of you pack", ArgTypes.STRING);
         this.force = this.withOptionalArg("force", "Your camera name", ArgTypes.BOOLEAN);
     }
 
@@ -56,10 +56,10 @@ public class ExportCameraCommand extends AbstractPlayerCommand {
                 commandContext.sendMessage(Message.raw("Invalid Pack Name"));
                 return;
             }
-            path = CameraInitializer.instanceDir(mypack, name + ".json");
+            path = FileUtils.instanceDirCamera(mypack, name + ".json");
         }
         else
-            path = CameraInitializer.instanceDir(FileUtils.getBasePack(), name + ".json");
+            path = FileUtils.instanceDirCamera(FileUtils.getBasePack(), name + ".json");
         if (!Files.exists(path.getParent(), new LinkOption[0])) {
             try {
                 Files.createDirectories(path.getParent());

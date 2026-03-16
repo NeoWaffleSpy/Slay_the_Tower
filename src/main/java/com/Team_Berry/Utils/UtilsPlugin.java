@@ -1,6 +1,8 @@
 package com.Team_Berry.Utils;
 
+import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.modules.i18n.event.MessagesUpdated;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 
@@ -20,6 +22,6 @@ public class UtilsPlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-
+        this.getEventRegistry().registerGlobal(MessagesUpdated.class, (event) -> TooltipInjector.injectTooltips());
     }
 }

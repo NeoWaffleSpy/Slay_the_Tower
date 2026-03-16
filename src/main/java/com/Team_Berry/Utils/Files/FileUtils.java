@@ -14,4 +14,12 @@ public class FileUtils {
     public static Path getBasePackRoot() {
         return getBasePack().getRoot();
     }
+
+    public static Path instanceDirCamera(AssetPack pack, String instanceName) {
+        return pack.getRoot().resolve("Common").resolve("CameraSettings").resolve(instanceName);
+    }
+
+    public static Path instanceDirCinema(AssetPack pack, String instanceName) {
+        return pack.getRoot().resolve("Common").resolve("CinematicKeys").resolve(instanceName);
+    }
 }

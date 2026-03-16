@@ -1,0 +1,98 @@
+{
+  "SunColors": [
+    {
+      "Hour": 12,
+      "Color": "#fffb9e"
+    }
+  ],
+  "SunlightColors": [
+    {
+      "Hour": 12,
+      "Color": "#ffffff"
+    }
+  ],
+  "SunlightDampingMultipliers": null,
+  "ScreenEffectColors": null,
+  "SunGlowColors": [
+    {
+      "Hour": 12,
+      "Color": "#fffb3eff"
+    }
+  ],
+  "Particle": {
+    "SystemId": "Butterflies_GS",
+    "Scale": 1,
+    "Color": "#ff004a"
+  },
+  "SkyBottomColors": [
+    {
+      "Hour": 12,
+      "Color": "#789effff"
+    }
+  ],
+  "SkyTopColors": [
+    {
+      "Hour": 12,
+      "Color": "#ff90cdff"
+    }
+  ],
+  "SkySunsetColors": [
+    {
+      "Hour": 12,
+      "Color": "#ff6868ff"
+    }
+  ],
+  "FogColors": [
+    {
+      "Hour": 12,
+      "Color": "#93b5ff"
+    }
+  ],
+  "FogHeightFalloffs": [
+    {
+      "Hour": 12,
+      "Value": 1
+    }
+  ],
+  "FogDensities": [
+    {
+      "Hour": 12,
+      "Value": 1
+    }
+  ],
+  "WaterTints": [
+    {
+      "Hour": 12,
+      "Color": "#478bbc"
+    }
+  ],
+  "ColorFilters": null,
+  "Clouds": [
+    {
+      "Texture": "Sky/Clouds/Marshmallow_Base.png",
+      "Colors": [
+        {
+          "Hour": 12,
+          "Color": "#ffe4d9ff"
+        }
+      ],
+      "Speeds": [
+        {
+          "Hour": 12,
+          "Value": 1
+        }
+      ]
+    }
+  ],
+  "SunScales": null,
+  "Stars": "Sky/Stars3.png",
+  "FogOptions": {
+    "IgnoreFogLimits": false,
+    "EffectiveViewDistanceMultiplier": 2
+  },
+  "MoonGlowColors": null,
+  "FogDistance": [
+    0,
+    275
+  ]
+}

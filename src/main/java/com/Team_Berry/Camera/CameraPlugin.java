@@ -4,6 +4,7 @@ import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Camera.MouseControl.UltMouseControl;
 import com.Team_Berry.Camera.Commands.Camera.CameraCommand;
 import com.Team_Berry.Camera.Commands.CameraGroup.CameraGroupCommand;
+import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Camera.Component.System.PlayerPOVSystem;
 import com.Team_Berry.Camera.Interactions.UltInteraction;
@@ -42,6 +43,7 @@ public class CameraPlugin extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
+        this.getCommandRegistry().registerCommand(new CinematicCommand());
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
 
 

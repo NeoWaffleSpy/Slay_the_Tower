@@ -5,6 +5,8 @@ import com.Team_Berry.Camera.Camera.MouseControl.AbstractMouseControl;
 import com.Team_Berry.Camera.Camera.MouseControl.UltMouseControl;
 import com.Team_Berry.Camera.CameraPlugin;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
+import com.Team_Berry.Utils.Files.FileUtils;
+import com.Team_Berry.Utils.Files.JSONParser;
 import com.hypixel.hytale.assetstore.AssetPack;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.protocol.*;
@@ -53,7 +55,9 @@ public class CameraInitializer {
     }
 
     public static void init() {
-        set("custom", new ServerCameraSettings());
+        ServerCameraSettings cameraSettings = new ServerCameraSettings();
+        cameraSettings.eyeOffset = true;
+        set("custom", cameraSettings);
         new CameraInitializer("custom");
         get("topDown");
         get("sideView");
@@ -107,7 +111,7 @@ public class CameraInitializer {
 
     public static ServerCameraSettings getJsonSettings(String key) {
         for (AssetPack pack : AssetModule.get().getAssetPacks()) {
-            Path p = instanceDir(pack, key + ".json");
+            Path p = FileUtils.instanceDirCamera(pack, key + ".json");
             if (Files.exists(p)) {
                 try {
                     return loadCameraSettings(p, key);
@@ -168,6 +172,14 @@ public class CameraInitializer {
         }
     }
 
+    public static void reload(PlayerRef playerRef) {
+        PlayerPOVComponent pPOV = getPOV(playerRef);
+        if (pPOV != null)
+            CameraInitializer.setPlayerPov(pPOV.getPOVName(), playerRef);
+        else
+            CameraInitializer.deletePOV(playerRef);
+    }
+
     public static void resetCamera(PlayerRef playerRef) {
         playerRef.getHiddenPlayersManager().showPlayer(playerRef.getUuid());
         playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.Custom, false, null));
@@ -210,18 +222,14 @@ public class CameraInitializer {
         return String.join(", ", Collections.list(camDict.keys()));
     }
 
-    public static Path instanceDir(AssetPack pack, String instanceName) {
-        return pack.getRoot().resolve("Common").resolve("CameraSettings").resolve(instanceName);
-    }
-
     private static ServerCameraSettings loadCameraSettings(Path p, String name) throws IOException, ParseException {
         String json = Files.readString(p);
         Map<String, Object> data = JSONObjectUtils.parse(json);
         ServerCameraSettings camSettings = new ServerCameraSettings();
-        camSettings.positionLerpSpeed = get(data.get("positionLerpSpeed"));
-        camSettings.rotationLerpSpeed = get(data.get("rotationLerpSpeed"));
-        camSettings.distance = get(data.get("distance"));
-        camSettings.speedModifier = get(data.get("speedModifier"));
+        camSettings.positionLerpSpeed = JSONParser.getFloat(data.get("positionLerpSpeed"));
+        camSettings.rotationLerpSpeed = JSONParser.getFloat(data.get("rotationLerpSpeed"));
+        camSettings.distance = JSONParser.getFloat(data.get("distance"));
+        camSettings.speedModifier = JSONParser.getFloat(data.get("speedModifier"));
         camSettings.allowPitchControls = (boolean) data.get("allowPitchControls");
         camSettings.displayCursor = (boolean) data.get("displayCursor");
         camSettings.displayReticle = (boolean) data.get("displayReticle");
@@ -230,54 +238,26 @@ public class CameraInitializer {
         camSettings.skipCharacterPhysics = (boolean) data.get("skipCharacterPhysics");
         camSettings.isFirstPerson = (boolean) data.get("isFirstPerson");
         camSettings.movementForceRotationType = MovementForceRotationType.valueOf((String) data.get("movementForceRotationType"));
-        camSettings.movementForceRotation = getDirection(data.get("movementForceRotation"));
+        camSettings.movementForceRotation = JSONParser.getDirection(data.get("movementForceRotation"));
         camSettings.attachedToType = AttachedToType.valueOf((String) data.get("attachedToType"));
-        camSettings.attachedToEntityId = getInt(data.get("attachedToEntityId"));
+        camSettings.attachedToEntityId = JSONParser.getInt(data.get("attachedToEntityId"));
         camSettings.eyeOffset = (boolean) data.get("eyeOffset");
         camSettings.positionDistanceOffsetType = PositionDistanceOffsetType.valueOf((String) data.get("positionDistanceOffsetType"));
-        camSettings.positionOffset = getPosition(data.get("positionOffset"));
-        camSettings.rotationOffset = getDirection(data.get("rotationOffset"));
+        camSettings.positionOffset = JSONParser.getPosition(data.get("positionOffset"));
+        camSettings.rotationOffset = JSONParser.getDirection(data.get("rotationOffset"));
         camSettings.positionType = PositionType.valueOf((String) data.get("positionType"));
-        camSettings.position = getPosition(data.get("position"));
+        camSettings.position = JSONParser.getPosition(data.get("position"));
         camSettings.rotationType = RotationType.valueOf((String) data.get("rotationType"));
-        camSettings.rotation = getDirection(data.get("rotation"));
+        camSettings.rotation = JSONParser.getDirection(data.get("rotation"));
         camSettings.canMoveType = CanMoveType.valueOf((String) data.get("canMoveType"));
         camSettings.applyMovementType = ApplyMovementType.valueOf((String) data.get("applyMovementType"));
-        camSettings.movementMultiplier = getVector(data.get("movementMultiplier"));
+        camSettings.movementMultiplier = JSONParser.getVector(data.get("movementMultiplier"));
         camSettings.applyLookType = ApplyLookType.valueOf((String) data.get("applyLookType"));
-        camSettings.lookMultiplier = getVector2(data.get("lookMultiplier"));
+        camSettings.lookMultiplier = JSONParser.getVector2(data.get("lookMultiplier"));
         camSettings.mouseInputType = MouseInputType.valueOf((String) data.get("mouseInputType"));
-        camSettings.planeNormal = getVector(data.get("planeNormal"));
+        camSettings.planeNormal = JSONParser.getVector(data.get("planeNormal"));
 
         set(name, camSettings);
         return camSettings;
-    }
-
-    private static Vector2f getVector2(Object data) {
-        Map<String, Object> myData = (Map<String, Object>) data;
-        return new Vector2f(get(myData.get("x")), get(myData.get("y")));
-    }
-
-    private static Vector3f getVector(Object data) {
-        Map<String, Object> myData = (Map<String, Object>) data;
-        return new Vector3f(get(myData.get("x")), get(myData.get("y")), get(myData.get("z")));
-    }
-
-    private static Position getPosition(Object data) {
-        Map<String, Object> myData = (Map<String, Object>) data;
-        return new Position(get(myData.get("x")), get(myData.get("y")), get(myData.get("z")));
-    }
-
-    private static Direction getDirection(Object data) {
-        Map<String, Object> myData = (Map<String, Object>) data;
-        return new Direction(get(myData.get("yaw")), get(myData.get("pitch")), get(myData.get("roll")));
-    }
-
-    private static float get(Object n) {
-        return ((Number) n).floatValue();
-    }
-
-    private static Integer getInt(Object n) {
-        return ((Number) n).intValue();
     }
 }

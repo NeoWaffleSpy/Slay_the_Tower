@@ -44,6 +44,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
     private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> rotationOffset;
     private final OptionalArg<String> positionType;
     private final OptionalArg<RelativeDoublePosition> position;
+    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> positionAdd;
     private final OptionalArg<String> rotationType;
     private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> rotation;
     private final OptionalArg<String> canMoveType;
@@ -77,6 +78,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         this.rotationOffset = this.withOptionalArg("rotationOffset", "Range: [-360,360]\nOffset camera rotation", ArgTypes.ROTATION);
         this.positionType = this.withOptionalArg("positionType", "Values: " + Arrays.toString(PositionType.VALUES) + "\nAttachedToPlusOffset: The camera will translate along with the player head\nCustom: set a fixed camera position defined by <--position x y z>", ArgTypes.STRING);
         this.position = this.withOptionalArg("position", "Set a fixed camera position when <--positionType Custom>", ArgTypes.RELATIVE_POSITION);
+        this.positionAdd = this.withOptionalArg("positionAdd", "offset the current fixed camera position when <--positionType Custom>", ArgTypes.ROTATION);
         this.rotationType = this.withOptionalArg("rotationType", "Values: " + Arrays.toString(RotationType.VALUES) + "\nAttachedToPlusOffset: The camera will rotate along with the player head\nCustom: set a fixed camera rotation defined by <--rotation x y z>", ArgTypes.STRING);
         this.rotation = this.withOptionalArg("rotation", "Range: [-360,360]\nSet a fixed camera rotation when <--rotationType Custom>", ArgTypes.ROTATION);
         /**/this.canMoveType = this.withOptionalArg("canMoveType", "Values: " + Arrays.toString(CanMoveType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
@@ -148,6 +150,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         settings.rotationOffset = getDirectionFromCoord(settings.rotationOffset, this.rotationOffset.get(commandContext));
         settings.positionType = posType;
         settings.position = getPositionFromRelativeCoord(settings.position, this.position.get(commandContext), commandContext, world, componentAccessor);
+        settings.position = addPositionFromVector(settings.position, this.positionAdd.get(commandContext));
         settings.rotationType = rotType;
         settings.rotation = getDirectionFromCoord(settings.rotation, this.rotation.get(commandContext));
         settings.canMoveType = cmt;
@@ -182,6 +185,12 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         if (pos == null)
             return toAssign;
         return new Position(pos.x, pos.y, pos.z);
+    }
+
+    private Position addPositionFromVector(Position coord, com.hypixel.hytale.math.vector.Vector3f offset) {
+        if (offset == null)
+            return coord;
+        return new Position(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
     }
 
     private Position getPositionFromRelativeCoord(Position toAssign, RelativeDoublePosition pos, CommandContext commandContext, World world, ComponentAccessor<EntityStore> accessor) {

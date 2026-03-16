@@ -1,0 +1,55 @@
+{
+  "Animations": {
+    "LungeCharge": {
+      "ThirdPerson": "Characters/Animations/Items/Zombie_Kweebec/Lunge_Charge.blockyanim"
+    },
+    "Lunge": {
+      "ThirdPerson": "Characters/Animations/Items/Zombie_Kweebec/Lunge.blockyanim",
+      "BlendingDuration": 0,
+      "ThirdPersonMoving": "Characters/Animations/Items/Zombie_Kweebec/Lunge.blockyanim",
+      "Looping": true
+    },
+    "LungeGetup": {
+      "ThirdPerson": "Characters/Animations/Items/Zombie_Kweebec/Lunge_GetUp2.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Zombie_Kweebec/Lunge_GetUp2.blockyanim",
+      "Speed": 0.1,
+      "Looping": true
+    },
+    "LungeWake": {
+      "ThirdPerson": "Characters/Animations/Items/Zombie_Kweebec/Wake2.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Zombie_Kweebec/Wake2.blockyanim"
+    }
+  },
+  "WiggleWeights": {
+    "Pitch": 2,
+    "PitchDeceleration": 0.1,
+    "Roll": 0.1,
+    "RollDeceleration": 0.1,
+    "X": 3,
+    "XDeceleration": 0.1,
+    "Y": 0.1,
+    "YDeceleration": 0.1,
+    "Z": 0.1,
+    "ZDeceleration": 0.1
+  },
+  "Camera": {
+    "Pitch": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    }
+  }
+}

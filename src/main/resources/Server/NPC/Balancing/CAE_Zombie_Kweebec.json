@@ -1,0 +1,129 @@
+{
+  "Type": "CombatActionEvaluator",
+  "TargetMemoryDuration": 10,
+  "CombatActionEvaluator": {
+    "RunConditions": [
+      {
+        "Type": "TimeSinceLastUsed",
+        "Curve": {
+          "ResponseCurve": "Linear",
+          "XRange": [
+            0,
+            10
+          ]
+        }
+      },
+      {
+        "Type": "Randomiser",
+        "MinValue": 0.9,
+        "MaxValue": 1
+      }
+    ],
+    "MinRunUtility": 0.5,
+    "AvailableActions": {
+      "SelectTarget": {
+        "Type": "SelectBasicAttackTarget",
+        "Description": "Select a target",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 10
+            }
+          }
+        ]
+      },
+      "Lunge": {
+        "Type": "Ability",
+        "Target": "Hostile",
+        "WeightCoefficient": 10,
+        "AttackDistanceRange": [
+          4,
+          7
+        ],
+        "RequireAiming": true,
+        "PositionFirst": true,
+        "ChargeDistance": 6,
+        "Ability": "Root_Zombie_Kweebec_Lunge",
+        "Conditions": [
+          {
+            "Type": "TargetDistance",
+            "Curve": {
+              "Type": "Default",
+              "XRange": [
+                4,
+                7
+              ],
+              "ResponseCurve": "Linear"
+            }
+          },
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 10
+            }
+          }
+        ],
+        "Description": "Jumps on the target",
+        "InteractionVars": {
+          "Melee_Damage": {
+            "Interactions": [
+              {
+                "$Comment": "When NPC overrides the InteractionVars, this info is not applicable anymore",
+                "Parent": "NPC_Attack_Melee_Damage",
+                "DamageCalculator": {
+                  "Type": "Absolute",
+                  "BaseDamage": {
+                    "Physical": 10
+                  },
+                  "RandomPercentageModifier": 0.1
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "MinActionUtility": 0.01,
+    "ActionSets": {
+      "Default": {
+        "BasicAttacks": {
+          "Attacks": [
+            "Root_Zombie_Kweebec_Melee_Attack"
+          ],
+          "Randomise": false,
+          "MaxRange": 1.5,
+          "Timeout": 2,
+          "CooldownRange": [
+            0.8,
+            1.3
+          ],
+          "InteractionVars": {
+            "Melee_Damage": {
+              "Interactions": [
+                {
+                  "$Comment": "When NPC overrides the InteractionVars, this info is not applicable anymore",
+                  "Parent": "NPC_Attack_Melee_Damage",
+                  "DamageCalculator": {
+                    "Type": "Absolute",
+                    "BaseDamage": {
+                      "Physical": 10
+                    },
+                    "RandomPercentageModifier": 0.1
+                  }
+                }
+              ]
+            }
+          },
+          "UseProjectedDistance": true
+        },
+        "Actions": [
+          "SelectTarget",
+          "Lunge"
+        ]
+      }
+    }
+  }
+}

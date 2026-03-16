@@ -1,0 +1,19 @@
+{
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  },
+  "Interactions": [
+    "Zombie_Kweebec_Attack_Melee_Simple",
+    {
+      "Type": "Simple",
+      "RunTime": 0.5,
+      "Effects": {
+        "MovementEffects": {
+          "DisableAll": true
+        }
+      }
+    }
+  ]
+}

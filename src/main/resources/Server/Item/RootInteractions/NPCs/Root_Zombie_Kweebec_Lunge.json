@@ -1,0 +1,22 @@
+{
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  },
+  "Interactions": [
+    "Zombie_Kweebec_Lunge",
+    {
+      "Type": "Simple",
+      "RunTime": 1,
+      "Effects": {
+        "MovementEffects": {
+          "DisableAll": true
+        },
+        "ItemPlayerAnimationsId": "Zombie_Kweebec",
+        "ItemAnimationId": "LungeWake",
+        "ClearAnimationOnFinish": true
+      }
+    }
+  ]
+}

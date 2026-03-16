@@ -1,0 +1,24 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent_Kweebec",
+  "Modify": {
+    "Appearance": "Zombie_Kweebec",
+    "WanderRadius": 5,
+    "ViewRange": 10,
+    "HearingRange": 5,
+    "CombatBackOffAfterAttack": false,
+    "Weapons": [ ],
+    "UseCombatActionEvaluator": true,
+    "_CombatConfig": "CAE_Zombie_Kweebec",
+    "OffHand": [ ],
+    "BlockAbility": "",
+    "LeashDistance": 15,
+    "BlockProbability": 0
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Zombie_Kweebecc.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

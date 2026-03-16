@@ -1,6 +1,7 @@
 package com.Team_Berry.Camera.Cinematic;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
+import com.Team_Berry.Camera.CameraPlugin;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class CinematicPlayer {
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService scheduler;
 
     public ArrayList<CinemaPoint> timeline = new ArrayList<>();
     public Position origin;
@@ -35,6 +36,7 @@ public class CinematicPlayer {
         AtomicReference<Long> delta = new AtomicReference<>(0L);
         AtomicReference<Integer> index = new AtomicReference<>(1);
 
+        scheduler = Executors.newScheduledThreadPool(1);
         /* Cinematic Player */
         timeline.forEach(point -> {
             scheduler.schedule(() -> {
@@ -53,7 +55,7 @@ public class CinematicPlayer {
         /* Transition back to the Player */
         ServerCameraSettings s;
         if (pPOV != null)
-            s = pPOV.getCamSettings();
+            s = pPOV.getCamSettings().clone();
         else {
             s = new ServerCameraSettings();
             s.eyeOffset = true;
@@ -73,8 +75,18 @@ public class CinematicPlayer {
         }, delta.get(), TimeUnit.MILLISECONDS);
     }
 
+    public void stopCinematic(PlayerRef player) {
+        scheduler.shutdownNow();
+        CameraPlugin.LOGGER.atInfo().log("Force shutdown of Cinematic Player");
+        CameraInitializer.reload(player);
+    }
+
     public void addCameraPoint(ServerCameraSettings cameraSettings, long transitionTime) {
         timeline.add(new CinemaPoint(cameraSettings, transitionTime));
+    }
+
+    public void addCameraPoint(ServerCameraSettings cameraSettings, long transitionTime, int index) {
+        timeline.add(index, new CinemaPoint(cameraSettings, transitionTime));
     }
 
     public void addCameraPoint(CinemaPoint cinemaPoint) {

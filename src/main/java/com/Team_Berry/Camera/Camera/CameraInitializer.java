@@ -39,7 +39,7 @@ public class CameraInitializer {
 
     public CameraInitializer(String cameraName) {
         this.cameraSettings = templateDict.get(cameraName);
-        this.mouseControl = new DefaultMouseControl();
+        this.mouseControl = null;
         this.isPlayerHidden = false;
         camDict.put(cameraName, this);
         activate();
@@ -59,10 +59,11 @@ public class CameraInitializer {
         cameraSettings.eyeOffset = true;
         set("custom", cameraSettings);
         new CameraInitializer("custom");
-        get("topDown");
-        get("sideView");
-        get("isometric");
-        get("shoulder");
+        getJsonSettings("topDown");
+        getJsonSettings("sideView");
+        getJsonSettings("isometric");
+        getJsonSettings("shoulder");
+        new CameraInitializer("topDown", new DefaultMouseControl(), false, "topDown");
         new CameraInitializer("isometric2", new DefaultMouseControl(), false, "isometric");
         new CameraInitializer("ultCam", new UltMouseControl(), false, "topDown");
 
@@ -72,7 +73,7 @@ public class CameraInitializer {
         PlayerPOVComponent pPOV = getPOV(playerRef);
         if (pPOV != null) {
             pPOV.setCamSettings(newSettings);
-            playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.Custom, true, newSettings));
+            playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.Custom, false, newSettings));
         }
     }
 
@@ -82,7 +83,7 @@ public class CameraInitializer {
             pPOV.setMouseControl(newControl);
     }
 
-    public static void set (String key, ServerCameraSettings value) {
+    public static void set(String key, ServerCameraSettings value) {
         templateDict.put(key, value);
     }
 
@@ -130,7 +131,7 @@ public class CameraInitializer {
             this.isActive = true;
             //this.eventRegistry.register(PlayerConnectEvent.class, (event) -> this.setPOV(event.getPlayerRef()));
             this.eventRegistry.register(PlayerMouseButtonEvent.class, this::dispatchControl);
-            this.eventRegistry.registerGlobal(PlayerInteractEvent.class, (event) -> event.setCancelled(true));
+            this.eventRegistry.registerGlobal(PlayerInteractEvent.class, (event) -> { if (mouseControl != null) event.setCancelled(true); });
             Universe.get().getPlayers().forEach((pRef) -> {
                 PlayerPOVComponent pPOV = getPOV(pRef);
                 if (pPOV != null) {
@@ -156,7 +157,7 @@ public class CameraInitializer {
             pPOV.setMouseControl(mouseControl);
         if (pPOV.getCamSettings() == null)
             pPOV.setCamSettings(cameraSettings);
-        playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.Custom, true, pPOV.getCamSettings()));
+        playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.Custom, false, pPOV.getCamSettings()));
     }
 
     public void deactivate() {
@@ -182,11 +183,13 @@ public class CameraInitializer {
 
     public static void resetCamera(PlayerRef playerRef) {
         playerRef.getHiddenPlayersManager().showPlayer(playerRef.getUuid());
-        playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.Custom, false, null));
+        playerRef.getPacketHandler().writeNoCache(new SetServerCamera(ClientCameraView.FirstPerson, false, null));
     }
 
     public void dispatchControl(PlayerMouseButtonEvent event) {
-        event.getPlayerRef().getStore().getComponent(event.getPlayerRef(), PlayerPOVComponent.getComponentType()).getMouseControl().onPlayerMouseButton(event);
+        AbstractMouseControl mouseControl = event.getPlayerRef().getStore().getComponent(event.getPlayerRef(), PlayerPOVComponent.getComponentType()).getMouseControl();
+        if (mouseControl != null)
+            mouseControl.onPlayerMouseButton(event);
     }
 
     private static PlayerPOVComponent getPOV(PlayerRef playerRef) {

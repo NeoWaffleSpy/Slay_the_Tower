@@ -1,7 +1,9 @@
 package com.Team_Berry.Camera.Commands.Cinematic;
 
+import com.Team_Berry.Camera.Cinematic.CinemaPoint;
 import com.Team_Berry.Camera.Cinematic.CinematicManager;
 import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
+import com.Team_Berry.Utils.Files.JSONParser;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -111,7 +113,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         int keyframe = this.keyFrame.get(commandContext);
         int maxLength = this.isRecursive.get(commandContext) ? c.timeline.size() - 1 : keyframe;
         for (int i = keyframe; i <= maxLength; i++) {
-            ServerCameraSettings settings = parseSettings(commandContext, c.getCinemaPoint(i), world, store);
+            CinemaPoint settings = parseSettings(commandContext, c.getCinemaPoint(i), world, store);
             if (settings == null) {
                 commandContext.sendMessage(Message.raw("Error while parsing settings for keyframe " + i).color(Color.RED));
                 return;
@@ -120,7 +122,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         }
     }
 
-    private ServerCameraSettings parseSettings(@NonNull CommandContext commandContext, ServerCameraSettings settings, World world, ComponentAccessor<EntityStore> componentAccessor) {
+    private CinemaPoint parseSettings(@NonNull CommandContext commandContext, CinemaPoint settings, World world, ComponentAccessor<EntityStore> componentAccessor) {
 
         MouseInputTargetType mitt = parseEnum((String)this.mouseInputTargetType.get(commandContext), MouseInputTargetType.class, settings.mouseInputTargetType, commandContext);
         if (mitt == null) return null;
@@ -143,6 +145,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         MouseInputType mit = parseEnum((String)this.mouseInputType.get(commandContext), MouseInputType.class, settings.mouseInputType, commandContext);
         if (mit == null) return null;
 
+        settings.transitionTime = getVal(settings.transitionTime, JSONParser.getLong(this.transitionTime.get(commandContext)));
         settings.positionLerpSpeed = getVal(settings.positionLerpSpeed, this.positionLerpSpeed.get(commandContext));
         settings.rotationLerpSpeed = getVal(settings.rotationLerpSpeed, this.rotationLerpSpeed.get(commandContext));
         settings.distance = getVal(settings.distance, this.distance.get(commandContext));

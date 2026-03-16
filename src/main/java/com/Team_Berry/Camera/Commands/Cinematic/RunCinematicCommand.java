@@ -26,11 +26,13 @@ public class RunCinematicCommand extends AbstractPlayerCommand {
     @Nonnull private final RequiredArg<String> nameArg;
     private final OptionalArg<RelativeDoublePosition> positionArg;
     private final DefaultArg<Boolean> isDebugMode;
+    private final DefaultArg<Boolean> fromOrigin;
     public RunCinematicCommand() {
         super("run", "Run a cinematic");
         this.nameArg = this.withRequiredArg("Cinematic Name", "The name of the cinematic", ArgTypes.STRING);
-        this.positionArg = this.withOptionalArg("origin", "Origin point of the cinematic", ArgTypes.RELATIVE_POSITION);
+        this.positionArg = this.withOptionalArg("position", "Origin point of the cinematic", ArgTypes.RELATIVE_POSITION);
         this.isDebugMode = this.withDefaultArg("debug", "give keyframe feedback in the chatbox", ArgTypes.BOOLEAN, false, "false");
+        this.fromOrigin = this.withDefaultArg("fromOrigin", "give keyframe feedback in the chatboxdefine it the cinematic should play from it's origin", ArgTypes.BOOLEAN, false, "false");
     }
 
     @Override
@@ -44,7 +46,10 @@ public class RunCinematicCommand extends AbstractPlayerCommand {
             return;
         }
         Position p;
-        if (this.positionArg.provided(commandContext)) {
+        if (this.fromOrigin.get(commandContext)) {
+            p = c.origin;
+        }
+        else if (this.positionArg.provided(commandContext)) {
             p = getPositionFromRelativeCoord(this.positionArg.get(commandContext), commandContext, world, store);
         }
         else {

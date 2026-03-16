@@ -11,6 +11,7 @@ import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
@@ -26,11 +27,13 @@ import javax.annotation.Nonnull;
 public class AddPointToCinematicCommand extends AbstractPlayerCommand {
     @Nonnull private final RequiredArg<String> nameArg;
     @Nonnull private final RequiredArg<Integer> transitionTime;
+    @Nonnull private final OptionalArg<Integer> insertPoint;
 
     public AddPointToCinematicCommand() {
         super("addPoint", "Add a keyframe to the cinematic");
         this.nameArg = this.withRequiredArg("Cinematic Name", "The name of the cinematic", ArgTypes.STRING);
         this.transitionTime = this.withRequiredArg("Transition Time", "length of time in milliseconds spent before starting the next keyframe", ArgTypes.INTEGER);
+        this.insertPoint = this.withOptionalArg("keyframe", "Insert camera at keyframe value", ArgTypes.INTEGER);
     }
 
     @Override
@@ -60,7 +63,10 @@ public class AddPointToCinematicCommand extends AbstractPlayerCommand {
         }
         cameraSettings.isFirstPerson = false;
         cameraSettings.eyeOffset = true;
-        c.addCameraPoint(cameraSettings, transitionTime.get(commandContext));
+        if (this.insertPoint.provided(commandContext))
+            c.addCameraPoint(cameraSettings, transitionTime.get(commandContext), this.insertPoint.get(commandContext));
+        else
+            c.addCameraPoint(cameraSettings, transitionTime.get(commandContext));
     }
 
     private Position getDeltaPosition(Position origin, Vector3d key) {

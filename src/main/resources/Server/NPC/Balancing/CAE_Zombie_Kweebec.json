@@ -40,7 +40,7 @@
         "WeightCoefficient": 10,
         "AttackDistanceRange": [
           4,
-          7
+          6
         ],
         "RequireAiming": true,
         "PositionFirst": true,
@@ -53,7 +53,7 @@
               "Type": "Default",
               "XRange": [
                 4,
-                7
+                6
               ],
               "ResponseCurve": "Linear"
             }

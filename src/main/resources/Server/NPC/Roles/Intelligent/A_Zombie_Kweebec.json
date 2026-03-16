@@ -1,6 +1,6 @@
 {
   "Type": "Variant",
-  "Reference": "Template_Intelligent",
+  "Reference": "Template_Intelligent_Kweebec",
   "Modify": {
     "Appearance": "Zombie_Kweebec",
     "WanderRadius": 5,
@@ -13,7 +13,8 @@
     "OffHand": [ ],
     "BlockAbility": "",
     "LeashDistance": 15,
-    "BlockProbability": 0
+    "BlockProbability": 0,
+    "SeparationDistance": 1
   },
   "Parameters": {
     "NameTranslationKey": {

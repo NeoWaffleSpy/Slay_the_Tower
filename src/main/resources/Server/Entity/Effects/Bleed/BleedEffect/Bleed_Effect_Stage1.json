@@ -1,0 +1,10 @@
+{
+  "OverlapBehavior": "Ignore",
+  "Duration": 5,
+  "RemovalBehavior": "Complete",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffa7a7"
+  },
+  "ValueType": "Percent"
+}

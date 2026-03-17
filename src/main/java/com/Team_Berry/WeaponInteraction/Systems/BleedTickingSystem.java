@@ -1,6 +1,7 @@
 package com.Team_Berry.WeaponInteraction.Systems;
 
 import com.Team_Berry.WeaponInteraction.Component.BleedComponent;
+import com.Team_Berry.WeaponInteraction.Utils.BleedEffectUtil;
 import com.Team_Berry.WeaponInteraction.Utils.BleedStage;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -37,7 +38,7 @@ public class BleedTickingSystem extends EntityTickingSystem<EntityStore> {
 
         long deltaMs = (long) (dt * 1000);
         bleedComponent.setAccumulatedTime(bleedComponent.getAccumulatedTime() + deltaMs);
-        if (bleedComponent.getEffectStage() == BleedStage.Bleeding && bleedComponent.getAccumulatedTime() >= TICK_INTERVAL) {
+        if (bleedComponent.getEffectStage() == BleedStage.BLEEDING && bleedComponent.getAccumulatedTime() >= TICK_INTERVAL) {
             EntityEffect effectDamagePercent = EntityEffect.getAssetMap().getAsset("Bleed_Damage");
             effectController.addEffect(bleedTarget, effectDamagePercent, commandBuffer);
 
@@ -48,8 +49,9 @@ public class BleedTickingSystem extends EntityTickingSystem<EntityStore> {
         }
         if(bleedComponent.isExpired(now)){
             commandBuffer.removeComponent(bleedTarget,bleedComponentType);
-            int effectIndex = EntityEffect.getAssetMap().getIndex("Bleed_Effect");
-            effectController.removeEffect(bleedTarget, effectIndex, store);
+            BleedEffectUtil.clearAllVisual(bleedTarget, effectController, store);
+
+
         }
     }
 

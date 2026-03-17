@@ -41,11 +41,11 @@ public class BleedComponent implements Component<EntityStore> {
 
     public BleedStage getStageFromStacks() {
         return switch (currentBleedStacks) {
-            case 1 -> BleedStage.Stage1;
-            case 2 -> BleedStage.Stage2;
-            case 3 -> BleedStage.Stage3;
-            case 4 -> BleedStage.Bleeding; // This is your MAX_BLEED_STACKS
-            default -> BleedStage.None;
+            case 1 -> BleedStage.STAGE1;
+            case 2 -> BleedStage.STAGE2;
+            case 3 -> BleedStage.STAGE3;
+            case 4 -> BleedStage.BLEEDING; // This is your MAX_BLEED_STACKS
+            default -> BleedStage.NONE;
         };
     }
 
@@ -57,6 +57,9 @@ public class BleedComponent implements Component<EntityStore> {
         return this.bleedRarity.getDamageKey();
     }
 
+    public String getVisualEffectKey() {
+        return this.effectStage.getEffectKey();
+    }
     public boolean isExpired(long now) {
         return now >= bleedStartTime + bleedDuration;
     }

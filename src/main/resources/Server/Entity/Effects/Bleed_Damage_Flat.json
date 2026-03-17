@@ -1,0 +1,15 @@
+{
+  "ValueType": "Percent",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 1
+    },
+    "SequentialModifierStep": 0,
+    "SequentialModifierMinimum": 1,
+    "Type": "Absolute"
+  },
+  "DamageCalculatorCooldown": 1,
+  "OverlapBehavior": "Overwrite",
+  "Duration": 5,
+  "RemovalBehavior": "Duration"
+}

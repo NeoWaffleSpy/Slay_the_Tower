@@ -1,4 +1,4 @@
-package com.Team_Berry.WeaponInteraction.System;
+package com.Team_Berry.WeaponInteraction.Systems;
 
 import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.hypixel.hytale.component.*;

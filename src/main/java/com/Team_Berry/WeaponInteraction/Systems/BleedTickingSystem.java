@@ -1,11 +1,11 @@
 package com.Team_Berry.WeaponInteraction.Systems;
 
 import com.Team_Berry.WeaponInteraction.Component.BleedComponent;
+import com.Team_Berry.WeaponInteraction.Utils.BleedStage;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
-import com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -37,10 +37,12 @@ public class BleedTickingSystem extends EntityTickingSystem<EntityStore> {
 
         long deltaMs = (long) (dt * 1000);
         bleedComponent.setAccumulatedTime(bleedComponent.getAccumulatedTime() + deltaMs);
-        if (bleedComponent.getAccumulatedTime() >= TICK_INTERVAL) {
-            EntityEffect effect = EntityEffect.getAssetMap().getAsset("Bleed_Damage");
-            OverlapBehavior overlap = effect.getOverlapBehavior();
-            effectController.addEffect(bleedTarget, effect, commandBuffer);
+        if (bleedComponent.getEffectStage() == BleedStage.Bleeding && bleedComponent.getAccumulatedTime() >= TICK_INTERVAL) {
+            EntityEffect effectDamagePercent = EntityEffect.getAssetMap().getAsset("Bleed_Damage");
+            effectController.addEffect(bleedTarget, effectDamagePercent, commandBuffer);
+
+            EntityEffect effectDamageFlat = EntityEffect.getAssetMap().getAsset(bleedComponent.getDamageEffectKey());
+            effectController.addEffect(bleedTarget, effectDamageFlat, commandBuffer);
 
             bleedComponent.setAccumulatedTime(bleedComponent.getAccumulatedTime() - TICK_INTERVAL);
         }

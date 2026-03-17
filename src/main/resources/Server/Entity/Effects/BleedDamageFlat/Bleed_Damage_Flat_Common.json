@@ -1,0 +1,9 @@
+{
+  "ValueType": "Absolute",
+  "OverlapBehavior": "Overwrite",
+  "Duration": 5,
+  "RemovalBehavior": "Duration",
+  "StatModifiers": {
+    "Health": -5
+  }
+}

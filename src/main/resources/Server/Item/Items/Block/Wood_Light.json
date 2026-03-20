@@ -1,8 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "Neon Yellow"
+    "Name": "Wood Light"
   },
-  "Icon": "Icons/ItemsGenerated/Wood_Light.png",
   "Categories": [
     "Blocks.Rocks"
   ],
@@ -53,5 +52,6 @@
   "ItemEntity": {
     "ShowItemParticles": false,
     "ParticleColor": "#ffd000"
-  }
+  },
+  "Icon": "Icons/ItemsGenerated/Wood_Light.png"
 }

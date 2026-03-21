@@ -1,0 +1,37 @@
+{
+  "Type": "Repeat",
+  "Repeat": 15,
+  "HorizontalSpeedMultiplier": 2,
+  "RunTime": 2,
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "ForkInteractions": {
+    "Interactions": [
+      {
+        "Type": "ModifyInventory",
+        "Next": {
+          "Type": "Replace",
+          "Var": "Primary_Shoot_Strength_4",
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Shortbow_Primary_Shoot_Strength_4"
+            ]
+          }
+        },
+        "Failed": {
+          "Type": "Replace",
+          "Var": "No_Ammo_Effects",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Bow_No_Ammo"
+            ]
+          }
+        },
+        "RunTime": 0.01
+      }
+    ]
+  }
+}

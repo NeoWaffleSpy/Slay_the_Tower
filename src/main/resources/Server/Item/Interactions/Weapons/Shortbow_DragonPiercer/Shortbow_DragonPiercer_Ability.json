@@ -1,0 +1,20 @@
+{
+  "Type": "Simple",
+  "RunTime": 2.5,
+  "Effects": {
+    "MovementEffects": {
+      "DisableAll": true
+    }
+  },
+  "Rules": {
+    "Blocking": [
+      "Primary",
+      "Ability1",
+      "SwapFrom"
+    ],
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "Next": "Shortbow_DragonPiercer_Ability_Projectile"
+}

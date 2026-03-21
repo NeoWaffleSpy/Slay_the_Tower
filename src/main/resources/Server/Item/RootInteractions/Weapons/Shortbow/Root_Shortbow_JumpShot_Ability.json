@@ -1,0 +1,11 @@
+{
+  "RequireNewClick": true,
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
+  "Interactions": [
+    "Shortbow_JumpShot_Ability"
+  ]
+}

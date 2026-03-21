@@ -1,0 +1,24 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "ApplyForce",
+      "Forces": [
+        {},
+        {
+          "Direction": {
+            "Y": 1
+          },
+          "Force": 22
+        }
+      ],
+      "Direction": {
+        "Z": 1
+      },
+      "Force": 13,
+      "HorizontalSpeedMultiplier": 0,
+      "RunTime": 0.7
+    },
+    "Shortbow_JumpShot_Ability_Projectile"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "TranslationProperties": {
+    "Name": "Poison"
+  },
+  "Icon": "Icons/ItemsGenerated/Fluid_Water.png",
+  "Categories": [
+    "Blocks.Fluids"
+  ],
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "PlaceFluid",
+          "FluidToPlace": "Source_Poison"
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Effect": [
+      "Water"
+    ],
+    "Opacity": "Transparent",
+    "Group": "Fluid_Water",
+    "Flags": {},
+    "BlockParticleSetId": "Water",
+    "Textures": [
+      {
+        "Weight": 1,
+        "All": "BlockTextures/Fluid_Water.png"
+      }
+    ],
+    "BlockSoundSetId": "Water",
+    "Tint": [
+      "#97ff9c"
+    ]
+  },
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Material": [
+      "Fluid"
+    ]
+  },
+  "MaxStack": 1
+}

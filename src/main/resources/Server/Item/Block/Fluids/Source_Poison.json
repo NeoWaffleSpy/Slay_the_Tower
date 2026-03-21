@@ -1,0 +1,60 @@
+{
+  "MaxFluidLevel": 1,
+  "Effect": [
+    "Lava"
+  ],
+  "Opacity": "Transparent",
+  "Textures": [
+    {
+      "Weight": 1,
+      "All": "BlockTextures/Fluid_Poison.png"
+    }
+  ],
+  "FluidFXId": "Water",
+  "Light": {
+    "Color": "#9c3",
+    "Radius": 0
+  },
+  "ParticleColor": "#ccbb33",
+  "BlockParticleSetId": "Water",
+  "BlockSoundSetId": "Mud",
+  "Interactions": {
+    "Collision": {
+      "Cooldown": {
+        "Id": "ClearBurn",
+        "Cooldown": 1
+      },
+      "Interactions": [
+        {
+          "Type": "ClearEntityEffect",
+          "EntityEffectId": "Burn"
+        },
+        {
+          "Type": "ClearEntityEffect",
+          "EntityEffectId": "Lava_Burn"
+        },
+        {
+          "Type": "ClearEntityEffect",
+          "EntityEffectId": "Flame_Staff_Burn"
+        },
+        {
+          "Type": "ApplyEffect",
+          "EffectId": {
+            "Parent": "Poison_T1"
+          }
+        }
+      ]
+    }
+  },
+  "Ticker": {
+    "Type": "Finite",
+    "CanDemote": false
+  },
+  "Tags": {
+    "Fluid": [
+      "Water"
+    ]
+  },
+  "DrawType": "Liquid",
+  "RequiresAlphaBlending": true
+}

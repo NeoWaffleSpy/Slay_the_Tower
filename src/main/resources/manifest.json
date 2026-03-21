@@ -19,6 +19,7 @@
     { "Group": "${plugin_group}", "Name": "Camera", "Main": "com.Team_Berry.Camera.CameraPlugin" },
     { "Group": "${plugin_group}", "Name": "GearAffix", "Main": "com.Team_Berry.GearAffix.GearAffixPlugin" },
     { "Group": "${plugin_group}", "Name": "Utils", "Main": "com.Team_Berry.Utils.UtilsPlugin" },
-    { "Group": "${plugin_group}", "Name": "WeaponInteraction", "Main": "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin" }
+    { "Group": "${plugin_group}", "Name": "WeaponInteraction", "Main": "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin" },
+    { "Group": "${plugin_group}", "Name": "Artefact", "Main": "com.Team_Berry.Artefacts.ArtefactPlugin" }
   ]
 }

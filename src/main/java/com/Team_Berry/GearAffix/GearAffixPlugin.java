@@ -15,7 +15,6 @@ public class GearAffixPlugin extends JavaPlugin {
     public GearAffixPlugin(JavaPluginInit init) {
         super(init);
         instance = this;
-        LOGGER.atInfo().log("Hello from %s version %s", this.getName(), this.getManifest().getVersion().toString());
     }
 
     @Override

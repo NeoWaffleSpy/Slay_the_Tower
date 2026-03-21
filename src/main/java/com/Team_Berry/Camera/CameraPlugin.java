@@ -41,6 +41,24 @@ public class CameraPlugin extends JavaPlugin {
         LOGGER.atInfo().log("Hello from %s version %s", this.getName(), this.getManifest().getVersion().toString());
     }
 
+    /*
+
+    @Override
+    protected void setup() {
+        //noinspection unchecked
+        getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
+                .setPath("TestCodecs")
+                .setCodec(TestCodecs.CODEC)
+                .setKeyFunction(TestCodecs::getId)
+                .setReplaceOnRemove(TestCodecs::new)
+                .build());
+
+        getEventRegistry().register(
+                LoadedAssetsEvent.class,
+                TestCodecs.class,
+                this::onAssetsLoaded);
+    }*/
+
     @Override
     protected void setup() {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
@@ -50,11 +68,13 @@ public class CameraPlugin extends JavaPlugin {
                 .setPath("MyCameras")
                 .setCodec(CameraTemplates.CODEC)
                 .setKeyFunction(CameraTemplates::getId)
+                .setReplaceOnRemove(CameraTemplates::new)
                 .build());
         getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
                 .setPath("Tmp")
                 .setCodec(TestCodecs.CODEC)
                 .setKeyFunction(TestCodecs::getId)
+                .setReplaceOnRemove(TestCodecs::new)
                 .build());
         /*getEventRegistry().register(
                 LoadedAssetsEvent.class,

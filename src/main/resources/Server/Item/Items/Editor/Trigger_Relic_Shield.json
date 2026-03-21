@@ -28,8 +28,8 @@
             "Type": "ApplyEffect",
             "EffectId": {
               "ApplicationEffects": {
-                "EntityBottomTint": "#00277c",
-                "EntityTopTint": "#040098",
+                "EntityBottomTint": "#0050ff",
+                "EntityTopTint": "#bdbcff",
                 "Particles": [
                   {
                     "SystemId": "Aura_Sphere",
@@ -92,11 +92,12 @@
                 "FirstPersonParticles": [
                   {
                     "SystemId": "Aura_Sphere",
-                    "Scale": 0.5
+                    "Scale": 1
                   }
-                ]
+                ],
+                "LocalSoundEventId": "SFX_Drop_Items_Metal"
               },
-              "Duration": 1.5,
+              "Duration": 1,
               "OverlapBehavior": "Ignore"
             }
           }

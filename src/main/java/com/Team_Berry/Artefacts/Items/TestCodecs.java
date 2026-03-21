@@ -51,9 +51,9 @@ public class TestCodecs implements JsonAssetWithMap<String, DefaultAssetMap<Stri
                         TestCodecs::new,
                         Codec.STRING,
                         (asset, id) ->  asset.id = id,
-                        (config) -> config.id,
-                        (config, data) -> config.data = data,
-                        (config) -> config.data)
+                        (asset) -> asset.id,
+                        (asset, data) -> asset.data = data,
+                        (asset) -> asset.data)
                 .append(
                         new KeyedCodec<>("ClassName", Codec.STRING),
                         (obj, val) -> obj.className = val,

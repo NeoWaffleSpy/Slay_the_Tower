@@ -31,7 +31,6 @@ public class ArtefactPlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        //noinspection unchecked
         getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
                 .setPath("TestCodecs")
                 .setCodec(TestCodecs.CODEC)

@@ -3,6 +3,7 @@ package com.Team_Berry.Camera;
 import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Camera.CameraTemplates;
 import com.Team_Berry.Camera.Camera.MouseControl.UltMouseControl;
+import com.Team_Berry.Camera.Camera.TestCodecs;
 import com.Team_Berry.Camera.Commands.Camera.CameraCommand;
 import com.Team_Berry.Camera.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
@@ -50,10 +51,15 @@ public class CameraPlugin extends JavaPlugin {
                 .setCodec(CameraTemplates.CODEC)
                 .setKeyFunction(CameraTemplates::getId)
                 .build());
-        getEventRegistry().register(
+        getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
+                .setPath("Tmp")
+                .setCodec(TestCodecs.CODEC)
+                .setKeyFunction(TestCodecs::getId)
+                .build());
+        /*getEventRegistry().register(
                 LoadedAssetsEvent.class,
                 CameraTemplates.class,
-                this::onAssetsLoaded);
+                this::onAssetsLoaded);*/
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());

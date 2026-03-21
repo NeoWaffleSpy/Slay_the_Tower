@@ -8,13 +8,12 @@ import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
-import com.hypixel.hytale.codec.builder.BuilderCodec;
 
 import java.util.Collection;
 
 public class TestCodecs implements JsonAssetWithMap<String, DefaultAssetMap<String, TestCodecs>> {
     private static AssetStore<String, TestCodecs, DefaultAssetMap<String, TestCodecs>> ASSET_STORE;
-    public static final BuilderCodec<TestCodecs> CODEC;
+    public static final AssetBuilderCodec<String, TestCodecs> CODEC;
 
     private String id;
     private String className = "template";
@@ -47,7 +46,14 @@ public class TestCodecs implements JsonAssetWithMap<String, DefaultAssetMap<Stri
     public int getValue() { return value; }
 
     static {
-        CODEC = BuilderCodec.builder(TestCodecs.class, TestCodecs::new)
+        CODEC = AssetBuilderCodec.builder(
+                        TestCodecs.class,
+                        TestCodecs::new,
+                        Codec.STRING,
+                        (asset, id) ->  asset.id = id,
+                        (config) -> config.id,
+                        (config, data) -> config.data = data,
+                        (config) -> config.data)
                 .append(
                         new KeyedCodec<>("ClassName", Codec.STRING),
                         (obj, val) -> obj.className = val,

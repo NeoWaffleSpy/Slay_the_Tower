@@ -1,6 +1,7 @@
 package com.Team_Berry.Camera;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
+import com.Team_Berry.Camera.Camera.CameraTemplates;
 import com.Team_Berry.Camera.Camera.MouseControl.UltMouseControl;
 import com.Team_Berry.Camera.Commands.Camera.CameraCommand;
 import com.Team_Berry.Camera.Commands.CameraGroup.CameraGroupCommand;
@@ -8,8 +9,10 @@ import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Camera.Component.System.PlayerPOVSystem;
 import com.Team_Berry.Camera.Interactions.UltInteraction;
+import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -40,6 +43,11 @@ public class CameraPlugin extends JavaPlugin {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
+        getAssetRegistry().register(HytaleAssetStore.builder(CameraTemplates.class, new DefaultAssetMap<String, CameraTemplates>(CameraTemplates[]::new))
+                .setPath("MyCameras")
+                .setCodec(CameraTemplates.CODEC)
+                .setKeyFunction(CameraTemplates::getId)
+                .build());
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());

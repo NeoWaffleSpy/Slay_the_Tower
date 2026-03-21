@@ -9,8 +9,10 @@ import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Camera.Component.System.PlayerPOVSystem;
 import com.Team_Berry.Camera.Interactions.UltInteraction;
+import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.event.IBaseEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -43,11 +45,15 @@ public class CameraPlugin extends JavaPlugin {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
-        getAssetRegistry().register(HytaleAssetStore.builder(CameraTemplates.class, new DefaultAssetMap<String, CameraTemplates>(CameraTemplates[]::new))
+        getAssetRegistry().register(HytaleAssetStore.builder(CameraTemplates.class, new DefaultAssetMap<>())
                 .setPath("MyCameras")
                 .setCodec(CameraTemplates.CODEC)
                 .setKeyFunction(CameraTemplates::getId)
                 .build());
+        getEventRegistry().register(
+                LoadedAssetsEvent.class,
+                CameraTemplates.class,
+                this::onAssetsLoaded);
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
@@ -55,6 +61,9 @@ public class CameraPlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
 
 
+    }
+
+    private void onAssetsLoaded(IBaseEvent<Class<CameraTemplates>> iBaseEvent) {
     }
 
     @Override

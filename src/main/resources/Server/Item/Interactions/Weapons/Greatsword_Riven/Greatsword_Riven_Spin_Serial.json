@@ -1,0 +1,7 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    "Greatsword_Riven_Ability_Dash",
+    "Weapon_Greatsword_Riven_Spin"
+  ]
+}

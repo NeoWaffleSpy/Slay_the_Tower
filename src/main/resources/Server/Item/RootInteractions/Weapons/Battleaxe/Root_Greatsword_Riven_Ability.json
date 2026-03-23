@@ -1,0 +1,14 @@
+{
+  "RequireNewClick": true,
+  "Interactions": [
+    "Greatsword_Riven_Ability"
+  ],
+  "Rules": {
+    "Interrupting": [
+      "Primary"
+    ]
+  },
+  "Cooldown": {
+    "Cooldown": 0.5
+  }
+}

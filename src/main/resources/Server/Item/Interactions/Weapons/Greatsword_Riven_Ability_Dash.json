@@ -1,0 +1,26 @@
+{
+  "Type": "ApplyForce",
+  "Direction": {
+    "Z": -1
+  },
+  "Forces": [
+    {
+      "Direction": {
+        "Y": 1
+      }
+    },
+    {
+      "Direction": {
+        "Y": 0,
+        "Z": -1
+      },
+      "Force": 25
+    }
+  ],
+  "VelocityConfig": {
+    "GroundResistance": 0.86,
+    "AirResistance": 0.88
+  },
+  "ChangeVelocityType": "Set",
+  "WaitForGround": false
+}

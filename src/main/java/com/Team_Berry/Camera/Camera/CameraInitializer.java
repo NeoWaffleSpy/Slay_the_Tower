@@ -17,6 +17,7 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerInteractEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.nimbusds.jose.util.JSONObjectUtils;
 
 import javax.annotation.Nonnull;
@@ -119,14 +120,20 @@ public class CameraInitializer {
             if (s.getId().equals(key)) {
                 set(s.getId(), s.getCameraSettings());
                 Universe.get().getPlayers().forEach((pRef) -> {
-                    PlayerPOVComponent pPOV = getPOV(pRef);
-                    if (pPOV != null) {
-                        String componentName = getPOV(pRef).getPOVName();
-                        if (componentName.equals(key))
-                            CameraInitializer.editCameraSettings(pRef, s.getCameraSettings());
-                    }
+                    if (pRef.getWorldUuid() == null)
+                        return;
+                    Universe.get().getWorld(pRef.getWorldUuid()).execute(() -> {
+                        PlayerPOVComponent pPOV = getPOV(pRef);
+                        if (pPOV != null) {
+                            String componentName = getPOV(pRef).getPOVName();
+                            if (componentName.equals(key))
+                                CameraInitializer.editCameraSettings(pRef, s.getCameraSettings());
+                        }
+                    });
                 });
             }
+            else
+                set(s.getId(), s.getCameraSettings());
         });
     }
 

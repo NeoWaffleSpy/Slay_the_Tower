@@ -60,6 +60,10 @@ public class CameraPlugin extends JavaPlugin {
 
     }
 
+    private void onAssetsLoaded(LoadedAssetsEvent<String, CameraTemplates, DefaultAssetMap<String, CameraTemplates>> event) {
+        event.getLoadedAssets().forEach((name, cam) -> CameraInitializer.updateCodecSetting(name));
+    }
+
     @Override
     protected void start() {
         CameraInitializer.init();

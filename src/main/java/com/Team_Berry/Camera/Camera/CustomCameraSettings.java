@@ -15,17 +15,17 @@ import com.hypixel.hytale.protocol.*;
 import java.util.Collection;
 import static com.Team_Berry.Utils.CodecUtils.*;
 
-public class CameraTemplates implements JsonAssetWithMap<String, DefaultAssetMap<String, CameraTemplates>> {
-    private static AssetStore<String, CameraTemplates, DefaultAssetMap<String, CameraTemplates>> ASSET_STORE;
-    public static final AssetBuilderCodec<String, CameraTemplates> CODEC;
+public class CustomCameraSettings implements JsonAssetWithMap<String, DefaultAssetMap<String, CustomCameraSettings>> {
+    private static AssetStore<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> ASSET_STORE;
+    public static final AssetBuilderCodec<String, CustomCameraSettings> CODEC;
 
     private String cameraName = "Template";
     private AssetExtraInfo.Data data;
     private ServerCameraSettings camSettings = new ServerCameraSettings();
 
-    public CameraTemplates() {}
-    public CameraTemplates(String cameraName) { this.cameraName = cameraName;}
-    public CameraTemplates(String cameraName, ServerCameraSettings camSettings) {
+    public CustomCameraSettings() {}
+    public CustomCameraSettings(String cameraName) { this.cameraName = cameraName;}
+    public CustomCameraSettings(String cameraName, ServerCameraSettings camSettings) {
         this.cameraName = cameraName;
         this.camSettings = camSettings;
     }
@@ -34,19 +34,19 @@ public class CameraTemplates implements JsonAssetWithMap<String, DefaultAssetMap
     public String getId() { return cameraName; }
     public ServerCameraSettings getCameraSettings() { return camSettings; }
 
-    public static AssetStore<String, CameraTemplates, DefaultAssetMap<String, CameraTemplates>> getAssetStore() {
+    public static AssetStore<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> getAssetStore() {
         if (ASSET_STORE == null) {
-            ASSET_STORE = AssetRegistry.getAssetStore(CameraTemplates.class);
+            ASSET_STORE = AssetRegistry.getAssetStore(CustomCameraSettings.class);
         }
         return ASSET_STORE;
     }
 
-    public static Collection<CameraTemplates> getAssetMap() {
+    public static Collection<CustomCameraSettings> getAssetMap() {
         return getAssetStore().getAssetMap().getAssetMap().values();
     }
 
     static {
-       CODEC = AssetBuilderCodec.builder(CameraTemplates.class, CameraTemplates::new, Codec.STRING,
+       CODEC = AssetBuilderCodec.builder(CustomCameraSettings.class, CustomCameraSettings::new, Codec.STRING,
                        (t, k) -> t.cameraName = k, (t) -> t.cameraName,
                        (asset, data) -> asset.data = data, (asset) -> asset.data)
                .append(new KeyedCodec<>("PositionLerpSpeed", Codec.FLOAT, true),

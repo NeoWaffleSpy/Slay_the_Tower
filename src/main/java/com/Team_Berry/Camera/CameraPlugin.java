@@ -1,7 +1,7 @@
 package com.Team_Berry.Camera;
 
+import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.Team_Berry.Camera.Camera.CameraInitializer;
-import com.Team_Berry.Camera.Camera.CameraTemplates;
 import com.Team_Berry.Camera.Commands.Camera.CameraCommand;
 import com.Team_Berry.Camera.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
@@ -9,9 +9,9 @@ import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Camera.Component.System.PlayerPOVSystem;
 import com.Team_Berry.Camera.Interactions.UltInteraction;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
+import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.event.IBaseEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -44,24 +44,27 @@ public class CameraPlugin extends JavaPlugin {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
-        getAssetRegistry().register(HytaleAssetStore.builder(CameraTemplates.class, new DefaultAssetMap<>())
+        getAssetRegistry().register(HytaleAssetStore.builder(CustomCameraSettings.class, new DefaultAssetMap<>())
                 .setPath("CameraSettings")
-                .setCodec(CameraTemplates.CODEC)
-                .setKeyFunction(CameraTemplates::getId)
-                .setReplaceOnRemove(CameraTemplates::new)
+                .setCodec(CustomCameraSettings.CODEC)
+                .setKeyFunction(CustomCameraSettings::getId)
+                .setReplaceOnRemove(CustomCameraSettings::new)
                 .build());
-        getEventRegistry().register(LoadedAssetsEvent.class, CameraTemplates.class, this::onAssetsLoaded);
+        getEventRegistry().register(LoadedAssetsEvent.class, CustomCameraSettings.class, this::onAssetsLoaded);
+        getEventRegistry().register(RemovedAssetsEvent.class, CustomCameraSettings.class, this::onAssetsRemoved);
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
         this.getCommandRegistry().registerCommand(new CinematicCommand());
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
-
-
     }
 
-    private void onAssetsLoaded(LoadedAssetsEvent<String, CameraTemplates, DefaultAssetMap<String, CameraTemplates>> event) {
+    private void onAssetsLoaded(LoadedAssetsEvent<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> event) {
         event.getLoadedAssets().forEach((name, cam) -> CameraInitializer.updateCodecSetting(name));
+    }
+
+    private void onAssetsRemoved(RemovedAssetsEvent<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> event) {
+        event.getRemovedAssets().forEach(CameraInitializer::remove);
     }
 
     @Override

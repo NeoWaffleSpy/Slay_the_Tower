@@ -57,16 +57,17 @@ public class CameraInitializer {
     public static void init() {
         ServerCameraSettings cameraSettings = new ServerCameraSettings();
         cameraSettings.eyeOffset = true;
-        set("custom", cameraSettings);
-        new CameraInitializer("custom");
-        getJsonSettings("topDown");
+        set("Custom", cameraSettings);
+        new CameraInitializer("Custom");
+        getCodecSetting();
+        new CameraInitializer("TopDown", new DefaultMouseControl(), false, "TopDown");
+        /*getJsonSettings("topDown");
         getJsonSettings("sideView");
         getJsonSettings("isometric");
         getJsonSettings("shoulder");
         new CameraInitializer("topDown", new DefaultMouseControl(), false, "topDown");
         new CameraInitializer("isometric2", new DefaultMouseControl(), false, "isometric");
-        new CameraInitializer("ultCam", new UltMouseControl(), false, "topDown");
-
+        new CameraInitializer("ultCam", new UltMouseControl(), false, "topDown");*/
     }
 
     public static void editCameraSettings(PlayerRef playerRef, ServerCameraSettings newSettings) {
@@ -86,6 +87,9 @@ public class CameraInitializer {
     public static void set(String key, ServerCameraSettings value) {
         templateDict.put(key, value);
     }
+    public static ServerCameraSettings getTemplate (String key) {
+        return templateDict.get(key);
+    }
 
     public static void setPlayerPov(String povName, PlayerRef playerRef) {
         CameraInitializer cam = CameraInitializer.get(povName);
@@ -93,10 +97,6 @@ public class CameraInitializer {
         if (pPOV != null)
             CameraInitializer.deletePOV(playerRef);
         playerRef.getReference().getStore().addComponent(playerRef.getReference(), PlayerPOVComponent.getComponentType(), new PlayerPOVComponent(povName));
-    }
-
-    public static ServerCameraSettings getTemplate (String key) {
-        return templateDict.get(key);
     }
 
     public static CameraInitializer get(String key) {
@@ -108,6 +108,26 @@ public class CameraInitializer {
             cam = new CameraInitializer(key);
         }
         return cam;
+    }
+
+    public static void getCodecSetting() {
+        CameraTemplates.getAssetMap().forEach(s -> set(s.getId(), s.getCameraSettings()));
+    }
+
+    public static void updateCodecSetting(String key) {
+        CameraTemplates.getAssetMap().forEach(s -> {
+            if (s.getId().equals(key)) {
+                set(s.getId(), s.getCameraSettings());
+                Universe.get().getPlayers().forEach((pRef) -> {
+                    PlayerPOVComponent pPOV = getPOV(pRef);
+                    if (pPOV != null) {
+                        String componentName = getPOV(pRef).getPOVName();
+                        if (componentName.equals(key))
+                            CameraInitializer.editCameraSettings(pRef, s.getCameraSettings());
+                    }
+                });
+            }
+        });
     }
 
     public static ServerCameraSettings getJsonSettings(String key) {

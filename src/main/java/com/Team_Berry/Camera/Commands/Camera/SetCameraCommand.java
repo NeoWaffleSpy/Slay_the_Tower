@@ -26,6 +26,7 @@ public class SetCameraCommand extends AbstractPlayerCommand {
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
         String name = (String)commandContext.get(this.nameArg);
+
         CameraInitializer cam = CameraInitializer.get(name);
         if (cam == null) {
             commandContext.sendMessage(Message.raw(name + " is not a valid POV"));
@@ -36,11 +37,5 @@ public class SetCameraCommand extends AbstractPlayerCommand {
             return;
         }
         CameraInitializer.setPlayerPov(name, playerRef);
-        /*
-        PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-        if (pPOV != null)
-            CameraInitializer.deletePOV(playerRef);
-        store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent(name));
-         */
     }
 }

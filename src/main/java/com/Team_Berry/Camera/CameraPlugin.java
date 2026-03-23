@@ -2,8 +2,6 @@ package com.Team_Berry.Camera;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Camera.CameraTemplates;
-import com.Team_Berry.Camera.Camera.MouseControl.UltMouseControl;
-import com.Team_Berry.Camera.Camera.TestCodecs;
 import com.Team_Berry.Camera.Commands.Camera.CameraCommand;
 import com.Team_Berry.Camera.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
@@ -41,45 +39,18 @@ public class CameraPlugin extends JavaPlugin {
         LOGGER.atInfo().log("Hello from %s version %s", this.getName(), this.getManifest().getVersion().toString());
     }
 
-    /*
-
-    @Override
-    protected void setup() {
-        //noinspection unchecked
-        getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
-                .setPath("TestCodecs")
-                .setCodec(TestCodecs.CODEC)
-                .setKeyFunction(TestCodecs::getId)
-                .setReplaceOnRemove(TestCodecs::new)
-                .build());
-
-        getEventRegistry().register(
-                LoadedAssetsEvent.class,
-                TestCodecs.class,
-                this::onAssetsLoaded);
-    }*/
-
     @Override
     protected void setup() {
         this.playerPOVComponentType = this.getEntityStoreRegistry().registerComponent(PlayerPOVComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
         getAssetRegistry().register(HytaleAssetStore.builder(CameraTemplates.class, new DefaultAssetMap<>())
-                .setPath("MyCameras")
+                .setPath("CameraSettings")
                 .setCodec(CameraTemplates.CODEC)
                 .setKeyFunction(CameraTemplates::getId)
                 .setReplaceOnRemove(CameraTemplates::new)
                 .build());
-        getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
-                .setPath("Tmp")
-                .setCodec(TestCodecs.CODEC)
-                .setKeyFunction(TestCodecs::getId)
-                .setReplaceOnRemove(TestCodecs::new)
-                .build());
-        /*getEventRegistry().register(
-                LoadedAssetsEvent.class,
-                CameraTemplates.class,
-                this::onAssetsLoaded);*/
+        getEventRegistry().register(LoadedAssetsEvent.class, CameraTemplates.class, this::onAssetsLoaded);
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
@@ -87,9 +58,6 @@ public class CameraPlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
 
 
-    }
-
-    private void onAssetsLoaded(IBaseEvent<Class<CameraTemplates>> iBaseEvent) {
     }
 
     @Override

@@ -78,7 +78,7 @@ public class CustomCameraCommand extends AbstractPlayerCommand {
         this.rotationOffset = this.withOptionalArg("rotationOffset", "Range: [-360,360]\nOffset camera rotation", ArgTypes.ROTATION);
         this.positionType = this.withOptionalArg("positionType", "Values: " + Arrays.toString(PositionType.VALUES) + "\nAttachedToPlusOffset: The camera will translate along with the player head\nCustom: set a fixed camera position defined by <--position x y z>", ArgTypes.STRING);
         this.position = this.withOptionalArg("position", "Set a fixed camera position when <--positionType Custom>", ArgTypes.RELATIVE_POSITION);
-        this.positionAdd = this.withOptionalArg("positionAdd", "offset the current fixed camera position when <--positionType Custom>", ArgTypes.ROTATION);
+        this.positionAdd = this.withOptionalArg("positionAdd", "Offset the current fixed camera position when <--positionType Custom>", ArgTypes.ROTATION);
         this.rotationType = this.withOptionalArg("rotationType", "Values: " + Arrays.toString(RotationType.VALUES) + "\nAttachedToPlusOffset: The camera will rotate along with the player head\nCustom: set a fixed camera rotation defined by <--rotation x y z>", ArgTypes.STRING);
         this.rotation = this.withOptionalArg("rotation", "Range: [-360,360]\nSet a fixed camera rotation when <--rotationType Custom>", ArgTypes.ROTATION);
         /**/this.canMoveType = this.withOptionalArg("canMoveType", "Values: " + Arrays.toString(CanMoveType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);

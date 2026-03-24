@@ -1,0 +1,16 @@
+{
+  "Distance": 15,
+  "RotationType": "Custom",
+  "PositionLerpSpeed": 0.2,
+  "RotationLerpSpeed": 0.2,
+  "MovementForceRotationType": "Custom",
+  "PlaneNormal": {
+    "Z": 1
+  },
+  "DisplayCursor": true,
+  "MovementMultiplier": {
+    "X": 1,
+    "Y": 1
+  },
+  "IsFirstPerson": false
+}

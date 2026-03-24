@@ -21,7 +21,8 @@
     ],
     "BlockParticleSetId": "Crystal",
     "Light": {
-      "Color": "#fd7"
+      "Color": "#fb7",
+      "Radius": 1
     }
   },
   "Tags": {

@@ -1,11 +1,12 @@
 {
-  "RequireNewClick": true,
+  "RequireNewClick": false,
   "Tags": {
     "Attack": [
       "Ranged"
     ]
   },
   "Interactions": [
+    "Hotbar9_Reset",
     "Shortbow_JumpShot_Ability"
   ]
 }

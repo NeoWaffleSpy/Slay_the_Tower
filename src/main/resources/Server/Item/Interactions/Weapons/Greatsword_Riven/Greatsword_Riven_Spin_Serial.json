@@ -1,5 +1,12 @@
 {
   "Type": "Serial",
+  "CancelOnItemChange": false,
+  "RunTime": 1,
+  "Rules": {
+    "Blocking": [
+      "SwapTo"
+    ]
+  },
   "Interactions": [
     "Greatsword_Riven_Ability_Dash",
     "Weapon_Greatsword_Riven_Spin"

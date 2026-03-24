@@ -60,5 +60,11 @@
       },
       "Force": 15
     }
-  ]
+  ],
+  "CancelOnItemChange": false,
+  "Rules": {
+    "Blocking": [
+      "SwapTo"
+    ]
+  }
 }

@@ -1,5 +1,6 @@
 {
   "Type": "LaunchProjectile",
   "ProjectileId": "Shortbow_JumpShot_Projectile",
-  "RunTime": 0
+  "RunTime": 0,
+  "CancelOnItemChange": false
 }

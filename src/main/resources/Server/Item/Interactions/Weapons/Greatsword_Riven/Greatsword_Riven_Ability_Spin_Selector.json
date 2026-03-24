@@ -1,6 +1,7 @@
 {
   "Type": "Selector",
   "RunTime": 0.1,
+  "CancelOnItemChange": false,
   "Selector": {
     "Id": "AOECylinder",
     "Range": 4,
@@ -24,7 +25,8 @@
           "Interactions": [
             "Greatsword_Riven_Spin_Damage"
           ]
-        }
+        },
+        "CancelOnItemChange": false
       }
     ]
   }

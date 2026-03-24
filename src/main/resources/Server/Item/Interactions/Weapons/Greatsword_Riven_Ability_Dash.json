@@ -1,5 +1,6 @@
 {
   "Type": "ApplyForce",
+  "CancelOnItemChange": false,
   "Direction": {
     "Z": -1
   },

@@ -1,8 +1,10 @@
 {
   "Type": "Serial",
+  "CancelOnItemChange": false,
   "Interactions": [
     {
       "Type": "ApplyForce",
+      "CancelOnItemChange": false,
       "Forces": [
         {},
         {

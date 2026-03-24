@@ -5,5 +5,12 @@
     "Greatsword_Riven_Spin_Serial",
     "Greatsword_Riven_Spin_Serial",
     "Greatsword_Riven_Ability_Smash"
-  ]
+  ],
+  "CancelOnItemChange": false,
+  "Rules": {
+    "Blocking": [
+      "SwapTo"
+    ]
+  },
+  "ChainId": "Greatsword_Riven_Chain"
 }

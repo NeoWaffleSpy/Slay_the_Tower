@@ -1,14 +1,22 @@
 {
-  "RequireNewClick": true,
+  "RequireNewClick": false,
   "Interactions": [
+    "Hotbar9_Reset",
     "Greatsword_Riven_Ability"
   ],
   "Rules": {
     "Interrupting": [
       "Primary"
+    ],
+    "Blocking": [
+      "SwapTo"
     ]
   },
   "Cooldown": {
-    "Cooldown": 0.5
+    "Cooldown": 0.5,
+    "Id": "Greatsword_Riven",
+    "ClickBypass": false,
+    "InterruptRecharge": false,
+    "SkipCooldownReset": false
   }
 }

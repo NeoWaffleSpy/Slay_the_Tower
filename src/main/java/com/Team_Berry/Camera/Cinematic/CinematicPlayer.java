@@ -1,36 +1,60 @@
 package com.Team_Berry.Camera.Cinematic;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
+import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.Team_Berry.Camera.CameraPlugin;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
+import com.hypixel.hytale.assetstore.AssetExtraInfo;
+import com.hypixel.hytale.assetstore.AssetRegistry;
+import com.hypixel.hytale.assetstore.AssetStore;
+import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
+import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
+import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.KeyedCodec;
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelParticle;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class CinematicPlayer {
+import static com.Team_Berry.Utils.CodecUtils.POS_CODEC;
+
+public class CinematicPlayer implements JsonAssetWithMap<String, DefaultAssetMap<String, CinematicPlayer>> {
+    public static final AssetBuilderCodec<String, CinematicPlayer> CODEC;
+    private static AssetStore<String, CinematicPlayer, DefaultAssetMap<String, CinematicPlayer>> ASSET_STORE;
     private ScheduledExecutorService scheduler;
 
     public ArrayList<CinemaPoint> timeline = new ArrayList<>();
     public Position origin;
 
+    private String cinemaName = "Template";
+    private AssetExtraInfo.Data data;
+
+    public CinematicPlayer() {}
+    public CinematicPlayer(String s) {
+        cinemaName = s;
+    }
     public CinematicPlayer(Position origin) {
         this.origin = origin;
     }
 
+
     public void runCinematic(PlayerRef player, Position origin, World world, CommandContext commandContext) {
         PlayerPOVComponent pPOV = player.getReference().getStore().getComponent(player.getReference(), PlayerPOVComponent.getComponentType());
         if (pPOV == null)
-            CameraInitializer.setPlayerPov("custom", player);
+            CameraInitializer.setPlayerPov("Custom", player);
         if (commandContext != null)
             commandContext.sendMessage(Message.raw("Starting Cinematic Player").color(Color.GREEN));
         AtomicReference<Long> delta = new AtomicReference<>(0L);
@@ -117,5 +141,34 @@ public class CinematicPlayer {
 
     private Position addPosition(Position a, Position b) {
         return new Position(a.x + b.x, a.y + b.y, a.z + b.z);
+    }
+
+    @Override
+    public String getId() { return cinemaName; }
+
+    public static AssetStore<String, CinematicPlayer, DefaultAssetMap<String, CinematicPlayer>> getAssetStore() {
+        if (ASSET_STORE == null) {
+            ASSET_STORE = AssetRegistry.getAssetStore(CinematicPlayer.class);
+        }
+        return ASSET_STORE;
+    }
+
+    public static Collection<CinematicPlayer> getAssetMap() {
+        return getAssetStore().getAssetMap().getAssetMap().values();
+    }
+
+    static {
+        CODEC = AssetBuilderCodec.builder(CinematicPlayer.class, CinematicPlayer::new, Codec.STRING,
+                        (t, k) -> t.cinemaName = k, (t) -> t.cinemaName,
+                        (asset, data) -> asset.data = data, (asset) -> asset.data)
+                .append(new KeyedCodec<>("Origin", POS_CODEC, true),
+                        (obj, val) -> obj.origin = val,
+                        obj -> obj.origin)
+                .documentation("Origin point of the cinematic").add()
+                .append(new KeyedCodec<ArrayList<CinemaPoint>>("Keyframes", new ArrayCodec(CinemaPoint.CODEC, ArrayList<CinemaPoint>::new)),
+                        (obj, val) -> obj.timeline = val,
+                        obj -> obj.timeline)
+                .documentation("List of all Keyframes in the cinematic").add()
+                .build();
     }
 }

@@ -1,12 +1,15 @@
 package com.Team_Berry.Camera.Cinematic;
 
 import com.Team_Berry.Camera.Camera.CameraInitializer;
+import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.Team_Berry.Camera.CameraPlugin;
+import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.Team_Berry.Utils.Files.FileUtils;
 import com.Team_Berry.Utils.Files.JSONParser;
 import com.hypixel.hytale.assetstore.AssetPack;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.server.core.asset.AssetModule;
+import com.hypixel.hytale.server.core.universe.Universe;
 import com.nimbusds.jose.util.JSONObjectUtils;
 
 import java.io.IOException;
@@ -22,6 +25,10 @@ public class CinematicManager {
 
     public CinematicManager() {}
 
+    public static void init() {
+        getCodecSetting();
+    }
+
     public static CinematicPlayer getCinematic(String name) {
         return cinemaList.get(name);
     }
@@ -30,6 +37,41 @@ public class CinematicManager {
         CinematicPlayer cinematicPlayer = new CinematicPlayer(origin);
         cinemaList.put(name, cinematicPlayer);
         return cinematicPlayer;
+    }
+
+    public static void set(String name, CinematicPlayer player) {
+        cinemaList.put(name, player);
+    }
+
+    public static void getCodecSetting() {
+        CinematicPlayer.getAssetMap().forEach(s -> set(s.getId(), s));
+    }
+
+    public static void updateCodecSetting(String key) {
+
+        CinematicPlayer.getAssetMap().forEach(s -> {
+            if (s.getId().equals(key) && false) {
+                set(s.getId(), s);
+                Universe.get().getPlayers().forEach((pRef) -> {
+                    if (pRef.getWorldUuid() == null)
+                        return;
+                    Universe.get().getWorld(pRef.getWorldUuid()).execute(() -> {
+                        PlayerPOVComponent pPOV = CameraInitializer.getPOV(pRef);
+                        if (pPOV != null) {
+                            String componentName = pPOV.getPOVName();
+                            if (componentName.equals(key))
+                                CameraInitializer.editCameraSettings(pRef, s.timeline.getFirst());
+                        }
+                    });
+                });
+            }
+            else
+                set(s.getId(), s);
+        });
+    }
+
+    public static void remove(String key) {
+        cinemaList.remove(key);
     }
 
     private static CinematicPlayer loadCinemaSettings(Path p, String name) throws IOException, ParseException {

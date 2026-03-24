@@ -11,17 +11,20 @@ import org.jspecify.annotations.Nullable;
 
 public class PlayerPOVComponent implements Component<EntityStore> {
     private @NonNull String POVName;
+    private String cinematicName;
     private ServerCameraSettings camSettings;
     private AbstractMouseControl mouseControl;
 
     public PlayerPOVComponent(@NonNull String POVName) {
         this.POVName = POVName;
+        this.cinematicName = null;
         this.camSettings = null;
         this.mouseControl = null;
     }
 
-    public PlayerPOVComponent(@NonNull String POVName, ServerCameraSettings camSettings, AbstractMouseControl mouseControl) {
+    public PlayerPOVComponent(@NonNull String POVName, String cinematicName, ServerCameraSettings camSettings, AbstractMouseControl mouseControl) {
         this.POVName = POVName;
+        this.cinematicName = cinematicName;
         this.camSettings = camSettings;
         this.mouseControl = mouseControl;
     }
@@ -29,6 +32,8 @@ public class PlayerPOVComponent implements Component<EntityStore> {
 
     public void setPOVName(@NonNull String POVName) { this.POVName = POVName; }
     public @NonNull String getPOVName() { return POVName; }
+    public void setCinematicName(@NonNull String cinematicName) { this.cinematicName = cinematicName; }
+    public @NonNull String getCinematicName() { return cinematicName; }
     public void setCamSettings(ServerCameraSettings camSettings) { this.camSettings = camSettings; }
     public ServerCameraSettings getCamSettings() { return camSettings; }
     public void setMouseControl(AbstractMouseControl mouseControl) { this.mouseControl = mouseControl; }
@@ -40,6 +45,6 @@ public class PlayerPOVComponent implements Component<EntityStore> {
 
     @Override
     public @Nullable Component<EntityStore> clone() {
-        return new PlayerPOVComponent(POVName, camSettings, mouseControl);
+        return new PlayerPOVComponent(POVName, cinematicName, camSettings, mouseControl);
     }
 }

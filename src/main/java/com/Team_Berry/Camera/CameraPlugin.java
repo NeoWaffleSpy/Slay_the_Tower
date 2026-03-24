@@ -2,6 +2,8 @@ package com.Team_Berry.Camera;
 
 import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.Team_Berry.Camera.Camera.CameraInitializer;
+import com.Team_Berry.Camera.Cinematic.CinematicManager;
+import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
 import com.Team_Berry.Camera.Commands.Camera.CameraCommand;
 import com.Team_Berry.Camera.Commands.CameraGroup.CameraGroupCommand;
 import com.Team_Berry.Camera.Commands.Cinematic.CinematicCommand;
@@ -50,8 +52,16 @@ public class CameraPlugin extends JavaPlugin {
                 .setKeyFunction(CustomCameraSettings::getId)
                 .setReplaceOnRemove(CustomCameraSettings::new)
                 .build());
-        getEventRegistry().register(LoadedAssetsEvent.class, CustomCameraSettings.class, this::onAssetsLoaded);
-        getEventRegistry().register(RemovedAssetsEvent.class, CustomCameraSettings.class, this::onAssetsRemoved);
+        getAssetRegistry().register(HytaleAssetStore.builder(CinematicPlayer.class, new DefaultAssetMap<>())
+                .setPath("CinemaKeys")
+                .setCodec(CinematicPlayer.CODEC)
+                .setKeyFunction(CinematicPlayer::getId)
+                .setReplaceOnRemove(CinematicPlayer::new)
+                .build());
+        getEventRegistry().register(LoadedAssetsEvent.class, CustomCameraSettings.class, this::onCameraLoaded);
+        getEventRegistry().register(LoadedAssetsEvent.class, CinematicPlayer.class, this::onCinemaLoaded);
+        getEventRegistry().register(RemovedAssetsEvent.class, CustomCameraSettings.class, this::onCameraRemoved);
+        getEventRegistry().register(RemovedAssetsEvent.class, CinematicPlayer.class, this::onCinemaRemoved);
         this.getEntityStoreRegistry().registerSystem(new PlayerPOVSystem());
         this.getCommandRegistry().registerCommand(new CameraCommand());
         this.getCommandRegistry().registerCommand(new CameraGroupCommand());
@@ -59,16 +69,25 @@ public class CameraPlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("UltInteraction", UltInteraction.class, UltInteraction.CODEC);
     }
 
-    private void onAssetsLoaded(LoadedAssetsEvent<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> event) {
+    private void onCameraLoaded(LoadedAssetsEvent<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> event) {
         event.getLoadedAssets().forEach((name, cam) -> CameraInitializer.updateCodecSetting(name));
     }
 
-    private void onAssetsRemoved(RemovedAssetsEvent<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> event) {
+    private void onCameraRemoved(RemovedAssetsEvent<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> event) {
         event.getRemovedAssets().forEach(CameraInitializer::remove);
+    }
+
+    private void onCinemaLoaded(LoadedAssetsEvent<String, CinematicPlayer, DefaultAssetMap<String, CinematicPlayer>> event) {
+        event.getLoadedAssets().forEach((name, cam) -> CinematicManager.updateCodecSetting(name));
+    }
+
+    private void onCinemaRemoved(RemovedAssetsEvent<String, CinematicPlayer, DefaultAssetMap<String, CinematicPlayer>> event) {
+        event.getRemovedAssets().forEach(CinematicManager::remove);
     }
 
     @Override
     protected void start() {
         CameraInitializer.init();
+        CinematicManager.init();
     }
 }

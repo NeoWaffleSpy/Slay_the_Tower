@@ -115,7 +115,7 @@ public class CameraInitializer {
                     Universe.get().getWorld(pRef.getWorldUuid()).execute(() -> {
                         PlayerPOVComponent pPOV = getPOV(pRef);
                         if (pPOV != null) {
-                            String componentName = getPOV(pRef).getPOVName();
+                            String componentName = pPOV.getPOVName();
                             if (componentName.equals(key))
                                 CameraInitializer.editCameraSettings(pRef, s.getCameraSettings());
                         }
@@ -194,7 +194,7 @@ public class CameraInitializer {
             mouseControl.onPlayerMouseButton(event);
     }
 
-    private static PlayerPOVComponent getPOV(PlayerRef playerRef) {
+    public static PlayerPOVComponent getPOV(PlayerRef playerRef) {
         PlayerPOVComponent pPOV = null;
         try {
             pPOV = playerRef.getReference().getStore().getComponent(playerRef.getReference(), PlayerPOVComponent.getComponentType());

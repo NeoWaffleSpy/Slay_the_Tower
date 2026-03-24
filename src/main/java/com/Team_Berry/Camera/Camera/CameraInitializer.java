@@ -22,8 +22,8 @@ public class CameraInitializer {
     private static Dictionary<String, CameraInitializer> camDict = new Hashtable<>();
     private static Dictionary<String, ServerCameraSettings> templateDict = new Hashtable<>();
     private final EventRegistry eventRegistry = new EventRegistry(new CopyOnWriteArrayList<>(), () -> this.isActive, "CameraDemo is not active!", HytaleServer.get().getEventBus());
-    private final ServerCameraSettings cameraSettings;
-    private final AbstractMouseControl mouseControl;
+    private ServerCameraSettings cameraSettings;
+    private AbstractMouseControl mouseControl;
     public String cameraName;
     public boolean isActive;
     public boolean isPlayerHidden;
@@ -107,8 +107,10 @@ public class CameraInitializer {
 
     public static void updateCodecSetting(String key) {
         CustomCameraSettings.getAssetMap().forEach(s -> {
-            if (s.getId().equals(key)) {
+            CameraInitializer cam = camDict.get(s.getId());
+            if (s.getId().equals(key) && cam != null) {
                 set(s.getId(), s.getCameraSettings());
+                cam.cameraSettings = s.getCameraSettings();
                 Universe.get().getPlayers().forEach((pRef) -> {
                     if (pRef.getWorldUuid() == null)
                         return;

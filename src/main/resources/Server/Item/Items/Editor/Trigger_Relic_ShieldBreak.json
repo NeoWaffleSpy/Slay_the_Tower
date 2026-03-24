@@ -1,0 +1,115 @@
+{
+  "TranslationProperties": {
+    "Name": "Trigger",
+    "Description": "server.items.Editor_Empty.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Editor_Empty.png",
+  "Quality": "Technical",
+  "Categories": [
+    "Tool.Block"
+  ],
+  "BlockType": {
+    "DrawType": "Cube",
+    "RequiresAlphaBlending": true,
+    "Opacity": "Transparent",
+    "Group": "@Tech",
+    "Flags": {},
+    "BlockParticleSetId": "Stone",
+    "CubeShadingMode": "Flat",
+    "Textures": [
+      {
+        "All": "BlockTextures/Editor_Empty.png"
+      }
+    ],
+    "Interactions": {
+      "CollisionEnter": {
+        "Interactions": [
+          {
+            "Type": "ApplyEffect",
+            "EffectId": {
+              "ApplicationEffects": {
+                "EntityBottomTint": "#7c0000",
+                "EntityTopTint": "#ff0000",
+                "Particles": [
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 0.75,
+                    "TargetEntityPart": "Self",
+                    "PositionOffset": {
+                      "Y": 0.5
+                    }
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "PositionOffset": {
+                      "Y": 0.5
+                    },
+                    "Scale": 0.75
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "PositionOffset": {
+                      "Y": 0.5
+                    },
+                    "Scale": 0.75
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 0.75,
+                    "PositionOffset": {
+                      "Y": 0.5
+                    }
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 0.75,
+                    "PositionOffset": {
+                      "Y": 0.5
+                    }
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 0.75,
+                    "PositionOffset": {
+                      "Y": 0.5
+                    }
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 0.75,
+                    "PositionOffset": {
+                      "Y": 0.5
+                    }
+                  },
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 0.75,
+                    "PositionOffset": {
+                      "Y": 0.5
+                    }
+                  }
+                ],
+                "FirstPersonParticles": [
+                  {
+                    "SystemId": "Aura_Sphere",
+                    "Scale": 1
+                  }
+                ],
+                "LocalSoundEventId": "SFX_Metal_Hit"
+              },
+              "Duration": 0.25,
+              "OverlapBehavior": "Ignore"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Type": [
+      "Editor"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Stone"
+}

@@ -1,0 +1,23 @@
+{
+  "PositionLerpSpeed": 0.2,
+  "RotationLerpSpeed": 0.2,
+  "Distance": 20,
+  "DisplayCursor": true,
+  "SendMouseMotion": true,
+  "PositionDistanceOffsetType": "DistanceOffsetRaycast",
+  "RotationType": "Custom",
+  "Rotation": {
+    "Pitch": -90
+  },
+  "MouseInputType": "LookAtPlane",
+  "PlaneNormal": {
+    "Y": 1
+  },
+  "IsFirstPerson": false,
+  "MovementMultiplier": {
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+  },
+  "EyeOffset": false
+}

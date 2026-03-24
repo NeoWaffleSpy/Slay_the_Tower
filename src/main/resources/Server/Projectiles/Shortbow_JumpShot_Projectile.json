@@ -1,0 +1,30 @@
+{
+  "Appearance": "Shortbow_JumpShot_Wind_Burst",
+  "VerticalCenterShot": 0.1,
+  "HorizontalCenterShot": 0.1,
+  "DepthShot": 1,
+  "PitchAdjustShot": false,
+  "SticksVertically": true,
+  "MuzzleVelocity": 50,
+  "TerminalVelocity": 100,
+  "DeathParticles": {
+    "SystemId": "Potion_Morph_Burst",
+    "Scale": 3
+  },
+  "DeathEffectsOnHit": true,
+  "DeadTimeMiss": 0,
+  "DeadTime": 0,
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "EntityDamageRadius": 6,
+    "EntityDamageFalloff": 0,
+    "BlockDamageRadius": 0,
+    "BlockDamageFalloff": 0,
+    "BlockDropChance": 0,
+    "DamageBlocks": false,
+    "EntityDamage": 15
+  },
+  "TimeToLive": 3,
+  "Gravity": 50,
+  "DeathSoundEventId": "SFX_Deployable_Totem_Heal_Despawn"
+}

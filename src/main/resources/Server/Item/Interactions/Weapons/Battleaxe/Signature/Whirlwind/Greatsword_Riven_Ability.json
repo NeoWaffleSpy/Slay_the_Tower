@@ -1,0 +1,9 @@
+{
+  "Type": "Chaining",
+  "ChainingAllowance": 2.9,
+  "Next": [
+    "Greatsword_Riven_Spin_Serial",
+    "Greatsword_Riven_Spin_Serial",
+    "Greatsword_Riven_Ability_Smash"
+  ]
+}

@@ -31,7 +31,6 @@ public class BleedComponent implements Component<EntityStore> {
     public void applyStacks(int bleedStacks, long now, long bleedDuration, String itemId) {
         this.bleedStartTime = now;
         this.bleedDuration = bleedDuration;
-        if (currentBleedStacks >= MAX_BLEED_STACKS) return;
 
         this.currentBleedStacks = Math.min(this.currentBleedStacks + bleedStacks, MAX_BLEED_STACKS);
 

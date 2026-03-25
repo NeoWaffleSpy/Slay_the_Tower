@@ -1,0 +1,6 @@
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemDurability": -1000,
+  "NotifyOnBreak": false,
+  "CancelOnItemChange": false
+}

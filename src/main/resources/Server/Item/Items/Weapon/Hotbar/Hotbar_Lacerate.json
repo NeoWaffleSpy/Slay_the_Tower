@@ -5,18 +5,16 @@
   "Categories": [
     "Items.Weapons"
   ],
-  "Model": "Items/Weapons/Longsword/Iron.blockymodel",
-  "Texture": "Items/Weapons/Longsword/Iron_Texture.png",
-  "Icon": "Icons/ItemsGenerated/Weapon_Longsword_Iron.png",
+  "Model": "Items/Weapons/Axe/Crude.blockymodel",
+  "Texture": "Items/Weapons/Axe/Crude_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Axe_Stone_Trork.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
-  "PlayerAnimationsId": "Sword_Riven",
+  "PlayerAnimationsId": "Axe",
   "Reticle": "DefaultMelee",
   "Quality": "Template",
   "ItemLevel": 15,
   "Interactions": {
-    "Primary": "Root_Weapon_Battleaxe_Primary",
-    "Secondary": "Root_Weapon_Battleaxe_Secondary_Guard",
-    "Ability1": "Root_Greatsword_Riven_Ability"
+    "SwapTo": "Root_Lacerate"
   },
   "IconProperties": {
     "Scale": 0.3,
@@ -85,5 +83,25 @@
       }
     ]
   },
-  "ItemSoundSetId": "ISS_Weapon_Blunt_Large"
+  "ItemSoundSetId": "ISS_Weapon_Blunt_Large",
+  "MaxDurability": 4,
+  "InteractionVars": {
+    "Lacerate_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Lacerate_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 16
+            },
+            "Type": "Absolute",
+            "RandomPercentageModifier": 0.2
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Axe_Crude_Impact"
+          }
+        }
+      ]
+    }
+  }
 }

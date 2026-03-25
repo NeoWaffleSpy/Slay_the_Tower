@@ -1,6 +1,7 @@
 {
   "RequireNewClick": false,
   "Interactions": [
+    "Set_On_Cooldown",
     "Hotbar9_Reset",
     "Greatsword_Riven_Ability"
   ],
@@ -11,12 +12,5 @@
     "Blocking": [
       "SwapTo"
     ]
-  },
-  "Cooldown": {
-    "Cooldown": 0.5,
-    "Id": "Greatsword_Riven",
-    "ClickBypass": false,
-    "InterruptRecharge": false,
-    "SkipCooldownReset": false
   }
 }

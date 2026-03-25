@@ -1,6 +1,5 @@
 {
   "Type": "Selector",
-  "RunTime": 0.1,
   "CancelOnItemChange": false,
   "Selector": {
     "Id": "AOECylinder",

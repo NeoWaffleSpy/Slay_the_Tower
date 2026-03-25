@@ -84,7 +84,7 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapon_Blunt_Large",
-  "MaxDurability": 3,
+  "MaxDurability": 10,
   "InteractionVars": {
     "Swing_Down_Damage": {
       "Interactions": [

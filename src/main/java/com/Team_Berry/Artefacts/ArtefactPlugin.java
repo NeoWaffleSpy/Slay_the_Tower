@@ -1,9 +1,11 @@
 package com.Team_Berry.Artefacts;
 
-import com.Team_Berry.Artefacts.Items.TestCodecs;
+import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Camera.Camera.CameraInitializer;
+import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
+import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
-import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.event.IBaseEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.registry.Registration;
@@ -31,24 +33,25 @@ public class ArtefactPlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        getAssetRegistry().register(HytaleAssetStore.builder(TestCodecs.class, new DefaultAssetMap<>())
-                .setPath("TestCodecs")
-                .setCodec(TestCodecs.CODEC)
-                .setKeyFunction(TestCodecs::getId)
-                .setReplaceOnRemove(TestCodecs::new)
+        getAssetRegistry().register(HytaleAssetStore.builder(ArtefactCodec.class, new DefaultAssetMap<>())
+                .setPath("Artefacts")
+                .setCodec(ArtefactCodec.CODEC)
+                .setKeyFunction(ArtefactCodec::getId)
+                .setReplaceOnRemove(ArtefactCodec::new)
                 .build());
 
         getEventRegistry().register(
                 LoadedAssetsEvent.class,
-                TestCodecs.class,
-                this::onAssetsLoaded);
+                ArtefactCodec.class,
+                this::onArtefactLoaded);
     }
 
-    private void onAssetsLoaded(IBaseEvent<Class<TestCodecs>> iEvent) {
-        LoadedAssetsEvent<String, TestCodecs, DefaultAssetMap<String, TestCodecs>> event = (LoadedAssetsEvent) iEvent;
-        for (TestCodecs asset : event.getAssetMap().getAssetMap().values()) {
-            LOGGER.atInfo().log("Loaded asset: " + asset.getId());
-        }
+    private void onArtefactLoaded(LoadedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
+        event.getLoadedAssets().forEach((name, cam) -> ArtefactCodec.updateCodecSetting(name));
+    }
+
+    private void onArtefactRemoved(RemovedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
+        event.getRemovedAssets().forEach(ArtefactCodec::remove);
     }
 
     @Override

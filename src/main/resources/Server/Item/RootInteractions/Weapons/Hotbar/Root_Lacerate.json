@@ -1,15 +1,9 @@
 {
-  "RequireNewClick": false,
-  "Tags": {
-    "Attack": [
-      "Ranged"
-    ]
-  },
   "Interactions": [
     "Hotbar9_Reset",
     {
       "Type": "CooldownCondition",
-      "Id": "JumpShot",
+      "Id": "Lacerate",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -17,12 +11,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "JumpShot",
-              "Cooldown": 5
+              "Id": "Lacerate",
+              "Cooldown": 4
             },
             "CancelOnItemChange": false
           },
-          "Shortbow_JumpShot_Ability"
+          "Lacerate"
         ]
       },
       "CancelOnItemChange": false

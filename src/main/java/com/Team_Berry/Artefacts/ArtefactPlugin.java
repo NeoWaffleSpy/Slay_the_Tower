@@ -1,11 +1,14 @@
 package com.Team_Berry.Artefacts;
 
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
+import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
 import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.event.IBaseEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.registry.Registration;
@@ -33,25 +36,9 @@ public class ArtefactPlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        getAssetRegistry().register(HytaleAssetStore.builder(ArtefactCodec.class, new DefaultAssetMap<>())
-                .setPath("Artefacts")
-                .setCodec(ArtefactCodec.CODEC)
-                .setKeyFunction(ArtefactCodec::getId)
-                .setReplaceOnRemove(ArtefactCodec::new)
-                .build());
-
-        getEventRegistry().register(
-                LoadedAssetsEvent.class,
-                ArtefactCodec.class,
-                this::onArtefactLoaded);
-    }
-
-    private void onArtefactLoaded(LoadedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
-        event.getLoadedAssets().forEach((name, cam) -> ArtefactCodec.updateCodecSetting(name));
-    }
-
-    private void onArtefactRemoved(RemovedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
-        event.getRemovedAssets().forEach(ArtefactCodec::remove);
+        ArtefactCodec.register();
+        StatusEffectCodec.register();
+        StatCodec.register();
     }
 
     @Override

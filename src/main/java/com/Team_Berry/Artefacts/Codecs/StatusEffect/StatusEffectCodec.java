@@ -1,14 +1,21 @@
 package com.Team_Berry.Artefacts.Codecs.StatusEffect;
 
+import com.Team_Berry.Artefacts.ArtefactPlugin;
+import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.Codecs.Enums.StatusEffectEnum;
+import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
+import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
+import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
+import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 
 import java.util.Collection;
 
@@ -41,14 +48,14 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
         return ASSET_STORE;
     }
 
-    public static void updateCodecSetting(String name) {
+    public static Collection<StatusEffectCodec> getAssetMap() {
+        return getAssetStore().getAssetMap().getAssetMap().values();
+    }
+
+    public void updateCodecSetting(String name) {
     }
 
     public static void remove(String s) {
-    }
-
-    public static Collection<StatusEffectCodec> getAssetMap() {
-        return getAssetStore().getAssetMap().getAssetMap().values();
     }
 
     static {
@@ -68,6 +75,27 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
                         (obj, val) -> obj.duration = val,
                         obj -> obj.duration).add()
                 .build();
+    }
+
+    public static void register() {
+        ArtefactPlugin a = ArtefactPlugin.get();
+        a.getAssetRegistry()
+                .register(HytaleAssetStore.builder(StatusEffectCodec.class, new DefaultAssetMap<>())
+                .setPath("StatusEffects")
+                .setCodec(StatusEffectCodec.CODEC)
+                .setKeyFunction(StatusEffectCodec::getId)
+                .setReplaceOnRemove(StatusEffectCodec::new)
+                .build());
+        a.getEventRegistry().register(LoadedAssetsEvent.class, StatusEffectCodec.class, StatusEffectCodec::onLoaded);
+        a.getEventRegistry().register(RemovedAssetsEvent.class, StatusEffectCodec.class, StatusEffectCodec::onRemoved);
+    }
+
+    public static void onLoaded(LoadedAssetsEvent<String, StatusEffectCodec, DefaultAssetMap<String, StatusEffectCodec>> event) {
+        event.getLoadedAssets().forEach((name, codec) -> codec.updateCodecSetting(name));
+    }
+
+    public static void onRemoved(RemovedAssetsEvent<String, StatusEffectCodec, DefaultAssetMap<String, StatusEffectCodec>> event) {
+        event.getRemovedAssets().forEach(StatusEffectCodec::remove);
     }
 }
 

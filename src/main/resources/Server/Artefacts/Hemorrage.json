@@ -1,0 +1,9 @@
+{
+  "TranslationProperties": {
+    "Name": "Hemorrage.name",
+    "Description": "Hemorrage.description"
+  },
+  "Stats": [
+    "Health"
+  ]
+}

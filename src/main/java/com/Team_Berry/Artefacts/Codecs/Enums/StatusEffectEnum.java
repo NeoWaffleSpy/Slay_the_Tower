@@ -1,4 +1,4 @@
-package com.Team_Berry.Artefacts.Codecs.StatusEffect;
+package com.Team_Berry.Artefacts.Codecs.Enums;
 
 public enum StatusEffectEnum {
     NONE { public float compute() { return 0; } },

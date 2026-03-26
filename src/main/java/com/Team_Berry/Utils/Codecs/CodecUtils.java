@@ -1,4 +1,4 @@
-package com.Team_Berry.Utils;
+package com.Team_Berry.Utils.Codecs;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;

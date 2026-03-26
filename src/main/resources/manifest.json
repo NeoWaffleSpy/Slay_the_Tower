@@ -16,9 +16,9 @@
   "IncludesAssetPack": true,
   "Main": "${plugin_main_entrypoint}",
   "SubPlugins": [
-    { "Group": "${plugin_group}", "Name": "Camera", "Main": "com.Team_Berry.Camera.CameraPlugin" },
-    { "Group": "${plugin_group}", "Name": "GearAffix", "Main": "com.Team_Berry.GearAffix.GearAffixPlugin" },
-    { "Group": "${plugin_group}", "Name": "Utils", "Main": "com.Team_Berry.Utils.UtilsPlugin" },
-    { "Group": "${plugin_group}", "Name": "WeaponInteraction", "Main": "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin" }
+    { "Group": "${plugin_group}", "Name": "Camera", "Main": "com.Team_Berry.Camera.CameraPlugin", "ServerVersion": "${server_version}" },
+    { "Group": "${plugin_group}", "Name": "GearAffix", "Main": "com.Team_Berry.GearAffix.GearAffixPlugin", "ServerVersion": "${server_version}" },
+    { "Group": "${plugin_group}", "Name": "Utils", "Main": "com.Team_Berry.Utils.UtilsPlugin", "ServerVersion": "${server_version}" },
+    { "Group": "${plugin_group}", "Name": "WeaponInteraction", "Main": "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin", "ServerVersion": "${server_version}" }
   ]
 }

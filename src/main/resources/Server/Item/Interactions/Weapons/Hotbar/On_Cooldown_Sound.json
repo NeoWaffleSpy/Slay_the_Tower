@@ -1,0 +1,7 @@
+{
+  "Type": "Simple",
+  "Effects": {
+    "LocalSoundEventId": "SFX_On_Cooldown"
+  },
+  "CancelOnItemChange": false
+}

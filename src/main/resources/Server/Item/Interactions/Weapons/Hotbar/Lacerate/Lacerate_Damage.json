@@ -1,19 +1,82 @@
 {
   "Type": "DamageEntity",
+  "CancelOnItemChange": false,
+  "DamageCalculator": {
+    "Class": "Light",
+    "BaseDamage": {
+      "Physical": 15
+    },
+    "SequentialModifierStep": 1,
+    "SequentialModifierMinimum": 1,
+    "RandomPercentageModifier": 1
+  },
+  "Effects": {
+    "CameraEffect": "Impact"
+  },
   "DamageEffects": {
     "Knockback": {
-      "Force": 1,
-      "RelativeX": -5,
-      "RelativeZ": -5,
-      "VelocityY": 5
+      "Type": "Force",
+      "VelocityConfig": {
+        "AirResistance": 0.92,
+        "AirResistanceMax": 0.92,
+        "GroundResistance": 0.94,
+        "GroundResistanceMax": 0.9,
+        "Threshold": 3.0,
+        "Style": "Linear"
+      },
+      "Direction": {
+        "X": -0.25,
+        "Y": 1,
+        "Z": -1.5
+      },
+      "Force": 9,
+      "VelocityType": "Add"
     },
-    "WorldSoundEventId": "SFX_Sword_T2_Impact",
-    "LocalSoundEventId": "SFX_Sword_T2_Impact",
     "WorldParticles": [
       {
-        "SystemId": "Impact_Blade_01"
+        "SystemId": "Impact_Sword_Basic"
+      }
+    ],
+    "CameraEffect": "Impact_Light"
+  },
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ApplyEffect",
+        "EffectId": "Red_Flash",
+        "Entity": "Target"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Regen_Lesser"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Regen_Small"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Regen"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Regen_Greater"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Regen_Large"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Stamina_Regen"
       }
     ]
-  },
-  "CancelOnItemChange": false
+  }
 }

@@ -11,8 +11,7 @@
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Axe",
   "Reticle": "DefaultMelee",
-  "Quality": "Template",
-  "ItemLevel": 15,
+  "Quality": "Common",
   "Interactions": {
     "SwapTo": "Root_Lacerate"
   },
@@ -84,24 +83,24 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapon_Blunt_Large",
-  "MaxDurability": 4,
   "InteractionVars": {
     "Lacerate_Damage": {
       "Interactions": [
         {
-          "Parent": "Lacerate_Damage",
+          "Parent": "Greatsword_Riven_Spin_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 16
-            },
-            "Type": "Absolute",
-            "RandomPercentageModifier": 0.2
+              "Physical": 10
+            }
           },
+          "EntityStatsOnHit": [],
           "DamageEffects": {
-            "WorldSoundEventId": "SFX_Axe_Crude_Impact"
+            "WorldSoundEventId": "SFX_Battleaxe_T2_Impact",
+            "LocalSoundEventId": "SFX_Battleaxe_T2_Impact"
           }
         }
       ]
     }
-  }
+  },
+  "MaxDurability": 4
 }

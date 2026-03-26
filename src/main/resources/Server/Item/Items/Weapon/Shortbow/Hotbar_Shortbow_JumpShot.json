@@ -5,7 +5,7 @@
   "Icon": "Icons/ItemsGenerated/Weapon_Bow_Crude.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Reticle": "DefaultMelee",
-  "Quality": "Template",
+  "Quality": "Uncommon",
   "ItemLevel": 5,
   "Categories": [
     "Items.Weapons"

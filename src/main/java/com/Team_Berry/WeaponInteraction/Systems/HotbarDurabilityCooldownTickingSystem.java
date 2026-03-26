@@ -6,7 +6,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
-import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -26,8 +26,16 @@ public class HotbarDurabilityCooldownTickingSystem extends EntityTickingSystem<E
     @Override
     public void tick(float dt, int i, @NonNull ArchetypeChunk<EntityStore> archetypeChunk, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
         Ref<EntityStore> ref = archetypeChunk.getReferenceTo(i);
-        Player player = commandBuffer.getComponent(ref, Player.getComponentType());
-        ItemContainer hotbar = player.getInventory().getHotbar();
+
+        // 1. Get the Hotbar component specifically
+        // Use the static getter provided in the decompiled code: InventoryComponent.Hotbar.getComponentType()
+        InventoryComponent.Hotbar hotbarComp = archetypeChunk.getComponent(i, InventoryComponent.Hotbar.getComponentType());
+
+        // 2. Safety check: ensure the entity actually has a hotbar
+        if (hotbarComp == null) return;
+
+        // 3. Access the ItemContainer from the component
+        ItemContainer hotbar = hotbarComp.getInventory();
 
         double repairPerSecond = 1.0;
         double amountToAdd = repairPerSecond * dt;
@@ -42,6 +50,8 @@ public class HotbarDurabilityCooldownTickingSystem extends EntityTickingSystem<E
             if (current < max) {
                 ItemStack improvedStack = stack.withIncreasedDurability(amountToAdd);
                 hotbar.setItemStackForSlot(slot, improvedStack);
+
+                hotbarComp.markDirty();
             }
         }
     }

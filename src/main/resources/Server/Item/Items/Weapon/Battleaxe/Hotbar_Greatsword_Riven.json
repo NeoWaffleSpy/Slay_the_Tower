@@ -5,13 +5,11 @@
   "Categories": [
     "Items.Weapons"
   ],
-  "Model": "Items/Weapons/Longsword/Iron.blockymodel",
-  "Texture": "Items/Weapons/Longsword/Iron_Texture.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Longsword_Iron.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Sword_Riven",
   "Reticle": "DefaultMelee",
-  "Quality": "Template",
+  "Quality": "Legendary",
   "ItemLevel": 15,
   "Interactions": {
     "SwapTo": "Root_Greatsword_Riven_Ability"

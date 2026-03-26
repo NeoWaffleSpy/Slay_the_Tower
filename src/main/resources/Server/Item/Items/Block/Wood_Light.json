@@ -2,28 +2,41 @@
   "TranslationProperties": {
     "Name": "Wood Light"
   },
+  "Icon": "Icons/ItemsGenerated/Wood_Light.png",
   "Categories": [
+    "Blocks.Rocks",
     "Blocks.Rocks"
   ],
   "PlayerAnimationsId": "Block",
+  "Interactions": {
+    "Secondary": "Lantern_Yellow"
+  },
   "BlockType": {
     "Material": "Solid",
     "DrawType": "Cube",
-    "Opacity": "Solid",
+    "Opacity": "Transparent",
     "Group": "Stone",
-    "CubeShadingMode": "Fullbright",
-    "BlockSoundSetId": "Crystal",
-    "ParticleColor": "#ffc900",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Crystal",
     "Textures": [
       {
+        "Weight": 1,
         "All": "Resources/Wood_Light.png"
       }
     ],
-    "BlockParticleSetId": "Crystal",
+    "ParticleColor": "#ffc744",
+    "BlockSoundSetId": "Crystal",
+    "CubeShadingMode": "Fullbright",
     "Light": {
-      "Color": "#fb7",
-      "Radius": 1
-    }
+      "Color": "#fb6",
+      "Radius": 0
+    },
+    "VariantRotation": "None"
   },
   "Tags": {
     "Type": [
@@ -45,14 +58,5 @@
       -13.5
     ]
   },
-  "ItemSoundSetId": "ISS_Items_Gems",
-  "Light": {
-    "Radius": 1,
-    "Color": "#fc0"
-  },
-  "ItemEntity": {
-    "ShowItemParticles": false,
-    "ParticleColor": "#ffd000"
-  },
-  "Icon": "Icons/ItemsGenerated/Wood_Light.png"
+  "ItemSoundSetId": "ISS_Blocks_Stone"
 }

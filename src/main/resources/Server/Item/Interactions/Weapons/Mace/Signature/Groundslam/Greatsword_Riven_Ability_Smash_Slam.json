@@ -57,13 +57,14 @@
     "Interactions": [
       {
         "Type": "Replace",
-        "Var": "Downstrike_Damage",
+        "Var": "Slam_Damage",
         "DefaultOk": true,
         "DefaultValue": {
           "Interactions": [
-            "Battleaxe_Downstrike_Charged_Damage"
+            "Greatsword_Riven_Ability_Slam_Damage"
           ]
-        }
+        },
+        "CancelOnItemChange": false
       }
     ]
   },
@@ -75,7 +76,9 @@
       "Interactions": [
         "Weapon_Mace_Signature_Groundslam_Explosion"
       ]
-    }
+    },
+    "CancelOnItemChange": false
   },
-  "RunTime": 0.05
+  "RunTime": 0.05,
+  "CancelOnItemChange": false
 }

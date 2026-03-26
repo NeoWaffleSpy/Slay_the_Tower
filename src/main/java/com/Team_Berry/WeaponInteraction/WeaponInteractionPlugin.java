@@ -5,6 +5,7 @@ import com.Team_Berry.Camera.Interactions.UltInteraction;
 import com.Team_Berry.WeaponInteraction.Component.BleedComponent;
 import com.Team_Berry.WeaponInteraction.Interactions.BleedInteraction;
 import com.Team_Berry.WeaponInteraction.Systems.BleedTickingSystem;
+import com.Team_Berry.WeaponInteraction.Systems.HotbarDurabilityCooldownTickingSystem;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -37,6 +38,7 @@ public class WeaponInteractionPlugin extends JavaPlugin {
         UltMouseControl.ULT_EXPLOSION_COMPONENT_TYPE = ultExplosionComponentComponentType;
         getEntityStoreRegistry().registerSystem(new UltExplosionTickingSystem(ultExplosionComponentComponentType));
         getEntityStoreRegistry().registerSystem(new BleedTickingSystem(bleedComponentType));
+        getEntityStoreRegistry().registerSystem(new HotbarDurabilityCooldownTickingSystem());
         this.getCodecRegistry(Interaction.CODEC).register("BleedInteraction", BleedInteraction.class, BleedInteraction.CODEC);
         BleedInteraction.BLEED_COMPONENT_TYPE = bleedComponentType;
 

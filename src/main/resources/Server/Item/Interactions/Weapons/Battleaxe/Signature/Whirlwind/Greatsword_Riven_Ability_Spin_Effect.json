@@ -35,5 +35,6 @@
     ],
     "CameraEffect": "Battleaxe_Whirlwind",
     "ClearAnimationOnFinish": true
-  }
+  },
+  "CancelOnItemChange": false
 }

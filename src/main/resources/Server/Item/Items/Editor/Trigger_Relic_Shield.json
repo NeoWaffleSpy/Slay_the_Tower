@@ -95,7 +95,8 @@
                     "Scale": 1
                   }
                 ],
-                "LocalSoundEventId": "SFX_Drop_Items_Metal"
+                "LocalSoundEventId": "SFX_Drop_Items_Metal",
+                "ScreenEffect": "ScreenEffects/Snow.png"
               },
               "Duration": 1,
               "OverlapBehavior": "Ignore"

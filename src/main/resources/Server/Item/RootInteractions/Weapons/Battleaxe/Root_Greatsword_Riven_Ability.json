@@ -1,14 +1,16 @@
 {
-  "RequireNewClick": true,
+  "RequireNewClick": false,
   "Interactions": [
+    "Set_On_Cooldown",
+    "Hotbar9_Reset",
     "Greatsword_Riven_Ability"
   ],
   "Rules": {
     "Interrupting": [
       "Primary"
+    ],
+    "Blocking": [
+      "SwapTo"
     ]
-  },
-  "Cooldown": {
-    "Cooldown": 0.5
   }
 }

@@ -1,11 +1,31 @@
 {
-  "RequireNewClick": true,
+  "RequireNewClick": false,
   "Tags": {
     "Attack": [
       "Ranged"
     ]
   },
   "Interactions": [
-    "Shortbow_JumpShot_Ability"
+    "Hotbar9_Reset",
+    {
+      "Type": "CooldownCondition",
+      "Id": "JumpShot",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "JumpShot",
+              "Cooldown": 5
+            },
+            "CancelOnItemChange": false
+          },
+          "Shortbow_JumpShot_Ability"
+        ]
+      },
+      "CancelOnItemChange": false
+    }
   ]
 }

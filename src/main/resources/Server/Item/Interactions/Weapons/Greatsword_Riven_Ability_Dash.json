@@ -1,5 +1,6 @@
 {
   "Type": "ApplyForce",
+  "CancelOnItemChange": false,
   "Direction": {
     "Z": -1
   },
@@ -22,5 +23,6 @@
     "AirResistance": 0.88
   },
   "ChangeVelocityType": "Set",
-  "WaitForGround": false
+  "WaitForGround": false,
+  "RunTime": 0.1
 }

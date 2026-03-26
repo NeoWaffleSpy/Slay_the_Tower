@@ -1,9 +1,15 @@
 {
   "Type": "Chaining",
-  "ChainingAllowance": 2.9,
+  "ChainingAllowance": 2.5,
   "Next": [
     "Greatsword_Riven_Spin_Serial",
     "Greatsword_Riven_Spin_Serial",
     "Greatsword_Riven_Ability_Smash"
-  ]
+  ],
+  "CancelOnItemChange": false,
+  "Rules": {
+    "Blocking": [
+      "SwapTo"
+    ]
+  }
 }

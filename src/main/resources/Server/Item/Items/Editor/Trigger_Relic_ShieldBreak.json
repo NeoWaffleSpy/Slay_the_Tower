@@ -95,9 +95,10 @@
                     "Scale": 1
                   }
                 ],
-                "LocalSoundEventId": "SFX_Metal_Hit"
+                "LocalSoundEventId": "SFX_Metal_Hit",
+                "ScreenEffect": "ScreenEffects/Daggers.png"
               },
-              "Duration": 0.25,
+              "Duration": 0.15,
               "OverlapBehavior": "Ignore"
             }
           }

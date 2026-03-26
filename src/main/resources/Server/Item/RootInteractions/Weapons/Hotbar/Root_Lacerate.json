@@ -1,0 +1,25 @@
+{
+  "Interactions": [
+    "Hotbar9_Reset",
+    {
+      "Type": "CooldownCondition",
+      "Id": "Lacerate",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Lacerate",
+              "Cooldown": 4
+            },
+            "CancelOnItemChange": false
+          },
+          "Lacerate"
+        ]
+      },
+      "CancelOnItemChange": false
+    }
+  ]
+}

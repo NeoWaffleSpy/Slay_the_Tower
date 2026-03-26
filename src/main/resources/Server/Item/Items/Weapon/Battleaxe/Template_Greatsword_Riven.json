@@ -85,7 +85,5 @@
       }
     ]
   },
-  "ItemSoundSetId": "ISS_Weapon_Blunt_Large",
-  "MaxDurability": 80,
-  "DurabilityLossOnHit": 0.45
+  "ItemSoundSetId": "ISS_Weapon_Blunt_Large"
 }

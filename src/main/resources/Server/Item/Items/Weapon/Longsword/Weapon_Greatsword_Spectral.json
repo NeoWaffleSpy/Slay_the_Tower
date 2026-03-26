@@ -8,33 +8,6 @@
   "Icon": "Icons/ItemsGenerated/Weapon_Longsword_Spectral.png",
   "Quality": "Uncommon",
   "ItemLevel": 20,
-  "Recipe": {
-    "TimeSeconds": 3.5,
-    "KnowledgeRequired": false,
-    "Input": [
-      {
-        "ItemId": "Ingredient_Bar_Iron",
-        "Quantity": 10
-      },
-      {
-        "ItemId": "Ingredient_Leather_Light",
-        "Quantity": 4
-      },
-      {
-        "ItemId": "Ingredient_Fabric_Scrap_Linen",
-        "Quantity": 3
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Type": "Crafting",
-        "Categories": [
-          "Weapon_Battleaxe"
-        ],
-        "Id": "Weapon_Bench"
-      }
-    ]
-  },
   "InteractionVars": {
     "Swing_Down_Damage": {
       "Interactions": [

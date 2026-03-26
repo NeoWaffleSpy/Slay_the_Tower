@@ -1,0 +1,5 @@
+{
+  "Type": "ChangeActiveSlot",
+  "TargetSlot": 8,
+  "CancelOnItemChange": false
+}

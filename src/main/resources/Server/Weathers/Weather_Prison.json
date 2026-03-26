@@ -98,7 +98,12 @@
       "Color": "#ff0000ff"
     }
   ],
-  "SunlightDampingMultipliers": null,
+  "SunlightDampingMultipliers": [
+    {
+      "Hour": 17,
+      "Value": 1.1
+    }
+  ],
   "SunlightColors": [
     {
       "Hour": 18,

@@ -1,20 +1,7 @@
 {
-  "Type": "Repeat",
-  "Repeat": 1,
-  "HorizontalSpeedMultiplier": 0.6,
-  "ForkInteractions": {
-    "Interactions": [
-      {
-        "Type": "Replace",
-        "Var": "Signature_Whirlwind_Effect",
-        "DefaultOk": true,
-        "DefaultValue": {
-          "Interactions": [
-            "Greatsword_Riven_Ability_Spin_Effect"
-          ]
-        }
-      },
-      "Greatsword_Riven_Ability_Spin_Selector"
-    ]
-  }
+  "Type": "Serial",
+  "Interactions": [
+    "Greatsword_Riven_Ability_Spin_Effect",
+    "Greatsword_Riven_Ability_Spin_Selector"
+  ]
 }

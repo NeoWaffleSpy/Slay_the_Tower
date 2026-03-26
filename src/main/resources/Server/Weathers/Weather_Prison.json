@@ -26,23 +26,22 @@
   "FogDensities": [
     {
       "Hour": 18,
-      "Value": 0.2
+      "Value": 0.1
     }
   ],
   "FogHeightFalloffs": [
     {
       "Hour": 18,
-      "Value": 5
+      "Value": 3.05
     }
   ],
   "FogDistance": [
-    -128.0,
-    375
+    -125,
+    325
   ],
   "FogOptions": {
-    "FogHeightCameraFixed": 0.5,
-    "EffectiveViewDistanceMultiplier": 1.0,
-    "FogHeightCameraOffset": 0.5,
+    "FogHeightCameraFixed": 0.017,
+    "EffectiveViewDistanceMultiplier": 1,
     "IgnoreFogLimits": false
   },
   "SunScales": [
@@ -54,7 +53,7 @@
   "MoonScales": [
     {
       "Hour": 18,
-      "Value": 5
+      "Value": 5.5
     }
   ],
   "Particle": {
@@ -74,8 +73,8 @@
       ],
       "Speeds": [
         {
-          "Hour": 18,
-          "Value": 2
+          "Hour": 17,
+          "Value": 3.5
         }
       ]
     }
@@ -100,7 +99,7 @@
   ],
   "SunlightDampingMultipliers": [
     {
-      "Hour": 17,
+      "Hour": 18,
       "Value": 1.1
     }
   ],

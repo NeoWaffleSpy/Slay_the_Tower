@@ -401,26 +401,6 @@
       "Bow"
     ]
   },
-  "Weapon": {
-    "EntityStatsToClear": [
-      "SignatureEnergy",
-      "SignatureCharges"
-    ],
-    "StatModifiers": {
-      "SignatureEnergy": [
-        {
-          "Amount": 6,
-          "CalculationType": "Additive"
-        }
-      ],
-      "SignatureCharges": [
-        {
-          "Amount": 1,
-          "CalculationType": "Additive"
-        }
-      ]
-    }
-  },
   "ItemAppearanceConditions": {
     "SignatureCharges": [
       {
@@ -539,6 +519,26 @@
   "ItemSoundSetId": "ISS_Weapons_Wood",
   "MaxDurability": 5,
   "PlayerAnimationsId": "Bow",
+  "Texture": "Items/Weapons/Bow/Iron_Texture.png",
   "Model": "Items/Weapons/Bow/Iron.blockymodel",
-  "Texture": "Items/Weapons/Bow/Iron_Texture.png"
+  "Weapon": {
+    "EntityStatsToClear": [
+      "SignatureEnergy",
+      "SignatureCharges"
+    ],
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 6,
+          "CalculationType": "Additive"
+        }
+      ],
+      "SignatureCharges": [
+        {
+          "Amount": 1,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  }
 }

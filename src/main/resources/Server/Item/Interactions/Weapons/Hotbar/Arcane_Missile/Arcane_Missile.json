@@ -1,41 +1,10 @@
 {
-  "Type": "Simple",
-  "$Comment": "Prepare Delay",
-  "RunTime": 0.167,
-  "Next": {
-    "Type": "Parallel",
-    "$Comment": "Make sure this parallel interaction is needed and can't be optimized away",
-    "Interactions": [
-      {
-        "Interactions": [
-          {
-            "Type": "Replace",
-            "DefaultValue": {
-              "Interactions": [
-                "Arcane_Missile_Launch"
-              ]
-            },
-            "Var": "Arcane_Missile_Launch",
-            "CancelOnItemChange": false
-          }
-        ]
-      },
-      {
-        "Interactions": [
-          {
-            "Type": "Replace",
-            "DefaultValue": {
-              "Interactions": [
-                "Arcane_Missile_Effect"
-              ]
-            },
-            "Var": "Arcane_Missile_Effect",
-            "CancelOnItemChange": false
-          }
-        ]
-      }
-    ],
-    "CancelOnItemChange": false
+  "Type": "LaunchProjectile",
+  "RunTime": 0.25,
+  "Effects": {
+    "ItemAnimationId": "CastSummonCharged",
+    "WorldSoundEventId": "SFX_Staff_Ice_Shoot"
   },
+  "ProjectileId": "Arcane_Missile",
   "CancelOnItemChange": false
 }

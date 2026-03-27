@@ -1,0 +1,23 @@
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Sword_Silversteel.name"
+  },
+  "Model": "Items/Weapons/Sword_Kweebec.blockymodel",
+  "Texture": "Items/Weapons/Sword_Kweebec_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Sword_Kweebec.png",
+  "Quality": "Common",
+  "ItemLevel": 45,
+  "IconProperties": {
+    "Scale": 0.35,
+    "Rotation": [
+      32,
+      81,
+      0
+    ],
+    "Translation": [
+      -15,
+      -38
+    ]
+  }
+}

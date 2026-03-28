@@ -3,7 +3,7 @@
     "Name": "server.items.Template_Weapon_Battleaxe.name"
   },
   "Categories": [
-    "Items.Weapons"
+    "Slay_The_Tower.Weapons"
   ],
   "Icon": "Icons/ItemsGenerated/Weapon_Longsword_Iron.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",

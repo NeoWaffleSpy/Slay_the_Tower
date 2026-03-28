@@ -2,7 +2,7 @@
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "Lacerate",
+      "Id": "Shadow_Dash",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,12 +10,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "Lacerate",
-              "Cooldown": 4
+              "Id": "Shadow_Dash",
+              "Cooldown": 1
             },
             "CancelOnItemChange": false
           },
-          "Lacerate"
+          "Shadow_Dash"
         ]
       },
       "CancelOnItemChange": false,

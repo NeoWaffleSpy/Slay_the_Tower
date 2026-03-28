@@ -2,7 +2,7 @@
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "Lacerate",
+      "Id": "TwinStab",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,12 +10,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "Lacerate",
-              "Cooldown": 4
+              "Id": "TwinStab",
+              "Cooldown": 1
             },
             "CancelOnItemChange": false
           },
-          "Lacerate"
+          "TwinStab"
         ]
       },
       "CancelOnItemChange": false,

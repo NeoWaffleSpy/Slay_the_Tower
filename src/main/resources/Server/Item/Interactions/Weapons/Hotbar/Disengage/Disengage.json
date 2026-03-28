@@ -1,0 +1,15 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    "Disengage_Dash",
+    {
+      "Type": "Simple",
+      "RunTime": 0.15,
+      "CancelOnItemChange": false,
+      "Effects": {
+        "ItemAnimationId": "SwingLeft"
+      }
+    },
+    "Disengage_Dagger_Throw"
+  ]
+}

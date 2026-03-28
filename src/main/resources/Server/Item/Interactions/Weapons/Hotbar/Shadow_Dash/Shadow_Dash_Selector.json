@@ -1,0 +1,43 @@
+{
+  "Type": "Selector",
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "Replace",
+        "Var": "Shadow_Dash_Damage",
+        "DefaultOk": true,
+        "DefaultValue": {
+          "Interactions": [
+            "Shadow_Dash_Damage"
+          ]
+        },
+        "CancelOnItemChange": false
+      },
+      {
+        "Type": "ApplyEffect",
+        "Entity": "Target",
+        "EffectId": {
+          "Parent": "NPC_Stun_Effect"
+        },
+        "CancelOnItemChange": false
+      }
+    ]
+  },
+  "Effects": {
+    "Trails": [
+      {
+        "TrailId": "Large_Charged_Black",
+        "PositionOffset": {
+          "X": 0.5,
+          "Z": 0.7
+        }
+      }
+    ]
+  },
+  "CancelOnItemChange": false,
+  "Selector": {
+    "Id": "AOECircle",
+    "Range": 2
+  },
+  "RunTime": 0.1
+}

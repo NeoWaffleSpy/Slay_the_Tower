@@ -1,0 +1,23 @@
+{
+  "Type": "Simple",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          "Whirl_Lunge_Force"
+        ]
+      },
+      {
+        "Interactions": [
+          "Shadow_Dash_Selector"
+        ]
+      }
+    ]
+  },
+  "RunTime": 0.15,
+  "Effects": {
+    "ItemAnimationId": "RazorstrikeLunge"
+  },
+  "CancelOnItemChange": false
+}

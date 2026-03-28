@@ -3,10 +3,8 @@
     "Name": "server.items.Template_Weapon_Battleaxe.name"
   },
   "Categories": [
-    "Items.Weapons"
+    "Slay_The_Tower.Weapons"
   ],
-  "Model": "Items/Weapons/Axe/Crude.blockymodel",
-  "Texture": "Items/Weapons/Axe/Crude_Texture.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Axe_Stone_Trork.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Axe",
@@ -102,5 +100,7 @@
       ]
     }
   },
-  "MaxDurability": 4
+  "MaxDurability": 4,
+  "Texture": "Items/Weapons/Axe/Crude_Texture.png",
+  "Model": "Items/Weapons/Axe/Crude.blockymodel"
 }

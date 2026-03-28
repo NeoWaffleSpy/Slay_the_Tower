@@ -20,6 +20,6 @@
     { "Group": "${plugin_group}", "Name": "GearAffix", "Main": "com.Team_Berry.GearAffix.GearAffixPlugin", "ServerVersion": "${server_version}" },
     { "Group": "${plugin_group}", "Name": "Utils", "Main": "com.Team_Berry.Utils.UtilsPlugin", "ServerVersion": "${server_version}" },
     { "Group": "${plugin_group}", "Name": "WeaponInteraction", "Main": "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin", "ServerVersion": "${server_version}" },
-    { "Group": "${plugin_group}", "Name": "Artefact", "Main": "com.Team_Berry.Artefacts.ArtefactPlugin", "ServerVersion": "${server_version}" }
+    { "Group": "${plugin_group}", "Name": "Artefact", "Main": "com.Team_Berry.Artefacts.ArtefactPlugin", "ServerVersion": "${server_version}", "Dependencies": { "Hytale:EntityStatsModule": "*" }}
   ]
 }

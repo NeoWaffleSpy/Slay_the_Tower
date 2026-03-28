@@ -66,16 +66,16 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         CODEC = AssetBuilderCodec.builder(StatCodec.class, StatCodec::new, Codec.STRING,
                         (t, k) -> t.effectName = k, (t) -> t.effectName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<StatEnum>("StatusEffect", new EnumCodec(StatEnum.class)),
+                .append(new KeyedCodec<>("StatusEffect", new EnumCodec<>(StatEnum.class)),
                         (obj, val) -> obj.stat = val,
                         obj -> obj.stat).add()
-                .append(new KeyedCodec<CalculationType>("CalculationType", new EnumCodec(CalculationType.class)),
+                .append(new KeyedCodec<>("CalculationType", new EnumCodec<>(CalculationType.class)),
                         (obj, val) -> obj.calc = val,
                         obj -> obj.calc).add()
-                .append(new KeyedCodec<TargetType>("TargetType", new EnumCodec(TargetType.class)),
+                .append(new KeyedCodec<>("TargetType", new EnumCodec<>(TargetType.class)),
                         (obj, val) -> obj.target = val,
                         obj -> obj.target).add()
-                .append(new KeyedCodec<TriggerType>("TriggerType", new EnumCodec(TriggerType.class)),
+                .append(new KeyedCodec<>("TriggerType", new EnumCodec<>(TriggerType.class)),
                         (obj, val) -> obj.trigger = val,
                         obj -> obj.trigger).add()
                 .append(new KeyedCodec<>("Value", Codec.FLOAT),

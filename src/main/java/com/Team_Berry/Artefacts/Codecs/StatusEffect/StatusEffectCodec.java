@@ -64,13 +64,13 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
         CODEC = AssetBuilderCodec.builder(StatusEffectCodec.class, StatusEffectCodec::new, Codec.STRING,
                         (t, k) -> t.effectName = k, (t) -> t.effectName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<StatusEffectEnum>("StatusEffect", new EnumCodec(StatusEffectEnum.class)),
+                .append(new KeyedCodec<>("StatusEffect", new EnumCodec<>(StatusEffectEnum.class)),
                         (obj, val) -> obj.effect = val,
                         obj -> obj.effect).add()
-                .append(new KeyedCodec<TargetType>("TargetType", new EnumCodec(TargetType.class)),
+                .append(new KeyedCodec<>("TargetType", new EnumCodec<>(TargetType.class)),
                         (obj, val) -> obj.target = val,
                         obj -> obj.target).add()
-                .append(new KeyedCodec<TriggerType>("TriggerType", new EnumCodec(TriggerType.class)),
+                .append(new KeyedCodec<>("TriggerType", new EnumCodec<>(TriggerType.class)),
                         (obj, val) -> obj.trigger = val,
                         obj -> obj.trigger).add()
                 .append(new KeyedCodec<>("Value", Codec.FLOAT),

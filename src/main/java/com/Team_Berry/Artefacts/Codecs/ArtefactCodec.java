@@ -1,6 +1,9 @@
 package com.Team_Berry.Artefacts.Codecs;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
+import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
+import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
+import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
 import com.Team_Berry.Utils.Codecs.CustomArrayCodec;
@@ -18,6 +21,7 @@ import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEve
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProperties;
@@ -34,6 +38,7 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
 
     public ArrayList<StatusEffectCodec> statusList = new ArrayList<>();
     public ArrayList<StatCodec> statList = new ArrayList<>();
+    private RarityEnum rarity = RarityEnum.DEBUG;
     private ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
 
     public ArtefactCodec() {}
@@ -88,6 +93,9 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                                 .metadata(new UIEditor(new UIEditor.Dropdown("StatDataSet")))),
                         (artefact, map) -> artefact.statList = getStatFromStringList(map),
                         (artefact) -> getStatStringList(artefact.statList)).add()
+                .append(new KeyedCodec<>("Rarity", new EnumCodec<>(RarityEnum.class)),
+                        (obj, val) -> obj.rarity = val,
+                        obj -> obj.rarity).add()
                 .append(new KeyedCodec<>("TranslationProperties", ItemTranslationProperties.CODEC),
                         (artefact, s) -> artefact.translationProperties = s,
                         (artefact) -> artefact.translationProperties)

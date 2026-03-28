@@ -5,7 +5,7 @@
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
-  "Icon": "Icons/ItemsGenerated/Weapon_Daggers_Iron.png",
+  "Icon": "Icons/ItemsGenerated/Daggers_Kweebec.png",
   "Quality": "Uncommon",
   "ItemLevel": 20,
   "Recipe": {
@@ -432,5 +432,17 @@
   },
   "MaxDurability": 120,
   "DurabilityLossOnHit": 0.1,
-  "Scale": 0.75
+  "Scale": 0.75,
+  "IconProperties": {
+    "Scale": 0.4,
+    "Rotation": [
+      30,
+      92,
+      0
+    ],
+    "Translation": [
+      -10,
+      -7
+    ]
+  }
 }

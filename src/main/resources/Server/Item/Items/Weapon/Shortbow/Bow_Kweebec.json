@@ -6,7 +6,7 @@
   "Quality": "Uncommon",
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
-  "Icon": "Icons/ItemsGenerated/JumpShotSlow_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
   "ItemLevel": 20,
   "Recipe": {
     "TimeSeconds": 3.5,
@@ -169,15 +169,15 @@
   "MaxDurability": 120,
   "DurabilityLossOnHit": 0.58,
   "IconProperties": {
-    "Scale": 0.58823,
+    "Scale": 0.35,
     "Rotation": [
-      22.5,
-      45,
-      22.5
+      39,
+      90,
+      0
     ],
     "Translation": [
-      0,
-      -13.5
+      -30,
+      -45
     ]
   }
 }

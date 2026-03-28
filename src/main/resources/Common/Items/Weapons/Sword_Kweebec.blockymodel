@@ -272,6 +272,118 @@
                                 {
                                   "id": "10",
                                   "name": "Blade5--C2",
+                                  "position": {"x": -62.38769, "y": 1, "z": -5.98405},
+                                  "orientation": {"x": -0.90845, "y": 0.29112, "z": -0.28858, "w": 0.08183},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": -1.59142, "y": 1.51679, "z": -3.17378},
+                                    "stretch": {"x": 1, "y": 1, "z": 0.1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 7, "y": 7},
+                                      "normal": "+Z",
+                                      "isStaticBox": true
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 57, "y": 25},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "11",
+                                  "name": "Blade5--C3",
+                                  "position": {"x": -50.73273, "y": 0.72251, "z": 4.08978},
+                                  "orientation": {"x": 0.33777, "y": -0.2136, "z": 0.25249, "w": 0.88121},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 0.1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 7, "y": 7},
+                                      "normal": "+Z",
+                                      "isStaticBox": true
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 57, "y": 25},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "12",
+                                  "name": "Blade5--C4",
+                                  "position": {"x": -80, "y": -1, "z": 6},
+                                  "orientation": {"x": -0.81957, "y": 0.40492, "z": -0.38423, "w": 0.12924},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": -2.1865, "y": -0.16195, "z": -0.18268},
+                                    "stretch": {"x": 1, "y": 1, "z": 0.1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 7, "y": 7},
+                                      "normal": "+Z",
+                                      "isStaticBox": true
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 57, "y": 25},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "13",
+                                  "name": "Blade6--C5",
+                                  "position": {"x": -80.86665, "y": 0.78998, "z": -4.94089},
+                                  "orientation": {"x": 0.05958, "y": 0.44072, "z": 0.00674, "w": 0.89564},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": -0.45536, "y": -1.26263, "z": -0.44544},
+                                    "stretch": {"x": 1, "y": 1, "z": 0.1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 7, "y": 7},
+                                      "normal": "+Z",
+                                      "isStaticBox": true
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 57, "y": 25},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "14",
+                                  "name": "Blade5--C6",
                                   "position": {"x": -65, "y": -5, "z": 0},
                                   "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
                                   "shape": {
@@ -298,13 +410,13 @@
                                   }
                                 },
                                 {
-                                  "id": "11",
-                                  "name": "Blade5--C3",
+                                  "id": "15",
+                                  "name": "Blade5--C7",
                                   "position": {"x": -64, "y": 14, "z": 0},
-                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "orientation": {"x": 0, "y": 0, "z": 0.15212, "w": 0.98836},
                                   "shape": {
                                     "type": "quad",
-                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "offset": {"x": -0.4429, "y": 0.32301, "z": 0},
                                     "stretch": {"x": 1, "y": 1, "z": 0.1},
                                     "settings": {
                                       "isPiece": false,
@@ -332,7 +444,7 @@
                       ]
                     },
                     {
-                      "id": "12",
+                      "id": "16",
                       "name": "Base",
                       "position": {"x": 17, "y": 0, "z": 0},
                       "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
@@ -383,7 +495,7 @@
                       },
                       "children": [
                         {
-                          "id": "13",
+                          "id": "17",
                           "name": "Block",
                           "position": {"x": 3, "y": 0, "z": 0},
                           "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
@@ -429,7 +541,7 @@
                           }
                         },
                         {
-                          "id": "14",
+                          "id": "18",
                           "name": "Block1",
                           "position": {"x": -1, "y": 0, "z": 0},
                           "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
@@ -480,7 +592,7 @@
                           }
                         },
                         {
-                          "id": "15",
+                          "id": "19",
                           "name": "Block1",
                           "position": {"x": -2, "y": 0, "z": 0},
                           "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
@@ -533,7 +645,7 @@
                       ]
                     },
                     {
-                      "id": "16",
+                      "id": "20",
                       "name": "Block2",
                       "position": {"x": -8, "y": 0, "z": 0},
                       "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},

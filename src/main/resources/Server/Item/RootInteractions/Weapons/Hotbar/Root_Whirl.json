@@ -1,0 +1,26 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Whirl",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Whirl",
+              "Cooldown": 1
+            },
+            "CancelOnItemChange": false
+          },
+          "Whirl"
+        ]
+      },
+      "CancelOnItemChange": false,
+      "Failed": "On_Cooldown_Sound"
+    },
+    "Hotbar9_Reset"
+  ]
+}

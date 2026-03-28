@@ -1,0 +1,54 @@
+{
+  "Model": "Dagger_Iron",
+  "LaunchWorldSoundEventId": "SFX_Spear_Throw",
+  "SpawnRotationOffset": {
+    "Roll": 90,
+    "Pitch": 2,
+    "Yaw": 0
+  },
+  "Physics": {
+    "Type": "Standard",
+    "LaunchForce": 30,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "Gravity": 30
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Signature_Volley_Damage",
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Shortbow_Signature_Volley_Damage"
+            ]
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Signature_Volley_Impact",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Projectile_Impact_Effects"
+            ]
+          }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+  "LaunchForce": 50,
+  "LaunchLocalSoundEventId": "SFX_Spear_Throw_Local",
+  "SpawnOffset": {
+    "Y": -0.17
+  }
+}

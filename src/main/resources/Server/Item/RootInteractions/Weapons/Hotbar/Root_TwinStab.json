@@ -1,0 +1,26 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "TwinStab",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "TwinStab",
+              "Cooldown": 1
+            },
+            "CancelOnItemChange": false
+          },
+          "TwinStab"
+        ]
+      },
+      "CancelOnItemChange": false,
+      "Failed": "On_Cooldown_Sound"
+    },
+    "Hotbar9_Reset"
+  ]
+}

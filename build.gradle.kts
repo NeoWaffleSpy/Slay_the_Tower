@@ -120,8 +120,14 @@ afterEvaluate {
 
     if (targetTask != null) {
         targetTask.finalizedBy(syncAssets)
-        logger.lifecycle("✅ specific task '${targetTask.name}' hooked for auto-sync.")
+        if (targetTask is JavaExec) {
+            targetTask.args("--backup", "--backup-dir", "./Backups")
+            logger.lifecycle("Backup enabled with directory ./Backups")
+        } else {
+            logger.warn("Task '${targetTask.name}' is not a JavaExec, cannot inject args directly.")
+        }
+        logger.lifecycle("specific task '${targetTask.name}' hooked for auto-sync.")
     } else {
-        logger.warn("⚠️ Could not find 'runServer' or 'server' task to hook auto-sync into.")
+        logger.warn("Could not find 'runServer' or 'server' task to hook auto-sync into.")
     }
 }

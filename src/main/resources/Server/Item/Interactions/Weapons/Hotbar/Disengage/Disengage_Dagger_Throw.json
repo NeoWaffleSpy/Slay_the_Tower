@@ -1,0 +1,33 @@
+{
+  "Type": "Parallel",
+  "Interactions": [
+    {
+      "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_Disengage_Dagger_Throw",
+          "CancelOnItemChange": false
+        }
+      ]
+    },
+    {
+      "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_Disengage_Dagger_Throw_Left",
+          "CancelOnItemChange": false
+        }
+      ]
+    },
+    {
+      "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_Disengage_Dagger_Throw_Right",
+          "CancelOnItemChange": false
+        }
+      ]
+    }
+  ],
+  "CancelOnItemChange": false
+}

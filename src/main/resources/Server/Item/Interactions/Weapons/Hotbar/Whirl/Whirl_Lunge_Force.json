@@ -1,0 +1,13 @@
+{
+  "Type": "ApplyForce",
+  "Direction": {
+    "X": 0,
+    "Y": 0.5,
+    "Z": -5
+  },
+  "Force": 25,
+  "ChangeVelocityType": "Add",
+  "VelocityConfig": {
+    "AirResistance": 0.94
+  }
+}

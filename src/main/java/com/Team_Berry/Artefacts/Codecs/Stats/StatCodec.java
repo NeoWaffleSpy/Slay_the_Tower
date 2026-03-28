@@ -4,6 +4,7 @@ import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Enums.StatEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
+import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
@@ -29,7 +30,8 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
 
     private StatEnum stat = StatEnum.NONE;
     private CalculationType calc = CalculationType.Additive;
-    private TargetType target = TargetType.ENEMY;
+    private TargetType target = TargetType.SELF;
+    private TriggerType trigger = TriggerType.PASSIVE;
     private float value = 1.0f;
     private float duration = 1.0f;
 
@@ -73,6 +75,9 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                 .append(new KeyedCodec<TargetType>("TargetType", new EnumCodec(TargetType.class)),
                         (obj, val) -> obj.target = val,
                         obj -> obj.target).add()
+                .append(new KeyedCodec<TriggerType>("TriggerType", new EnumCodec(TriggerType.class)),
+                        (obj, val) -> obj.trigger = val,
+                        obj -> obj.trigger).add()
                 .append(new KeyedCodec<>("Value", Codec.FLOAT),
                         (obj, val) -> obj.value = val,
                         obj -> obj.value).add()

@@ -4,6 +4,13 @@
     "Description": "Hemorrage.description"
   },
   "Stats": [
-    "Health"
+    "Health",
+    "Armor",
+    "Mana"
+  ],
+  "StatusEffect": [
+    "Bleed",
+    "SuperBleed",
+    "MegaBleed"
   ]
 }

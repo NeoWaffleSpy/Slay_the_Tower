@@ -1,1 +1,6 @@
-{}
+{
+  "StatusEffect": "Health",
+  "CalculationType": "Multiplicative",
+  "TargetType": "Self",
+  "Value": 0.1
+}

@@ -4,6 +4,7 @@ import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Enums.StatusEffectEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
+import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
@@ -28,6 +29,7 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
 
     private StatusEffectEnum effect = StatusEffectEnum.NONE;
     private TargetType target = TargetType.ENEMY;
+    private TriggerType trigger = TriggerType.ON_HIT;
     private float value = 1.0f;
     private float duration = 1.0f;
 
@@ -68,6 +70,9 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
                 .append(new KeyedCodec<TargetType>("TargetType", new EnumCodec(TargetType.class)),
                         (obj, val) -> obj.target = val,
                         obj -> obj.target).add()
+                .append(new KeyedCodec<TriggerType>("TriggerType", new EnumCodec(TriggerType.class)),
+                        (obj, val) -> obj.trigger = val,
+                        obj -> obj.trigger).add()
                 .append(new KeyedCodec<>("Value", Codec.FLOAT),
                         (obj, val) -> obj.value = val,
                         obj -> obj.value).add()

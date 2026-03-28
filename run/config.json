@@ -27,5 +27,6 @@
     "Path": "auth.enc"
   },
   "Update": {},
-  "Backup": {}
+  "Backup": {},
+  "WorldMap": {}
 }

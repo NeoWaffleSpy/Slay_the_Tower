@@ -45,7 +45,6 @@
     -30,
     50
   ],
-  "Next": "Greatsword_Riven_Ability_Smash_Slam",
   "Forces": [
     {
       "Direction": {
@@ -66,5 +65,6 @@
     "Blocking": [
       "SwapTo"
     ]
-  }
+  },
+  "Next": "Greatsword_Riven_Ability_Smash_Groundslam"
 }

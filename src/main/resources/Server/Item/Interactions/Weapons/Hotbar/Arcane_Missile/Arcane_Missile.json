@@ -1,0 +1,10 @@
+{
+  "Type": "LaunchProjectile",
+  "RunTime": 0.25,
+  "Effects": {
+    "ItemAnimationId": "CastSummonCharged",
+    "WorldSoundEventId": "SFX_Staff_Ice_Shoot"
+  },
+  "ProjectileId": "Arcane_Missile",
+  "CancelOnItemChange": false
+}

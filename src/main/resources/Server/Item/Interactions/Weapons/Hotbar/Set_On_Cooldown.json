@@ -2,5 +2,10 @@
   "Type": "ModifyInventory",
   "AdjustHeldItemDurability": -1000,
   "NotifyOnBreak": false,
-  "CancelOnItemChange": false
+  "CancelOnItemChange": false,
+  "Next": {
+    "Type": "ModifyInventory",
+    "AdjustHeldItemDurability": 0.01,
+    "CancelOnItemChange": false
+  }
 }

@@ -3,7 +3,7 @@
     "Hotbar9_Reset",
     {
       "Type": "CooldownCondition",
-      "Id": "Lacerate",
+      "Id": "Arcane_Missile",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -11,12 +11,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "Lacerate",
+              "Id": "Arcane_Missile",
               "Cooldown": 4
             },
             "CancelOnItemChange": false
           },
-          "Lacerate"
+          "Arcane_Missile"
         ]
       },
       "CancelOnItemChange": false,

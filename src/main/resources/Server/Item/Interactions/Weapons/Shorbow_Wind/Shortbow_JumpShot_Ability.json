@@ -21,7 +21,7 @@
       "HorizontalSpeedMultiplier": 0,
       "RunTime": 0.7,
       "Effects": {
-        "ItemAnimationId": "ShootCharging",
+        "ItemAnimationId": "ShootChargingJumpShot",
         "ClearAnimationOnFinish": true,
         "ClearSoundEventOnFinish": true,
         "WorldSoundEventId": "SFX_Bow_T2_Draw",

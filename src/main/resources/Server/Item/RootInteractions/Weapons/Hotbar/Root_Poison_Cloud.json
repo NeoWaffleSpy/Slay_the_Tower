@@ -8,7 +8,7 @@
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "JumpShot",
+      "Id": "Poison_Cloud",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -16,12 +16,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "JumpShot",
+              "Id": "Poison_Cloud",
               "Cooldown": 5
             },
             "CancelOnItemChange": false
           },
-          "Arrow_Rain"
+          "Poison_Cloud"
         ]
       },
       "CancelOnItemChange": false

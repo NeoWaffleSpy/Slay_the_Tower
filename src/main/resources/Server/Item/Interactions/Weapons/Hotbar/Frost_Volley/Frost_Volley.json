@@ -1,0 +1,72 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.5,
+  "Effects": {
+    "ItemAnimationId": "ShootChargingPoisonCloud",
+    "ClearAnimationOnFinish": true,
+    "ClearSoundEventOnFinish": true,
+    "WorldSoundEventId": "SFX_Bow_T2_Draw",
+    "LocalSoundEventId": "SFX_Bow_T2_Draw_Local"
+  },
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley_Left_Middle"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley_Left_Middle2"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley_Left_Edge"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley_Right_Middle"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley_Right_Middle2"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Frost_Volley_Right_Edge"
+          }
+        ]
+      }
+    ]
+  }
+}

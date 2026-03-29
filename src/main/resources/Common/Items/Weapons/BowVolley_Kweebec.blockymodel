@@ -1112,1009 +1112,1003 @@
                           }
                         },
                         "unwrapMode": "custom",
-                        "visible": false,
+                        "visible": true,
                         "doubleSided": false,
                         "shadingMode": "flat"
                       },
                       "children": [
                         {
                           "id": "36",
-                          "name": "ARROW-PARTS-PLACEHOLDER",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                          "name": "bone",
+                          "position": {"x": -3, "y": 10, "z": 0},
+                          "orientation": {"x": 0, "y": 0, "z": 0.70711, "w": 0.70711},
                           "shape": {
-                            "type": "quad",
+                            "type": "none",
                             "offset": {"x": 0, "y": 0, "z": 0},
                             "stretch": {"x": 1, "y": 1, "z": 1},
                             "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
+                              "isPiece": false
                             },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
+                            "textureLayout": {},
                             "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
+                            "visible": true,
+                            "doubleSided": false,
                             "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "37",
-                          "name": "ARROW-PARTS-PLACEHOLDER",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "38",
-                          "name": "ARROW-PARTS-PLACEHOLDER",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "39",
-                          "name": "ARROW-PARTS-PLACEHOLDER",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "40",
-                      "name": "ARROW-PLACEHOLDER2",
-                      "position": {"x": 10, "y": -22, "z": 5},
-                      "orientation": {"x": 0, "y": 0, "z": -0.60876, "w": 0.79335},
-                      "shape": {
-                        "type": "box",
-                        "offset": {"x": 0, "y": 0, "z": 0},
-                        "stretch": {"x": 1, "y": 1, "z": 1},
-                        "settings": {
-                          "isPiece": false,
-                          "size": {"x": 57, "y": 2, "z": 2}
-                        },
-                        "textureLayout": {
-                          "back": {
-                            "offset": {"x": 57, "y": 48},
-                            "mirror": {"x": true, "y": false},
-                            "angle": 0
                           },
-                          "right": {
-                            "offset": {"x": 55, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "front": {
-                            "offset": {"x": 0, "y": 50},
-                            "mirror": {"x": false, "y": true},
-                            "angle": 0
-                          },
-                          "left": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "top": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "bottom": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          }
-                        },
-                        "unwrapMode": "custom",
-                        "visible": false,
-                        "doubleSided": false,
-                        "shadingMode": "flat"
-                      },
-                      "children": [
-                        {
-                          "id": "41",
-                          "name": "ARROW-PARTS-PLACEHOLDER2",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
+                          "children": [
+                            {
+                              "id": "37",
+                              "name": "ARROW-PLACEHOLDER2",
+                              "position": {"x": 0, "y": 0, "z": 0},
+                              "orientation": {"x": 0, "y": 0, "z": -0.60876, "w": 0.79335},
+                              "shape": {
+                                "type": "box",
+                                "offset": {"x": 0, "y": 0, "z": 0},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 57, "y": 2, "z": 2}
+                                },
+                                "textureLayout": {
+                                  "back": {
+                                    "offset": {"x": 57, "y": 48},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  },
+                                  "right": {
+                                    "offset": {"x": 55, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "front": {
+                                    "offset": {"x": 0, "y": 50},
+                                    "mirror": {"x": false, "y": true},
+                                    "angle": 0
+                                  },
+                                  "left": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "top": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "bottom": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": false,
+                                "shadingMode": "flat"
+                              },
+                              "children": [
+                                {
+                                  "id": "38",
+                                  "name": "ARROW-PARTS-PLACEHOLDER2",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "39",
+                                  "name": "ARROW-PARTS-PLACEHOLDER3",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "40",
+                                  "name": "ARROW-PARTS-PLACEHOLDER4",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "41",
+                                  "name": "ARROW-PARTS-PLACEHOLDER5",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                }
+                              ]
                             },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
+                            {
+                              "id": "42",
+                              "name": "ARROW-PLACEHOLDER3",
+                              "position": {"x": -19, "y": 0, "z": 0},
+                              "orientation": {"x": 0, "y": 0, "z": -0.79335, "w": 0.60876},
+                              "shape": {
+                                "type": "box",
+                                "offset": {"x": 0, "y": 0, "z": 0},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 57, "y": 2, "z": 2}
+                                },
+                                "textureLayout": {
+                                  "back": {
+                                    "offset": {"x": 57, "y": 48},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  },
+                                  "right": {
+                                    "offset": {"x": 55, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "front": {
+                                    "offset": {"x": 0, "y": 50},
+                                    "mirror": {"x": false, "y": true},
+                                    "angle": 0
+                                  },
+                                  "left": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "top": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "bottom": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": false,
+                                "shadingMode": "flat"
+                              },
+                              "children": [
+                                {
+                                  "id": "43",
+                                  "name": "ARROW-PARTS-PLACEHOLDER6",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "44",
+                                  "name": "ARROW-PARTS-PLACEHOLDER7",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "45",
+                                  "name": "ARROW-PARTS-PLACEHOLDER8",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "46",
+                                  "name": "ARROW-PARTS-PLACEHOLDER9",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                }
+                              ]
                             },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "42",
-                          "name": "ARROW-PARTS-PLACEHOLDER3",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
+                            {
+                              "id": "47",
+                              "name": "ARROW-PLACEHOLDER4",
+                              "position": {"x": 8, "y": 6, "z": 0},
+                              "orientation": {"x": 0, "y": 0, "z": -0.46175, "w": 0.88701},
+                              "shape": {
+                                "type": "box",
+                                "offset": {"x": 0, "y": 0, "z": 0},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 57, "y": 2, "z": 2}
+                                },
+                                "textureLayout": {
+                                  "back": {
+                                    "offset": {"x": 57, "y": 48},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  },
+                                  "right": {
+                                    "offset": {"x": 55, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "front": {
+                                    "offset": {"x": 0, "y": 50},
+                                    "mirror": {"x": false, "y": true},
+                                    "angle": 0
+                                  },
+                                  "left": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "top": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "bottom": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": false,
+                                "shadingMode": "flat"
+                              },
+                              "children": [
+                                {
+                                  "id": "48",
+                                  "name": "ARROW-PARTS-PLACEHOLDER10",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "49",
+                                  "name": "ARROW-PARTS-PLACEHOLDER11",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "50",
+                                  "name": "ARROW-PARTS-PLACEHOLDER12",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "51",
+                                  "name": "ARROW-PARTS-PLACEHOLDER13",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                }
+                              ]
                             },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
+                            {
+                              "id": "52",
+                              "name": "ARROW-PLACEHOLDER5",
+                              "position": {"x": -28, "y": 6, "z": 0},
+                              "orientation": {"x": 0, "y": 0, "z": -0.86603, "w": 0.5},
+                              "shape": {
+                                "type": "box",
+                                "offset": {"x": 0, "y": 0, "z": 0},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 57, "y": 2, "z": 2}
+                                },
+                                "textureLayout": {
+                                  "back": {
+                                    "offset": {"x": 57, "y": 48},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  },
+                                  "right": {
+                                    "offset": {"x": 55, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "front": {
+                                    "offset": {"x": 0, "y": 50},
+                                    "mirror": {"x": false, "y": true},
+                                    "angle": 0
+                                  },
+                                  "left": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "top": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "bottom": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": false,
+                                "shadingMode": "flat"
+                              },
+                              "children": [
+                                {
+                                  "id": "53",
+                                  "name": "ARROW-PARTS-PLACEHOLDER14",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "54",
+                                  "name": "ARROW-PARTS-PLACEHOLDER15",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "55",
+                                  "name": "ARROW-PARTS-PLACEHOLDER16",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "56",
+                                  "name": "ARROW-PARTS-PLACEHOLDER17",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                }
+                              ]
                             },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "43",
-                          "name": "ARROW-PARTS-PLACEHOLDER4",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
+                            {
+                              "id": "57",
+                              "name": "ARROW-PLACEHOLDER6",
+                              "position": {"x": -36, "y": 13, "z": 0},
+                              "orientation": {"x": 0, "y": 0, "z": -0.93969, "w": 0.34202},
+                              "shape": {
+                                "type": "box",
+                                "offset": {"x": 0, "y": 0, "z": 0},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 57, "y": 2, "z": 2}
+                                },
+                                "textureLayout": {
+                                  "back": {
+                                    "offset": {"x": 57, "y": 48},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  },
+                                  "right": {
+                                    "offset": {"x": 55, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "front": {
+                                    "offset": {"x": 0, "y": 50},
+                                    "mirror": {"x": false, "y": true},
+                                    "angle": 0
+                                  },
+                                  "left": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "top": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "bottom": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": false,
+                                "shadingMode": "flat"
+                              },
+                              "children": [
+                                {
+                                  "id": "58",
+                                  "name": "ARROW-PARTS-PLACEHOLDER18",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "59",
+                                  "name": "ARROW-PARTS-PLACEHOLDER19",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "60",
+                                  "name": "ARROW-PARTS-PLACEHOLDER20",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "61",
+                                  "name": "ARROW-PARTS-PLACEHOLDER21",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                }
+                              ]
                             },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "44",
-                          "name": "ARROW-PARTS-PLACEHOLDER5",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "45",
-                      "name": "ARROW-PLACEHOLDER3",
-                      "position": {"x": -9, "y": -22, "z": 5},
-                      "orientation": {"x": 0, "y": 0, "z": -0.79335, "w": 0.60876},
-                      "shape": {
-                        "type": "box",
-                        "offset": {"x": 0, "y": 0, "z": 0},
-                        "stretch": {"x": 1, "y": 1, "z": 1},
-                        "settings": {
-                          "isPiece": false,
-                          "size": {"x": 57, "y": 2, "z": 2}
-                        },
-                        "textureLayout": {
-                          "back": {
-                            "offset": {"x": 57, "y": 48},
-                            "mirror": {"x": true, "y": false},
-                            "angle": 0
-                          },
-                          "right": {
-                            "offset": {"x": 55, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "front": {
-                            "offset": {"x": 0, "y": 50},
-                            "mirror": {"x": false, "y": true},
-                            "angle": 0
-                          },
-                          "left": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "top": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "bottom": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          }
-                        },
-                        "unwrapMode": "custom",
-                        "visible": false,
-                        "doubleSided": false,
-                        "shadingMode": "flat"
-                      },
-                      "children": [
-                        {
-                          "id": "46",
-                          "name": "ARROW-PARTS-PLACEHOLDER6",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "47",
-                          "name": "ARROW-PARTS-PLACEHOLDER7",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "48",
-                          "name": "ARROW-PARTS-PLACEHOLDER8",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "49",
-                          "name": "ARROW-PARTS-PLACEHOLDER9",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "50",
-                      "name": "ARROW-PLACEHOLDER4",
-                      "position": {"x": 18, "y": -16, "z": 5},
-                      "orientation": {"x": 0, "y": 0, "z": -0.46175, "w": 0.88701},
-                      "shape": {
-                        "type": "box",
-                        "offset": {"x": 0, "y": 0, "z": 0},
-                        "stretch": {"x": 1, "y": 1, "z": 1},
-                        "settings": {
-                          "isPiece": false,
-                          "size": {"x": 57, "y": 2, "z": 2}
-                        },
-                        "textureLayout": {
-                          "back": {
-                            "offset": {"x": 57, "y": 48},
-                            "mirror": {"x": true, "y": false},
-                            "angle": 0
-                          },
-                          "right": {
-                            "offset": {"x": 55, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "front": {
-                            "offset": {"x": 0, "y": 50},
-                            "mirror": {"x": false, "y": true},
-                            "angle": 0
-                          },
-                          "left": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "top": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "bottom": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          }
-                        },
-                        "unwrapMode": "custom",
-                        "visible": false,
-                        "doubleSided": false,
-                        "shadingMode": "flat"
-                      },
-                      "children": [
-                        {
-                          "id": "51",
-                          "name": "ARROW-PARTS-PLACEHOLDER10",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "52",
-                          "name": "ARROW-PARTS-PLACEHOLDER11",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "53",
-                          "name": "ARROW-PARTS-PLACEHOLDER12",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "54",
-                          "name": "ARROW-PARTS-PLACEHOLDER13",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "55",
-                      "name": "ARROW-PLACEHOLDER5",
-                      "position": {"x": -18, "y": -16, "z": 5},
-                      "orientation": {"x": 0, "y": 0, "z": -0.86603, "w": 0.5},
-                      "shape": {
-                        "type": "box",
-                        "offset": {"x": 0, "y": 0, "z": 0},
-                        "stretch": {"x": 1, "y": 1, "z": 1},
-                        "settings": {
-                          "isPiece": false,
-                          "size": {"x": 57, "y": 2, "z": 2}
-                        },
-                        "textureLayout": {
-                          "back": {
-                            "offset": {"x": 57, "y": 48},
-                            "mirror": {"x": true, "y": false},
-                            "angle": 0
-                          },
-                          "right": {
-                            "offset": {"x": 55, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "front": {
-                            "offset": {"x": 0, "y": 50},
-                            "mirror": {"x": false, "y": true},
-                            "angle": 0
-                          },
-                          "left": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "top": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "bottom": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          }
-                        },
-                        "unwrapMode": "custom",
-                        "visible": false,
-                        "doubleSided": false,
-                        "shadingMode": "flat"
-                      },
-                      "children": [
-                        {
-                          "id": "56",
-                          "name": "ARROW-PARTS-PLACEHOLDER14",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "57",
-                          "name": "ARROW-PARTS-PLACEHOLDER15",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "58",
-                          "name": "ARROW-PARTS-PLACEHOLDER16",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "59",
-                          "name": "ARROW-PARTS-PLACEHOLDER17",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "60",
-                      "name": "ARROW-PLACEHOLDER6",
-                      "position": {"x": -26, "y": -9, "z": 5},
-                      "orientation": {"x": 0, "y": 0, "z": -0.93969, "w": 0.34202},
-                      "shape": {
-                        "type": "box",
-                        "offset": {"x": 0, "y": 0, "z": 0},
-                        "stretch": {"x": 1, "y": 1, "z": 1},
-                        "settings": {
-                          "isPiece": false,
-                          "size": {"x": 57, "y": 2, "z": 2}
-                        },
-                        "textureLayout": {
-                          "back": {
-                            "offset": {"x": 57, "y": 48},
-                            "mirror": {"x": true, "y": false},
-                            "angle": 0
-                          },
-                          "right": {
-                            "offset": {"x": 55, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "front": {
-                            "offset": {"x": 0, "y": 50},
-                            "mirror": {"x": false, "y": true},
-                            "angle": 0
-                          },
-                          "left": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "top": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "bottom": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          }
-                        },
-                        "unwrapMode": "custom",
-                        "visible": false,
-                        "doubleSided": false,
-                        "shadingMode": "flat"
-                      },
-                      "children": [
-                        {
-                          "id": "61",
-                          "name": "ARROW-PARTS-PLACEHOLDER18",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "62",
-                          "name": "ARROW-PARTS-PLACEHOLDER19",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "63",
-                          "name": "ARROW-PARTS-PLACEHOLDER20",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        },
-                        {
-                          "id": "64",
-                          "name": "ARROW-PARTS-PLACEHOLDER21",
-                          "position": {"x": -32, "y": 0, "z": 0},
-                          "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 15},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 0, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "65",
-                      "name": "ARROW-PLACEHOLDER7",
-                      "position": {"x": 24, "y": -8, "z": 5},
-                      "orientation": {"x": 0, "y": 0, "z": -0.34202, "w": 0.93969},
-                      "shape": {
-                        "type": "box",
-                        "offset": {"x": 0, "y": 0, "z": 0},
-                        "stretch": {"x": 1, "y": 1, "z": 1},
-                        "settings": {
-                          "isPiece": false,
-                          "size": {"x": 57, "y": 2, "z": 2}
-                        },
-                        "textureLayout": {
-                          "back": {
-                            "offset": {"x": 57, "y": 48},
-                            "mirror": {"x": true, "y": false},
-                            "angle": 0
-                          },
-                          "right": {
-                            "offset": {"x": 55, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "front": {
-                            "offset": {"x": 0, "y": 50},
-                            "mirror": {"x": false, "y": true},
-                            "angle": 0
-                          },
-                          "left": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "top": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          },
-                          "bottom": {
-                            "offset": {"x": 0, "y": 48},
-                            "mirror": {"x": false, "y": false},
-                            "angle": 0
-                          }
-                        },
-                        "unwrapMode": "custom",
-                        "visible": false,
-                        "doubleSided": false,
-                        "shadingMode": "flat"
-                      },
-                      "children": [
-                        {
-                          "id": "66",
-                          "name": "ARROW-PARTS-PLACEHOLDER22",
-                          "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
-                          "shape": {
-                            "type": "quad",
-                            "offset": {"x": 0, "y": 0, "z": 0},
-                            "stretch": {"x": 1, "y": 1, "z": 1},
-                            "settings": {
-                              "isPiece": false,
-                              "size": {"x": 16, "y": 16},
-                              "normal": "+Z"
-                            },
-                            "textureLayout": {
-                              "front": {
-                                "offset": {"x": 16, "y": 32},
-                                "mirror": {"x": false, "y": false},
-                                "angle": 0
-                              }
-                            },
-                            "unwrapMode": "custom",
-                            "visible": false,
-                            "doubleSided": true,
-                            "shadingMode": "flat"
-                          }
+                            {
+                              "id": "62",
+                              "name": "ARROW-PLACEHOLDER7",
+                              "position": {"x": 14, "y": 14, "z": 0},
+                              "orientation": {"x": 0, "y": 0, "z": -0.34202, "w": 0.93969},
+                              "shape": {
+                                "type": "box",
+                                "offset": {"x": 0, "y": 0, "z": 0},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 57, "y": 2, "z": 2}
+                                },
+                                "textureLayout": {
+                                  "back": {
+                                    "offset": {"x": 57, "y": 48},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  },
+                                  "right": {
+                                    "offset": {"x": 55, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "front": {
+                                    "offset": {"x": 0, "y": 50},
+                                    "mirror": {"x": false, "y": true},
+                                    "angle": 0
+                                  },
+                                  "left": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "top": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  },
+                                  "bottom": {
+                                    "offset": {"x": 0, "y": 48},
+                                    "mirror": {"x": false, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": false,
+                                "shadingMode": "flat"
+                              },
+                              "children": [
+                                {
+                                  "id": "63",
+                                  "name": "ARROW-PARTS-PLACEHOLDER22",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "64",
+                                  "name": "ARROW-PARTS-PLACEHOLDER23",
+                                  "position": {"x": 30, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 16},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 16, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "65",
+                                  "name": "ARROW-PARTS-PLACEHOLDER24",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                },
+                                {
+                                  "id": "66",
+                                  "name": "ARROW-PARTS-PLACEHOLDER25",
+                                  "position": {"x": -32, "y": 0, "z": 0},
+                                  "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
+                                  "shape": {
+                                    "type": "quad",
+                                    "offset": {"x": 0, "y": 0, "z": 0},
+                                    "stretch": {"x": 1, "y": 1, "z": 1},
+                                    "settings": {
+                                      "isPiece": false,
+                                      "size": {"x": 16, "y": 15},
+                                      "normal": "+Z"
+                                    },
+                                    "textureLayout": {
+                                      "front": {
+                                        "offset": {"x": 0, "y": 32},
+                                        "mirror": {"x": false, "y": false},
+                                        "angle": 0
+                                      }
+                                    },
+                                    "unwrapMode": "custom",
+                                    "visible": true,
+                                    "doubleSided": true,
+                                    "shadingMode": "flat"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
                         },
                         {
                           "id": "67",
-                          "name": "ARROW-PARTS-PLACEHOLDER23",
+                          "name": "ARROW-PARTS-PLACEHOLDER",
                           "position": {"x": 30, "y": 0, "z": 0},
-                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                          "orientation": {"x": 0.38268, "y": 0, "z": 0, "w": 0.92388},
                           "shape": {
                             "type": "quad",
                             "offset": {"x": 0, "y": 0, "z": 0},
@@ -2132,14 +2126,41 @@
                               }
                             },
                             "unwrapMode": "custom",
-                            "visible": false,
+                            "visible": true,
                             "doubleSided": true,
                             "shadingMode": "flat"
                           }
                         },
                         {
                           "id": "68",
-                          "name": "ARROW-PARTS-PLACEHOLDER24",
+                          "name": "ARROW-PARTS-PLACEHOLDER",
+                          "position": {"x": 30, "y": 0, "z": 0},
+                          "orientation": {"x": -0.38268, "y": 0, "z": 0, "w": 0.92388},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": 0, "y": 0, "z": 0},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 16, "y": 16},
+                              "normal": "+Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 16, "y": 32},
+                                "mirror": {"x": false, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        },
+                        {
+                          "id": "69",
+                          "name": "ARROW-PARTS-PLACEHOLDER",
                           "position": {"x": -32, "y": 0, "z": 0},
                           "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
                           "shape": {
@@ -2159,14 +2180,14 @@
                               }
                             },
                             "unwrapMode": "custom",
-                            "visible": false,
+                            "visible": true,
                             "doubleSided": true,
                             "shadingMode": "flat"
                           }
                         },
                         {
-                          "id": "69",
-                          "name": "ARROW-PARTS-PLACEHOLDER25",
+                          "id": "70",
+                          "name": "ARROW-PARTS-PLACEHOLDER",
                           "position": {"x": -32, "y": 0, "z": 0},
                           "orientation": {"x": -0.70711, "y": 0, "z": 0, "w": 0.70711},
                           "shape": {
@@ -2186,7 +2207,7 @@
                               }
                             },
                             "unwrapMode": "custom",
-                            "visible": false,
+                            "visible": true,
                             "doubleSided": true,
                             "shadingMode": "flat"
                           }

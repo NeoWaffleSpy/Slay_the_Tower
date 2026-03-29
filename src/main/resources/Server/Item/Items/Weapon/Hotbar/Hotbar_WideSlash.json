@@ -37,9 +37,6 @@
     "RenderDualWielded": true
   },
   "MaxDurability": 4,
-  "Interactions": {
-    "SwapTo": "Root_WideSlash"
-  },
   "InteractionVars": {
     "WideSlash_Damage": {
       "Interactions": [
@@ -77,5 +74,8 @@
     }
   },
   "Scale": 0.75,
-  "SubCategory": "Dagger"
+  "SubCategory": "Dagger",
+  "Interactions": {
+    "SwapTo": "Root_WideSlash"
+  }
 }

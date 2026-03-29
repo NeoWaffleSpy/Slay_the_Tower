@@ -1,0 +1,18 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Fuse_Bomb_Sparks",
+      "FixedRotation": true,
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "StartDelay": 0.1
+    },
+    {
+      "SpawnerId": "Fuse_Bomb_Glow",
+      "StartDelay": 0.1
+    }
+  ]
+}

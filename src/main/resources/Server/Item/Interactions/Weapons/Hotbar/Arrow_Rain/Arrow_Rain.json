@@ -1,0 +1,11 @@
+{
+  "Type": "Simple",
+  "Next": {
+    "Type": "Projectile",
+    "Config": "Projectile_Config_Arrow_Rain"
+  },
+  "RunTime": 0.5,
+  "Effects": {
+    "ItemAnimationId": "ShootChargingPoisonCloud"
+  }
+}

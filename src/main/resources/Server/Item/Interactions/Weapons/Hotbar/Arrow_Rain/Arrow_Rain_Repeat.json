@@ -1,0 +1,44 @@
+{
+  "Type": "Repeat",
+  "Repeat": 10,
+  "ForkInteractions": {
+    "Interactions": [
+      {
+        "Type": "Selector",
+        "Selector": {
+          "Id": "AOECircle",
+          "Range": 3
+        },
+        "RunTime": 1,
+        "Effects": {
+          "Particles": []
+        },
+        "CancelOnItemChange": false,
+        "HitEntity": {
+          "Interactions": [
+            {
+              "Type": "Replace",
+              "CancelOnItemChange": false,
+              "DefaultOk": true,
+              "Var": "Poison_Cloud_Damage",
+              "DefaultValue": {
+                "Interactions": [
+                  "Poison_Cloud_Damage"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "CancelOnItemChange": false,
+  "Effects": {
+    "Particles": [
+      {
+        "SystemId": "Posion_Smoke_Aura",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  }
+}

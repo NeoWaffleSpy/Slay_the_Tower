@@ -4,7 +4,7 @@
     "Name": "server.items.Weapon_Shield_Orbis_Knight.name"
   },
   "Categories": [
-    "Items.Weapons"
+    "Slay_The_Tower.Weapons"
   ],
   "Model": "Items/Weapons/Shield_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Shield_Kweebec_Texture.png",
@@ -23,5 +23,6 @@
       -23,
       -30
     ]
-  }
+  },
+  "SubCategory": "Weapons"
 }

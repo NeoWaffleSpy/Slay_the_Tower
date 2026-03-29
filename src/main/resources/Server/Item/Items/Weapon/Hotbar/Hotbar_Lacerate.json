@@ -90,5 +90,6 @@
   },
   "MaxDurability": 4,
   "Texture": "Items/Weapons/Axe/Crude_Texture.png",
-  "Model": "Items/Weapons/Axe/Crude.blockymodel"
+  "Model": "Items/Weapons/Axe/Crude.blockymodel",
+  "SubCategory": "Other"
 }

@@ -2,7 +2,7 @@
   "TranslationProperties": {
     "Name": "server.items.Template_Weapon_Shortbow.name"
   },
-  "Icon": "Icons/ItemsGenerated/JumpShotSlow_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Reticle": "DefaultMelee",
   "Quality": "Uncommon",
@@ -22,7 +22,7 @@
     ]
   },
   "Interactions": {
-    "SwapTo": "Root_Shortbow_JumpShot_Ability"
+    "SwapTo": "Root_Arrow_Rain"
   },
   "Tags": {
     "Type": [

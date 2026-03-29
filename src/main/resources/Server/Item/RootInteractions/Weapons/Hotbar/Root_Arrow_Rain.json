@@ -1,8 +1,14 @@
 {
+  "RequireNewClick": false,
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "Shadow_Dash",
+      "Id": "JumpShot",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,16 +16,15 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "Shadow_Dash",
-              "Cooldown": 8
+              "Id": "JumpShot",
+              "Cooldown": 5
             },
             "CancelOnItemChange": false
           },
-          "Shadow_Dash"
+          "Arrow_Rain"
         ]
       },
-      "CancelOnItemChange": false,
-      "Failed": "On_Cooldown_Sound"
+      "CancelOnItemChange": false
     },
     "Hotbar9_Reset"
   ]

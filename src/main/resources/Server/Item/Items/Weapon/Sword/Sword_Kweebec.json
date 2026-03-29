@@ -19,5 +19,9 @@
       -29,
       -33
     ]
-  }
+  },
+  "SubCategory": "Weapons",
+  "Categories": [
+    "Slay_The_Tower.Weapons"
+  ]
 }

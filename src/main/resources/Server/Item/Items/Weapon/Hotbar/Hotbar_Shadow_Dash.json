@@ -59,5 +59,6 @@
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Shadow_Dash_Ability_Icon.png",
-  "Scale": 0.75
+  "Scale": 0.75,
+  "SubCategory": "Dagger"
 }

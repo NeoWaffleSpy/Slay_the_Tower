@@ -1,0 +1,8 @@
+{
+  "Type": "ChangeStat",
+  "StatModifiers": {
+    "DeployablePreview": 0
+  },
+  "ValueType": "Percent",
+  "Behaviour": "Set"
+}

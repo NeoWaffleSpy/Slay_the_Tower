@@ -5,7 +5,33 @@
     {
       "Id": "Weapons",
       "Name": "server.ui.itemcategory.weapons",
-      "Icon": "Icons/ItemCategories/Items-Weapons.png"
+      "Icon": "Icons/ItemCategories/Items-Weapons.png",
+      "SubCategories": [
+        {
+          "Id": "Weapons",
+          "Name": "Weapons",
+          "Description": "Kweebec Weapons"
+        },
+        {
+          "Id": "Dagger",
+          "Name": "Dagger Skills",
+          "Description": "Dagger Skills",
+          "Order": 1
+        },
+        {
+          "Id": "Ranger",
+          "Name": "Ranger Skills",
+          "Description": "Ranger Skills",
+          "Order": 2
+        },
+        {
+          "Id": "Other",
+          "Name": "Other Skills",
+          "Description": "Other Skills",
+          "Order": 3
+        }
+      ],
+      "Order": 0
     }
   ]
 }

@@ -38,5 +38,6 @@
   "Texture": "Items/Weapons/Staff/Wizard_Texture.png",
   "Categories": [
     "Slay_The_Tower.Weapons"
-  ]
+  ],
+  "SubCategory": "Other"
 }

@@ -1,0 +1,11 @@
+{
+  "Type": "DamageEntity",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 7
+    },
+    "Class": "Light"
+  },
+  "CancelOnItemChange": false,
+  "Parent": "DamageEntityParent"
+}

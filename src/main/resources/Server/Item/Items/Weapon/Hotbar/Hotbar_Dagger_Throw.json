@@ -25,9 +25,6 @@
       -21
     ]
   },
-  "Utility": {
-    "Compatible": false
-  },
   "Tags": {
     "Type": [
       "Weapon"
@@ -57,5 +54,6 @@
       ]
     }
   },
-  "Scale": 0.75
+  "Scale": 0.75,
+  "SubCategory": "Dagger"
 }

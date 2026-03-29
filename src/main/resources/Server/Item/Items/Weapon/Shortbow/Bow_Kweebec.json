@@ -2,7 +2,7 @@
   "TranslationProperties": {
     "Name": "server.items.Weapon_Shortbow_Iron.name"
   },
-  "Parent": "Template_Weapon_Shortbow",
+  "Parent": "Template_Weapon_Shortbow_Kweebec",
   "Quality": "Uncommon",
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
@@ -40,6 +40,32 @@
         "Id": "Armory"
       }
     ]
+  },
+  "Interactions": {
+    "Primary": "Root_Kweebec_Bow_Primary_Shoot",
+    "Secondary": "Root_Weapon_Shortbow_Secondary_Guard",
+    "Ability1": "Root_Weapon_Shortbow_Signature_Volley",
+    "SwapFrom": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Ammo": 1
+          },
+          "Next": {
+            "Type": "ModifyInventory",
+            "RequiredGameMode": "Adventure",
+            "ItemToAdd": {
+              "Id": "Weapon_Arrow_Crude",
+              "Quantity": 1
+            }
+          }
+        },
+        {
+          "Type": "ChangeActiveSlot"
+        }
+      ]
+    }
   },
   "InteractionVars": {
     "Primary_Shoot_Damage_Strength_0": {
@@ -166,8 +192,6 @@
       ]
     }
   },
-  "MaxDurability": 120,
-  "DurabilityLossOnHit": 0.58,
   "IconProperties": {
     "Scale": 0.35,
     "Rotation": [
@@ -178,6 +202,67 @@
     "Translation": [
       -35,
       -37
+    ]
+  },
+  "Categories": [
+    "Slay_The_Tower.Weapons"
+  ],
+  "SubCategory": "Weapons",
+  "RenderDeployablePreview": true,
+  "Weapon": {
+    "StatModifiers": {
+      "DeployablePreview": [
+        {
+          "CalculationType": "Additive",
+          "Amount": 1
+        }
+      ]
+    }
+  },
+  "ItemAppearanceConditions": {
+    "DeployablePreview": [
+      {
+        "Condition": [
+          1,
+          100
+        ],
+        "ConditionValueType": "Percent",
+        "Particles": [
+          {
+            "SystemId": "Bow_Signature_Charge",
+            "TargetNodeName": "ARROW-PLACEHOLDER",
+            "PositionOffset": {
+              "X": 0.5,
+              "Y": 0.25,
+              "Z": 0
+            },
+            "Scale": 0.5,
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Bow_Signature_Charge",
+            "TargetNodeName": "ARROW-PLACEHOLDER",
+            "PositionOffset": {
+              "X": 0.5,
+              "Y": 0,
+              "Z": 0
+            },
+            "Scale": 0.5,
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Bow_Signature_Charge",
+            "TargetNodeName": "ARROW-PLACEHOLDER",
+            "PositionOffset": {
+              "X": 0.5,
+              "Y": -0.25,
+              "Z": 0
+            },
+            "Scale": 0.5,
+            "TargetEntityPart": "PrimaryItem"
+          }
+        ]
+      }
     ]
   }
 }

@@ -2,7 +2,7 @@
   "TranslationProperties": {
     "Name": "server.items.Template_Weapon_Shortbow.name"
   },
-  "Icon": "Icons/ItemsGenerated/PoisonCloud_Ability_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Fire_Goblin.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [
@@ -32,10 +32,17 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapons_Wood",
-  "MaxDurability": 1,
+  "MaxDurability": 8,
   "PlayerAnimationsId": "Kweebec_Bow",
   "Texture": "Items/Weapons/BombBow_Kweebec_Texture.png",
   "Model": "Items/Weapons/BombBow_Kweebec.blockymodel",
   "Weapon": {},
-  "SubCategory": "Ranger"
+  "SubCategory": "Ranger",
+  "Particles": [
+    {
+      "SystemId": "Fuse_Bomb_Weapon",
+      "TargetEntityPart": "PrimaryItem",
+      "TargetNodeName": "Fuse_Lit"
+    }
+  ]
 }

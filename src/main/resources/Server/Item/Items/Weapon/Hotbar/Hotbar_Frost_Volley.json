@@ -32,7 +32,7 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapons_Wood",
-  "MaxDurability": 1,
+  "MaxDurability": 5,
   "PlayerAnimationsId": "Kweebec_Bow",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
   "Model": "Items/Weapons/BowVolley_Kweebec.blockymodel",
@@ -53,5 +53,19 @@
         }
       ]
     }
-  }
+  },
+  "Particles": [
+    {
+      "TargetEntityPart": "PrimaryItem",
+      "SystemId": "Frost_Volley_Particle_Trail_Weapon",
+      "Scale": 0.6,
+      "TargetNodeName": "ARROW-PARTS-PLACEHOLDER",
+      "PositionOffset": {
+        "X": -0.2
+      },
+      "RotationOffset": {
+        "Pitch": 140
+      }
+    }
+  ]
 }

@@ -59,5 +59,13 @@
         }
       ]
     }
-  }
+  },
+  "Particles": [
+    {
+      "SystemId": "Fuse_Bomb",
+      "TargetEntityPart": "Entity",
+      "TargetNodeName": "Fuse_Lit",
+      "Scale": 2
+    }
+  ]
 }

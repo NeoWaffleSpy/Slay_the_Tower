@@ -32,7 +32,7 @@
   },
   "Particles": [
     {
-      "SystemId": "Poison_Cloud_Particle_Trail",
+      "SystemId": "Poison_Cloud_Particle_Trail_Weapon",
       "Scale": 0.5,
       "TargetEntityPart": "Entity"
     }

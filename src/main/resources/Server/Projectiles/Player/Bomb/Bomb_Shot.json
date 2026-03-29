@@ -6,7 +6,6 @@
   "MuzzleVelocity": 20,
   "TerminalVelocity": 20,
   "Gravity": 20,
-  "Damage": 22,
   "HitParticles": {
     "SystemId": "Explosion_Medium"
   },
@@ -19,8 +18,7 @@
   "DeathEffectsOnHit": true,
   "BounceSoundEventId": "SFX_Bomb_Fire_Goblin_Bounce",
   "HitSoundEventId": "SFX_Bomb_Fire_Goblin_Hit",
-  "MissSoundEventId": "SFX_Crystal_Break",
-  "DeathSoundEventId": "SFX_Crystal_Break",
+  "DeathSoundEventId": "SFX_Goblin_Lobber_Bomb_Death",
   "DeadTimeMiss": 0,
   "DeadTime": 0,
   "ExplosionConfig": {
@@ -28,7 +26,7 @@
     "DamageBlocks": false,
     "BlockDamageRadius": 20,
     "EntityDamageRadius": 5,
-    "EntityDamageFalloff": 1.0,
+    "EntityDamageFalloff": 0,
     "Knockback": {
       "Type": "Point",
       "VelocityConfig": {
@@ -40,7 +38,8 @@
       },
       "Force": 5,
       "VelocityType": "Set"
-    }
+    },
+    "EntityDamage": 25
   },
   "VerticalCenterShot": 0.2,
   "HorizontalCenterShot": 0.1

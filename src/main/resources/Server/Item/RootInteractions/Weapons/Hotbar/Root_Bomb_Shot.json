@@ -17,7 +17,7 @@
             "Type": "TriggerCooldown",
             "Cooldown": {
               "Id": "Bomb_Shot",
-              "Cooldown": 1
+              "Cooldown": 8
             },
             "CancelOnItemChange": false
           },

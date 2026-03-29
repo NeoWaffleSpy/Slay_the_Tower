@@ -37,5 +37,16 @@
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Weapon": {},
-  "SubCategory": "Ranger"
+  "SubCategory": "Ranger",
+  "Particles": [
+    {
+      "TargetNodeName": "ARROW-PARTS-PLACEHOLDER",
+      "TargetEntityPart": "PrimaryItem",
+      "SystemId": "Poison_Cloud_Particle_Trail_Weapon",
+      "Scale": 0.3,
+      "RotationOffset": {
+        "Roll": -90
+      }
+    }
+  ]
 }

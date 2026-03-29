@@ -1,0 +1,18 @@
+{
+  "Type": "ApplyForce",
+  "Direction": {
+    "Z": 5,
+    "Y": 2
+  },
+  "Force": 13,
+  "CancelOnItemChange": false,
+  "RunTime": 0.4,
+  "HorizontalSpeedMultiplier": 0,
+  "ChangeVelocityType": "Set",
+  "Duration": 0.1,
+  "WaitForGround": false,
+  "Effects": {
+    "ItemAnimationId": "Backflip",
+    "ClearAnimationOnFinish": true
+  }
+}

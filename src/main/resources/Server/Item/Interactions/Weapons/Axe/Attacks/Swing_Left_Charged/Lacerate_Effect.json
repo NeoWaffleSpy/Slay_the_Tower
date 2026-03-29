@@ -1,7 +1,7 @@
 {
   "Type": "Simple",
   "$Comment": "Length of Effect",
-  "RunTime": 0.2,
+  "RunTime": 0.1,
   "Effects": {
     "Trails": [
       {

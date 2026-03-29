@@ -1,0 +1,11 @@
+{
+  "Parent": "Projectile_Config_Disengage_Dagger_Throw",
+  "SpawnRotationOffset": {
+    "Yaw": -10,
+    "Roll": 90,
+    "Pitch": 2
+  },
+  "SpawnOffset": {
+    "Y": -0.17
+  }
+}

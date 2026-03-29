@@ -1,0 +1,26 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Slow_Bomb",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Slow_Bomb",
+              "Cooldown": 6
+            },
+            "CancelOnItemChange": false
+          },
+          "Slow_Bomb"
+        ]
+      },
+      "CancelOnItemChange": false,
+      "Failed": "On_Cooldown_Sound"
+    },
+    "Hotbar9_Reset"
+  ]
+}

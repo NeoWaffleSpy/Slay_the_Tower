@@ -1,0 +1,31 @@
+{
+  "Type": "Simple",
+  "Effects": {
+    "ItemAnimationId": "PounceSweep",
+    "LocalSoundEventId": "SFX_Daggers_T2_Swing_Double_Local",
+    "WorldSoundEventId": "SFX_Daggers_T2_Swing_Double"
+  },
+  "RunTime": 0.133,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Parallel",
+        "$Comment": "Make sure this parallel interaction is needed and can't be optimized away",
+        "Interactions": [
+          {
+            "Interactions": [
+              "WideSlash_Selector"
+            ]
+          },
+          {
+            "Interactions": [
+              "WideSlash_Effect"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "CancelOnItemChange": false
+}

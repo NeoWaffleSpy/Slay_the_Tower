@@ -1,0 +1,26 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "WideSlash",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "WideSlash",
+              "Cooldown": 4
+            },
+            "CancelOnItemChange": false
+          },
+          "WideSlash"
+        ]
+      },
+      "CancelOnItemChange": false,
+      "Failed": "On_Cooldown_Sound"
+    },
+    "Hotbar9_Reset"
+  ]
+}

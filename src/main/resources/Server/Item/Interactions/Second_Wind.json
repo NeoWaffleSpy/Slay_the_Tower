@@ -1,0 +1,35 @@
+{
+  "Type": "Serial",
+  "$Comment": "Effects and VFX/SFX would be applied here in the Serial interaction chain",
+  "Interactions": [
+    {
+      "Type": "ApplyEffect",
+      "EffectId": "Second_Wind",
+      "Effects": {
+        "WorldSoundEventId": "SFX_On_Cooldown"
+      }
+    },
+    {
+      "Type": "ChangeStat",
+      "StatModifiers": {
+        "Stamina": 30
+      },
+      "ValueType": "Percent"
+    },
+    {
+      "$Comment": "Each of these dashes is a Serial interaction with ApplyForce and Daggers_Dash_Effect",
+      "Type": "MovementCondition",
+      "Failed": "Daggers_Dash_Forward",
+      "Forward": "Daggers_Dash_Forward",
+      "Back": "Daggers_Dash_Backward",
+      "Left": "Daggers_Dash_Left",
+      "Right": "Daggers_Dash_Right",
+      "ForwardLeft": "Daggers_Dash_Forward_Left",
+      "ForwardRight": "Daggers_Dash_Forward_Right",
+      "BackLeft": "Daggers_Dash_Backward_Left",
+      "BackRight": "Daggers_Dash_Backward_Right",
+      "Effects": {},
+      "CancelOnItemChange": false
+    }
+  ]
+}

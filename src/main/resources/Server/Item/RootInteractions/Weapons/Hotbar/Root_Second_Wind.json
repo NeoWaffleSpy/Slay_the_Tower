@@ -1,0 +1,26 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Second_Wind",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Second_Wind",
+              "Cooldown": 3
+            },
+            "CancelOnItemChange": false
+          },
+          "Second_Wind"
+        ]
+      },
+      "CancelOnItemChange": false,
+      "Failed": "On_Cooldown_Sound"
+    },
+    "Hotbar9_Reset"
+  ]
+}

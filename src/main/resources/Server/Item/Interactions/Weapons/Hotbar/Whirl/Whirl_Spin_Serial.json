@@ -1,0 +1,15 @@
+{
+  "Type": "Parallel",
+  "Interactions": [
+    {
+      "Interactions": [
+        "Whirl_Spin_Effect"
+      ]
+    },
+    {
+      "Interactions": [
+        "Whirl_Spin_Selector"
+      ]
+    }
+  ]
+}

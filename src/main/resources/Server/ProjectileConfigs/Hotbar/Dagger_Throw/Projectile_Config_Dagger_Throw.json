@@ -1,0 +1,55 @@
+{
+  "Model": "Kweebec_Dagger",
+  "LaunchWorldSoundEventId": "SFX_Spear_Throw",
+  "SpawnRotationOffset": {
+    "Pitch": 2,
+    "Yaw": 0
+  },
+  "Physics": {
+    "Type": "Standard",
+    "LaunchForce": 30,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "Gravity": 20
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Dagger_Damage",
+          "DefaultValue": {
+            "Interactions": [
+              "Dagger_Throw_Damage"
+            ]
+          },
+          "CancelOnItemChange": false,
+          "DefaultOk": true
+        },
+        {
+          "Type": "Replace",
+          "Var": "Signature_Volley_Impact",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Projectile_Impact_Effects"
+            ]
+          }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+  "LaunchForce": 50,
+  "LaunchLocalSoundEventId": "SFX_Spear_Throw_Local",
+  "SpawnOffset": {
+    "Y": -0.17
+  }
+}

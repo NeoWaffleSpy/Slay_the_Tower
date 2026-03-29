@@ -1,0 +1,35 @@
+{
+  "Debuff": true,
+  "RemovalBehavior": "Duration",
+  "Duration": 3,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffa93f",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "Particles": [
+      {
+        "SystemId": "Stunned",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Head"
+      }
+    ],
+    "HorizontalSpeedMultiplier": 0,
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability2",
+        "Ability3",
+        "Use",
+        "SwapTo",
+        "SwapFrom",
+        "Wielding",
+        "ProjectileSpawn",
+        "Held",
+        "HeldOffhand",
+        "Equipped",
+        "Dodge"
+      ]
+    }
+  }
+}

@@ -2,14 +2,12 @@
   "TranslationProperties": {
     "Name": "server.items.Weapon_Staff_Wizard.name"
   },
-  "Categories": [
-    "Items.Weapons"
-  ],
   "Icon": "Icons/ItemsGenerated/Weapon_Staff_Wizard.png",
   "Quality": "Common",
   "PlayerAnimationsId": "Staff",
   "Interactions": {
-    "SwapTo": "Root_Arcane_Missile"
+    "SwapTo": "Root_Arcane_Missile",
+    "Held": "Root_Arcane_Missile"
   },
   "IconProperties": {
     "Scale": 0.23,
@@ -35,5 +33,10 @@
   "Weapon": {},
   "ItemSoundSetId": "ISS_Weapons_Wood",
   "FuelQuality": 1,
-  "MaxDurability": 4
+  "MaxDurability": 4,
+  "Model": "Items/Weapons/Staff/Wizard.blockymodel",
+  "Texture": "Items/Weapons/Staff/Wizard_Texture.png",
+  "Categories": [
+    "Slay_The_Tower.Weapons"
+  ]
 }

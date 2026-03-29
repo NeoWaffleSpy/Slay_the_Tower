@@ -1,0 +1,11 @@
+{
+  "Type": "Simple",
+  "Next": {
+    "Type": "Projectile",
+    "Config": "Projectile_Config_Dagger_Throw"
+  },
+  "RunTime": 0.15,
+  "Effects": {
+    "ItemAnimationId": "SwingLeft"
+  }
+}

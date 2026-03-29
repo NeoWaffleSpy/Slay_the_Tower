@@ -1,0 +1,32 @@
+{
+  "Type": "Selector",
+  "CancelOnItemChange": false,
+  "Selector": {
+    "Id": "AOECylinder",
+    "Range": 2.3,
+    "Height": 2,
+    "Offset": {
+      "Y": -1
+    }
+  },
+  "HitBlock": {
+    "Interactions": [
+      "Block_Break_Adventure"
+    ]
+  },
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "Replace",
+        "Var": "Whirl_Spin_Damage",
+        "DefaultOk": true,
+        "DefaultValue": {
+          "Interactions": [
+            "Greatsword_Riven_Spin_Damage"
+          ]
+        },
+        "CancelOnItemChange": false
+      }
+    ]
+  }
+}

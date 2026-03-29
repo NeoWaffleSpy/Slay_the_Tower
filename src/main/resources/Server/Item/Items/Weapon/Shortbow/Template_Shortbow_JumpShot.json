@@ -8,7 +8,7 @@
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Bow",
   "Reticle": "DefaultMelee",
-  "Quality": "Template",
+  "Quality": "Rare",
   "ItemLevel": 5,
   "Categories": [
     "Items.Weapons"

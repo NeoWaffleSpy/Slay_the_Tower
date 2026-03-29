@@ -14,7 +14,7 @@
           {
             "Type": "Selector",
             "$Comment": "Length of Combat",
-            "RunTime": 0.156,
+            "RunTime": 0.1,
             "Selector": {
               "Id": "Horizontal",
               "Direction": "ToLeft",

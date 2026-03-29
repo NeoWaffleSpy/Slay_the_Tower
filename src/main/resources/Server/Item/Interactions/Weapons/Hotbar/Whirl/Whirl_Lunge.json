@@ -1,0 +1,24 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.1,
+  "Effects": {
+    "ItemAnimationId": "RazorstrikeLunge",
+    "WorldSoundEventId": "SFX_Daggers_T2_Signature_P3",
+    "LocalSoundEventId": "SFX_Daggers_T2_Signature_P3_Local"
+  },
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          "Whirl_Lunge_Selector"
+        ]
+      },
+      {
+        "Interactions": [
+          "Whirl_Lunge_Force"
+        ]
+      }
+    ]
+  }
+}

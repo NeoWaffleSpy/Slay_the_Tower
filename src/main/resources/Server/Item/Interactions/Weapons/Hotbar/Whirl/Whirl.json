@@ -1,0 +1,7 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    "Whirl_Lunge",
+    "Whirl_Spin_Serial"
+  ]
+}

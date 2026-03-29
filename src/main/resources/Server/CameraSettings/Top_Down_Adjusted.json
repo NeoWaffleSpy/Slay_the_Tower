@@ -1,0 +1,26 @@
+{
+  "Distance": 3,
+  "SendMouseMotion": true,
+  "PositionDistanceOffsetType": "DistanceOffsetRaycast",
+  "RotationType": "AttachedToPlusOffset",
+  "Rotation": {
+    "Pitch": -50
+  },
+  "MouseInputType": "LookAtPlane",
+  "PlaneNormal": {
+    "Y": 1
+  },
+  "IsFirstPerson": false,
+  "EyeOffset": true,
+  "MovementForceRotationType": "AttachedToHead",
+  "DisplayReticle": true,
+  "DisplayCursor": false,
+  "LookMultiplier": {
+    "X": 5,
+    "Y": 2
+  },
+  "PositionType": "AttachedToPlusOffset",
+  "PositionOffset": {
+    "X": 0
+  }
+}

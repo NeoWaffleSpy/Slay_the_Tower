@@ -1,6 +1,5 @@
 {
   "Interactions": [
-    "Hotbar9_Reset",
     {
       "Type": "CooldownCondition",
       "Id": "Arcane_Missile",
@@ -21,6 +20,8 @@
       },
       "CancelOnItemChange": false,
       "Failed": "On_Cooldown_Sound"
-    }
-  ]
+    },
+    "Hotbar9_Reset"
+  ],
+  "ClickQueuingTimeout": 0.3
 }

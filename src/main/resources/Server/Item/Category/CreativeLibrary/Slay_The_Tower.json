@@ -1,0 +1,11 @@
+{
+  "Icon": "Icons/ItemCategories/Items.png",
+  "Order": 5,
+  "Children": [
+    {
+      "Id": "Weapons",
+      "Name": "server.ui.itemcategory.weapons",
+      "Icon": "Icons/ItemCategories/Items-Weapons.png"
+    }
+  ]
+}

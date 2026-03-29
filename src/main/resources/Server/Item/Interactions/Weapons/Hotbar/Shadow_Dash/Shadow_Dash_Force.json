@@ -1,0 +1,23 @@
+{
+  "Type": "ApplyForce",
+  "VelocityConfig": {
+    "GroundResistance": 0.496,
+    "AirResistance": 0.504
+  },
+  "ChangeVelocityType": "Set",
+  "CancelOnItemChange": false,
+  "Forces": [
+    {
+      "Direction": {
+        "Z": -5
+      },
+      "Force": 200
+    },
+    {
+      "Direction": {
+        "Y": 1
+      },
+      "Force": 1
+    }
+  ]
+}

@@ -6,7 +6,6 @@
     ]
   },
   "Interactions": [
-    "Hotbar9_Reset",
     {
       "Type": "CooldownCondition",
       "Id": "JumpShot",
@@ -26,6 +25,7 @@
         ]
       },
       "CancelOnItemChange": false
-    }
+    },
+    "Hotbar9_Reset"
   ]
 }

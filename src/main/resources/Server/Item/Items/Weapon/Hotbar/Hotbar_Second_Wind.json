@@ -1,10 +1,10 @@
 {
   "TranslationProperties": {
-    "Name": "Disengage"
+    "Name": "Second Wind"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
-  "Icon": "Icons/ItemsGenerated/Disengage_Ability_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Daggers_Kweebec.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Daggers",
   "Reticle": "DefaultMelee",
@@ -36,9 +36,9 @@
   "Weapon": {
     "RenderDualWielded": true
   },
-  "MaxDurability": 6,
+  "MaxDurability": 3,
   "Interactions": {
-    "SwapTo": "Root_Disengage"
+    "SwapTo": "Root_Second_Wind"
   },
   "InteractionVars": {
     "Disengage_Damage": {

@@ -1,0 +1,11 @@
+{
+  "Type": "Simple",
+  "Next": {
+    "Type": "LaunchProjectile",
+    "ProjectileId": "Slow_Bomb_Projectile"
+  },
+  "RunTime": 0.15,
+  "Effects": {
+    "ItemAnimationId": "SwingLeft"
+  }
+}

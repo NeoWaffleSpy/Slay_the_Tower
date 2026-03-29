@@ -2,7 +2,7 @@
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "TwinStab",
+      "Id": "Slow_Bomb",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,12 +10,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "TwinStab",
-              "Cooldown": 1.9
+              "Id": "Slow_Bomb",
+              "Cooldown": 6
             },
             "CancelOnItemChange": false
           },
-          "TwinStab"
+          "Slow_Bomb"
         ]
       },
       "CancelOnItemChange": false,

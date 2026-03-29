@@ -2,7 +2,6 @@
   "Model": "Kweebec_Dagger",
   "LaunchWorldSoundEventId": "SFX_Spear_Throw",
   "SpawnRotationOffset": {
-    "Roll": 90,
     "Pitch": 2,
     "Yaw": 0
   },
@@ -14,19 +13,21 @@
     "RotationMode": "VelocityDamped",
     "Bounciness": 0.0,
     "SticksVertically": true,
-    "Gravity": 30
+    "Gravity": 20
   },
   "Interactions": {
     "ProjectileHit": {
       "Interactions": [
         {
           "Type": "Replace",
-          "Var": "Signature_Volley_Damage",
+          "Var": "Dagger_Damage",
           "DefaultValue": {
             "Interactions": [
-              "Weapon_Shortbow_Signature_Volley_Damage"
+              "Dagger_Throw_Damage"
             ]
-          }
+          },
+          "CancelOnItemChange": false,
+          "DefaultOk": true
         },
         {
           "Type": "Replace",

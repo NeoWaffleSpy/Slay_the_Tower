@@ -4,7 +4,7 @@
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
-  "Icon": "Icons/ItemsGenerated/Daggers_Kweebec.png",
+  "Icon": "Icons/ItemsGenerated/WideSlash_Ability_Icon.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Daggers",
   "Reticle": "DefaultMelee",

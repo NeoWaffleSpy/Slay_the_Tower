@@ -370,6 +370,14 @@
       "Looping": false,
       "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Bow/Attacks/Shoot_Charged/Shoot_Charging_Moving.blockyanim",
       "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
+    },
+    "ShootChargingBombShot": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Bow/Attacks/Shoot_Charged/Shoot_Charging.blockyanim",
+      "Speed": 0.95,
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Bow/Attacks/Shoot_Charged/Shoot_Charging_FPS.blockyanim",
+      "Looping": false,
+      "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Bow/Attacks/Shoot_Charged/Shoot_Charging_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
     }
   },
   "Camera": {

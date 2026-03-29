@@ -50,8 +50,8 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
         return ASSET_STORE;
     }
 
-    public static Collection<StatusEffectCodec> getAssetMap() {
-        return getAssetStore().getAssetMap().getAssetMap().values();
+    public static DefaultAssetMap<String, StatusEffectCodec> getAssetMap() {
+        return getAssetStore().getAssetMap();
     }
 
     public void updateCodecSetting(String name) {

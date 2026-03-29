@@ -104,34 +104,28 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     }
 
     public static ArrayList<StatusEffectCodec> getStatusEffectFromStringList(ArrayList<String> sList) {
-        Collection<StatusEffectCodec> col = StatusEffectCodec.getAssetMap();
+        DefaultAssetMap<String, StatusEffectCodec> map = StatusEffectCodec.getAssetMap();
         ArrayList<StatusEffectCodec> list = new ArrayList<>();
-        sList.forEach((s) -> col.forEach((status) -> {
-            if (Objects.equals(status.getId(), s))
-                list.add(status);
-        }));
+        sList.forEach((s) -> list.add(map.getAsset(s)));
         return list;
     }
 
     public static ArrayList<StatCodec> getStatFromStringList(ArrayList<String> sList) {
-        Collection<StatCodec> col = StatCodec.getAssetMap();
+        DefaultAssetMap<String, StatCodec> map = StatCodec.getAssetMap();
         ArrayList<StatCodec> list = new ArrayList<>();
-        sList.forEach((s) -> col.forEach((status) -> {
-            if (Objects.equals(status.getId(), s))
-                list.add(status);
-        }));
+        sList.forEach((s) -> list.add(map.getAsset(s)));
         return list;
     }
 
     public static ArrayList<String> getStatusStringList(ArrayList<StatusEffectCodec> list) {
         ArrayList<String> val = new ArrayList<>();
-        list.forEach((status) -> val.add(new String(status.getId())));
+        list.forEach((status) -> val.add(status.getId()));
         return val;
     }
 
     public static ArrayList<String> getStatStringList(ArrayList<StatCodec> list) {
         ArrayList<String> val = new ArrayList<>();
-        list.forEach((status) -> val.add(new String(status.getId())));
+        list.forEach((status) -> val.add(status.getId()));
         return val;
     }
 
@@ -159,15 +153,15 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     }
 
     public static void registerStatusEffectRequestDataset(AssetEditorRequestDataSetEvent event) {
-        Collection<StatusEffectCodec> statusEffect = StatusEffectCodec.getAssetMap();
-        String[] s = statusEffect.stream().map(StatusEffectCodec::getId).toArray(String[]::new);
+        DefaultAssetMap<String, StatusEffectCodec> statusEffect = StatusEffectCodec.getAssetMap();
+        String[] s = statusEffect.getAssetMap().values().stream().map(StatusEffectCodec::getId).toArray(String[]::new);
         ArtefactPlugin.LOGGER.atInfo().log("Registering request assets for dataset " + Arrays.toString(s));
         event.setResults(s);
     }
 
     public static void registerStatRequestDataset(AssetEditorRequestDataSetEvent event) {
-        Collection<StatCodec> stats = StatCodec.getAssetMap();
-        String[] s = stats.stream().map(StatCodec::getId).toArray(String[]::new);
+        DefaultAssetMap<String, StatCodec> stats = StatCodec.getAssetMap();
+        String[] s = stats.getAssetMap().values().stream().map(StatCodec::getId).toArray(String[]::new);
         ArtefactPlugin.LOGGER.atInfo().log("Registering request assets for dataset " + Arrays.toString(s));
         event.setResults(s);
     }

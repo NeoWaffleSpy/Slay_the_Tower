@@ -1,7 +1,6 @@
 package com.Team_Berry.Artefacts.Codecs.Stats;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
-import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Enums.StatEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
@@ -12,14 +11,18 @@ import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
+import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
+import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
 import com.hypixel.hytale.protocol.CalculationType;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 
-import java.util.Collection;
+import java.util.Arrays;
 
 public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, StatCodec>> {
     private static AssetStore<String, StatCodec, DefaultAssetMap<String, StatCodec>> ASSET_STORE;
@@ -28,6 +31,7 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     private String effectName = "Template";
     private AssetExtraInfo.Data data;
 
+    private EntityStatType type;
     private StatEnum stat = StatEnum.NONE;
     private CalculationType calc = CalculationType.Additive;
     private TargetType target = TargetType.SELF;
@@ -52,8 +56,8 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         return ASSET_STORE;
     }
 
-    public static Collection<StatCodec> getAssetMap() {
-        return getAssetStore().getAssetMap().getAssetMap().values();
+    public static DefaultAssetMap<String, StatCodec> getAssetMap() {
+        return getAssetStore().getAssetMap();
     }
 
     public void updateCodecSetting(String name) {
@@ -66,6 +70,10 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         CODEC = AssetBuilderCodec.builder(StatCodec.class, StatCodec::new, Codec.STRING,
                         (t, k) -> t.effectName = k, (t) -> t.effectName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
+                .append(new KeyedCodec<>("Stat", Codec.STRING),
+                        (artefact, map) -> artefact.type = getStatFromString(map),
+                        (artefact) -> getStatString(artefact.type))
+                .metadata(new UIEditor(new UIEditor.Dropdown("EntityStatTypeDataSet"))).add()
                 .append(new KeyedCodec<>("StatusEffect", new EnumCodec<>(StatEnum.class)),
                         (obj, val) -> obj.stat = val,
                         obj -> obj.stat).add()
@@ -88,16 +96,24 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     }
 
     public static void register() {
-        ArtefactPlugin a = ArtefactPlugin.get();
-        a.getAssetRegistry()
+        ArtefactPlugin artifact = ArtefactPlugin.get();
+        artifact.getAssetRegistry()
                 .register(HytaleAssetStore.builder(StatCodec.class, new DefaultAssetMap<>())
                 .setPath("StatCodec")
                 .setCodec(StatCodec.CODEC)
                 .setKeyFunction(StatCodec::getId)
                 .setReplaceOnRemove(StatCodec::new)
                 .build());
-        a.getEventRegistry().register(LoadedAssetsEvent.class, StatCodec.class, StatCodec::onLoaded);
-        a.getEventRegistry().register(RemovedAssetsEvent.class, StatCodec.class, StatCodec::onRemoved);
+        artifact.getEventRegistry().register(LoadedAssetsEvent.class, StatCodec.class, StatCodec::onLoaded);
+        artifact.getEventRegistry().register(RemovedAssetsEvent.class, StatCodec.class, StatCodec::onRemoved);
+        artifact.getEventRegistry().register(AssetEditorRequestDataSetEvent.class, "EntityStatTypeDataSet", StatCodec::registerStatRequestDataset);
+    }
+
+    public static void registerStatRequestDataset(AssetEditorRequestDataSetEvent event) {
+        IndexedLookupTableAssetMap<String, EntityStatType> entityStatType = ArtefactPlugin.getEntityStatTypeAssetStore();
+        String[] s = entityStatType.getAssetMap().values().stream().map(EntityStatType::getId).toArray(String[]::new);
+        ArtefactPlugin.LOGGER.atInfo().log("Registering request assets for dataset " + Arrays.toString(s));
+        event.setResults(s);
     }
 
     public static void onLoaded(LoadedAssetsEvent<String, StatCodec, DefaultAssetMap<String, StatCodec>> event) {
@@ -106,5 +122,13 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
 
     public static void onRemoved(RemovedAssetsEvent<String, StatCodec, DefaultAssetMap<String, StatCodec>> event) {
         event.getRemovedAssets().forEach(StatCodec::remove);
+    }
+
+    public static EntityStatType getStatFromString(String key) {
+        return ArtefactPlugin.getEntityStatTypeAssetStore().getAsset(key);
+    }
+
+    public static String getStatString(EntityStatType stat) {
+        return stat.getId();
     }
 }

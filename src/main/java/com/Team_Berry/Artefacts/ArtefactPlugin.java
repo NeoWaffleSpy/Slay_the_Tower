@@ -8,9 +8,11 @@ import com.Team_Berry.Artefacts.Components.Systems.StatEffectSystem;
 import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Camera.CustomCameraSettings;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
+import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.event.IBaseEvent;
@@ -21,6 +23,7 @@ import com.hypixel.hytale.server.core.command.system.CommandRegistration;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsSystems;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -40,6 +43,10 @@ public class ArtefactPlugin extends JavaPlugin {
 
     public ComponentType<EntityStore, StatEffectComponent> getStatEffectComponentType() {
         return this.statEffectComponentType;
+    }
+
+    public static IndexedLookupTableAssetMap<String, EntityStatType> getEntityStatTypeAssetStore() {
+        return AssetRegistry.getAssetStore(EntityStatType.class).getAssetMap();
     }
 
     public ArtefactPlugin(JavaPluginInit init) {

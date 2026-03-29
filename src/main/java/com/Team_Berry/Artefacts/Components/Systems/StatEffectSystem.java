@@ -8,10 +8,8 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
-import com.hypixel.hytale.server.core.modules.entity.tracker.EntityTrackerSystems;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
-import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -40,7 +38,7 @@ public class StatEffectSystem {
         private final Query<EntityStore> query;
         public StatEffectTickingSystem(@Nonnull ComponentType<EntityStore, EntityStatMap> entityStatMapComponentType) {
             this.entityStatMapComponentType = entityStatMapComponentType;
-            this.query = Query.and(entityStatMapComponentType);
+            this.query = Query.and(ArtefactPlugin.get().getStatEffectComponentType());
         }
 
         @Override
@@ -56,7 +54,7 @@ public class StatEffectSystem {
                     artefact.statList.forEach(stat -> {
                         if (stat == null)
                             return;
-                        statMap.putModifier(EntityStatType.getAssetMap().getIndex("health"), key)
+                        //statMap.putModifier(EntityStatType.getAssetMap().getIndex("health"), key)
                     });
                 });
                 comp.artefactUpdated.clear();

@@ -2,7 +2,7 @@
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "TwinStab",
+      "Id": "WideSlash",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,12 +10,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "TwinStab",
-              "Cooldown": 1.9
+              "Id": "WideSlash",
+              "Cooldown": 4
             },
             "CancelOnItemChange": false
           },
-          "TwinStab"
+          "WideSlash"
         ]
       },
       "CancelOnItemChange": false,

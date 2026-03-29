@@ -11,7 +11,7 @@
             "Type": "TriggerCooldown",
             "Cooldown": {
               "Id": "Disengage",
-              "Cooldown": 1
+              "Cooldown": 6
             },
             "CancelOnItemChange": false
           },

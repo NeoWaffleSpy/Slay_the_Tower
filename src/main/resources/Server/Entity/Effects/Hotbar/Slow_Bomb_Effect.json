@@ -1,0 +1,9 @@
+{
+  "Duration": 3,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#c0fffd",
+    "HorizontalSpeedMultiplier": 0.3
+  }
+}

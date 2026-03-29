@@ -1,10 +1,10 @@
 {
   "TranslationProperties": {
-    "Name": "Disengage"
+    "Name": "Dagger Throw"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
-  "Icon": "Icons/ItemsGenerated/Disengage_Ability_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Daggers_Throw_Ability_Icon.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Daggers",
   "Reticle": "DefaultMelee",
@@ -25,6 +25,9 @@
       -21
     ]
   },
+  "Utility": {
+    "Compatible": false
+  },
   "Tags": {
     "Type": [
       "Weapon"
@@ -36,24 +39,19 @@
   "Weapon": {
     "RenderDualWielded": true
   },
-  "MaxDurability": 6,
+  "MaxDurability": 1.2,
   "Interactions": {
-    "SwapTo": "Root_Disengage"
+    "SwapTo": "Root_Dagger_Throw"
   },
   "InteractionVars": {
-    "Disengage_Damage": {
+    "Dagger_Damage": {
       "Interactions": [
         {
-          "Parent": "Disengage_Damage",
+          "Parent": "Dagger_Throw_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 8
+              "Physical": 12
             }
-          },
-          "EntityStatsOnHit": [],
-          "DamageEffects": {
-            "WorldSoundEventId": "SFX_Battleaxe_T2_Impact",
-            "LocalSoundEventId": "SFX_Battleaxe_T2_Impact"
           }
         }
       ]

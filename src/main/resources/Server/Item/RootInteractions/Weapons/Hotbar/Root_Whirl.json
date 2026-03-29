@@ -11,7 +11,7 @@
             "Type": "TriggerCooldown",
             "Cooldown": {
               "Id": "Whirl",
-              "Cooldown": 1
+              "Cooldown": 7
             },
             "CancelOnItemChange": false
           },

@@ -16,7 +16,7 @@
             "ExtendBottom": 0.5,
             "ExtendLeft": 0.5,
             "ExtendRight": 0.5,
-            "EndDistance": 2
+            "EndDistance": 3
           },
           "Effects": {
             "WorldSoundEventId": "SFX_Daggers_T2_Swing",
@@ -58,7 +58,8 @@
           "Next": {
             "Type": "Simple",
             "$Comment": "Pad the interaction length",
-            "RunTime": 0.069
+            "RunTime": 0.069,
+            "CancelOnItemChange": false
           },
           "HitBlock": {
             "Interactions": [
@@ -73,9 +74,10 @@
                 "DefaultOk": true,
                 "DefaultValue": {
                   "Interactions": [
-                    "Weapon_Daggers_Primary_Stab_Right_Damage"
+                    "TwinStab_Right_Damage"
                   ]
-                }
+                },
+                "CancelOnItemChange": false
               },
               {
                 "Type": "Replace",
@@ -83,9 +85,10 @@
                 "DefaultOk": true,
                 "DefaultValue": {
                   "Interactions": [
-                    "Weapon_Daggers_Primary_Stab_Right_Damage"
+                    "TwinStab_Right_Damage"
                   ]
-                }
+                },
+                "CancelOnItemChange": false
               }
             ]
           }

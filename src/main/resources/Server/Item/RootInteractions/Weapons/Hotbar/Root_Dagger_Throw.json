@@ -2,7 +2,7 @@
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "TwinStab",
+      "Id": "Dagger_Throw",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,12 +10,12 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "TwinStab",
-              "Cooldown": 1.9
+              "Id": "Dagger_Throw",
+              "Cooldown": 1.2
             },
             "CancelOnItemChange": false
           },
-          "TwinStab"
+          "Dagger_Throw"
         ]
       },
       "CancelOnItemChange": false,

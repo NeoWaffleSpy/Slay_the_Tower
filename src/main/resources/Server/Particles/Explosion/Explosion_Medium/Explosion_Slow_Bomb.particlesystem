@@ -1,0 +1,38 @@
+{
+  "Spawners": [
+    {
+      "PositionOffset": {
+        "Y": 0.5,
+        "X": 0.0
+      },
+      "StartDelay": 0.0,
+      "SpawnerId": "Explosion_Medium_Smoke_Main"
+    },
+    {
+      "SpawnerId": "Explosion_Medium_Smoke_Side",
+      "PositionOffset": {
+        "Y": 0.5,
+        "Z": -0.2
+      },
+      "StartDelay": 0.0,
+      "LifeSpan": {
+        "Min": 0.0,
+        "Max": 0.0
+      }
+    },
+    {
+      "PositionOffset": {
+        "Y": 0.5,
+        "Z": 0.2
+      },
+      "RotationOffset": {
+        "Yaw": 180.0
+      },
+      "StartDelay": 0.0,
+      "SpawnerId": "Explosion_Medium_Smoke_Side"
+    }
+  ],
+  "BoundingRadius": 100.0,
+  "CullDistance": 100.0,
+  "IsImportant": false
+}

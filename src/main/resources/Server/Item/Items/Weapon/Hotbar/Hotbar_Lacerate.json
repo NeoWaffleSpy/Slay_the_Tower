@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Template_Weapon_Battleaxe.name"
+    "Name": "Lacerate"
   },
   "Categories": [
     "Slay_The_Tower.Weapons"
@@ -30,19 +30,7 @@
       "Weapon"
     ]
   },
-  "Weapon": {
-    "EntityStatsToClear": [
-      "SignatureEnergy"
-    ],
-    "StatModifiers": {
-      "SignatureEnergy": [
-        {
-          "Amount": 9,
-          "CalculationType": "Additive"
-        }
-      ]
-    }
-  },
+  "Weapon": {},
   "ItemAppearanceConditions": {
     "SignatureEnergy": [
       {

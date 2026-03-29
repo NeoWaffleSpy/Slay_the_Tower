@@ -2,7 +2,7 @@
   "TranslationProperties": {
     "Name": "server.items.Template_Weapon_Shortbow.name"
   },
-  "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
+  "Icon": "Icons/ItemsGenerated/4Arrows_Ability_Icon.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [
@@ -23,7 +23,9 @@
   "Interactions": {
     "SwapTo": "Root_Burst",
     "SwapFrom": "Root_Burst_SwapFrom",
-    "Held": "Root_Burst_Held"
+    "Held": "Root_Burst_Held",
+    "Primary": "Root_Burst_SwapFrom",
+    "Secondary": "Root_Burst_SwapFrom"
   },
   "Tags": {
     "Type": [

@@ -24,6 +24,7 @@
         "TargetEntityPart": "Entity"
       }
     ],
-    "HorizontalSpeedMultiplier": 2.5
+    "HorizontalSpeedMultiplier": 2,
+    "ScreenEffect": "ScreenEffects/Burst_ScreenEffect.png"
   }
 }

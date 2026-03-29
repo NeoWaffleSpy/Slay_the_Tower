@@ -21,7 +21,7 @@
     ]
   },
   "Interactions": {
-    "SwapTo": "Root_Poison_Cloud"
+    "SwapTo": "Root_Bomb_Shot"
   },
   "Tags": {
     "Type": [
@@ -32,10 +32,10 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapons_Wood",
-  "MaxDurability": 5,
+  "MaxDurability": 1,
   "PlayerAnimationsId": "Kweebec_Bow",
-  "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
-  "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
+  "Texture": "Items/Weapons/BombBow_Kweebec_Texture.png",
+  "Model": "Items/Weapons/BombBow_Kweebec.blockymodel",
   "Weapon": {},
   "SubCategory": "Ranger"
 }

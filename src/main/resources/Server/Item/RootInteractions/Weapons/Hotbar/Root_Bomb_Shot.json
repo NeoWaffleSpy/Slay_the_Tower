@@ -1,0 +1,31 @@
+{
+  "RequireNewClick": false,
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Bomb_Shot",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Bomb_Shot",
+              "Cooldown": 1
+            },
+            "CancelOnItemChange": false
+          },
+          "Bomb_Shot"
+        ]
+      },
+      "CancelOnItemChange": false
+    },
+    "Hotbar9_Reset"
+  ]
+}

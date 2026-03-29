@@ -5,7 +5,7 @@ import com.Team_Berry.WeaponInteraction.Component.BleedComponent;
 import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.Team_Berry.WeaponInteraction.Interactions.BleedInteraction;
 import com.Team_Berry.WeaponInteraction.Systems.BleedTickingSystem;
-import com.Team_Berry.WeaponInteraction.Systems.HotbarManagerSystem;
+import com.Team_Berry.WeaponInteraction.Systems.HotbarManagerTickingSystem;
 import com.Team_Berry.WeaponInteraction.Systems.SlowBombDamageSystem;
 import com.Team_Berry.WeaponInteraction.Systems.UltExplosionTickingSystem;
 import com.hypixel.hytale.component.ComponentType;
@@ -39,7 +39,7 @@ public class WeaponInteractionPlugin extends JavaPlugin {
         UltMouseControl.ULT_EXPLOSION_COMPONENT_TYPE = ultExplosionComponentComponentType;
         getEntityStoreRegistry().registerSystem(new UltExplosionTickingSystem(ultExplosionComponentComponentType));
         getEntityStoreRegistry().registerSystem(new BleedTickingSystem(bleedComponentType));
-        getEntityStoreRegistry().registerSystem(new HotbarManagerSystem());
+        getEntityStoreRegistry().registerSystem(new HotbarManagerTickingSystem());
         getEntityStoreRegistry().registerSystem(new SlowBombDamageSystem());
         this.getCodecRegistry(Interaction.CODEC).register("BleedInteraction", BleedInteraction.class, BleedInteraction.CODEC);
         BleedInteraction.BLEED_COMPONENT_TYPE = bleedComponentType;

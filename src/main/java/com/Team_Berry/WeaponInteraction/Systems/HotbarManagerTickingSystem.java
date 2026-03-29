@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class HotbarManagerSystem extends EntityTickingSystem<EntityStore> {
+public class HotbarManagerTickingSystem extends EntityTickingSystem<EntityStore> {
 
     private static final byte HOTBAR_SECTION_ID = -1;
     private final ConcurrentHashMap<UUID, Integer> lastSyncedSlot = new ConcurrentHashMap<>();

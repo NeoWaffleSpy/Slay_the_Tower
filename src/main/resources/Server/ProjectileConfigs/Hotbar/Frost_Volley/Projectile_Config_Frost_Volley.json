@@ -1,0 +1,61 @@
+{
+  "Model": "Frost_Volley_Arrow",
+  "SpawnRotationOffset": {
+    "Pitch": 4,
+    "Yaw": 0,
+    "Roll": -45
+  },
+  "Physics": {
+    "Type": "Standard",
+    "LaunchForce": 10,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "Gravity": 3
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Signature_Volley_Damage",
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Shortbow_Signature_Volley_Damage"
+            ]
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Signature_Volley_Impact",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Projectile_Impact_Effects"
+            ]
+          }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Primary_Shoot_Miss_Strength_4",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Projectile_Miss"
+            ]
+          }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+  "LaunchForce": 20,
+  "SpawnOffset": {
+    "Y": -0.4
+  }
+}

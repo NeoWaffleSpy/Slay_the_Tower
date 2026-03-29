@@ -1,0 +1,42 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Template_Weapon_Shortbow.name"
+  },
+  "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "Reticle": "DefaultMelee",
+  "Quality": "Uncommon",
+  "Categories": [
+    "Slay_The_Tower.Weapons"
+  ],
+  "IconProperties": {
+    "Scale": 0.4,
+    "Translation": [
+      -25,
+      -39
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Interactions": {
+    "SwapTo": "Root_Frost_Volley"
+  },
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Bow"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Wood",
+  "MaxDurability": 1,
+  "PlayerAnimationsId": "Kweebec_Bow",
+  "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
+  "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
+  "Weapon": {},
+  "SubCategory": "Ranger"
+}

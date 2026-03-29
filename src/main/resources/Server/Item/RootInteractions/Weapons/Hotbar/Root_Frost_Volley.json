@@ -1,0 +1,31 @@
+{
+  "RequireNewClick": false,
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Frost_Volley",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Frost_Volley",
+              "Cooldown": 1
+            },
+            "CancelOnItemChange": false
+          },
+          "Frost_Volley"
+        ]
+      },
+      "CancelOnItemChange": false
+    },
+    "Hotbar9_Reset"
+  ]
+}

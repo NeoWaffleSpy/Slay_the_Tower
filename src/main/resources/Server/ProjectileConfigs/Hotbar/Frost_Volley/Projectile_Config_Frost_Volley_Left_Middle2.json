@@ -1,0 +1,8 @@
+{
+  "Parent": "Projectile_Config_Frost_Volley",
+  "SpawnRotationOffset": {
+    "Yaw": 10,
+    "Pitch": 4,
+    "Roll": 90
+  }
+}

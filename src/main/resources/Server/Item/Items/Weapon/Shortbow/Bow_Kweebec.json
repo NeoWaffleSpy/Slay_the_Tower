@@ -171,13 +171,13 @@
   "IconProperties": {
     "Scale": 0.35,
     "Rotation": [
-      39,
-      90,
+      49,
+      91,
       0
     ],
     "Translation": [
-      -30,
-      -45
+      -35,
+      -37
     ]
   }
 }

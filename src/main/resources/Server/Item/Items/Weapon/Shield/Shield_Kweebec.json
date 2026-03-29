@@ -13,15 +13,15 @@
   "ItemLevel": 40,
   "Scale": 1.1,
   "IconProperties": {
-    "Scale": 0.5,
+    "Scale": 0.45,
     "Rotation": [
-      0,
+      323,
       267,
       0
     ],
     "Translation": [
-      1,
-      -32
+      -23,
+      -30
     ]
   }
 }

@@ -9,15 +9,15 @@
   "Quality": "Common",
   "ItemLevel": 45,
   "IconProperties": {
-    "Scale": 0.4,
+    "Scale": 0.43,
     "Rotation": [
       42,
-      90,
+      88,
       0
     ],
     "Translation": [
-      -26,
-      -32
+      -29,
+      -33
     ]
   }
 }

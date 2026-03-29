@@ -2,12 +2,11 @@
   "TranslationProperties": {
     "Name": "server.items.Template_Weapon_Shortbow.name"
   },
-  "Model": "Items/Weapons/Bow/Iron.blockymodel",
-  "Texture": "Items/Weapons/Bow/Iron_Texture.png",
+  "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
+  "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Bow_Crude.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Bow",
-  "Reticle": "DefaultMelee",
   "Quality": "Template",
   "ItemLevel": 5,
   "Categories": [
@@ -69,40 +68,45 @@
     "Primary_Shoot_Strength_0": {
       "Interactions": [
         {
-          "$Comment": "Launching a shot with 0.0s charge",
-          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_0"
+          "Type": "Projectile",
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Projectile",
+          "Config": "Projectile_Config_Kweebec_Bow_Strength0"
         }
       ]
     },
     "Primary_Shoot_Strength_1": {
       "Interactions": [
         {
-          "$Comment": "Launching a shot with 0.3s charge",
-          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_1"
+          "Type": "Projectile",
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Projectile",
+          "Config": "Projectile_Config_Kweebec_Bow_Strength1"
         }
       ]
     },
     "Primary_Shoot_Strength_2": {
       "Interactions": [
         {
-          "$Comment": "Launching a shot with 0.6s charge",
-          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_2"
+          "Type": "Projectile",
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Projectile",
+          "Config": "Projectile_Config_Kweebec_Bow_Strength2"
         }
       ]
     },
     "Primary_Shoot_Strength_3": {
       "Interactions": [
         {
-          "$Comment": "Launching a shot with 0.9s charge",
-          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_3"
+          "Type": "Projectile",
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Projectile",
+          "Config": "Projectile_Config_Kweebec_Bow_Strength3"
         }
       ]
     },
     "Primary_Shoot_Strength_4": {
       "Interactions": [
         {
-          "$Comment": "Launching a shot with full charge (1.2s+)",
-          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_4"
+          "Type": "Projectile",
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Projectile",
+          "Config": "Projectile_Config_Kweebec_Bow_Strength4"
         }
       ]
     },
@@ -454,7 +458,5 @@
       ]
     }
   },
-  "ItemSoundSetId": "ISS_Weapons_Wood",
-  "MaxDurability": 80,
-  "DurabilityLossOnHit": 0.58
+  "ItemSoundSetId": "ISS_Weapons_Wood"
 }

@@ -1,0 +1,24 @@
+{
+  "Interactions": [
+    {
+      "Type": "Simple",
+      "RunTime": 0.06,
+      "Next": {
+        "Type": "EffectCondition",
+        "EntityEffectIds": [
+          "Burst_Effect"
+        ],
+        "CancelOnItemChange": false,
+        "Failed": "Hotbar9_Reset"
+      }
+    }
+  ],
+  "Rules": {
+    "BlockedBy": [
+      "SwapFrom"
+    ],
+    "InterruptedBy": [
+      "SwapFrom"
+    ]
+  }
+}

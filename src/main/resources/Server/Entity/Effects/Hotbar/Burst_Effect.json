@@ -1,0 +1,29 @@
+{
+  "Duration": 5,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "ApplicationEffects": {
+    "LocalSoundEventId": "SFX_Bow_T2_Signature_Nock_Local",
+    "WorldSoundEventId": "SFX_Bow_T2_Signature_Nock",
+    "Particles": [
+      {
+        "SystemId": "Potion_Health_Implosion",
+        "Scale": 1.5,
+        "Color": "#ffe400",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Potion_Health_Implosion",
+        "Scale": 5,
+        "PositionOffset": {
+          "Z": 0
+        },
+        "Color": "#ffe400",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "HorizontalSpeedMultiplier": 2.5
+  }
+}

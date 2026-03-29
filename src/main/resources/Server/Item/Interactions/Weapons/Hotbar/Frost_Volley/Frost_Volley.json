@@ -15,7 +15,8 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley"
+            "Config": "Projectile_Config_Frost_Volley",
+            "CancelOnItemChange": false
           }
         ]
       },
@@ -23,7 +24,8 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley_Left_Middle"
+            "Config": "Projectile_Config_Frost_Volley_Left_Middle",
+            "CancelOnItemChange": false
           }
         ]
       },
@@ -31,7 +33,8 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley_Left_Middle2"
+            "Config": "Projectile_Config_Frost_Volley_Left_Middle2",
+            "CancelOnItemChange": false
           }
         ]
       },
@@ -39,7 +42,8 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley_Left_Edge"
+            "Config": "Projectile_Config_Frost_Volley_Left_Edge",
+            "CancelOnItemChange": false
           }
         ]
       },
@@ -47,7 +51,8 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley_Right_Middle"
+            "Config": "Projectile_Config_Frost_Volley_Right_Middle",
+            "CancelOnItemChange": false
           }
         ]
       },
@@ -55,7 +60,8 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley_Right_Middle2"
+            "Config": "Projectile_Config_Frost_Volley_Right_Middle2",
+            "CancelOnItemChange": false
           }
         ]
       },
@@ -63,10 +69,12 @@
         "Interactions": [
           {
             "Type": "Projectile",
-            "Config": "Projectile_Config_Frost_Volley_Right_Edge"
+            "Config": "Projectile_Config_Frost_Volley_Right_Edge",
+            "CancelOnItemChange": false
           }
         ]
       }
-    ]
+    ],
+    "CancelOnItemChange": false
   }
 }

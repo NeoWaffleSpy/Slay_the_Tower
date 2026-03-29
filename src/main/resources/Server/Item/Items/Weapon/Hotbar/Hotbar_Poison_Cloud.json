@@ -4,7 +4,6 @@
   },
   "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
-  "Reticle": "DefaultMelee",
   "Quality": "Uncommon",
   "Categories": [
     "Slay_The_Tower.Weapons"

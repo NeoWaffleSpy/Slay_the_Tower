@@ -1,0 +1,30 @@
+{
+  "RequireNewClick": false,
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Burst",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Burst",
+              "Cooldown": 10
+            },
+            "CancelOnItemChange": false
+          },
+          "Burst"
+        ]
+      },
+      "CancelOnItemChange": false
+    }
+  ]
+}

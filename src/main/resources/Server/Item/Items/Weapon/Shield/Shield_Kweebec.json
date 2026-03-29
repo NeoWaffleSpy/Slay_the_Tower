@@ -1,0 +1,27 @@
+{
+  "Parent": "Template_Weapon_Shield",
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Shield_Orbis_Knight.name"
+  },
+  "Categories": [
+    "Items.Weapons"
+  ],
+  "Model": "Items/Weapons/Shield_Kweebec.blockymodel",
+  "Texture": "Items/Weapons/Shield_Kweebec_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Shield_Kweebec.png",
+  "Quality": "Common",
+  "ItemLevel": 40,
+  "Scale": 1.1,
+  "IconProperties": {
+    "Scale": 0.5,
+    "Rotation": [
+      0,
+      267,
+      0
+    ],
+    "Translation": [
+      1,
+      -32
+    ]
+  }
+}

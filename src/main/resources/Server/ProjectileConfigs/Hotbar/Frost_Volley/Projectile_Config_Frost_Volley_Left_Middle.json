@@ -6,5 +6,8 @@
     "Roll": 90
   },
   "LaunchWorldSoundEventId": "SFX_Staff_Ice_Shoot",
-  "LaunchLocalSoundEventId": "SFX_Staff_Ice_Shoot"
+  "LaunchLocalSoundEventId": "SFX_Staff_Ice_Shoot",
+  "SpawnOffset": {
+    "Y": -0.4
+  }
 }

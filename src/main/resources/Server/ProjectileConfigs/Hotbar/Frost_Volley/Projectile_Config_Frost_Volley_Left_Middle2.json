@@ -4,5 +4,8 @@
     "Yaw": 10,
     "Pitch": 4,
     "Roll": 90
+  },
+  "SpawnOffset": {
+    "Y": -0.4
   }
 }

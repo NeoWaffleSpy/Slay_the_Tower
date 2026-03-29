@@ -35,7 +35,7 @@
   "MaxDurability": 1,
   "PlayerAnimationsId": "Kweebec_Bow",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
-  "Model": "Items/Weapons/BowQuintuple_Kweebec.blockymodel",
+  "Model": "Items/Weapons/BowVolley_Kweebec.blockymodel",
   "Weapon": {},
   "SubCategory": "Ranger",
   "InteractionVars": {

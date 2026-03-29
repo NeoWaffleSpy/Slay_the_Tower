@@ -362,6 +362,14 @@
       "Speed": 1,
       "BlendingDuration": 0,
       "ThirdPersonFace": "Characters/Animations/Expressions/Rage.blockyanim"
+    },
+    "ShootChargingVolley": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Bow/Attacks/Shoot_Charged/Shoot_Charging.blockyanim",
+      "Speed": 2,
+      "FirstPerson": "Characters/Animations/Items/Kweebec_Bow/Shoot_Charging_Volley_FPS.blockyanim",
+      "Looping": false,
+      "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Bow/Attacks/Shoot_Charged/Shoot_Charging_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
     }
   },
   "Camera": {

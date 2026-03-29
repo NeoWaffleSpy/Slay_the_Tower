@@ -2,7 +2,7 @@
   "Type": "Simple",
   "RunTime": 0.5,
   "Effects": {
-    "ItemAnimationId": "ShootChargingPoisonCloud",
+    "ItemAnimationId": "ShootChargingVolley",
     "ClearAnimationOnFinish": true,
     "ClearSoundEventOnFinish": true,
     "WorldSoundEventId": "SFX_Bow_T2_Draw",

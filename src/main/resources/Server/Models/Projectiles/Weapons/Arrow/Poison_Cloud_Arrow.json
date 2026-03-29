@@ -1,0 +1,44 @@
+{
+  "HitBox": {
+    "Max": {
+      "X": 0.075,
+      "Y": 0.075,
+      "Z": 0.075
+    },
+    "Min": {
+      "X": -0.075,
+      "Y": -0.075,
+      "Z": -0.075
+    }
+  },
+  "MinScale": 1,
+  "MaxScale": 1,
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Weapons/Arrow/Arrow.blockymodel",
+      "Texture": "Items/Weapons/Arrow_Kweebec.png"
+    }
+  ],
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Poison_Cloud_Particle_Trail",
+      "Scale": 0.5,
+      "TargetEntityPart": "Entity"
+    }
+  ],
+  "Light": {
+    "Color": "#6fe",
+    "Radius": 1
+  }
+}

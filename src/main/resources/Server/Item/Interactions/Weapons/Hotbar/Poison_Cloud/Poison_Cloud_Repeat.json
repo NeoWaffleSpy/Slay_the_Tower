@@ -7,7 +7,7 @@
         "Type": "Selector",
         "Selector": {
           "Id": "AOECircle",
-          "Range": 3
+          "Range": 4
         },
         "RunTime": 1,
         "Effects": {

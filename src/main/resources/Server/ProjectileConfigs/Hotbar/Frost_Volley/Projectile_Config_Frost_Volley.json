@@ -20,12 +20,13 @@
       "Interactions": [
         {
           "Type": "Replace",
-          "Var": "Signature_Volley_Damage",
           "DefaultValue": {
             "Interactions": [
-              "Weapon_Shortbow_Signature_Volley_Damage"
+              "Frost_Volley_Damage"
             ]
-          }
+          },
+          "Var": "Frost_Volley_Damage",
+          "DefaultOk": true
         },
         {
           "Type": "Replace",

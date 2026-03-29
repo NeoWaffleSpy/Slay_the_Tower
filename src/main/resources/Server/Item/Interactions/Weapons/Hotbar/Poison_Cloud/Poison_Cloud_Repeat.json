@@ -39,6 +39,8 @@
         "SystemId": "Posion_Smoke_Aura",
         "TargetEntityPart": "Entity"
       }
-    ]
+    ],
+    "WorldSoundEventId": "SFX_Fireball_Death",
+    "LocalSoundEventId": "SFX_Fireball_Death"
   }
 }

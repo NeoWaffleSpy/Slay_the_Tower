@@ -21,7 +21,9 @@
     ]
   },
   "Interactions": {
-    "SwapTo": "Root_Frost_Volley"
+    "SwapTo": "Root_Burst",
+    "SwapFrom": "Root_Burst_SwapFrom",
+    "Held": "Root_Burst_Held"
   },
   "Tags": {
     "Type": [
@@ -32,10 +34,10 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapons_Wood",
-  "MaxDurability": 1,
+  "MaxDurability": 10,
   "PlayerAnimationsId": "Kweebec_Bow",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
-  "Model": "Items/Weapons/BowQuintuple_Kweebec.blockymodel",
+  "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Weapon": {},
   "SubCategory": "Ranger",
   "InteractionVars": {
@@ -50,6 +52,18 @@
             },
             "Class": "Light"
           }
+        }
+      ]
+    },
+    "Primary_Shoot_Strength_4": {
+      "Interactions": [
+        {
+          "Type": "Projectile",
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Projectile",
+          "Effects": {
+            "ItemAnimationId": "ShootChargingBurst"
+          },
+          "Config": "Projectile_Config_Burst"
         }
       ]
     }

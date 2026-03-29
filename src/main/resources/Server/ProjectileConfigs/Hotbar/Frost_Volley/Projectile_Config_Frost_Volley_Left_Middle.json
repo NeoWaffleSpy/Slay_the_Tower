@@ -4,5 +4,7 @@
     "Yaw": 5,
     "Pitch": 4,
     "Roll": 90
-  }
+  },
+  "LaunchWorldSoundEventId": "SFX_Staff_Ice_Shoot",
+  "LaunchLocalSoundEventId": "SFX_Staff_Ice_Shoot"
 }

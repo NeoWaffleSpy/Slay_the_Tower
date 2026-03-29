@@ -1,6 +1,6 @@
 {
   "Model": "Arrow_Iron",
-  "LaunchWorldSoundEventId": "SFX_Spear_Throw",
+  "LaunchWorldSoundEventId": "SFX_Bow_T2_Shoot",
   "SpawnRotationOffset": {
     "Roll": 90,
     "Pitch": 2,
@@ -32,7 +32,7 @@
     }
   },
   "LaunchForce": 50,
-  "LaunchLocalSoundEventId": "SFX_Spear_Throw_Local",
+  "LaunchLocalSoundEventId": "SFX_Bow_T2_Shoot_Local",
   "SpawnOffset": {
     "Y": -0.17
   }

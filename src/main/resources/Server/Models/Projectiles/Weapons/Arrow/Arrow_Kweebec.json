@@ -13,6 +13,36 @@
   },
   "MinScale": 1,
   "MaxScale": 1,
+  "Trails": [
+    {
+      "PositionOffset": {
+        "X": 0.5,
+        "Y": 0,
+        "Z": 0
+      },
+      "TargetNodeName": "Handle",
+      "TrailId": "Arrow",
+      "RotationOffset": {
+        "Yaw": 90,
+        "Pitch": 0,
+        "Roll": 45
+      }
+    },
+    {
+      "PositionOffset": {
+        "X": 0.5,
+        "Y": 0,
+        "Z": 0
+      },
+      "TargetNodeName": "Handle",
+      "TrailId": "Arrow",
+      "RotationOffset": {
+        "Yaw": 0,
+        "Pitch": 45,
+        "Roll": 90
+      }
+    }
+  ],
   "DefaultAttachments": [
     {
       "Model": "Items/Weapons/Arrow/Arrow.blockymodel",
@@ -29,16 +59,5 @@
         }
       ]
     }
-  },
-  "Particles": [
-    {
-      "SystemId": "Frost_Volley_Particle_Trail",
-      "Scale": 0.5,
-      "TargetEntityPart": "Entity"
-    }
-  ],
-  "Light": {
-    "Color": "#6fe",
-    "Radius": 1
   }
 }

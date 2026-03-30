@@ -27,11 +27,11 @@ public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetM
     private String effectName = "Template";
     private AssetExtraInfo.Data data;
 
-    private StatusEffectEnum effect = StatusEffectEnum.NONE;
-    private TargetType target = TargetType.ENEMY;
-    private TriggerType trigger = TriggerType.ON_HIT;
-    private float value = 1.0f;
-    private float duration = 1.0f;
+    public StatusEffectEnum effect = StatusEffectEnum.NONE;
+    public TargetType target = TargetType.ENEMY;
+    public TriggerType trigger = TriggerType.ON_HIT;
+    public float value = 1.0f;
+    public float duration = 1.0f;
 
     public StatusEffectCodec() {}
     public StatusEffectCodec(String effectName) {

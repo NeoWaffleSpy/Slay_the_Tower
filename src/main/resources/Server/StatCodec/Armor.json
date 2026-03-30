@@ -1,6 +1,7 @@
 {
   "StatusEffect": "Health",
-  "CalculationType": "Multiplicative",
+  "CalculationType": "Additive",
   "TargetType": "Self",
-  "Value": 0.1
+  "Stat": "Bonus_Armor",
+  "Value": 100
 }

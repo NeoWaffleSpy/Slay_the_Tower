@@ -58,6 +58,10 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         return ASSET_STORE;
     }
 
+    public static DefaultAssetMap<String, ArtefactCodec> getAssetMap() {
+        return getAssetStore().getAssetMap();
+    }
+
     public void updateTranslation() {
         if (translationProperties == null
                 || translationProperties.getName() == null
@@ -75,10 +79,6 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     }
 
     public static void remove(String s) {
-    }
-
-    public static Collection<ArtefactCodec> getAssetMap() {
-        return getAssetStore().getAssetMap().getAssetMap().values();
     }
 
     static {

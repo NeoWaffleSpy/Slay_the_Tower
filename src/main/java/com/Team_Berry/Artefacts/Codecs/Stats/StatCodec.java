@@ -1,7 +1,6 @@
 package com.Team_Berry.Artefacts.Codecs.Stats;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
-import com.Team_Berry.Artefacts.Codecs.Enums.StatEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
@@ -18,9 +17,9 @@ import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
-import com.hypixel.hytale.protocol.CalculationType;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier.CalculationType;
 
 import java.util.Arrays;
 
@@ -31,13 +30,12 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     private String effectName = "Template";
     private AssetExtraInfo.Data data;
 
-    private EntityStatType type;
-    private StatEnum stat = StatEnum.NONE;
-    private CalculationType calc = CalculationType.Additive;
-    private TargetType target = TargetType.SELF;
-    private TriggerType trigger = TriggerType.PASSIVE;
-    private float value = 1.0f;
-    private float duration = 1.0f;
+    public EntityStatType type;
+    public CalculationType calc = CalculationType.ADDITIVE;
+    public TargetType target = TargetType.SELF;
+    public TriggerType trigger = TriggerType.PASSIVE;
+    public float value = 1.0f;
+    public float duration = 1.0f;
 
     public StatCodec() {}
     public StatCodec(String effectName) {
@@ -74,9 +72,6 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                         (artefact, map) -> artefact.type = getStatFromString(map),
                         (artefact) -> getStatString(artefact.type))
                 .metadata(new UIEditor(new UIEditor.Dropdown("EntityStatTypeDataSet"))).add()
-                .append(new KeyedCodec<>("StatusEffect", new EnumCodec<>(StatEnum.class)),
-                        (obj, val) -> obj.stat = val,
-                        obj -> obj.stat).add()
                 .append(new KeyedCodec<>("CalculationType", new EnumCodec<>(CalculationType.class)),
                         (obj, val) -> obj.calc = val,
                         obj -> obj.calc).add()
@@ -129,6 +124,8 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     }
 
     public static String getStatString(EntityStatType stat) {
+        if (stat == null)
+            return null;
         return stat.getId();
     }
 }

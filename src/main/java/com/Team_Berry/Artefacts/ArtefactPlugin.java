@@ -3,26 +3,16 @@ package com.Team_Berry.Artefacts;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
+import com.Team_Berry.Artefacts.Commandes.ArtefactCommand;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.Components.Systems.StatEffectSystem;
-import com.Team_Berry.Camera.Camera.CameraInitializer;
-import com.Team_Berry.Camera.Camera.CustomCameraSettings;
-import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.assetstore.AssetRegistry;
-import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
-import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
-import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
-import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.event.IBaseEvent;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.registry.Registration;
-import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.command.system.CommandRegistration;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsSystems;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -62,7 +52,7 @@ public class ArtefactPlugin extends JavaPlugin {
         ArtefactCodec.register();
         StatusEffectCodec.register();
         StatCodec.register();
-        //this.entityStatusEffectComponentType = this.getEntityStoreRegistry().registerComponent(EntityStatMap.class, "EntityStats", EntityStatMap.CODEC);
+        this.getCommandRegistry().registerCommand(new ArtefactCommand());
         this.getEntityStoreRegistry().registerSystem(new StatEffectSystem.StatEffectTickingSystem(EntityStatsModule.get().getEntityStatMapComponentType()));
     }
 

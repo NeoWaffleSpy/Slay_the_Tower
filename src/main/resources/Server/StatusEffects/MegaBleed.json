@@ -1,3 +1,5 @@
 {
-  "Value": 5
+  "Value": 5,
+  "StatusEffect": "Bleeding",
+  "Duration": 30
 }

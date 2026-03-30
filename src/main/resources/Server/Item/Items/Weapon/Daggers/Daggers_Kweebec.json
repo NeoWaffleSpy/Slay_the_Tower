@@ -1,5 +1,5 @@
 {
-  "Parent": "Template_Weapon_Daggers",
+  "Parent": "Template_Weapon_Daggers_Kweebec",
   "TranslationProperties": {
     "Name": "server.items.Weapon_Daggers_Iron.name"
   },

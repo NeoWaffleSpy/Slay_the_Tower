@@ -1,0 +1,1175 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Head",
+      "position": {"x": 0, "y": 0, "z": 0},
+      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "shape": {
+        "type": "none",
+        "offset": {"x": 0, "y": 0, "z": 0},
+        "stretch": {"x": 1, "y": 1, "z": 1},
+        "settings": {
+          "isPiece": true
+        },
+        "textureLayout": {},
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+      },
+      "children": [
+        {
+          "id": "2",
+          "name": "Moptop",
+          "position": {"x": 0, "y": -111.78579, "z": 0.55291},
+          "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "shape": {
+            "type": "none",
+            "offset": {"x": 0, "y": 111.78579, "z": 14.54709},
+            "stretch": {"x": 1, "y": 1, "z": 1},
+            "settings": {
+              "isPiece": false
+            },
+            "textureLayout": {},
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "flat"
+          },
+          "children": [
+            {
+              "id": "3",
+              "name": "Single_leaves",
+              "position": {"x": -2.51559, "y": 244.72272, "z": 14.02406},
+              "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+              "shape": {
+                "type": "none",
+                "offset": {"x": 0, "y": 0, "z": 0},
+                "stretch": {"x": 1, "y": 1, "z": 1},
+                "settings": {
+                  "isPiece": false
+                },
+                "textureLayout": {},
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": false,
+                "shadingMode": "flat"
+              },
+              "children": [
+                {
+                  "id": "4",
+                  "name": "Leaf--C1",
+                  "position": {"x": 13.51559, "y": -106.93693, "z": -9.47697},
+                  "orientation": {"x": -0.59432, "y": 0.18628, "z": 0.54731, "w": 0.55906},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 0, "y": -14.5, "z": 0},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 14, "y": 29},
+                      "normal": "-Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 69, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                },
+                {
+                  "id": "5",
+                  "name": "Leaf--C2",
+                  "position": {"x": 3.51559, "y": -106.93693, "z": -1.47697},
+                  "orientation": {"x": 0.043, "y": -0.21797, "z": 0.95234, "w": 0.20902},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 2, "y": -14.5, "z": 0},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 14, "y": 29},
+                      "normal": "-Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 55, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                },
+                {
+                  "id": "6",
+                  "name": "Leaf--C3",
+                  "position": {"x": -11.33192, "y": -69.09977, "z": -11.45399},
+                  "orientation": {"x": 0.14363, "y": 0.12561, "z": -0.96856, "w": 0.15961},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 0, "y": 0, "z": 0},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 12, "y": 23},
+                      "normal": "-Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 70, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                },
+                {
+                  "id": "7",
+                  "name": "Leaf--C4",
+                  "position": {"x": -9.91749, "y": -107.16526, "z": -10.47723},
+                  "orientation": {"x": -0.65067, "y": -0.69032, "z": 0.2459, "w": -0.19903},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 0, "y": -14.5, "z": 0},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 14, "y": 29},
+                      "normal": "-Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 55, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                },
+                {
+                  "id": "8",
+                  "name": "Leaf--C5",
+                  "position": {"x": -0.17761, "y": -106.10186, "z": -1.18534},
+                  "orientation": {"x": -0.27447, "y": -0.14114, "z": -0.10583, "w": 0.94528},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": -1.1, "y": -16.29023, "z": -0.64273},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 12, "y": 23},
+                      "normal": "-Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 82, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                },
+                {
+                  "id": "9",
+                  "name": "Leaf--C6",
+                  "position": {"x": -10.17148, "y": -107.0976, "z": -23.80114},
+                  "orientation": {"x": 0.34441, "y": 0.16373, "z": -0.08203, "w": 0.92078},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": -1.1, "y": -13.29023, "z": 0.64273},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 12, "y": 23},
+                      "normal": "+Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 70, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                },
+                {
+                  "id": "10",
+                  "name": "Leaf--C7",
+                  "position": {"x": 13.35136, "y": -116.85158, "z": -1.99505},
+                  "orientation": {"x": -0.34086, "y": 0.70154, "z": -0.36359, "w": -0.50938},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 1.1, "y": -15.29023, "z": 0.64273},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 12, "y": 23},
+                      "normal": "+Z",
+                      "isStaticBox": true
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 70, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "11",
+              "name": "Curved_leaves",
+              "position": {"x": 0, "y": 111.78579, "z": 14.54709},
+              "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+              "shape": {
+                "type": "none",
+                "offset": {"x": 0, "y": 0, "z": 0},
+                "stretch": {"x": 1, "y": 1, "z": 1},
+                "settings": {
+                  "isPiece": false
+                },
+                "textureLayout": {},
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": false,
+                "shadingMode": "flat"
+              },
+              "children": [
+                {
+                  "id": "12",
+                  "name": "Leaf",
+                  "position": {"x": -6, "y": 134, "z": 7},
+                  "orientation": {"x": -0.47594, "y": -0.00992, "z": 0.38924, "w": 0.78859},
+                  "shape": {
+                    "type": "none",
+                    "offset": {"x": 0, "y": -7, "z": 0},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false
+                    },
+                    "textureLayout": {},
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": false,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "13",
+                      "name": "Leaf--C1",
+                      "position": {"x": 6.23225, "y": -38.6832, "z": -8.63184},
+                      "orientation": {"x": 0.07681, "y": 0.16414, "z": -0.11834, "w": 0.9763},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": -28.91976, "y": -21.2612, "z": -95.42032},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 20, "y": 14},
+                          "normal": "-Z",
+                          "isStaticBox": true
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 38, "y": 0},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      }
+                    },
+                    {
+                      "id": "14",
+                      "name": "Leaf_middle9",
+                      "position": {"x": 0, "y": -21, "z": 0},
+                      "orientation": {"x": 0.23769, "y": 0, "z": 0, "w": 0.97134},
+                      "shape": {
+                        "type": "none",
+                        "offset": {"x": 0, "y": -8, "z": 0},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false
+                        },
+                        "textureLayout": {},
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": false,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "15",
+                          "name": "Leaf_middle9--C1",
+                          "position": {"x": 6.23225, "y": -27.67092, "z": 0.509},
+                          "orientation": {"x": 0.07681, "y": 0.09095, "z": -0.18076, "w": 0.9763},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": -31.87219, "y": -69.35733, "z": -72.52467},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 20, "y": 16},
+                              "normal": "-Z",
+                              "isStaticBox": true
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 38, "y": 14},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        },
+                        {
+                          "id": "16",
+                          "name": "Leaf_tip9",
+                          "position": {"x": 0, "y": -24, "z": 0},
+                          "orientation": {"x": 0.25882, "y": 0, "z": 0, "w": 0.96593},
+                          "shape": {
+                            "type": "none",
+                            "offset": {"x": 0, "y": -8.5, "z": 0},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false
+                            },
+                            "textureLayout": {},
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": false,
+                            "shadingMode": "flat"
+                          },
+                          "children": [
+                            {
+                              "id": "17",
+                              "name": "Leaf_tip9--C1",
+                              "position": {"x": 6.23225, "y": -11.42461, "z": 2.27627},
+                              "orientation": {"x": 0.07681, "y": -0.01162, "z": -0.20202, "w": 0.9763},
+                              "shape": {
+                                "type": "quad",
+                                "offset": {"x": -35.34767, "y": -103.40923, "z": -25.93158},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 20, "y": 17},
+                                  "normal": "-Z",
+                                  "isStaticBox": true
+                                },
+                                "textureLayout": {
+                                  "front": {
+                                    "offset": {"x": 38, "y": 30},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": true,
+                                "shadingMode": "flat"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "18",
+                  "name": "Leaf2",
+                  "position": {"x": -4, "y": 132.68678, "z": 4.9254},
+                  "orientation": {"x": -0.51466, "y": -0.18849, "z": -0.19924, "w": 0.81234},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 6.52064, "y": -46.15342, "z": -96.76273},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 17, "y": 16},
+                      "normal": "-Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 17, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "19",
+                      "name": "Leaf_middle",
+                      "position": {"x": -6.52064, "y": 30.15342, "z": 96.76273},
+                      "orientation": {"x": 0.23769, "y": 0, "z": 0, "w": 0.97134},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": 6.52064, "y": -86.52375, "z": -68.21093},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 17, "y": 16},
+                          "normal": "-Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 17, "y": 16},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "20",
+                          "name": "Leaf_Tip",
+                          "position": {"x": -6.52064, "y": 70.52375, "z": 68.21093},
+                          "orientation": {"x": -0.19509, "y": 0, "z": 0, "w": 0.98079},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": 6.52064, "y": -55.94329, "z": -93.06842},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 17, "y": 19},
+                              "normal": "-Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 17, "y": 32},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "21",
+                  "name": "Leaf4",
+                  "position": {"x": -3, "y": 134, "z": 4},
+                  "orientation": {"x": -0.51535, "y": -0.15622, "z": -0.39124, "w": 0.74628},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 32.06601, "y": -26.6146, "z": -102.47774},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 15, "y": 12},
+                      "normal": "-Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 54, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "22",
+                      "name": "Leaf_middle3",
+                      "position": {"x": -32.06601, "y": 12.6146, "z": 102.47774},
+                      "orientation": {"x": 0.23769, "y": 0, "z": 0, "w": 0.97134},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": 32.06601, "y": -71.83175, "z": -82.30249},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 15, "y": 16},
+                          "normal": "-Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 54, "y": 12},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "23",
+                          "name": "Leaf_Tip3",
+                          "position": {"x": -32.06601, "y": 55.83175, "z": 82.30249},
+                          "orientation": {"x": 0.25882, "y": 0, "z": 0, "w": 0.96593},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": 32.06601, "y": -102.43116, "z": -39.36017},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 15, "y": 12},
+                              "normal": "-Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 54, "y": 28},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "24",
+                  "name": "Leaf11",
+                  "position": {"x": -3.10272, "y": 133.03936, "z": -0.29572},
+                  "orientation": {"x": 0.29244, "y": 0.56888, "z": 0.74671, "w": -0.18244},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": -10.60717, "y": 13.60184, "z": -107.14967},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 20, "y": 14},
+                      "normal": "-Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 38, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "25",
+                      "name": "Leaf_middle4",
+                      "position": {"x": 10.60717, "y": -27.60184, "z": 107.14967},
+                      "orientation": {"x": 0.40275, "y": 0, "z": 0, "w": 0.91531},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": -10.60717, "y": -73.08062, "z": -87.57854},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 20, "y": 16},
+                          "normal": "-Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 38, "y": 14},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "26",
+                          "name": "Leaf_Tip4",
+                          "position": {"x": 10.60717, "y": 57.08062, "z": 87.57854},
+                          "orientation": {"x": 0.32144, "y": 0, "z": 0, "w": 0.94693},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": -10.60717, "y": -113.44637, "z": -29.86215},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 20, "y": 17},
+                              "normal": "-Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 38, "y": 30},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "27",
+                  "name": "Leaf12",
+                  "position": {"x": 6.88894, "y": 142.50046, "z": 26.94674},
+                  "orientation": {"x": -0.68308, "y": -0.04844, "z": 0.1671, "w": 0.70932},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": -44.89291, "y": 24.41637, "z": -100.25121},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 17, "y": 12},
+                      "normal": "-Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 38, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "28",
+                      "name": "Leaf_middle5",
+                      "position": {"x": 44.89291, "y": -27.58957, "z": 100.15121},
+                      "orientation": {"x": 0.25882, "y": 0, "z": 0, "w": 0.96593},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": -44.89291, "y": -38.37849, "z": -97.52829},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 17, "y": 14},
+                          "normal": "-Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 38, "y": 14},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "29",
+                          "name": "Leaf_Tip5",
+                          "position": {"x": 44.89291, "y": 24.77849, "z": 97.52829},
+                          "orientation": {"x": 0.21644, "y": 0, "z": 0, "w": 0.9763},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": -44.89291, "y": -77.01833, "z": -74.96048},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 17, "y": 14},
+                              "normal": "-Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 38, "y": 30},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "30",
+                  "name": "Leaf14",
+                  "position": {"x": -4, "y": 132.68678, "z": 2.9254},
+                  "orientation": {"x": 0.13465, "y": -0.70666, "z": -0.69313, "w": -0.04557},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": 19.95746, "y": -17.9419, "z": -107.24109},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 17, "y": 16},
+                      "normal": "-Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 17, "y": 0},
+                        "mirror": {"x": true, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "31",
+                      "name": "Leaf_middle6",
+                      "position": {"x": -19.95746, "y": 1.9419, "z": 107.24109},
+                      "orientation": {"x": 0.42262, "y": 0, "z": 0, "w": 0.90631},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": 19.95746, "y": -96.54197, "z": -61.31731},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 17, "y": 16},
+                          "normal": "-Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 17, "y": 16},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "32",
+                          "name": "Leaf_Tip6",
+                          "position": {"x": -19.95746, "y": 80.54197, "z": 61.31731},
+                          "orientation": {"x": -0.19509, "y": 0, "z": 0, "w": 0.98079},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": 19.95746, "y": -67.83699, "z": -90.53335},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 17, "y": 19},
+                              "normal": "-Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 17, "y": 32},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "33",
+                  "name": "Leaf16",
+                  "position": {"x": -6, "y": 136, "z": 2},
+                  "orientation": {"x": 0.6026, "y": -0.22416, "z": 0.39713, "w": 0.65491},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": -38.08207, "y": -6.01922, "z": 102.79491},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 20, "y": 14},
+                      "normal": "+Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 18, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "34",
+                      "name": "Leaf_middle2",
+                      "position": {"x": 38.08207, "y": -7.98078, "z": -102.79491},
+                      "orientation": {"x": -0.23769, "y": 0, "z": 0, "w": 0.97134},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": -38.08207, "y": -54.59705, "z": 91.63226},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 20, "y": 16},
+                          "normal": "+Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 18, "y": 14},
+                            "mirror": {"x": false, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "35",
+                          "name": "Leaf_tip2",
+                          "position": {"x": 38.08207, "y": 38.59705, "z": -91.63226},
+                          "orientation": {"x": -0.25882, "y": 0, "z": 0, "w": 0.96593},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": -38.08207, "y": -94.67036, "z": 56.05734},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 20, "y": 17},
+                              "normal": "+Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 18, "y": 30},
+                                "mirror": {"x": false, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "36",
+                  "name": "Leaf18",
+                  "position": {"x": 13.04821, "y": 131.87593, "z": -0.13331},
+                  "orientation": {"x": 0.40073, "y": -0.62836, "z": -0.49636, "w": -0.44521},
+                  "shape": {
+                    "type": "none",
+                    "offset": {"x": 2.5, "y": -8, "z": 0},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false
+                    },
+                    "textureLayout": {},
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": false,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "37",
+                      "name": "Leaf18--C1",
+                      "position": {"x": -26.33361, "y": -23.19911, "z": -7.4915},
+                      "orientation": {"x": 0.02726, "y": -0.08231, "z": -0.43371, "w": 0.89687},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": 16.96986, "y": 5.46865, "z": -103.09353},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 15, "y": 12},
+                          "normal": "-Z",
+                          "isStaticBox": true
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 54, "y": 0},
+                            "mirror": {"x": true, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      }
+                    },
+                    {
+                      "id": "38",
+                      "name": "Leaf_middle7",
+                      "position": {"x": -12.5418, "y": -22.59473, "z": -9.13096},
+                      "orientation": {"x": 0.40275, "y": 0, "z": 0, "w": 0.91531},
+                      "shape": {
+                        "type": "none",
+                        "offset": {"x": 2.5, "y": -8, "z": 0},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false
+                        },
+                        "textureLayout": {},
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": false,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "39",
+                          "name": "Leaf_middle7--C1",
+                          "position": {"x": -11.2918, "y": -7.19957, "z": 1.5532},
+                          "orientation": {"x": 0.02726, "y": -0.37537, "z": -0.23234, "w": 0.89687},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": 11.77017, "y": -77.90376, "z": -66.98405},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 15, "y": 16},
+                              "normal": "-Z",
+                              "isStaticBox": true
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 54, "y": 12},
+                                "mirror": {"x": true, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        },
+                        {
+                          "id": "40",
+                          "name": "Leaf_Tip7",
+                          "position": {"x": 16.2918, "y": -9.43466, "z": -2.37974},
+                          "orientation": {"x": -0.23769, "y": 0, "z": 0, "w": 0.97134},
+                          "shape": {
+                            "type": "none",
+                            "offset": {"x": 2.5, "y": -6, "z": 0},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false
+                            },
+                            "textureLayout": {},
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": false,
+                            "shadingMode": "flat"
+                          },
+                          "children": [
+                            {
+                              "id": "41",
+                              "name": "Leaf_Tip7--C1",
+                              "position": {"x": -25.08361, "y": -5.83356, "z": 4.52061},
+                              "orientation": {"x": 0.02726, "y": -0.22567, "z": -0.3794, "w": 0.89687},
+                              "shape": {
+                                "type": "quad",
+                                "offset": {"x": 6.75084, "y": -48.11636, "z": -96.65373},
+                                "stretch": {"x": 1, "y": 1, "z": 1},
+                                "settings": {
+                                  "isPiece": false,
+                                  "size": {"x": 15, "y": 12},
+                                  "normal": "-Z",
+                                  "isStaticBox": true
+                                },
+                                "textureLayout": {
+                                  "front": {
+                                    "offset": {"x": 54, "y": 28},
+                                    "mirror": {"x": true, "y": false},
+                                    "angle": 0
+                                  }
+                                },
+                                "unwrapMode": "custom",
+                                "visible": true,
+                                "doubleSided": true,
+                                "shadingMode": "flat"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "42",
+                  "name": "Leaf20",
+                  "position": {"x": -3, "y": 134, "z": 4},
+                  "orientation": {"x": -0.3783, "y": -0.60946, "z": -0.52681, "w": 0.45598},
+                  "shape": {
+                    "type": "quad",
+                    "offset": {"x": -9.70117, "y": -32.33521, "z": -106.64868},
+                    "stretch": {"x": 1, "y": 1, "z": 1},
+                    "settings": {
+                      "isPiece": false,
+                      "size": {"x": 15, "y": 12},
+                      "normal": "-Z"
+                    },
+                    "textureLayout": {
+                      "front": {
+                        "offset": {"x": 39, "y": 0},
+                        "mirror": {"x": false, "y": false},
+                        "angle": 0
+                      }
+                    },
+                    "unwrapMode": "custom",
+                    "visible": true,
+                    "doubleSided": true,
+                    "shadingMode": "flat"
+                  },
+                  "children": [
+                    {
+                      "id": "43",
+                      "name": "Leaf_middle8",
+                      "position": {"x": 9.70117, "y": 18.33521, "z": 106.64868},
+                      "orientation": {"x": 0.40275, "y": 0, "z": 0, "w": 0.91531},
+                      "shape": {
+                        "type": "quad",
+                        "offset": {"x": -9.70117, "y": -103.07029, "z": -54.109},
+                        "stretch": {"x": 1, "y": 1, "z": 1},
+                        "settings": {
+                          "isPiece": false,
+                          "size": {"x": 15, "y": 16},
+                          "normal": "-Z"
+                        },
+                        "textureLayout": {
+                          "front": {
+                            "offset": {"x": 39, "y": 12},
+                            "mirror": {"x": false, "y": false},
+                            "angle": 0
+                          }
+                        },
+                        "unwrapMode": "custom",
+                        "visible": true,
+                        "doubleSided": true,
+                        "shadingMode": "flat"
+                      },
+                      "children": [
+                        {
+                          "id": "44",
+                          "name": "Leaf_Tip8",
+                          "position": {"x": 9.70117, "y": 87.07029, "z": 54.109},
+                          "orientation": {"x": -0.23769, "y": 0, "z": 0, "w": 0.97134},
+                          "shape": {
+                            "type": "quad",
+                            "offset": {"x": -9.70117, "y": -65.34201, "z": -91.89488},
+                            "stretch": {"x": 1, "y": 1, "z": 1},
+                            "settings": {
+                              "isPiece": false,
+                              "size": {"x": 15, "y": 12},
+                              "normal": "-Z"
+                            },
+                            "textureLayout": {
+                              "front": {
+                                "offset": {"x": 39, "y": 28},
+                                "mirror": {"x": false, "y": false},
+                                "angle": 0
+                              }
+                            },
+                            "unwrapMode": "custom",
+                            "visible": true,
+                            "doubleSided": true,
+                            "shadingMode": "flat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "format": "character",
+  "lod": "auto"
+}

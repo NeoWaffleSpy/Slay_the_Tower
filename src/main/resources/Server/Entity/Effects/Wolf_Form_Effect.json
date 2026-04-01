@@ -1,0 +1,10 @@
+{
+  "ModelChange": "Wolf_Black",
+  "Duration": 3,
+  "RemovalBehavior": "Duration",
+  "OverlapBehavior": "Overwrite",
+  "ApplicationEffects": {
+    "LocalSoundEventId": "SFX_Wolf_Alerted",
+    "WorldSoundEventId": "SFX_Wolf_Alerted"
+  }
+}

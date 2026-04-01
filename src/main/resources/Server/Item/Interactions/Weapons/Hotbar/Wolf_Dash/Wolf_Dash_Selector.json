@@ -1,0 +1,31 @@
+{
+  "Type": "Selector",
+  "Selector": {
+    "Id": "AOECircle",
+    "Range": 2
+  },
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "Replace",
+        "CancelOnItemChange": false,
+        "Var": "Wolf_Dash_Damage",
+        "DefaultValue": {
+          "Interactions": [
+            "Wolf_Dash_Damage"
+          ]
+        }
+      },
+      {
+        "Type": "ApplyForce",
+        "Direction": {
+          "Z": 5,
+          "Y": 1
+        },
+        "Force": 12
+      }
+    ]
+  },
+  "CancelOnItemChange": false,
+  "RunTime": 1
+}

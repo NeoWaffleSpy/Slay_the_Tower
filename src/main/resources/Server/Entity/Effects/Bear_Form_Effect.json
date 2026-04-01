@@ -1,0 +1,10 @@
+{
+  "ModelChange": "Bear_Grizzly_Form",
+  "Duration": 3,
+  "RemovalBehavior": "Duration",
+  "OverlapBehavior": "Overwrite",
+  "ApplicationEffects": {
+    "LocalSoundEventId": "SFX_Bear_Grizzly_Alerted",
+    "WorldSoundEventId": "SFX_Bear_Grizzly_Alerted"
+  }
+}

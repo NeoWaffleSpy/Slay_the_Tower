@@ -1,0 +1,36 @@
+{
+  "Type": "Simple",
+  "Effects": {
+    "ItemPlayerAnimationsId": "Wolf_Black_Default",
+    "ItemAnimationId": "Bite"
+  },
+  "$Comment": "Prepare Delay",
+  "Next": {
+    "Type": "Selector",
+    "Effects": {
+      "WorldSoundEventId": "SFX_NPC_Unarmed_Swing"
+    },
+    "$Comment": "Length of Combat",
+    "RunTime": 0.167,
+    "Selector": {
+      "Id": "AOECircle",
+      "Range": 2
+    },
+    "HitEntity": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "DefaultValue": {
+            "Interactions": [
+              "Wolf_Bite_Damage"
+            ]
+          },
+          "Var": "Bite_Damage"
+        },
+        "Weapon_Daggers_Primary_Pounce_Stab_Force"
+      ]
+    },
+    "CancelOnItemChange": false,
+    "HorizontalSpeedMultiplier": 2
+  }
+}

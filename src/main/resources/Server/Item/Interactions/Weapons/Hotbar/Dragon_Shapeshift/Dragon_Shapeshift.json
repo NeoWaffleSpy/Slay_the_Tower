@@ -1,0 +1,14 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "ApplyEffect",
+      "EffectId": "Dragon_Form_Effect"
+    },
+    "Dragon_Shapeshift_Parallel",
+    {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Dragon_Form_Effect"
+    }
+  ]
+}

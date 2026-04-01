@@ -1,0 +1,37 @@
+{
+  "Type": "Selector",
+  "Selector": {
+    "Id": "AOECylinder",
+    "Range": 6,
+    "Height": 20,
+    "Offset": {
+      "Y": -10
+    }
+  },
+  "RunTime": 4,
+  "CancelOnItemChange": false,
+  "HorizontalSpeedMultiplier": 0,
+  "HitEntity": {
+    "Interactions": [
+      "Wolf_Dash_Damage"
+    ]
+  },
+  "Effects": {
+    "Particles": [
+      {
+        "PositionOffset": {
+          "Y": -1
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Roll": 0,
+          "Yaw": 180
+        },
+        "TargetNodeName": "Head",
+        "SystemId": "Dragon_Shapeshift_Breath",
+        "TargetEntityPart": "Entity",
+        "Scale": 5
+      }
+    ]
+  }
+}

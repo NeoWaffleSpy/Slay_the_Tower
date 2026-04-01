@@ -9,8 +9,7 @@
     {
       "Type": "Simple",
       "RunTime": 1,
-      "CancelOnItemChange": false,
-      "HorizontalSpeedMultiplier": 2
+      "CancelOnItemChange": false
     },
     {
       "Type": "ClearEntityEffect",

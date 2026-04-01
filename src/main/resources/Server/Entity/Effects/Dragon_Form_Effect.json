@@ -1,0 +1,14 @@
+{
+  "ModelChange": "Dragon_Fire_Form",
+  "Duration": 10,
+  "RemovalBehavior": "Duration",
+  "OverlapBehavior": "Overwrite",
+  "ApplicationEffects": {
+    "LocalSoundEventId": "SFX_Dragon_Sleep",
+    "WorldSoundEventId": "SFX_Dragon_Sleep",
+    "HorizontalSpeedMultiplier": 0,
+    "MovementEffects": {
+      "DisableAll": true
+    }
+  }
+}

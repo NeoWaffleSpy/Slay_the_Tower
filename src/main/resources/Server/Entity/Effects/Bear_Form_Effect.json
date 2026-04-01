@@ -1,5 +1,5 @@
 {
-  "ModelChange": "Bear_Grizzly",
+  "ModelChange": "Bear_Grizzly_Form",
   "Duration": 3,
   "RemovalBehavior": "Duration",
   "OverlapBehavior": "Overwrite",

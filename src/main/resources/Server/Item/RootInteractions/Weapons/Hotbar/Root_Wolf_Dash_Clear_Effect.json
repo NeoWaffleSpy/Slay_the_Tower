@@ -1,0 +1,8 @@
+{
+  "Interactions": [
+    {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Wolf_Form_Effect"
+    }
+  ]
+}

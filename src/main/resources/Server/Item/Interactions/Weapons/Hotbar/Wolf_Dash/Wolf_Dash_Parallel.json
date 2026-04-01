@@ -1,0 +1,15 @@
+{
+  "Type": "Parallel",
+  "Interactions": [
+    {
+      "Interactions": [
+        "Wolf_Dash_Force"
+      ]
+    },
+    {
+      "Interactions": [
+        "Wolf_Dash_Selector"
+      ]
+    }
+  ]
+}

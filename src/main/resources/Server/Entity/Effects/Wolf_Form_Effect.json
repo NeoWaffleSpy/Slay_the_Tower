@@ -1,5 +1,5 @@
 {
-  "ModelChange": "Wolf_Black_Form",
+  "ModelChange": "Wolf_Black",
   "Duration": 3,
   "RemovalBehavior": "Duration",
   "OverlapBehavior": "Overwrite",

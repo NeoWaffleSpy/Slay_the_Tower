@@ -1,0 +1,22 @@
+{
+  "Type": "DamageEntity",
+  "Parent": "DamageEntityParent",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 15
+    }
+  },
+  "DamageEffects": {
+    "Knockback": {
+      "Type": "Force",
+      "Force": 10,
+      "Direction": {
+        "Z": 1
+      }
+    }
+  },
+  "Effects": {
+    "WorldSoundEventId": "SFX_NPC_Unarmed_Impact",
+    "LocalSoundEventId": "SFX_NPC_Unarmed_Impact"
+  }
+}

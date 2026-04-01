@@ -84,6 +84,47 @@
             ]
           }
         }
+      },
+      "Stunned": {
+        "Type": "Ability",
+        "Target": "Self",
+        "WeightCoefficient": 100000,
+        "AttackDistanceRange": [
+          1,
+          100
+        ],
+        "Conditions": [
+          {
+            "Type": "SelfHasEffect",
+            "EffectId": "NPC_Stun_Effect",
+            "TrueValue": 1,
+            "FalseValue": 0
+          },
+          {
+            "Type": "TargetDistance",
+            "Curve": {
+              "XRange": [
+                0,
+                100
+              ],
+              "ResponseCurve": "Linear"
+            }
+          }
+        ],
+        "Description": "Is stunned",
+        "Ability": {
+          "Interactions": [
+            {
+              "Type": "Simple",
+              "RunTime": 3,
+              "Effects": {
+                "MovementEffects": {
+                  "DisableAll": true
+                }
+              }
+            }
+          ]
+        }
       }
     },
     "MinActionUtility": 0.01,
@@ -121,7 +162,8 @@
         },
         "Actions": [
           "SelectTarget",
-          "Lunge"
+          "Lunge",
+          "Stunned"
         ]
       }
     }

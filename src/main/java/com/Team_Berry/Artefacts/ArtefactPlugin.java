@@ -52,8 +52,8 @@ public class ArtefactPlugin extends JavaPlugin {
         ArtefactCodec.register();
         StatusEffectCodec.register();
         StatCodec.register();
+        StatEffectSystem.register();
         this.getCommandRegistry().registerCommand(new ArtefactCommand());
-        this.getEntityStoreRegistry().registerSystem(new StatEffectSystem.StatEffectTickingSystem(EntityStatsModule.get().getEntityStatMapComponentType()));
     }
 
     @Override

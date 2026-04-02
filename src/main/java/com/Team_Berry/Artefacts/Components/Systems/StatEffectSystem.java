@@ -21,19 +21,69 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
 public class StatEffectSystem {
+    public static void register() {
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectTickingSystem(EntityStatsModule.get().getEntityStatMapComponentType()));
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectDamageSystem());
+    }
+
     public static class StatEffectDamageSystem extends DamageEventSystem {
+        EntityStatType bonusDamageType;
+        EntityStatType bonusArmorType;
         public StatEffectDamageSystem() {}
 
-        @Override
-        public void handle(int i, @NonNull ArchetypeChunk<EntityStore> archetypeChunk, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer, @NonNull Damage damage) {
-
+        @Nonnull
+        public Query<EntityStore> getQuery() {
+            return Archetype.empty();
         }
 
         @Override
-        public @Nullable Query<EntityStore> getQuery() {
-            return null;
+        public void handle(int i, @NonNull ArchetypeChunk<EntityStore> archetypeChunk, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer, @NonNull Damage damage) {
+            if (bonusDamageType == null)
+                bonusDamageType = StatCodec.getStatFromString("Bonus_Damage");
+            if (bonusArmorType == null)
+                bonusArmorType = StatCodec.getStatFromString("Bonus_Armor");
+            if (damage.getAmount() <= 0.0F)
+                return;
+            Ref<EntityStore> targetRef = archetypeChunk.getReferenceTo(i);
+            Damage.Source source = damage.getSource();
+            if (source instanceof Damage.EntitySource entitySource) {
+                float damageValue = damage.getAmount();
+                Ref<EntityStore> attackerRef = entitySource.getRef();
+                EntityStatMap statMapAttack = commandBuffer.getComponent(attackerRef, EntityStatMap.getComponentType());
+                if (bonusDamageType != null && statMapAttack != null) {
+                    float mult = 1;
+                    Map<String, Modifier> modMap = statMapAttack.get(getEntityIndex(bonusDamageType)).getModifiers();
+                    if (modMap != null) {
+                        for (Modifier mod : modMap.values()) {
+                            StaticModifier modifier = (StaticModifier) mod;
+                            if (modifier.getCalculationType() == StaticModifier.CalculationType.ADDITIVE)
+                                damageValue += modifier.getAmount();
+                            else if (modifier.getCalculationType() == StaticModifier.CalculationType.MULTIPLICATIVE)
+                                mult += modifier.getAmount();
+                        }
+                        damageValue *= mult;
+                    }
+                }
+                EntityStatMap statMapTarget = commandBuffer.getComponent(targetRef, EntityStatMap.getComponentType());
+                if (bonusArmorType != null && statMapTarget != null) {
+                    float div = 1;
+                    Map<String, Modifier> modMap = statMapTarget.get(getEntityIndex(bonusArmorType)).getModifiers();
+                    if (modMap != null) {
+                        for (Modifier mod : modMap.values()) {
+                            StaticModifier modifier = (StaticModifier) mod;
+                            if (modifier.getCalculationType() == StaticModifier.CalculationType.ADDITIVE)
+                                damageValue -= modifier.getAmount();
+                            else if (modifier.getCalculationType() == StaticModifier.CalculationType.MULTIPLICATIVE)
+                                div *= modifier.getAmount();
+                        }
+                        damageValue *= div;
+                    }
+                }
+                damage.setAmount(damageValue);
+            }
         }
     }
 
@@ -49,7 +99,6 @@ public class StatEffectSystem {
 
         @Override
         public void tick(float dt, int index, @NonNull ArchetypeChunk archetypeChunk, @NonNull Store store, @NonNull CommandBuffer commandBuffer) {
-            Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
             StatEffectComponent comp = (StatEffectComponent) archetypeChunk.getComponent(index, ArtefactPlugin.get().getStatEffectComponentType());
             if (comp == null || comp.artefactUpdated.isEmpty())
                 return;
@@ -60,7 +109,7 @@ public class StatEffectSystem {
                 comp.artefactUpdated.forEach(artefact -> {
                     for (int i = 0; i < artefact.statList.size(); i++) {
                         StatCodec stat = artefact.statList.get(i);
-                        String key = SlayTheTower.get().getName() + "-" + artefact.getId() + "-" + i;
+                        String key = ArtefactPlugin.get().getName() + "-" + artefact.getId() + "-" + i;
                         if (stat == null || stat.type == null)
                             return;
                         if (stat.trigger == TriggerType.PASSIVE) {
@@ -84,13 +133,13 @@ public class StatEffectSystem {
             }
         }
 
-        private int getEntityIndex(EntityStatType statType) {
-            return ArtefactPlugin.getEntityStatTypeAssetStore().getIndex(statType.getId());
-        }
-
         @Override
         public @Nullable Query getQuery() {
             return this.query;
         }
+    }
+
+    private static int getEntityIndex(EntityStatType statType) {
+        return ArtefactPlugin.getEntityStatTypeAssetStore().getIndex(statType.getId());
     }
 }

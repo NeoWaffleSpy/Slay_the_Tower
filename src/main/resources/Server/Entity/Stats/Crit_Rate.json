@@ -1,5 +1,5 @@
 {
-  "InitialValue": 0,
+  "InitialValue": 0.05,
   "Min": 0,
-  "Max": 0
+  "Max": 1
 }

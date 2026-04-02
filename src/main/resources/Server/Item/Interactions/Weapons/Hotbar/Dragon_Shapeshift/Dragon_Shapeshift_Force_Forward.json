@@ -1,0 +1,16 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.3,
+  "Next": {
+    "Type": "ApplyForce",
+    "Direction": {
+      "Z": -1
+    },
+    "Force": 1,
+    "Duration": 1.2,
+    "HorizontalSpeedMultiplier": 0,
+    "CancelOnItemChange": false,
+    "RunTime": 1.2
+  },
+  "CancelOnItemChange": false
+}

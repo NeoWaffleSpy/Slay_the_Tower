@@ -32,7 +32,7 @@
   "MaxDurability": 1,
   "PlayerAnimationsId": "Kweebec_Bow",
   "Weapon": {},
-  "SubCategory": "Ranger",
+  "SubCategory": "Shapeshift",
   "Particles": [
     {
       "TargetNodeName": "ARROW-PARTS-PLACEHOLDER",

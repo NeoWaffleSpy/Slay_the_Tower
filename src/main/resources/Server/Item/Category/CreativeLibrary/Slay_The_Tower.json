@@ -25,10 +25,16 @@
           "Order": 2
         },
         {
+          "Order": 3,
+          "Id": "Shapeshift",
+          "Name": "Shapeshift",
+          "Description": "Shapeshift"
+        },
+        {
           "Id": "Other",
           "Name": "Other Skills",
           "Description": "Other Skills",
-          "Order": 3
+          "Order": 99
         }
       ],
       "Order": 0

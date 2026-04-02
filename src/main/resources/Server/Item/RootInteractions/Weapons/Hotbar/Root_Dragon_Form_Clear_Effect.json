@@ -1,0 +1,8 @@
+{
+  "Interactions": [
+    {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Dragon_Form_Effect"
+    }
+  ]
+}

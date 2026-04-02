@@ -1,0 +1,32 @@
+{
+  "Type": "ApplyForce",
+  "Direction": {
+    "Y": 2
+  },
+  "Force": 40,
+  "CancelOnItemChange": false,
+  "HorizontalSpeedMultiplier": 0,
+  "Next": {
+    "Type": "ApplyForce",
+    "RunTime": 0.5,
+    "HorizontalSpeedMultiplier": 0,
+    "Duration": 0.5,
+    "Direction": {
+      "Z": -1
+    },
+    "Force": 20,
+    "Effects": {
+      "ItemPlayerAnimationsId": "Dragon_Form",
+      "ItemAnimationId": "FlyIdle"
+    },
+    "RaycastMode": "FollowMotion"
+  },
+  "WaitForGround": false,
+  "WaitForCollision": false,
+  "RunTime": 0.2,
+  "Effects": {
+    "ClearAnimationOnFinish": false,
+    "ItemPlayerAnimationsId": "Dragon_Form",
+    "ItemAnimationId": "FlyIdle"
+  }
+}

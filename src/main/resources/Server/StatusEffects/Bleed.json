@@ -1,0 +1,6 @@
+{
+  "StatusEffect": "Bleeding",
+  "TargetType": "Enemy",
+  "Value": 3,
+  "Duration": 50
+}

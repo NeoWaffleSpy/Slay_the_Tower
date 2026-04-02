@@ -13,7 +13,7 @@ import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.protocol.*;
 
 import java.util.Collection;
-import static com.Team_Berry.Utils.CodecUtils.*;
+import static com.Team_Berry.Utils.Codecs.CodecUtils.*;
 
 public class CustomCameraSettings implements JsonAssetWithMap<String, DefaultAssetMap<String, CustomCameraSettings>> {
     private static AssetStore<String, CustomCameraSettings, DefaultAssetMap<String, CustomCameraSettings>> ASSET_STORE;

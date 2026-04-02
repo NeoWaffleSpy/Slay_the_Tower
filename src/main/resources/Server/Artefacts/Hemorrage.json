@@ -1,0 +1,17 @@
+{
+  "TranslationProperties": {
+    "Name": "Hemorrage.name",
+    "Description": "Hemorrage.description"
+  },
+  "Stats": [
+    "Health",
+    "Armor",
+    "Mana"
+  ],
+  "StatusEffect": [
+    "Bleed",
+    "SuperBleed",
+    "MegaBleed"
+  ],
+  "Rarity": "Rare"
+}

@@ -1,0 +1,5 @@
+{
+  "Stat": "Regen_Energy",
+  "CalculationType": "Multiplicative",
+  "Value": 0.2
+}

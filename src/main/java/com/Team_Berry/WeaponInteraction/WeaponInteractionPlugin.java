@@ -24,7 +24,6 @@ public class WeaponInteractionPlugin extends JavaPlugin {
     public WeaponInteractionPlugin(JavaPluginInit init) {
         super(init);
         instance = this;
-        LOGGER.atInfo().log("Hello from %s version %s", this.getName(), this.getManifest().getVersion().toString());
     }
 
     public static WeaponInteractionPlugin get() {

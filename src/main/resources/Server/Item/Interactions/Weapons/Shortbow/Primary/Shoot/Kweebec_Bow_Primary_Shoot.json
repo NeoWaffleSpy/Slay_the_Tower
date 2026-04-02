@@ -1,0 +1,16 @@
+{
+  "Type": "ChangeStat",
+  "Behaviour": "Set",
+  "StatModifiers": {
+    "StaminaRegenDelay": -10
+  },
+  "Next": {
+    "Type": "Replace",
+    "Var": "Primary_Shoot_Charge",
+    "DefaultValue": {
+      "Interactions": [
+        "Weapon_Shortbow_Primary_Shoot_Charge"
+      ]
+    }
+  }
+}

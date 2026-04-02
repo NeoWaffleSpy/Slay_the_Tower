@@ -16,7 +16,7 @@
           "Yaw": 0
         },
         "TargetNodeName": "Handle",
-        "TrailId": "Medium_Charged"
+        "TrailId": "Wide_Slash_Medium_Charged"
       },
       {
         "PositionOffset": {
@@ -30,13 +30,13 @@
           "Yaw": 0
         },
         "TargetNodeName": "Handle",
-        "TrailId": "Medium_Charged",
+        "TrailId": "Wide_Slash_Medium_Charged",
         "TargetEntityPart": "SecondaryItem"
       }
     ],
     "Particles": [
       {
-        "SystemId": "Daggers_Pounce_Flash",
+        "SystemId": "Wide_Slash_Flash",
         "TargetNodeName": "Handle",
         "PositionOffset": {
           "X": 0.0,
@@ -51,7 +51,7 @@
         "DetachedFromModel": false
       },
       {
-        "SystemId": "Daggers_Pounce_Flash",
+        "SystemId": "Wide_Slash_Flash",
         "TargetEntityPart": "SecondaryItem",
         "TargetNodeName": "Handle",
         "RotationOffset": {
@@ -68,7 +68,7 @@
     ],
     "FirstPersonParticles": [
       {
-        "SystemId": "Daggers_Pounce_Flash_FP",
+        "SystemId": "Wide_Slash_Flash_FP",
         "TargetNodeName": "Handle",
         "PositionOffset": {
           "X": 0.0,
@@ -83,7 +83,7 @@
         "DetachedFromModel": false
       },
       {
-        "SystemId": "Daggers_Pounce_Flash_FP",
+        "SystemId": "Wide_Slash_Flash_FP",
         "TargetEntityPart": "SecondaryItem",
         "TargetNodeName": "Handle",
         "RotationOffset": {

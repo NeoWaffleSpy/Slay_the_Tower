@@ -1,0 +1,15 @@
+{
+  "Type": "Simple",
+  "Next": {
+    "Type": "Projectile",
+    "Config": "Projectile_Config_Poison_Cloud"
+  },
+  "RunTime": 0.5,
+  "Effects": {
+    "ItemAnimationId": "ShootChargingPoisonCloud",
+    "ClearAnimationOnFinish": true,
+    "ClearSoundEventOnFinish": true,
+    "WorldSoundEventId": "SFX_Bow_T2_Draw",
+    "LocalSoundEventId": "SFX_Bow_T2_Draw_Local"
+  }
+}

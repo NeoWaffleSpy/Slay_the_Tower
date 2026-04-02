@@ -1,0 +1,13 @@
+{
+  "IsFirstPerson": false,
+  "EyeOffset": true,
+  "PositionLerpSpeed": 1,
+  "RotationLerpSpeed": 1,
+  "Distance": 1.5,
+  "PositionDistanceOffsetType": "DistanceOffsetRaycast",
+  "RotationType": "AttachedToPlusOffset",
+  "PositionOffset": {
+    "Z": -0.5,
+    "Y": 0.5
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "ApplyEffect",
+      "EffectId": "Wolf_Form_Effect"
+    },
+    "Wolf_Dash_Parallel",
+    {
+      "Type": "Simple",
+      "RunTime": 1,
+      "CancelOnItemChange": false
+    },
+    {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Wolf_Form_Effect"
+    }
+  ]
+}

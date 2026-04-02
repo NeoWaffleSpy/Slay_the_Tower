@@ -1,0 +1,31 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Dragon_Shapeshift",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Dragon_Shapeshift",
+              "Cooldown": 1
+            },
+            "CancelOnItemChange": false
+          },
+          "Dragon_Shapeshift"
+        ]
+      },
+      "CancelOnItemChange": false
+    }
+  ],
+  "Rules": {
+    "InterruptedBy": [
+      "Primary",
+      "Secondary",
+      "SwapFrom"
+    ]
+  }
+}

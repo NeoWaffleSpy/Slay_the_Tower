@@ -1,0 +1,13 @@
+{
+  "Parent": "Projectile_Config_Frost_Volley",
+  "SpawnRotationOffset": {
+    "Yaw": -5,
+    "Pitch": 4,
+    "Roll": 90
+  },
+  "LaunchLocalSoundEventId": "SFX_Bow_T2_Shoot_Local",
+  "LaunchWorldSoundEventId": "SFX_Bow_T2_Shoot",
+  "SpawnOffset": {
+    "Y": -0.4
+  }
+}

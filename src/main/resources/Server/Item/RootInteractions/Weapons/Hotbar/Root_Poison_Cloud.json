@@ -1,0 +1,31 @@
+{
+  "RequireNewClick": false,
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  },
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Poison_Cloud",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Poison_Cloud",
+              "Cooldown": 5
+            },
+            "CancelOnItemChange": false
+          },
+          "Poison_Cloud"
+        ]
+      },
+      "CancelOnItemChange": false
+    },
+    "Hotbar9_Reset"
+  ]
+}

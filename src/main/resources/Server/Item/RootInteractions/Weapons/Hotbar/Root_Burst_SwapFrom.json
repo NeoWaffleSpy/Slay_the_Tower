@@ -1,0 +1,14 @@
+{
+  "Interactions": [
+    {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Burst_Effect",
+      "CancelOnItemChange": false
+    }
+  ],
+  "Rules": {
+    "BlockedBy": [
+      "Primary"
+    ]
+  }
+}

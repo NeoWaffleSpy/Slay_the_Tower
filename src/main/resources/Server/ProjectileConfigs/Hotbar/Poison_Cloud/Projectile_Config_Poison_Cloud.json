@@ -1,0 +1,39 @@
+{
+  "Model": "Poison_Cloud_Arrow",
+  "LaunchWorldSoundEventId": "SFX_Bow_T2_Shoot",
+  "SpawnRotationOffset": {
+    "Roll": 90,
+    "Pitch": 2,
+    "Yaw": 0
+  },
+  "Physics": {
+    "Type": "Standard",
+    "LaunchForce": 30,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "Gravity": 50
+  },
+  "Interactions": {
+    "ProjectileMiss": {
+      "Interactions": [
+        "Poison_Cloud_Repeat",
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileHit": {
+      "Interactions": [
+        "Weapon_Shortbow_Primary_Shoot_Damage_Strength_2",
+        "Poison_Cloud_Repeat",
+        "Common_Projectile_Despawn"
+      ]
+    }
+  },
+  "LaunchForce": 50,
+  "LaunchLocalSoundEventId": "SFX_Bow_T2_Shoot_Local",
+  "SpawnOffset": {
+    "Y": -0.17
+  }
+}

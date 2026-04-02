@@ -1,0 +1,15 @@
+{
+  "Type": "DamageEntity",
+  "Parent": "DamageEntityParent",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 5
+    },
+    "Class": "Light"
+  },
+  "Next": {
+    "Type": "ApplyEffect",
+    "Entity": "Target",
+    "EffectId": "Frost_Volley_Effect"
+  }
+}

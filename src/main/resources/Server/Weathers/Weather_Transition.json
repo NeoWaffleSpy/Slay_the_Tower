@@ -1,0 +1,127 @@
+{
+  "SkyTopColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffffff"
+    }
+  ],
+  "SkyBottomColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffffff"
+    }
+  ],
+  "SkySunsetColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffffff"
+    }
+  ],
+  "FogColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffff"
+    }
+  ],
+  "FogDensities": [
+    {
+      "Hour": 0,
+      "Value": 0.2
+    }
+  ],
+  "FogHeightFalloffs": [
+    {
+      "Hour": 0,
+      "Value": 2
+    }
+  ],
+  "FogOptions": {
+    "FogHeightCameraFixed": 1,
+    "EffectiveViewDistanceMultiplier": 1,
+    "IgnoreFogLimits": false
+  },
+  "SunScales": [
+    {
+      "Hour": 0,
+      "Value": 0
+    }
+  ],
+  "MoonScales": [
+    {
+      "Hour": 0,
+      "Value": 0
+    }
+  ],
+  "Particle": {
+    "SystemId": "Magic_Sparks_Heavy_GS",
+    "OvergroundOnly": false,
+    "Color": "#cfcfcf",
+    "Scale": 2
+  },
+  "Clouds": [
+    {
+      "Texture": "Sky/Clouds/Twirled.png",
+      "Colors": [
+        {
+          "Hour": 18,
+          "Color": "#ffffffff"
+        }
+      ],
+      "Speeds": [
+        {
+          "Hour": 17,
+          "Value": 2
+        }
+      ]
+    }
+  ],
+  "SunGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#000000ff"
+    }
+  ],
+  "SunColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffff"
+    }
+  ],
+  "ScreenEffectColors": [
+    {
+      "Hour": 0,
+      "Color": "#000000ff"
+    }
+  ],
+  "SunlightDampingMultipliers": [
+    {
+      "Hour": 0,
+      "Value": 1
+    }
+  ],
+  "SunlightColors": [
+    {
+      "Hour": 0,
+      "Color": "#000000"
+    }
+  ],
+  "ColorFilters": [
+    {
+      "Hour": 9,
+      "Color": "#ffffff"
+    }
+  ],
+  "MoonColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffffff"
+    }
+  ],
+  "MoonGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#000000ff"
+    }
+  ],
+  "Stars": "Sky/Stars.png"
+}

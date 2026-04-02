@@ -1,0 +1,15 @@
+{
+  "Type": "Parallel",
+  "Interactions": [
+    {
+      "Interactions": [
+        "Dragon_Shapeshift_Force_Up"
+      ]
+    },
+    {
+      "Interactions": [
+        "Dragon_Shapeshift_Selector"
+      ]
+    }
+  ]
+}

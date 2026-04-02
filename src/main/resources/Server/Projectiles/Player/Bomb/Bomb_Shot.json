@@ -1,0 +1,46 @@
+{
+  "Appearance": "Bomb_Shot_Arrow",
+  "DepthShot": 1,
+  "PitchAdjustShot": false,
+  "SticksVertically": true,
+  "MuzzleVelocity": 20,
+  "TerminalVelocity": 20,
+  "Gravity": 20,
+  "HitParticles": {
+    "SystemId": "Explosion_Medium"
+  },
+  "MissParticles": {
+    "SystemId": "Explosion_Medium"
+  },
+  "DeathParticles": {
+    "SystemId": "Explosion_Medium"
+  },
+  "DeathEffectsOnHit": true,
+  "BounceSoundEventId": "SFX_Bomb_Fire_Goblin_Bounce",
+  "HitSoundEventId": "SFX_Bomb_Fire_Goblin_Hit",
+  "DeathSoundEventId": "SFX_Goblin_Lobber_Bomb_Death",
+  "DeadTimeMiss": 0,
+  "DeadTime": 0,
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "DamageBlocks": false,
+    "BlockDamageRadius": 20,
+    "EntityDamageRadius": 5,
+    "EntityDamageFalloff": 0,
+    "Knockback": {
+      "Type": "Point",
+      "VelocityConfig": {
+        "AirResistance": 0.97,
+        "AirResistanceMax": 0.96,
+        "GroundResistance": 0.94,
+        "GroundResistanceMax": 0.3,
+        "Threshold": 3.0
+      },
+      "Force": 5,
+      "VelocityType": "Set"
+    },
+    "EntityDamage": 25
+  },
+  "VerticalCenterShot": 0.2,
+  "HorizontalCenterShot": 0.1
+}

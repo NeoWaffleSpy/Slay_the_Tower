@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Poison_Smoke_Thick",
+      "FixedRotation": false,
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "SpawnerId": "Poison_Smoke",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    }
+  ],
+  "LifeSpan": 9.5,
+  "CullDistance": 0
+}

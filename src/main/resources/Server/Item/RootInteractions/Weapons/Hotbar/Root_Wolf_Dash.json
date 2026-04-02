@@ -1,0 +1,31 @@
+{
+  "Interactions": [
+    {
+      "Type": "CooldownCondition",
+      "Id": "Wolf_Dash",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Set_On_Cooldown",
+          {
+            "Type": "TriggerCooldown",
+            "Cooldown": {
+              "Id": "Wolf_Dash",
+              "Cooldown": 1
+            },
+            "CancelOnItemChange": false
+          },
+          "Wolf_Dash"
+        ]
+      },
+      "CancelOnItemChange": false
+    }
+  ],
+  "Rules": {
+    "InterruptedBy": [
+      "Primary",
+      "Secondary",
+      "SwapFrom"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "RequireNewClick": true,
+  "Interactions": [
+    "Kweebec_Bow_Primary_Shoot"
+  ],
+  "Tags": {
+    "Attack": [
+      "Ranged"
+    ]
+  }
+}

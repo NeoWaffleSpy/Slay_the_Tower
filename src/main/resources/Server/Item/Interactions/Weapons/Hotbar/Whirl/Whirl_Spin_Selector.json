@@ -2,12 +2,8 @@
   "Type": "Selector",
   "CancelOnItemChange": false,
   "Selector": {
-    "Id": "AOECylinder",
-    "Range": 2.3,
-    "Height": 2,
-    "Offset": {
-      "Y": -1
-    }
+    "Id": "AOECircle",
+    "Range": 2.3
   },
   "HitBlock": {
     "Interactions": [

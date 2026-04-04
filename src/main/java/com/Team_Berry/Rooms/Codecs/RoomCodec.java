@@ -67,10 +67,8 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         return getAssetStore().getAssetMap();
     }
 
-
     public static void register() {
         RoomPlugin plugin = RoomPlugin.get();
-
         plugin.getAssetRegistry()
                 .register(HytaleAssetStore.builder(RoomCodec.class, new DefaultAssetMap<>())
                         .setPath("Rooms")
@@ -96,8 +94,8 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
 
     public static class SpawnPoint {
         public static final BuilderCodec<SpawnPoint> CODEC = BuilderCodec.builder(SpawnPoint.class, SpawnPoint::new)
-                .append(new KeyedCodec<>("Position", CodecUtils.POS_CODEC), (obj, val) -> obj.pos = val, obj -> obj.pos).add()
-                .append(new KeyedCodec<>("Rotation", CodecUtils.DIR_CODEC), (obj, val) -> obj.rot = val, obj -> obj.rot).add()
+                .append(new KeyedCodec<>("Position", CodecUtils.POS_CODEC, true), (obj, val) -> obj.pos = val, obj -> obj.pos).add()
+                .append(new KeyedCodec<>("Rotation", CodecUtils.DIR_CODEC, true), (obj, val) -> obj.rot = val, obj -> obj.rot).add()
                 .build();
         public Position pos = new Position(0, 0, 0);
         public Direction rot = new Direction(0, 0, 0);
@@ -105,14 +103,12 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
 
     public static class NPCSpawnArea {
         public static final BuilderCodec<NPCSpawnArea> CODEC = BuilderCodec.builder(NPCSpawnArea.class, NPCSpawnArea::new)
-                .append(new KeyedCodec<>("GroupName", Codec.STRING), (obj, val) -> obj.groupName = val, obj -> obj.groupName).add()
-                .append(new KeyedCodec<>("Min", CodecUtils.POS_CODEC), (obj, val) -> obj.minPos = val, obj -> obj.minPos).add()
-                .append(new KeyedCodec<>("Max", CodecUtils.POS_CODEC), (obj, val) -> obj.maxPos = val, obj -> obj.maxPos).add()
+                .append(new KeyedCodec<>("GroupName", Codec.STRING, true), (obj, val) -> obj.groupName = val, obj -> obj.groupName).add()
+                .append(new KeyedCodec<>("Min", CodecUtils.POS_CODEC, true), (obj, val) -> obj.minPos = val, obj -> obj.minPos).add()
+                .append(new KeyedCodec<>("Max", CodecUtils.POS_CODEC, true), (obj, val) -> obj.maxPos = val, obj -> obj.maxPos).add()
                 .build();
         public Position minPos = new Position(0, 0, 0);
         public Position maxPos = new Position(0, 0, 0);
         public String groupName = "Default";
     }
-
-
 }

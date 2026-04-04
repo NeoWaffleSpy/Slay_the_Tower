@@ -1,6 +1,8 @@
 package com.Team_Berry.Rooms;
 
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
+import com.Team_Berry.Rooms.Commmands.RoomNPCCommand.RoomNPCCommand;
+import com.Team_Berry.Rooms.Commmands.RoomTeleporterCommand.RoomTeleporterCommand;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -22,6 +24,10 @@ public class RoomPlugin extends JavaPlugin {
     protected void setup() {
         RoomCodec.register();
         LOGGER.atInfo().log("Room System Initialized");
+        this.getCommandRegistry().registerCommand(new RoomTeleporterCommand());
+        this.getCommandRegistry().registerCommand(new RoomNPCCommand());
+
+
     }
 
     @Override

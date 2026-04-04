@@ -21,6 +21,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier.CalculationType;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 
 public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, StatCodec>> {
@@ -127,5 +128,10 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         if (stat == null)
             return null;
         return stat.getId();
+    }
+
+    @Nonnull
+    public String toString() {
+        return "StatCodec{effectName='" + effectName + "', type='" + type + "', calculations='" + calc + "', target='" + target + "', trigger='" + trigger + "', value='" + value + "', duration='" + duration + "'}";
     }
 }

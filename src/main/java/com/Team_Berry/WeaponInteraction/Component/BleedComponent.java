@@ -3,6 +3,7 @@ package com.Team_Berry.WeaponInteraction.Component;
 import com.Team_Berry.WeaponInteraction.Utils.BleedRarity;
 import com.Team_Berry.WeaponInteraction.Utils.BleedStage;
 import com.hypixel.hytale.component.Component;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,6 +16,8 @@ public class BleedComponent implements Component<EntityStore> {
     BleedStage effectStage;
     long accumulatedTime = 0;
     BleedRarity bleedRarity = BleedRarity.NONE;
+    float intensityModifier = 0;
+    float durationModifier = 0;
 
 
     @Override
@@ -29,12 +32,19 @@ public class BleedComponent implements Component<EntityStore> {
     }
 
     public void applyStacks(int bleedStacks, long now, long bleedDuration, String itemId) {
+        applyStacks(bleedStacks, now, bleedDuration, itemId, null);
+    }
+
+    public void applyStacks(int bleedStacks, long now, long bleedDuration, String itemId, EntityStatMap map) {
         this.bleedStartTime = now;
         this.bleedDuration = bleedDuration;
 
         this.currentBleedStacks = Math.min(this.currentBleedStacks + bleedStacks, MAX_BLEED_STACKS);
 
         this.effectStage = getStageFromStacks();
+        if (map != null) {
+            return;
+        }
         setBleedRarityFromWeapon(itemId);
     }
 

@@ -12,6 +12,7 @@
         "TargetNodeName": "Head"
       }
     ],
+    "HorizontalSpeedMultiplier": 0,
     "AbilityEffects": {
       "Disabled": [
         "Primary",
@@ -29,7 +30,6 @@
         "Equipped",
         "Dodge"
       ]
-    },
-    "HorizontalSpeedMultiplier": 0
+    }
   }
 }

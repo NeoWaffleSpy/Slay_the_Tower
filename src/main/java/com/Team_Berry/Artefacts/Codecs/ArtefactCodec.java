@@ -113,7 +113,14 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     public static ArrayList<StatCodec> getStatFromStringList(ArrayList<String> sList) {
         DefaultAssetMap<String, StatCodec> map = StatCodec.getAssetMap();
         ArrayList<StatCodec> list = new ArrayList<>();
-        sList.forEach((s) -> list.add(map.getAsset(s)));
+        sList.forEach((s) -> {
+            StatCodec c = map.getAsset(s);
+            if (c != null)
+                ArtefactPlugin.LOGGER.atInfo().log("Adding stat codec: " + c.toString());
+            else
+                ArtefactPlugin.LOGGER.atInfo().log("No stat codec for: " + s);
+            list.add(c);
+        });
         return list;
     }
 

@@ -1,0 +1,9 @@
+{
+  "Type": "DamageEntity",
+  "Parent": "DamageEntityParent",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Skill": 30
+    }
+  }
+}

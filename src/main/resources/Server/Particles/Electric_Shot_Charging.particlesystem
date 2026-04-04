@@ -1,0 +1,27 @@
+{
+  "BoundingRadius": 10,
+  "Spawners": [
+    {
+      "SpawnerId": "Katana_Kit_Charging_Primary_Electric_Zaps",
+      "FixedRotation": false,
+      "RotationOffset": {
+        "Roll": 120
+      },
+      "LifeSpan": {
+        "Min": 1,
+        "Max": 1
+      },
+      "PositionOffset": {
+        "Y": -0.1
+      },
+      "StartDelay": 0.8
+    },
+    {
+      "SpawnerId": "Katana_Kit_Primary_Charging_Sparks",
+      "LifeSpan": {
+        "Min": 1,
+        "Max": 1
+      }
+    }
+  ]
+}

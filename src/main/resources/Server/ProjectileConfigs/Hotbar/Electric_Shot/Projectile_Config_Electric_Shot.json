@@ -1,0 +1,58 @@
+{
+  "Model": "Frost_Volley_Arrow",
+  "Physics": {
+    "Type": "Standard",
+    "LaunchForce": 10,
+    "TerminalVelocityAir": 100,
+    "TerminalVelocityWater": 100,
+    "RotationMode": "None",
+    "Bounciness": 0.0,
+    "SticksVertically": true,
+    "ComputeYaw": false,
+    "ComputePitch": false
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_ELectric_Shot_Pierce"
+        },
+        {
+          "Type": "Replace",
+          "DefaultValue": {
+            "Interactions": [
+              "Frost_Volley_Damage"
+            ]
+          },
+          "Var": "Frost_Volley_Damage",
+          "DefaultOk": true
+        },
+        {
+          "Type": "Replace",
+          "Var": "Signature_Volley_Impact",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Projectile_Impact_Effects"
+            ]
+          }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "Primary_Shoot_Miss_Strength_4",
+          "DefaultValue": {
+            "Interactions": [
+              "Common_Projectile_Miss"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "LaunchForce": 50
+}

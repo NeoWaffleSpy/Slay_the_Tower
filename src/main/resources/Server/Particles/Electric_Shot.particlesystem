@@ -1,0 +1,49 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Katana_Kit_Primary_Charging_Shockwave_Multi",
+      "StartDelay": 0,
+      "LifeSpan": {
+        "Min": 0.05,
+        "Max": 0.05
+      }
+    },
+    {
+      "SpawnerId": "Katana_Kit_Primary_Charged_Shockwave_End"
+    },
+    {
+      "SpawnerId": "Katana_Kit_Primary_Charging_Big_Electric_Zap",
+      "RotationOffset": {
+        "Roll": 90,
+        "Yaw": -3
+      },
+      "LifeSpan": {
+        "Min": 0.1,
+        "Max": 0.1
+      },
+      "PositionOffset": {
+        "Y": -0.1,
+        "X": 1,
+        "Z": 0.1
+      }
+    },
+    {
+      "SpawnerId": "Katana_Kit_Primary_Charging_Big_Electric_Zap",
+      "RotationOffset": {
+        "Roll": 90,
+        "Yaw": -3,
+        "Pitch": 60
+      },
+      "LifeSpan": {
+        "Min": 0.1,
+        "Max": 0.1
+      },
+      "PositionOffset": {
+        "Y": -0.1,
+        "X": 1,
+        "Z": 0.1
+      }
+    }
+  ],
+  "BoundingRadius": 10
+}

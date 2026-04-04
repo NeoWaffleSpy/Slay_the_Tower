@@ -27,8 +27,7 @@
         "Held",
         "HeldOffhand",
         "Equipped",
-        "Dodge",
-        "Primary"
+        "Dodge"
       ]
     },
     "HorizontalSpeedMultiplier": 0

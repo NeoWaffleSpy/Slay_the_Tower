@@ -1,0 +1,21 @@
+{
+  "Appearance": "Kweebec_Electric_Shot",
+  "Gravity": 5,
+  "MissParticles": {
+    "SystemId": "Explosion_Slow_Bomb"
+  },
+  "HitSoundEventId": "SFX_Bomb_Fire_Goblin_Hit",
+  "DeathSoundEventId": "SFX_Crystal_Break",
+  "DeadTimeMiss": 0,
+  "DeadTime": 0,
+  "SticksVertically": true,
+  "Damage": 30,
+  "DeathEffectsOnHit": true,
+  "PitchAdjustShot": false,
+  "VerticalCenterShot": 0.1,
+  "MuzzleVelocity": 75,
+  "TerminalVelocity": 100,
+  "HitParticles": {
+    "SystemId": "Electric_Shot_Impact"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "None",
+  "LinearFiltering": true,
+  "ParticleRotateWithSpawner": false,
+  "TrailSpawnerPositionMultiplier": 0,
+  "TrailSpawnerRotationMultiplier": 0,
+  "MaxConcurrentParticles": 1,
+  "ParticleLifeSpan": {
+    "Min": 0.1,
+    "Max": 0.1
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Star5.png",
+    "InitialAnimationFrame": {
+      "Opacity": 0.756,
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      },
+      "Scale": {
+        "X": {
+          "Min": 3,
+          "Max": 3
+        },
+        "Y": {
+          "Min": 3,
+          "Max": 3
+        }
+      },
+      "Color": "#ffe400"
+    },
+    "CollisionAnimationFrame": {
+      "Scale": {
+        "X": {
+          "Min": 1,
+          "Max": 1
+        },
+        "Y": {
+          "Min": 1,
+          "Max": 1
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "FrameIndex": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Opacity": 1,
+        "Color": "#ffffff",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      }
+    }
+  },
+  "SpawnBurst": true,
+  "CameraOffset": 0,
+  "UVMotion": {
+    "Texture": "Particles/Textures/UVMotion/FlowMap.png",
+    "Scale": 0,
+    "Strength": 0,
+    "SpeedY": 0,
+    "SpeedX": 0
+  },
+  "Shape": "Sphere",
+  "UseEmitDirection": false,
+  "WaveDelay": {
+    "Min": 0,
+    "Max": 0
+  },
+  "TotalParticles": {
+    "Min": 1,
+    "Max": 1
+  }
+}

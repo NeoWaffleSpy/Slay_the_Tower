@@ -52,10 +52,6 @@
       "Texture": "NPC/Kweebec_Wandering/Kweebec_Rootling_Chest_Petalwear.png"
     },
     {
-      "Model": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Hand/Kweebec_Rootling_Simplecuff.blockymodel",
-      "Texture": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Hand/Kweebec_Rootling_Simplecuff.png"
-    },
-    {
       "Model": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Belt_Petalwear.blockymodel",
       "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Belt_Petalwear.png"
     }

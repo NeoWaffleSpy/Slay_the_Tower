@@ -1,0 +1,31 @@
+{
+  "Type": "Simple",
+  "Next": {
+    "Type": "LaunchProjectile",
+    "ProjectileId": "Piercing_Arrow",
+    "Effects": {
+      "Particles": [
+        {
+          "SystemId": "Electric_Shot",
+          "TargetEntityPart": "PrimaryItem",
+          "TargetNodeName": "ARROW-PARTS-PLACEHOLDER"
+        }
+      ],
+      "ItemAnimationId": "ShootCharged",
+      "CameraEffect": "Mace_Bash"
+    },
+    "RunTime": 1,
+    "CancelOnItemChange": false
+  },
+  "RunTime": 1,
+  "Effects": {
+    "ItemAnimationId": "ShootChargingElectricShot",
+    "Particles": [
+      {
+        "SystemId": "Electric_Shot_Charging",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "ARROW-PARTS-PLACEHOLDER"
+      }
+    ]
+  }
+}

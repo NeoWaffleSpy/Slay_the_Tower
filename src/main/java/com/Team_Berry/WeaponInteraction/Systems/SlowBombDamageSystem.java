@@ -1,9 +1,6 @@
 package com.Team_Berry.WeaponInteraction.Systems;
 
-import com.hypixel.hytale.component.ArchetypeChunk;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
@@ -33,10 +30,8 @@ public class SlowBombDamageSystem extends DamageEventSystem {
             Ref<EntityStore> attackerRef = entitySource.getRef();
             PlayerRef attackerPlayer = commandBuffer.getComponent(attackerRef, PlayerRef.getComponentType());
             if (attackerPlayer != null && source instanceof Damage.ProjectileSource projectileSource) {
-
                 Ref<EntityStore> projectileRef = projectileSource.getProjectile();
                 ProjectileComponent projectileComponent = commandBuffer.getComponent(projectileRef, ProjectileComponent.getComponentType());
-
                 addEffect(store, commandBuffer, projectileComponent, targetRef, attackerRef);
             }
         }
@@ -52,6 +47,22 @@ public class SlowBombDamageSystem extends DamageEventSystem {
             }
         }
     }
+    public String debugEntity(Ref<EntityStore> ref, CommandBuffer<EntityStore> commandBuffer) {
+        StringBuilder sb = new StringBuilder("Entity Details:\n");
+        Archetype<EntityStore> archetype = commandBuffer.getArchetype(ref);
 
+        for (int i = archetype.getMinIndex(); i < archetype.length(); i++) {
+            ComponentType<EntityStore, ?> type = archetype.get(i);
+            if (type != null) {
+                // This uses the toString() from your ComponentType code
+                sb.append(" - ").append(type.toString()).append("\n");
+
+                // If you want the actual VALUES (like health or velocity):
+                Object data = commandBuffer.getComponent(ref, type);
+                sb.append("   Data: ").append(data.toString()).append("\n");
+            }
+        }
+        return sb.toString();
+    }
 
 }

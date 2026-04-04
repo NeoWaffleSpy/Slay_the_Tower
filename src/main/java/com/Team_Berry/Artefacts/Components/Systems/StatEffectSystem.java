@@ -99,8 +99,8 @@ public class StatEffectSystem {
                         odd += modifier.getAmount();
                     }
                 }
-                ArtefactPlugin.LOGGER.atInfo().log("Critical Rate at " + odd + "%");
-                if (Math.random() < (odd/100)) {
+                ArtefactPlugin.LOGGER.atInfo().log("Critical Rate at " + odd*100 + "%");
+                if (Math.random() < (odd)) {
                     float mult = 2;
                     if (bonusCritDamageType != null) {
                         ArtefactPlugin.LOGGER.atInfo().log("Successfully entered Critical Damage");

@@ -36,7 +36,9 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     private String artefactName = "Template";
     private AssetExtraInfo.Data data;
 
+    public ArrayList<String> statusStringList = new ArrayList<>();
     public ArrayList<StatusEffectCodec> statusList = new ArrayList<>();
+    public ArrayList<String> statStringList = new ArrayList<>();
     public ArrayList<StatCodec> statList = new ArrayList<>();
     private RarityEnum rarity = RarityEnum.DEBUG;
     private ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
@@ -87,12 +89,12 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
                 .append(new KeyedCodec<>("StatusEffect", new CustomArrayCodec<>(Codec.STRING, ArrayList::new)
                                 .metadata(new UIEditor(new UIEditor.Dropdown("StatEffectDataSet")))),
-                        (artefact, map) -> artefact.statusList = getStatusEffectFromStringList(map),
-                        (artefact) -> getStatusStringList(artefact.statusList)).add()
+                        (artefact, map) -> artefact.statusStringList = getStatusEffectFromStringList(artefact, map),
+                        (artefact) -> artefact.statusStringList).add()
                 .append(new KeyedCodec<>("Stats", new CustomArrayCodec<>(Codec.STRING, ArrayList::new)
                                 .metadata(new UIEditor(new UIEditor.Dropdown("StatDataSet")))),
-                        (artefact, map) -> artefact.statList = getStatFromStringList(map),
-                        (artefact) -> getStatStringList(artefact.statList)).add()
+                        (artefact, map) -> artefact.statStringList = getStatFromStringList(artefact, map),
+                        (artefact) -> artefact.statStringList).add()
                 .append(new KeyedCodec<>("Rarity", new EnumCodec<>(RarityEnum.class)),
                         (obj, val) -> obj.rarity = val,
                         obj -> obj.rarity).add()
@@ -103,37 +105,18 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .build();
     }
 
-    public static ArrayList<StatusEffectCodec> getStatusEffectFromStringList(ArrayList<String> sList) {
+    public static ArrayList<String> getStatusEffectFromStringList(ArtefactCodec codec, ArrayList<String> sList) {
         DefaultAssetMap<String, StatusEffectCodec> map = StatusEffectCodec.getAssetMap();
-        ArrayList<StatusEffectCodec> list = new ArrayList<>();
-        sList.forEach((s) -> list.add(map.getAsset(s)));
-        return list;
+        codec.statusList.clear();
+        sList.forEach((s) -> codec.statusList.add(map.getAsset(s)));
+        return sList;
     }
 
-    public static ArrayList<StatCodec> getStatFromStringList(ArrayList<String> sList) {
+    public static ArrayList<String> getStatFromStringList(ArtefactCodec codec, ArrayList<String> sList) {
         DefaultAssetMap<String, StatCodec> map = StatCodec.getAssetMap();
-        ArrayList<StatCodec> list = new ArrayList<>();
-        sList.forEach((s) -> {
-            StatCodec c = map.getAsset(s);
-            if (c != null)
-                ArtefactPlugin.LOGGER.atInfo().log("Adding stat codec: " + c.toString());
-            else
-                ArtefactPlugin.LOGGER.atInfo().log("No stat codec for: " + s);
-            list.add(c);
-        });
-        return list;
-    }
-
-    public static ArrayList<String> getStatusStringList(ArrayList<StatusEffectCodec> list) {
-        ArrayList<String> val = new ArrayList<>();
-        list.forEach((status) -> val.add(status.getId()));
-        return val;
-    }
-
-    public static ArrayList<String> getStatStringList(ArrayList<StatCodec> list) {
-        ArrayList<String> val = new ArrayList<>();
-        list.forEach((status) -> val.add(status.getId()));
-        return val;
+        codec.statList.clear();
+        sList.forEach((s) -> codec.statList.add(map.getAsset(s)));
+        return sList;
     }
 
     public static void register() {

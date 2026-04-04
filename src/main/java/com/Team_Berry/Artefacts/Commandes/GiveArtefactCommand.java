@@ -2,6 +2,7 @@ package com.Team_Berry.Artefacts.Commandes;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;

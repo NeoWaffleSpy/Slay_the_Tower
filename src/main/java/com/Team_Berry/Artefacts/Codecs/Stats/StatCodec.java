@@ -31,6 +31,7 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     private String effectName = "Template";
     private AssetExtraInfo.Data data;
 
+    public String typeString = "Health";
     public EntityStatType type;
     public CalculationType calc = CalculationType.ADDITIVE;
     public TargetType target = TargetType.SELF;
@@ -70,8 +71,8 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                         (t, k) -> t.effectName = k, (t) -> t.effectName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
                 .append(new KeyedCodec<>("Stat", Codec.STRING),
-                        (artefact, map) -> artefact.type = getStatFromString(map),
-                        (artefact) -> getStatString(artefact.type))
+                        (artefact, map) -> artefact.typeString = updateStatFromString(artefact, map),
+                        (artefact) -> artefact.typeString)
                 .metadata(new UIEditor(new UIEditor.Dropdown("EntityStatTypeDataSet"))).add()
                 .append(new KeyedCodec<>("CalculationType", new EnumCodec<>(CalculationType.class)),
                         (obj, val) -> obj.calc = val,
@@ -95,6 +96,7 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         ArtefactPlugin artifact = ArtefactPlugin.get();
         artifact.getAssetRegistry()
                 .register(HytaleAssetStore.builder(StatCodec.class, new DefaultAssetMap<>())
+                .loadsAfter(EntityStatType.class)
                 .setPath("StatCodec")
                 .setCodec(StatCodec.CODEC)
                 .setKeyFunction(StatCodec::getId)
@@ -120,14 +122,13 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         event.getRemovedAssets().forEach(StatCodec::remove);
     }
 
-    public static EntityStatType getStatFromString(String key) {
-        return ArtefactPlugin.getEntityStatTypeAssetStore().getAsset(key);
+    public static String updateStatFromString(StatCodec codec, String key) {
+        codec.type = ArtefactPlugin.getEntityStatTypeAssetStore().getAsset(key);
+        return key;
     }
 
-    public static String getStatString(EntityStatType stat) {
-        if (stat == null)
-            return null;
-        return stat.getId();
+    public static EntityStatType getStatFromString(String key) {
+        return ArtefactPlugin.getEntityStatTypeAssetStore().getAsset(key);
     }
 
     @Nonnull

@@ -1,5 +1,5 @@
 {
-  "Stat": "Regen_Energy",
+  "Stat": "Bonus_Armor",
   "CalculationType": "Multiplicative",
   "Value": 0.2
 }

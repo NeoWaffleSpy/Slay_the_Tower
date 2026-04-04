@@ -1,0 +1,56 @@
+{
+  "NPCSpawnAreas": [
+    {
+      "GroupName": "Corner1",
+      "Min": {
+        "X": 2,
+        "Z": -4
+      },
+      "Max": {
+        "Z": -6
+      }
+    },
+    {
+      "GroupName": "Middle",
+      "Min": {
+        "X": 5,
+        "Z": -14
+      },
+      "Max": {
+        "X": 6,
+        "Z": 13
+      }
+    }
+  ],
+  "PlayerSpawns": [
+    {
+      "Position": {
+        "X": -4,
+        "Z": -22
+      },
+      "Rotation": {
+        "Yaw": -5,
+        "Pitch": -137
+      }
+    },
+    {
+      "Position": {
+        "X": -2,
+        "Y": 0,
+        "Z": 21
+      },
+      "Rotation": {
+        "Yaw": -5,
+        "Pitch": -137
+      }
+    },
+    {
+      "Position": {
+        "X": -4,
+        "Z": 19
+      }
+    },
+    {}
+  ],
+  "WorldName": "run"
+}

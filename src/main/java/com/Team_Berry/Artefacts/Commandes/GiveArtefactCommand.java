@@ -42,6 +42,7 @@ public class GiveArtefactCommand extends AbstractPlayerCommand {
         ArtefactCodec artefact = ArtefactCodec.getAssetMap().getAsset(artefactName.get(commandContext));
         if (artefact == null) {
             commandContext.sendMessage(Message.raw("No valid artefact with this name").color(Color.RED));
+            return;
         }
         if (artefactCount.provided(commandContext))
             statComp.setStackArtefact(artefact, artefactCount.get(commandContext));

@@ -45,7 +45,7 @@ public class RoomNPCSpawner {
 
         Builder<Role> roleBuilder = npcPlugin.tryGetCachedValidRole(roleIndex);
 
-        if (roleBuilder == null || !(roleBuilder instanceof ISpawnableWithModel spawnable) || !roleBuilder.isSpawnable()) {
+        if (!(roleBuilder instanceof ISpawnableWithModel spawnable) || !roleBuilder.isSpawnable()) {
             RoomPlugin.LOGGER.atWarning().log("NPC at index " + roleIndex + " is not a spawnable role.");
             return;
         }

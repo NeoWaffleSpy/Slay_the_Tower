@@ -1,5 +1,6 @@
 package com.Team_Berry.Rooms;
 
+import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Commmands.RoomNPCCommand.RoomNPCCommand;
 import com.Team_Berry.Rooms.Commmands.RoomTeleporterCommand.RoomTeleporterCommand;
@@ -23,6 +24,7 @@ public class RoomPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         RoomCodec.register();
+        MobGroupCodec.register();
         LOGGER.atInfo().log("Room System Initialized");
         this.getCommandRegistry().registerCommand(new RoomTeleporterCommand());
         this.getCommandRegistry().registerCommand(new RoomNPCCommand());

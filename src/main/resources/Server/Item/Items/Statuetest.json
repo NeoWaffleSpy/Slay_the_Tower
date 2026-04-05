@@ -4,7 +4,7 @@
   },
   "Icon": "Icons/ItemsGenerated/Debug_Block.png",
   "Categories": [],
-  "Quality": "Developer",
+  "Quality": "Common",
   "Interactions": {
     "Primary": "Block_Primary",
     "Secondary": "Block_Secondary"

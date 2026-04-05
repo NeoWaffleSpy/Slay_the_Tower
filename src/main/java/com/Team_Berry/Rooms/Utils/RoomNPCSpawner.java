@@ -1,5 +1,6 @@
 package com.Team_Berry.Rooms.Utils;
 
+import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.RoomPlugin;
 import com.hypixel.hytale.component.Store;
@@ -75,5 +76,29 @@ public class RoomNPCSpawner {
         double max = Math.max(v1, v2);
         if (min == max) return min;
         return min + (max - min) * ThreadLocalRandom.current().nextDouble();
+    }
+
+    public static void spawnMobGroup(Store<EntityStore> store, RoomCodec room, MobGroupCodec group) {
+        for (MobGroupCodec.MobEntry entry : group.mobs) {
+            for (int i = 0; i < entry.quantity; i++) {
+                spawnInRoom(store, room, entry.npcRoleId);
+            }
+        }
+    }
+
+    public static void spawnMobGroupById(Store<EntityStore> store, String roomId, String mobGroupId) {
+        RoomCodec room = RoomCodec.getAssetMap().getAsset(roomId);
+        if (room == null) {
+            RoomPlugin.LOGGER.atWarning().log("Cannot spawn MobGroup: Room '" + roomId + "' not found.");
+            return;
+        }
+
+        MobGroupCodec group = MobGroupCodec.getAssetMap().getAsset(mobGroupId);
+        if (group == null) {
+            RoomPlugin.LOGGER.atWarning().log("Cannot spawn MobGroup: Group '" + mobGroupId + "' not found.");
+            return;
+        }
+
+        spawnMobGroup(store, room, group);
     }
 }

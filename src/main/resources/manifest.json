@@ -51,6 +51,12 @@
       "Name": "Room",
       "Main": "com.Team_Berry.Rooms.RoomPlugin",
       "ServerVersion": "${server_version}"
+    },
+    {
+      "Group": "${plugin_group}",
+      "Name": "Game",
+      "Main": "com.Team_Berry.Game.GamePlugin",
+      "ServerVersion": "${server_version}"
     }
   ]
 }

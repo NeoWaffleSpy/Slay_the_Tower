@@ -40,9 +40,7 @@
       "CollisionEnter": {
         "Interactions": [
           {
-            "Type": "Teleporter",
-            "ClearOutXZ": 50,
-            "ClearOutY": 150
+            "Type": "InitiateStageInteraction"
           }
         ]
       }

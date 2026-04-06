@@ -25,10 +25,6 @@ public class MobGroupCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         CODEC = AssetBuilderCodec.builder(MobGroupCodec.class, MobGroupCodec::new, Codec.STRING,
                         (t, k) -> t.id = k, (t) -> t.id,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<>("Difficulty", Codec.INTEGER, true),
-                        (obj, val) -> obj.difficulty = val,
-                        obj -> obj.difficulty)
-                .documentation("The difficulty tier of this mob group (e.g., Easy, Medium, Hard).").add()
                 .append(new KeyedCodec<>("Mobs", new CustomArrayCodec<>(MobEntry.CODEC, ArrayList::new)),
                         (obj, val) -> obj.mobs = val,
                         obj -> obj.mobs)
@@ -36,7 +32,6 @@ public class MobGroupCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .build();
     }
 
-    public int difficulty = 1;
     public ArrayList<MobEntry> mobs = new ArrayList<>();
     private String id = "NewMobGroup";
     private AssetExtraInfo.Data data;
@@ -82,6 +77,17 @@ public class MobGroupCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     @Override
     public String getId() {
         return this.id;
+    }
+
+    public int getTotalMobCount() {
+        int total = 0;
+        if (this.mobs == null) return 0;
+
+        for (MobEntry entry : this.mobs) {
+            total += entry.quantity;
+        }
+
+        return total;
     }
 
     public static class MobEntry {

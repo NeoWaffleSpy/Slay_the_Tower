@@ -1,6 +1,7 @@
 package com.Team_Berry.Game.Systems;
 
 import com.Team_Berry.Game.Components.QuestNPCComponent;
+import com.Team_Berry.Game.Enums.QuestUpdate;
 import com.Team_Berry.Game.GameManager;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -31,7 +32,7 @@ public class QuestNPCDeathSystem extends RefSystem<EntityStore> {
 
     @Override
     public void onEntityRemove(@NotNull Ref<EntityStore> ref, @NotNull RemoveReason removeReason, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
-        System.out.println("npc just died oh");
+        gameManager.updateQuest(QuestUpdate.MOB_DEATH);
     }
 
 

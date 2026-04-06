@@ -1,0 +1,14 @@
+{
+  "Milestones": [
+    {
+      "RoomCount": 3,
+      "Name": "1er sors",
+      "Difficulty": 1
+    },
+    {
+      "RoomCount": 3,
+      "Difficulty": 1,
+      "Name": "2e sors"
+    }
+  ]
+}

@@ -43,5 +43,10 @@
       }
     }
   ],
-  "WorldName": "run"
+  "WorldName": "run",
+  "Tags": {
+    "Category": [
+      "Room"
+    ]
+  }
 }

@@ -83,6 +83,38 @@ public class SkillMilestoneCodec implements JsonAssetWithMap<String, DefaultAsse
         return this.id;
     }
 
+    /**
+     * Gets a milestone by its index in the progression (0 = first, 1 = second, etc.)
+     */
+    public MilestoneEntry getMilestoneByIndex(int index) {
+        if (index >= 0 && index < milestones.size()) {
+            return milestones.get(index);
+        }
+        return null;
+    }
+
+    /**
+     * Gets the total number of milestones defined in this skill tree.
+     */
+    public int getTotalMilestoneCount() {
+        return milestones.size();
+    }
+
+    /**
+     * Finds which milestone index a player is currently on based on their total cleared rooms.
+     */
+    public int getMilestoneIndexForRooms(int clearedRooms) {
+        int currentIdx = -1;
+        for (int i = 0; i < milestones.size(); i++) {
+            if (clearedRooms >= milestones.get(i).roomCount) {
+                currentIdx = i;
+            } else {
+                break; // Since the list is sorted, we can stop once we hit a count too high
+            }
+        }
+        return currentIdx;
+    }
+
     public static class MilestoneEntry {
         public static final BuilderCodec<MilestoneEntry> CODEC = BuilderCodec.builder(MilestoneEntry.class, MilestoneEntry::new)
                 .append(new KeyedCodec<>("Name", Codec.STRING),

@@ -10,6 +10,8 @@ import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.Random;
@@ -34,8 +36,8 @@ public class RoomTeleporter {
                     (float) Math.toDegrees(spawn.rot.pitch),
                     (float) Math.toDegrees(spawn.rot.roll)
             );
-
-            Teleport teleport = Teleport.createForPlayer(pos, rot);
+            World world = Universe.get().getWorld(room.worldName);
+            Teleport teleport = Teleport.createForPlayer(world, pos, rot);
 
             store.addComponent(ref, Teleport.getComponentType(), teleport);
         });

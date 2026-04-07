@@ -3,5 +3,8 @@
     "Crit_Rate",
     "Crit_Damage"
   ],
-  "Icon": "Icons/Items/EditorTools/Flood.png"
+  "Icon": "Icons/Items/EditorTools/Extrude.png",
+  "HudUI": [
+    {}
+  ]
 }

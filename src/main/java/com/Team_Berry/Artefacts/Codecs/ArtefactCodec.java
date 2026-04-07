@@ -2,8 +2,6 @@ package com.Team_Berry.Artefacts.Codecs;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
-import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
-import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
 import com.Team_Berry.Utils.Codecs.CustomArrayCodec;
@@ -20,16 +18,11 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
-import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
-import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
-import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
-import com.hypixel.hytale.codec.schema.metadata.ui.UIEditorPreview;
-import com.hypixel.hytale.codec.schema.metadata.ui.UIRebuildCaches;
-import com.hypixel.hytale.codec.schema.metadata.ui.UITypeIcon;
+import com.hypixel.hytale.codec.schema.metadata.ui.*;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.asset.common.CommonAssetValidator;
-import com.hypixel.hytale.server.core.asset.type.item.config.ItemHudUI;
+import com.hypixel.hytale.server.core.asset.type.item.config.AssetIconProperties;
 import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProperties;
 
 import java.awt.*;
@@ -42,7 +35,7 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     private String artefactName = "Template";
     private AssetExtraInfo.Data data;
     public String icon = null;
-    protected ItemHudUI[] hudUI;
+    protected AssetIconProperties iconProperties;
 
     public ArrayList<String> statusStringList = new ArrayList<>();
     public ArrayList<StatusEffectCodec> statusList = new ArrayList<>();
@@ -104,6 +97,10 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .addValidator(CommonAssetValidator.ICON_ITEM)
                 .metadata(new UIEditor(new UIEditor.Icon("Icons/ItemsGenerated/{assetId}.png", 64, 64)))
                 .metadata(new UIRebuildCaches(UIRebuildCaches.ClientCache.ITEM_ICONS)).add()
+                .append(new KeyedCodec<>("IconProperties", AssetIconProperties.CODEC),
+                        (item, s) -> item.iconProperties = s,
+                        (item) -> item.iconProperties)
+                .metadata(UIDisplayMode.HIDDEN).add()
                 .append(new KeyedCodec<>("StatusEffect", new CustomArrayCodec<>(Codec.STRING, ArrayList::new)
                                 .metadata(new UIEditor(new UIEditor.Dropdown("StatEffectDataSet")))),
                         (artefact, map) -> artefact.statusStringList = getStatusEffectFromStringList(artefact, map),
@@ -119,9 +116,6 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                         (artefact, s) -> artefact.translationProperties = s,
                         (artefact) -> artefact.translationProperties)
                 .documentation("The translation properties for this item asset.").add()
-                .addField(new KeyedCodec<>("HudUI", new ArrayCodec(ItemHudUI.CODEC, (x$0) -> new ItemHudUI[x$0])),
-                        (artefact, s) -> artefact.hudUI = s,
-                        (artefact) -> artefact.hudUI)
                 .build();
     }
 

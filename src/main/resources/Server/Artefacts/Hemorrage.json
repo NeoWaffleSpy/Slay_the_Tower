@@ -13,5 +13,6 @@
     "SuperBleed",
     "MegaBleed"
   ],
-  "Rarity": "Rare"
+  "Rarity": "Rare",
+  "Icon": "Icons/ItemsGenerated/BombShot_Ability_Icon.png"
 }

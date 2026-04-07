@@ -19,6 +19,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class StatEffectSystem {
@@ -157,19 +158,20 @@ public class StatEffectSystem {
                 if (statMap == null)
                     return;
                 comp.artefactUpdated.forEach(artefact -> {
+                    ArrayList<StatCodec> list = artefact.getStatArray();
                     ArtefactPlugin.LOGGER.atInfo().log("Changed artefact " + artefact.getId());
-                    ArtefactPlugin.LOGGER.atInfo().log("StatListSize " + artefact.statList.size());
-                    for (int i = 0; i < artefact.statList.size(); i++) {
-                        StatCodec stat = artefact.statList.get(i);
+                    ArtefactPlugin.LOGGER.atInfo().log("StatListSize " + list.size());
+                    for (int i = 0; i < list.size(); i++) {
+                        StatCodec stat = list.get(i);
                         String key = ArtefactPlugin.get().getName() + "-" + artefact.getId() + "-" + i;
-                        if (stat == null || stat.type == null)
+                        if (stat == null || stat.getType() == null)
                             return;
                         ArtefactPlugin.LOGGER.atInfo().log("Stat & StatType Not Null");
                         if (stat.trigger == TriggerType.PASSIVE) {
                             if (!comp.artefactList.containsKey(artefact) || comp.getAmount(artefact) == 0)
-                                statMap.removeModifier(getEntityIndex(stat.type), key);
+                                statMap.removeModifier(getEntityIndex(stat.getType()), key);
                             else
-                                statMap.putModifier(getEntityIndex(stat.type), key, new StaticModifier(Modifier.ModifierTarget.MAX, stat.calc, stat.value * comp.getAmount(artefact)));
+                                statMap.putModifier(getEntityIndex(stat.getType()), key, new StaticModifier(Modifier.ModifierTarget.MAX, stat.calc, stat.value * comp.getAmount(artefact)));
                         }
                     }
                 });

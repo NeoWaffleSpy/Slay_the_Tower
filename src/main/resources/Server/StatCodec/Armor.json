@@ -2,6 +2,6 @@
   "StatusEffect": "Health",
   "CalculationType": "Additive",
   "TargetType": "Self",
-  "Stat": "Bonus_Armor",
+  "Stat": "Attack_Speed",
   "Value": 100
 }

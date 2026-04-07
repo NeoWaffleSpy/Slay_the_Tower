@@ -37,9 +37,15 @@ public class RoomTeleporter {
                     (float) Math.toDegrees(spawn.rot.roll)
             );
             World world = Universe.get().getWorld(room.worldName);
-            Teleport teleport = Teleport.createForPlayer(world, pos, rot);
+            if (world != null) {
+                Teleport teleport = Teleport.createForPlayer(world, pos, rot);
 
-            store.addComponent(ref, Teleport.getComponentType(), teleport);
+                store.addComponent(ref, Teleport.getComponentType(), teleport);
+            } else {
+                RoomPlugin.LOGGER.atWarning().log("World doesn't exist!! %s", room.worldName);
+
+            }
+
         });
     }
 

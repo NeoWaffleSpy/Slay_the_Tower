@@ -1,0 +1,25 @@
+{
+  "Mobs": [
+    {
+      "NPCRole": "Kweebec_Bear",
+      "Quantity": 2
+    },
+    {
+      "NPCRole": "A_Skeleton_Archer",
+      "Quantity": 3
+    },
+    {
+      "NPCRole": "A_Zombie_Kweebec",
+      "Quantity": 5
+    },
+    {
+      "NPCRole": "Kweebec_Ghoul",
+      "Quantity": 2
+    }
+  ],
+  "Tags": {
+    "Difficulty": [
+      "1"
+    ]
+  }
+}

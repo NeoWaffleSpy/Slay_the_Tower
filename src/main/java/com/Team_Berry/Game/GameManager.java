@@ -41,27 +41,32 @@ public class GameManager {
             Store<EntityStore> store = playerRef.getReference().getStore();
 
             RoomCodec room = pickRoom();
-            gameState.setCurrentRoom(room);
+            if(RoomTeleporter.canTeleportToRoom(room)){
+                gameState.setCurrentRoom(room);
 
-            MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
-            int mobs = mobGroups.getTotalMobCount();
-            RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
-            startQuest(mobGroups.getTotalMobCount());
+                MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
+                int mobs = mobGroups.getTotalMobCount();
+                RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
+                startQuest(mobGroups.getTotalMobCount());
 
-            // List<Ref<EntityStore>> questMobList = RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
-//            if (questMobList != null) {
-//                startQuest(questMobList);
-//            } else {
-//                startQuest(mobGroups.getTotalMobCount());
-//            }
+                // List<Ref<EntityStore>> questMobList = RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
+    //            if (questMobList != null) {
+    //                startQuest(questMobList);
+    //            } else {
+    //                startQuest(mobGroups.getTotalMobCount());
+    //            }
 
 
-            for (PlayerRef p : participants) {
-                RoomTeleporter.teleportToRoom(p, room);
+                for (PlayerRef p : participants) {
+                    RoomTeleporter.teleportToRoom(p, room);
+                }
+            }else {
+                playerRef.sendMessage(Message.Raw("Can't teleport to room"))
             }
         } else {
             RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
         }
+        
     }
 
     private void startQuest(List<Ref<EntityStore>> questMobList) {

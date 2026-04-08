@@ -61,4 +61,24 @@ public class RoomTeleporter {
 
         teleportToRoom(playerRef, room);
     }
+
+    public static boolean canTeleportToRoom(RoomCodec room) {
+        if (room == null) {
+            RoomPlugin.LOGGER.atWarning().log("Validation failed: RoomCodec is null.");
+            return false;
+        }
+
+        if (room.playerSpawns.isEmpty()) {
+            RoomPlugin.LOGGER.atWarning().log("Validation failed: Room %s has no spawn points.", room.worldName);
+            return false;
+        }
+
+        World world = Universe.get().getWorld(room.worldName);
+        if (world == null) {
+            RoomPlugin.LOGGER.atWarning().log("Validation failed: World %s does not exist.", room.worldName);
+            return false;
+        }
+
+        return true;
+    }
 }

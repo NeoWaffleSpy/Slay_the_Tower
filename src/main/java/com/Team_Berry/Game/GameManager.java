@@ -13,6 +13,7 @@ import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
@@ -61,7 +62,7 @@ public class GameManager {
                     RoomTeleporter.teleportToRoom(p, room);
                 }
             }else {
-                playerRef.sendMessage(Message.Raw("Can't teleport to room"))
+                playerRef.sendMessage(Message.raw("Can't teleport to room"));
             }
         } else {
             RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());

@@ -51,6 +51,7 @@ public class GameManager {
         this.participants.add(playerRef);
 
         if (isNewStage) {
+            playerRef.sendMessage(Message.raw("new room started !"));
             RoomCodec room = pickRoom();
 
             if (room != null) {
@@ -58,9 +59,9 @@ public class GameManager {
                 Store<EntityStore> store = playerRef.getReference().getStore();
 
                 MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
+                startQuest(mobGroups.getTotalMobCount());
 
                 RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
-                startQuest(mobGroups.getTotalMobCount());
 
                 for (PlayerRef p : participants) {
                     RoomTeleporter.teleportToRoom(p, room);
@@ -69,6 +70,8 @@ public class GameManager {
                 playerRef.sendMessage(Message.raw("Error: No valid rooms found."));
             }
         } else {
+            playerRef.sendMessage(Message.raw("joining existing room"));
+
             RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
         }
     }

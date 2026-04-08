@@ -31,6 +31,8 @@ public class GameManager {
     private final Set<PlayerRef> deadPlayers = new HashSet<>();
     private Quest currentQuest;
 
+    private boolean isStartingStage = false;
+
     public GameManager(SkillMilestoneCodec milestoneData) {
         this.gameState = new GameState();
         this.gameState.initialize(milestoneData);
@@ -47,31 +49,43 @@ public class GameManager {
     //            }
 
     public void initiateStage(PlayerRef playerRef) {
+        if (isStartingStage) {
+            this.participants.add(playerRef);
+            if (gameState.getCurrentRoom() != null) {
+                RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
+            }
+            return;
+        }
+
         boolean isNewStage = (this.currentQuest == null);
         this.participants.add(playerRef);
 
         if (isNewStage) {
-            playerRef.sendMessage(Message.raw("new room started !"));
-            RoomCodec room = pickRoom();
+            isStartingStage = true;
+            try {
+                playerRef.sendMessage(Message.raw("new room started !"));
+                RoomCodec room = pickRoom();
 
-            if (room != null) {
-                gameState.setCurrentRoom(room);
-                Store<EntityStore> store = playerRef.getReference().getStore();
+                if (room != null) {
+                    gameState.setCurrentRoom(room);
+                    Store<EntityStore> store = playerRef.getReference().getStore();
+                    MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
 
-                MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
-                startQuest(mobGroups.getTotalMobCount());
+                    // IMPORTANT: Set currentQuest BEFORE spawning/teleporting
+                    // to ensure the "isNewStage" check fails for anyone else entering
+                    startQuest(mobGroups.getTotalMobCount());
 
-                RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
+                    RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
 
-                for (PlayerRef p : participants) {
-                    RoomTeleporter.teleportToRoom(p, room);
+                    for (PlayerRef p : participants) {
+                        RoomTeleporter.teleportToRoom(p, room);
+                    }
                 }
-            } else {
-                playerRef.sendMessage(Message.raw("Error: No valid rooms found."));
+            } finally {
+                isStartingStage = false;
             }
         } else {
             playerRef.sendMessage(Message.raw("joining existing room"));
-
             RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
         }
     }

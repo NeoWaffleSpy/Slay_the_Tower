@@ -15,6 +15,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.Nullable;
@@ -26,67 +27,66 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
+
     private final GameState gameState;
     private final Set<PlayerRef> participants = new HashSet<>();
     private final Set<PlayerRef> deadPlayers = new HashSet<>();
     private Quest currentQuest;
-
     private boolean isStartingStage = false;
+    private long lastRoomStartTick = -1;
 
     public GameManager(SkillMilestoneCodec milestoneData) {
         this.gameState = new GameState();
         this.gameState.initialize(milestoneData);
     }
 
-    // event => initiateStage(event)
-
-
-    //          List<Ref<EntityStore>> questMobList = RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
-    //            if (questMobList != null) {
-    //                startQuest(questMobList);
-    //            } else {
-    //                startQuest(mobGroups.getTotalMobCount());
-    //            }
 
     public void initiateStage(PlayerRef playerRef) {
-        if (isStartingStage) {
-            this.participants.add(playerRef);
-            if (gameState.getCurrentRoom() != null) {
-                RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
+        long currentTick = playerRef.getReference().getStore()
+                .getResource(TimeResource.getResourceType())
+                .getNow().toEpochMilli();
+
+
+        synchronized (this) {
+            if (isStartingStage) {
+                this.participants.add(playerRef);
+                return;
             }
-            return;
+
+            if (this.currentQuest != null || (currentTick - lastRoomStartTick < 1000)) {
+                this.participants.add(playerRef);
+                if (gameState.getCurrentRoom() != null) {
+                    RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
+                }
+                return;
+            }
+
+            isStartingStage = true;
+            lastRoomStartTick = currentTick;
         }
 
-        boolean isNewStage = (this.currentQuest == null);
-        this.participants.add(playerRef);
+        try {
+            this.participants.add(playerRef);
+            playerRef.sendMessage(Message.raw("Starting stage..."));
 
-        if (isNewStage) {
-            isStartingStage = true;
-            try {
-                playerRef.sendMessage(Message.raw("new room started !"));
-                RoomCodec room = pickRoom();
+            RoomCodec room = pickRoom();
+            if (room != null) {
+                gameState.setCurrentRoom(room);
+                Store<EntityStore> store = playerRef.getReference().getStore();
+                MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
 
-                if (room != null) {
-                    gameState.setCurrentRoom(room);
-                    Store<EntityStore> store = playerRef.getReference().getStore();
-                    MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
+                startQuest(mobGroups.getTotalMobCount());
+                RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
 
-                    // IMPORTANT: Set currentQuest BEFORE spawning/teleporting
-                    // to ensure the "isNewStage" check fails for anyone else entering
-                    startQuest(mobGroups.getTotalMobCount());
-
-                    RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
-
-                    for (PlayerRef p : participants) {
-                        RoomTeleporter.teleportToRoom(p, room);
-                    }
+                for (PlayerRef p : participants) {
+                    RoomTeleporter.teleportToRoom(p, room);
                 }
-            } finally {
-                isStartingStage = false;
             }
-        } else {
-            playerRef.sendMessage(Message.raw("joining existing room"));
-            RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
+        } catch (Exception e) {
+            this.currentQuest = null;
+            playerRef.sendMessage(Message.raw("Error starting room."));
+        } finally {
+            isStartingStage = false;
         }
     }
 
@@ -98,7 +98,6 @@ public class GameManager {
         this.currentQuest = new Quest(spawnedMobs);
     }
 
-
     public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef) {
         if (currentQuest == null) return;
 
@@ -107,7 +106,7 @@ public class GameManager {
             if (currentQuest.isComplete()) {
                 endStage(EndStageResult.SUCCESS);
             }
-        } else if (questUpdate == QuestUpdate.PLAYER_DEATH &&  playerRef != null) {
+        } else if (questUpdate == QuestUpdate.PLAYER_DEATH && playerRef != null) {
             resolvePlayerDeath(playerRef);
         }
     }
@@ -132,7 +131,6 @@ public class GameManager {
 
         if (gameState.getRoomsUntilNextMilestone() <= 0) {
             gameState.advanceToNextMilestone();
-
             goToLobby();
         } else {
             goNextRoom();
@@ -152,7 +150,6 @@ public class GameManager {
                 RoomTeleporter.teleportToRoom(participant, lobby);
             }
         }
-
     }
 
     public GameState getGameState() {
@@ -174,9 +171,7 @@ public class GameManager {
             }
         }
 
-        if (validRooms.isEmpty()) {
-            return null;
-        }
+        if (validRooms.isEmpty()) return null;
 
         return validRooms.get(ThreadLocalRandom.current().nextInt(validRooms.size()));
     }
@@ -197,12 +192,10 @@ public class GameManager {
 
     private RoomCodec pickLobbyRoom() {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Lobby"); // Search for Lobby category
+        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Lobby");
         Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
 
-        if (roomKeys == null || roomKeys.isEmpty()) {
-            return null;
-        }
+        if (roomKeys == null || roomKeys.isEmpty()) return null;
 
         List<String> keyList = new ArrayList<>(roomKeys);
         String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));

@@ -32,7 +32,7 @@ public class QuestNPCDeathSystem extends RefSystem<EntityStore> {
 
     @Override
     public void onEntityRemove(@NotNull Ref<EntityStore> ref, @NotNull RemoveReason removeReason, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
-        gameManager.updateQuest(QuestUpdate.MOB_DEATH);
+        gameManager.updateQuest(QuestUpdate.MOB_DEATH, null);
     }
 
 

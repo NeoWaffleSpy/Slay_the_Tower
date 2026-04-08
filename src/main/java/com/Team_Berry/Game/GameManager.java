@@ -14,8 +14,10 @@ import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,7 +27,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
     private final GameState gameState;
-    private final Set<PlayerRef> participants = new HashSet<>(); // Added
+    private final Set<PlayerRef> participants = new HashSet<>();
+    private final Set<PlayerRef> deadPlayers = new HashSet<>();
     private Quest currentQuest;
 
     public GameManager(SkillMilestoneCodec milestoneData) {
@@ -34,40 +37,40 @@ public class GameManager {
     }
 
     // event => initiateStage(event)
-    public void initiateStage(PlayerRef playerRef) {
-        boolean isNewStage = (this.currentQuest == null);
-        this.participants.add(playerRef);
 
-        if (isNewStage) {
-            Store<EntityStore> store = playerRef.getReference().getStore();
 
-            RoomCodec room = pickRoom();
-            if(RoomTeleporter.canTeleportToRoom(room)){
-                gameState.setCurrentRoom(room);
-
-                MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
-                int mobs = mobGroups.getTotalMobCount();
-                RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
-                startQuest(mobGroups.getTotalMobCount());
-
-                // List<Ref<EntityStore>> questMobList = RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
+    //          List<Ref<EntityStore>> questMobList = RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
     //            if (questMobList != null) {
     //                startQuest(questMobList);
     //            } else {
     //                startQuest(mobGroups.getTotalMobCount());
     //            }
 
+    public void initiateStage(PlayerRef playerRef) {
+        boolean isNewStage = (this.currentQuest == null);
+        this.participants.add(playerRef);
+
+        if (isNewStage) {
+            RoomCodec room = pickRoom();
+
+            if (room != null) {
+                gameState.setCurrentRoom(room);
+                Store<EntityStore> store = playerRef.getReference().getStore();
+
+                MobGroupCodec mobGroups = pickMobGroup(gameState.getCurrentMilestone().difficulty);
+
+                RoomNPCSpawner.spawnMobGroup(store, room, mobGroups);
+                startQuest(mobGroups.getTotalMobCount());
 
                 for (PlayerRef p : participants) {
                     RoomTeleporter.teleportToRoom(p, room);
                 }
-            }else {
-                playerRef.sendMessage(Message.raw("Can't teleport to room"));
+            } else {
+                playerRef.sendMessage(Message.raw("Error: No valid rooms found."));
             }
         } else {
             RoomTeleporter.teleportToRoom(playerRef, gameState.getCurrentRoom());
         }
-        
     }
 
     private void startQuest(List<Ref<EntityStore>> questMobList) {
@@ -79,7 +82,7 @@ public class GameManager {
     }
 
 
-    public void updateQuest(QuestUpdate questUpdate) {
+    public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef) {
         if (currentQuest == null) return;
 
         if (questUpdate == QuestUpdate.MOB_DEATH) {
@@ -88,7 +91,7 @@ public class GameManager {
                 endStage(EndStageResult.SUCCESS);
             }
         } else if (questUpdate == QuestUpdate.PLAYER_DEATH) {
-            endStage(EndStageResult.FAILURE);
+            resolvePlayerDeath(playerRef);
         }
     }
 
@@ -96,15 +99,15 @@ public class GameManager {
         this.currentQuest = null;
         switch (result) {
             case SUCCESS:
+                reviveDeadPlayers();
                 ResolveNextStage();
                 break;
 
             case FAILURE:
-                gameState.reset();
+                resetGame(); // Use the new unified reset method
                 goToLobby();
                 break;
         }
-
     }
 
     private void ResolveNextStage() {
@@ -133,8 +136,6 @@ public class GameManager {
             }
         }
 
-        // Cleanup participants for the next run
-        this.participants.clear();
     }
 
     public GameState getGameState() {
@@ -146,14 +147,21 @@ public class GameManager {
         int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Room");
         Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
 
-        if (roomKeys == null || roomKeys.isEmpty()) {
+        if (roomKeys == null || roomKeys.isEmpty()) return null;
+
+        List<RoomCodec> validRooms = new ArrayList<>();
+        for (String key : roomKeys) {
+            RoomCodec room = roomMap.getAsset(key);
+            if (RoomTeleporter.canTeleportToRoom(room)) {
+                validRooms.add(room);
+            }
+        }
+
+        if (validRooms.isEmpty()) {
             return null;
         }
 
-        List<String> keyList = new ArrayList<>(roomKeys);
-        String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
-
-        return roomMap.getAsset(randomKey);
+        return validRooms.get(ThreadLocalRandom.current().nextInt(validRooms.size()));
     }
 
     public MobGroupCodec pickMobGroup(int difficulty) {
@@ -183,5 +191,30 @@ public class GameManager {
         String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
 
         return roomMap.getAsset(randomKey);
+    }
+
+    public void resolvePlayerDeath(PlayerRef playerRef) {
+        boolean wasActiveParticipant = this.participants.remove(playerRef);
+
+        if (wasActiveParticipant) {
+            this.deadPlayers.add(playerRef);
+            if (this.participants.isEmpty()) {
+                endStage(EndStageResult.FAILURE);
+            }
+        }
+    }
+
+    private void resetGame() {
+        this.currentQuest = null;
+        this.participants.clear();
+        this.deadPlayers.clear();
+    }
+
+    private void reviveDeadPlayers() {
+        if (deadPlayers.isEmpty()) return;
+
+        // TODO: Revive the player at the location of a living participant
+        this.participants.addAll(deadPlayers);
+        deadPlayers.clear();
     }
 }

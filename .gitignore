@@ -44,3 +44,4 @@ build/
 /run/universe/worlds/*
 
 !/run/universe/worlds/void/
+!/run/universe/worlds/run/

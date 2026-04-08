@@ -3,6 +3,7 @@ package com.Team_Berry.Artefacts.Codecs.Stats;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
+import com.Team_Berry.Utils.Codecs.AssetWrapperCodec;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetKeyValidator;
 import com.hypixel.hytale.assetstore.AssetRegistry;
@@ -20,10 +21,12 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.schema.SchemaContext;
 import com.hypixel.hytale.codec.schema.config.Schema;
+import com.hypixel.hytale.codec.schema.metadata.ui.UIDisplayMode;
 import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
 import com.hypixel.hytale.codec.validation.ValidationResults;
 import com.hypixel.hytale.codec.validation.Validator;
 import com.hypixel.hytale.codec.validation.ValidatorCache;
+import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier.CalculationType;
@@ -45,6 +48,7 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     public TriggerType trigger = TriggerType.PASSIVE;
     public float value = 1.0f;
     public float duration = 1.0f;
+    public float probability = 1.0f;
 
     public StatCodec() {}
     public StatCodec(String effectName) {
@@ -81,7 +85,7 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
         CODEC = AssetBuilderCodec.builder(StatCodec.class, StatCodec::new, Codec.STRING,
                         (t, k) -> t.effectName = k, (t) -> t.effectName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<>("Stat", new ContainedAssetCodec<>(EntityStatType.class, EntityStatType.CODEC)),
+                .append(new KeyedCodec<>("Stat", new AssetWrapperCodec<>(EntityStatType.class, EntityStatType.CODEC)),
                         (artefact, s) -> artefact.type = s,
                         (artefact) -> artefact.type)
                 .addValidator(EntityStatType.VALIDATOR_CACHE.getValidator()).add()
@@ -100,6 +104,10 @@ public class StatCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                 .append(new KeyedCodec<>("Duration", Codec.FLOAT),
                         (obj, val) -> obj.duration = val,
                         obj -> obj.duration).add()
+                .append(new KeyedCodec<>("Probability", Codec.FLOAT),
+                        (obj, val) -> obj.probability = val,
+                        obj -> obj.probability)
+                .addValidator(Validators.min(0f)).addValidator(Validators.max(1f)).add()
                 .build();
     }
 

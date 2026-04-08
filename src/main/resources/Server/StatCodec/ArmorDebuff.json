@@ -1,7 +1,9 @@
 {
   "StatusEffect": "Health",
   "CalculationType": "Additive",
-  "TargetType": "Self",
+  "TargetType": "Enemy",
   "Stat": "Bonus_Armor",
-  "Value": 100
+  "Value": -5,
+  "TriggerType": "OnHit",
+  "Duration": 3
 }

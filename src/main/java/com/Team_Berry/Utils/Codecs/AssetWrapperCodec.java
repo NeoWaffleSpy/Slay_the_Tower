@@ -26,7 +26,6 @@ import org.bson.BsonValue;
 public class AssetWrapperCodec<K, T extends JsonAssetWithMap<K, M>, M extends AssetMap<K, T>> implements Codec<K>, ValidatableCodec<K> {
     private static final boolean DISABLE_DIRECT_LOADING = true;
     private final Class<T> assetClass;
-    private final Class<K> keyClass;
     private final AssetCodec<K, T> codec;
     @Nonnull
     private final Mode mode;
@@ -45,16 +44,12 @@ public class AssetWrapperCodec<K, T extends JsonAssetWithMap<K, M>, M extends As
             throw new UnsupportedOperationException("Contained asset mode can't be NONE!");
         } else {
             this.assetClass = assetClass;
-            this.keyClass = AssetRegistry.getAssetStore(this.assetClass).getKeyClass();
             this.codec = codec;
             this.mode = mode;
             this.keyGenerator = keyGenerator;
         }
     }
 
-    public Class<K> getKeyClass() {
-        return this.keyClass;
-    }
     public Class<T> getAssetClass() {
         return this.assetClass;
     }
@@ -63,8 +58,6 @@ public class AssetWrapperCodec<K, T extends JsonAssetWithMap<K, M>, M extends As
     public K decode(@Nonnull BsonValue bsonValue, ExtraInfo extraInfo) {
         if (!(extraInfo instanceof AssetExtraInfo<?> typed)) {
             throw new UnsupportedOperationException("Unable to decode asset from codec used outside of an AssetStore");
-        } else if (!typed.getKey().getClass().equals(getKeyClass())) {
-            throw new IllegalStateException("Wrong key type");
         } else if (bsonValue.isString()) {
             return (K)this.codec.getKeyCodec().getChildCodec().decode(bsonValue, extraInfo);
         } else {
@@ -127,8 +120,6 @@ public class AssetWrapperCodec<K, T extends JsonAssetWithMap<K, M>, M extends As
     public K decodeJson(@Nonnull RawJsonReader reader, ExtraInfo extraInfo) throws IOException {
         if (!(extraInfo instanceof AssetExtraInfo<?> typed)) {
             throw new UnsupportedOperationException("Unable to decode asset from codec used outside of an AssetStore");
-        } else if (!typed.getKey().getClass().equals(getKeyClass())) {
-            throw new IllegalStateException("Wrong key type");
         } else {
             @SuppressWarnings("unchecked")
             AssetExtraInfo<K> assetExtraInfo = (AssetExtraInfo<K>) typed;

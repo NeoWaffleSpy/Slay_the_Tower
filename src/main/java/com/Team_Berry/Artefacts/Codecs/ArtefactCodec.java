@@ -93,15 +93,15 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         CODEC = AssetBuilderCodec.builder(ArtefactCodec.class, ArtefactCodec::new, Codec.STRING,
                         (t, k) -> t.artefactName = k, (t) -> t.artefactName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .metadata(new UIEditorPreview(UIEditorPreview.PreviewType.ITEM))
+                /*.metadata(new UIEditorPreview(UIEditorPreview.PreviewType.ITEM))
                 .metadata(new UITypeIcon("Item.png"))
-                .metadata(new UIRebuildCaches(false, UIRebuildCaches.ClientCache.ITEM_ICONS))
+                .metadata(new UIRebuildCaches(false, UIRebuildCaches.ClientCache.ITEM_ICONS))*/
                 .append(new KeyedCodec<>("Icon", Codec.STRING),
                         (artefact, s) -> artefact.icon = s,
                         (artefact) -> artefact.icon)
                 .addValidator(CommonAssetValidator.ICON_ITEM)
-                .metadata(new UIEditor(new UIEditor.Icon("Icons/ItemsGenerated/{assetId}.png", 64, 64)))
-                .metadata(new UIRebuildCaches(UIRebuildCaches.ClientCache.ITEM_ICONS)).add()
+                /*.metadata(new UIEditor(new UIEditor.Icon("Icons/ItemsGenerated/{assetId}.png", 64, 64)))
+                .metadata(new UIRebuildCaches(UIRebuildCaches.ClientCache.ITEM_ICONS))*/.add()
                 .append(new KeyedCodec<>("StatusEffect", new ArrayCodec<>(new AssetWrapperCodec<>(StatusEffectCodec.class, StatusEffectCodec.CODEC), String[]::new)),
                         (artefact, map) -> artefact.statusList = map,
                         (artefact) -> artefact.statusList)

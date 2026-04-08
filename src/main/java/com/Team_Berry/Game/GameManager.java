@@ -90,7 +90,7 @@ public class GameManager {
             if (currentQuest.isComplete()) {
                 endStage(EndStageResult.SUCCESS);
             }
-        } else if (questUpdate == QuestUpdate.PLAYER_DEATH) {
+        } else if (questUpdate == QuestUpdate.PLAYER_DEATH &&  playerRef != null) {
             resolvePlayerDeath(playerRef);
         }
     }

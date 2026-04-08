@@ -26,7 +26,7 @@
   "FogDensities": [
     {
       "Hour": 0,
-      "Value": 0.2
+      "Value": 7
     }
   ],
   "FogHeightFalloffs": [
@@ -35,11 +35,6 @@
       "Value": 2
     }
   ],
-  "FogOptions": {
-    "FogHeightCameraFixed": 1,
-    "EffectiveViewDistanceMultiplier": 1,
-    "IgnoreFogLimits": false
-  },
   "SunScales": [
     {
       "Hour": 0,
@@ -58,23 +53,6 @@
     "Color": "#cfcfcf",
     "Scale": 2
   },
-  "Clouds": [
-    {
-      "Texture": "Sky/Clouds/Twirled.png",
-      "Colors": [
-        {
-          "Hour": 18,
-          "Color": "#ffffffff"
-        }
-      ],
-      "Speeds": [
-        {
-          "Hour": 17,
-          "Value": 2
-        }
-      ]
-    }
-  ],
   "SunGlowColors": [
     {
       "Hour": 0,
@@ -105,12 +83,7 @@
       "Color": "#000000"
     }
   ],
-  "ColorFilters": [
-    {
-      "Hour": 9,
-      "Color": "#ffffff"
-    }
-  ],
+  "ColorFilters": null,
   "MoonColors": [
     {
       "Hour": 0,

@@ -51,7 +51,7 @@ public class ArtefactHud {
             <style>
                 .artefactColumn {
                     layout-mode: top;
-                    anchor-left: 0;
+                    anchor-left: 10;
                     anchor-top: 0;
                     anchor-bottom: 0;
                     anchor-width: 64;
@@ -63,17 +63,27 @@ public class ArtefactHud {
                     height: 64px;
                     text-align: right;
                     vertical-align: bottom;
+                    anchor-top: 10;
                 }
             
                 .artefactCount {
-                    anchor-left: 35;
-                    anchor-top: 30;
+                    anchor-left: 60;
+                    anchor-top: 20;
                     anchor-right: 0;
                     anchor-bottom: 0;
                     color: #ffffff;
-                    text-outline-color: #000000;
                     font-weight: bold;
-                    font-size: 20;
+                    font-size: 25;
+                }
+                
+                .artefactCountShadow {
+                    anchor-left: 62;
+                    anchor-top: 22;
+                    anchor-right: 0;
+                    anchor-bottom: 0;
+                    color: #000000;
+                    font-weight: bold;
+                    font-size: 25;
                 }
             </style>
             """;
@@ -88,6 +98,7 @@ public class ArtefactHud {
 
     private static final String artefactContainer = style + """
             <div class='artefactBox' style='background-image: url({{$image}})'>
+                <p class='artefactCountShadow'>{{$count}}</p>
                 <p class='artefactCount'>{{$count}}</p>
             </div>
             """;

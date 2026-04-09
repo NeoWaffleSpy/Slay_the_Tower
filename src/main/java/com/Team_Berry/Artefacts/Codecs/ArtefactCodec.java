@@ -2,17 +2,17 @@ package com.Team_Berry.Artefacts.Codecs;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
-import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
-import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
-import com.Team_Berry.Utils.Codecs.CustomArrayCodec;
+import com.Team_Berry.Utils.Codecs.AssetWrapperCodec;
 import com.Team_Berry.Utils.TooltipInjector.StringFormatter;
 import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
+import com.hypixel.hytale.assetstore.AssetKeyValidator;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
+import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
@@ -20,24 +20,29 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
-import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
-import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
+import com.hypixel.hytale.codec.schema.metadata.ui.*;
+import com.hypixel.hytale.codec.validation.ValidatorCache;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
+import com.hypixel.hytale.server.core.asset.common.CommonAssetValidator;
 import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProperties;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, ArtefactCodec>> {
     private static AssetStore<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> ASSET_STORE;
     public static final AssetBuilderCodec<String, ArtefactCodec> CODEC;
+    public static final ValidatorCache<String> VALIDATOR_CACHE = new ValidatorCache<>(new AssetKeyValidator<>(ArtefactCodec::getAssetStore));
 
     private String artefactName = "Template";
     private AssetExtraInfo.Data data;
+    public String icon = null;
 
-    public ArrayList<StatusEffectCodec> statusList = new ArrayList<>();
-    public ArrayList<StatCodec> statList = new ArrayList<>();
+    public String[] statusList;
+    public String[] statList;
     private RarityEnum rarity = RarityEnum.DEBUG;
     private ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
 
@@ -81,18 +86,30 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     public static void remove(String s) {
     }
 
+    public ArrayList<String> statusStringArray() { return new ArrayList<>(List.of(statusList)); }
+    public ArrayList<String> statStringArray() { return new ArrayList<>(List.of(statList)); }
+
     static {
         CODEC = AssetBuilderCodec.builder(ArtefactCodec.class, ArtefactCodec::new, Codec.STRING,
                         (t, k) -> t.artefactName = k, (t) -> t.artefactName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<>("StatusEffect", new CustomArrayCodec<>(Codec.STRING, ArrayList::new)
-                                .metadata(new UIEditor(new UIEditor.Dropdown("StatEffectDataSet")))),
-                        (artefact, map) -> artefact.statusList = getStatusEffectFromStringList(map),
-                        (artefact) -> getStatusStringList(artefact.statusList)).add()
-                .append(new KeyedCodec<>("Stats", new CustomArrayCodec<>(Codec.STRING, ArrayList::new)
-                                .metadata(new UIEditor(new UIEditor.Dropdown("StatDataSet")))),
-                        (artefact, map) -> artefact.statList = getStatFromStringList(map),
-                        (artefact) -> getStatStringList(artefact.statList)).add()
+                /*.metadata(new UIEditorPreview(UIEditorPreview.PreviewType.ITEM))
+                .metadata(new UITypeIcon("Item.png"))
+                .metadata(new UIRebuildCaches(false, UIRebuildCaches.ClientCache.ITEM_ICONS))*/
+                .append(new KeyedCodec<>("Icon", Codec.STRING),
+                        (artefact, s) -> artefact.icon = s,
+                        (artefact) -> artefact.icon)
+                .addValidator(CommonAssetValidator.ICON_ITEM)
+                /*.metadata(new UIEditor(new UIEditor.Icon("Icons/ItemsGenerated/{assetId}.png", 64, 64)))
+                .metadata(new UIRebuildCaches(UIRebuildCaches.ClientCache.ITEM_ICONS))*/.add()
+                .append(new KeyedCodec<>("StatusEffect", new ArrayCodec<>(new AssetWrapperCodec<>(StatusEffectCodec.class, StatusEffectCodec.CODEC), String[]::new)),
+                        (artefact, map) -> artefact.statusList = map,
+                        (artefact) -> artefact.statusList)
+                .addValidatorLate(() -> StatusEffectCodec.VALIDATOR_CACHE.getArrayValidator().late()).add()
+                .append(new KeyedCodec<>("Stats", new ArrayCodec<>(new AssetWrapperCodec<>(StatCodec.class, StatCodec.CODEC), String[]::new)),
+                        (artefact, map) -> artefact.statList = map,
+                        (artefact) -> artefact.statList)
+                .addValidatorLate(() -> StatCodec.VALIDATOR_CACHE.getArrayValidator().late()).add()
                 .append(new KeyedCodec<>("Rarity", new EnumCodec<>(RarityEnum.class)),
                         (obj, val) -> obj.rarity = val,
                         obj -> obj.rarity).add()
@@ -103,30 +120,18 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .build();
     }
 
-    public static ArrayList<StatusEffectCodec> getStatusEffectFromStringList(ArrayList<String> sList) {
+    public ArrayList<StatusEffectCodec> getStatusEffectArray() {
         DefaultAssetMap<String, StatusEffectCodec> map = StatusEffectCodec.getAssetMap();
         ArrayList<StatusEffectCodec> list = new ArrayList<>();
-        sList.forEach((s) -> list.add(map.getAsset(s)));
+        statusStringArray().forEach((s) -> list.add(map.getAsset(s)));
         return list;
     }
 
-    public static ArrayList<StatCodec> getStatFromStringList(ArrayList<String> sList) {
+    public ArrayList<StatCodec> getStatArray() {
         DefaultAssetMap<String, StatCodec> map = StatCodec.getAssetMap();
         ArrayList<StatCodec> list = new ArrayList<>();
-        sList.forEach((s) -> list.add(map.getAsset(s)));
+        statStringArray().forEach((s) -> list.add(map.getAsset(s)));
         return list;
-    }
-
-    public static ArrayList<String> getStatusStringList(ArrayList<StatusEffectCodec> list) {
-        ArrayList<String> val = new ArrayList<>();
-        list.forEach((status) -> val.add(status.getId()));
-        return val;
-    }
-
-    public static ArrayList<String> getStatStringList(ArrayList<StatCodec> list) {
-        ArrayList<String> val = new ArrayList<>();
-        list.forEach((status) -> val.add(status.getId()));
-        return val;
     }
 
     public static void register() {
@@ -140,8 +145,6 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .build());
         a.getEventRegistry().register(LoadedAssetsEvent.class, ArtefactCodec.class, ArtefactCodec::onLoaded);
         a.getEventRegistry().register(RemovedAssetsEvent.class, ArtefactCodec.class, ArtefactCodec::onRemoved);
-        a.getEventRegistry().register(AssetEditorRequestDataSetEvent.class, "StatEffectDataSet", ArtefactCodec::registerStatusEffectRequestDataset);
-        a.getEventRegistry().register(AssetEditorRequestDataSetEvent.class, "StatDataSet", ArtefactCodec::registerStatRequestDataset);
     }
 
     public static void onLoaded(LoadedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
@@ -150,19 +153,5 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
 
     public static void onRemoved(RemovedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
         event.getRemovedAssets().forEach(ArtefactCodec::remove);
-    }
-
-    public static void registerStatusEffectRequestDataset(AssetEditorRequestDataSetEvent event) {
-        DefaultAssetMap<String, StatusEffectCodec> statusEffect = StatusEffectCodec.getAssetMap();
-        String[] s = statusEffect.getAssetMap().values().stream().map(StatusEffectCodec::getId).toArray(String[]::new);
-        ArtefactPlugin.LOGGER.atInfo().log("Registering request assets for dataset " + Arrays.toString(s));
-        event.setResults(s);
-    }
-
-    public static void registerStatRequestDataset(AssetEditorRequestDataSetEvent event) {
-        DefaultAssetMap<String, StatCodec> stats = StatCodec.getAssetMap();
-        String[] s = stats.getAssetMap().values().stream().map(StatCodec::getId).toArray(String[]::new);
-        ArtefactPlugin.LOGGER.atInfo().log("Registering request assets for dataset " + Arrays.toString(s));
-        event.setResults(s);
     }
 }

@@ -54,5 +54,4 @@ public class BleedTickingSystem extends EntityTickingSystem<EntityStore> {
 
         }
     }
-
 }

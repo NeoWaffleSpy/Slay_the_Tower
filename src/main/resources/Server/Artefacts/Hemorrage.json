@@ -6,12 +6,13 @@
   "Stats": [
     "Health",
     "Armor",
-    "Mana"
+    "Health"
   ],
   "StatusEffect": [
     "Bleed",
     "SuperBleed",
     "MegaBleed"
   ],
-  "Rarity": "Rare"
+  "Rarity": "Rare",
+  "Icon": "Icons/ItemsGenerated/BombShot_Ability_Icon.png"
 }

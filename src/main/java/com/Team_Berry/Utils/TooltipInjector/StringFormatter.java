@@ -3,9 +3,12 @@ package com.Team_Berry.Utils.TooltipInjector;
 import com.Team_Berry.Utils.UtilsPlugin;
 
 import java.awt.*;
+import java.security.SecureRandom;
 import java.util.regex.Pattern;
 
 public class StringFormatter {
+    private static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final SecureRandom RANDOM = new SecureRandom();
     private StringBuilder sb = new StringBuilder();
     static Pattern HEX_COLOR = Pattern.compile("^#([A-Fa-f0-9]{6})$");
     public boolean isColorOpen = false;
@@ -94,6 +97,14 @@ public class StringFormatter {
         if (isItalicOpen) this.setItalic(false);
         if (isBoldOpen) this.setBold(false);
         if (isUnderlineOpen) this.setUnder(false);
+        return sb.toString();
+    }
+
+    public static String generate(int length) {
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(CHARS.charAt(RANDOM.nextInt(CHARS.length())));
+        }
         return sb.toString();
     }
 }

@@ -25,7 +25,7 @@ public class RoomNPCSpawner {
 
 
     public static @Nullable Ref<EntityStore> spawnInRoom(Store<EntityStore> store, RoomCodec room, String roleId) {
-        if (room == null || room.npcSpawnAreas.isEmpty()) return null;
+        if (room == null || room.npcSpawnAreas.length == 0) return null;
 
         NPCPlugin npcPlugin = NPCPlugin.get();
         int roleIndex = npcPlugin.getBuilderManager().getIndex(roleId);
@@ -35,7 +35,7 @@ public class RoomNPCSpawner {
             return null;
         }
 
-        RoomCodec.NPCSpawnArea area = room.npcSpawnAreas.get(ThreadLocalRandom.current().nextInt(room.npcSpawnAreas.size()));
+        RoomCodec.NPCSpawnArea area = room.npcSpawnAreas[ThreadLocalRandom.current().nextInt(room.npcSpawnAreas.length)];
 
         Vector3d spawnPos = new Vector3d(
                 safeLerp(area.minPos.x, area.maxPos.x),

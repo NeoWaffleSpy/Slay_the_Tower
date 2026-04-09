@@ -5,7 +5,9 @@ import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Enums.StatusEffectEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
+import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
+import com.hypixel.hytale.assetstore.AssetKeyValidator;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
@@ -16,6 +18,7 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
+import com.hypixel.hytale.codec.validation.ValidatorCache;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 
 import java.util.Collection;
@@ -23,6 +26,7 @@ import java.util.Collection;
 public class StatusEffectCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, StatusEffectCodec>> {
     private static AssetStore<String, StatusEffectCodec, DefaultAssetMap<String, StatusEffectCodec>> ASSET_STORE;
     public static final AssetBuilderCodec<String, StatusEffectCodec> CODEC;
+    public static final ValidatorCache<String> VALIDATOR_CACHE = new ValidatorCache<>(new AssetKeyValidator<>(StatusEffectCodec::getAssetStore));
 
     private String effectName = "Template";
     private AssetExtraInfo.Data data;

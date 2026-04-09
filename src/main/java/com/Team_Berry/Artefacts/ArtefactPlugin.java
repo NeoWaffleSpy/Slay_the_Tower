@@ -49,9 +49,9 @@ public class ArtefactPlugin extends JavaPlugin {
         this.statEffectComponentType = this.getEntityStoreRegistry().registerComponent(StatEffectComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
-        ArtefactCodec.register();
         StatusEffectCodec.register();
         StatCodec.register();
+        ArtefactCodec.register();
         StatEffectSystem.register();
         this.getCommandRegistry().registerCommand(new ArtefactCommand());
     }

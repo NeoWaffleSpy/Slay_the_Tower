@@ -11,7 +11,7 @@
           "Direction": {
             "Y": 1
           },
-          "Force": 18
+          "Force": 22
         }
       ],
       "Direction": {
@@ -21,7 +21,7 @@
       "HorizontalSpeedMultiplier": 0,
       "RunTime": 0.7,
       "Effects": {
-        "ItemAnimationId": "ShootChargingJumpShot",
+        "ItemAnimationId": "ShootCharging",
         "ClearAnimationOnFinish": true,
         "ClearSoundEventOnFinish": true,
         "WorldSoundEventId": "SFX_Bow_T2_Draw",

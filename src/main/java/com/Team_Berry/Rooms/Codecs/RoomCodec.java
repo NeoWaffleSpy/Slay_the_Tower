@@ -2,7 +2,6 @@ package com.Team_Berry.Rooms.Codecs;
 
 import com.Team_Berry.Rooms.RoomPlugin;
 import com.Team_Berry.Utils.Codecs.CodecUtils;
-import com.Team_Berry.Utils.Codecs.CustomArrayCodec;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
@@ -14,11 +13,10 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.protocol.Direction;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
-
-import java.util.ArrayList;
 
 public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, RoomCodec>> {
     public static final AssetBuilderCodec<String, RoomCodec> CODEC;
@@ -32,19 +30,19 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                         (obj, val) -> obj.worldName = val,
                         obj -> obj.worldName)
                 .documentation("The World where this room is located.").add()
-                .append(new KeyedCodec<>("PlayerSpawns", new CustomArrayCodec<>(SpawnPoint.CODEC, ArrayList::new)),
+                .append(new KeyedCodec<>("PlayerSpawns", new ArrayCodec<>(SpawnPoint.CODEC, SpawnPoint[]::new)),
                         (obj, val) -> obj.playerSpawns = val,
                         obj -> obj.playerSpawns)
                 .documentation("List of possible locations for players to teleport into.").add()
-                .append(new KeyedCodec<>("NPCSpawnAreas", new CustomArrayCodec<>(NPCSpawnArea.CODEC, ArrayList::new)),
+                .append(new KeyedCodec<>("NPCSpawnAreas", new ArrayCodec<>(NPCSpawnArea.CODEC, NPCSpawnArea[]::new)),
                         (obj, val) -> obj.npcSpawnAreas = val,
                         obj -> obj.npcSpawnAreas)
                 .documentation("Defined area for NPC spawning.").add()
                 .build();
     }
 
-    public ArrayList<SpawnPoint> playerSpawns = new ArrayList<>();
-    public ArrayList<NPCSpawnArea> npcSpawnAreas = new ArrayList<>();
+    public SpawnPoint[] playerSpawns;
+    public NPCSpawnArea[] npcSpawnAreas;
     public String worldName = "default";
     private String roomName = "NewRoom";
     private AssetExtraInfo.Data data;

@@ -1,5 +1,6 @@
 package com.Team_Berry.Artefacts.Commandes;
 
+import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
@@ -29,6 +30,7 @@ public class GiveArtefactCommand extends AbstractPlayerCommand {
 
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
+        ArtefactHud.buildHudPlayer(playerRef);
         StatEffectComponent statComp = store.getComponent(ref, StatEffectComponent.getComponentType());
         if (statComp == null) {
             playerRef.getReference().getStore().addComponent(playerRef.getReference(), StatEffectComponent.getComponentType(), new StatEffectComponent());

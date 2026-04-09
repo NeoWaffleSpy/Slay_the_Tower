@@ -1,7 +1,6 @@
 package com.Team_Berry.Rooms.Codecs;
 
 import com.Team_Berry.Rooms.RoomPlugin;
-import com.Team_Berry.Utils.Codecs.CustomArrayCodec;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
@@ -13,6 +12,7 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 
 import java.util.ArrayList;
@@ -25,14 +25,14 @@ public class MobGroupCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         CODEC = AssetBuilderCodec.builder(MobGroupCodec.class, MobGroupCodec::new, Codec.STRING,
                         (t, k) -> t.id = k, (t) -> t.id,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<>("Mobs", new CustomArrayCodec<>(MobEntry.CODEC, ArrayList::new)),
+                .append(new KeyedCodec<>("Mobs", new ArrayCodec<>(MobEntry.CODEC, MobEntry[]::new)),
                         (obj, val) -> obj.mobs = val,
                         obj -> obj.mobs)
                 .documentation("List of NPC roles and their quantities in this group.").add()
                 .build();
     }
 
-    public ArrayList<MobEntry> mobs = new ArrayList<>();
+    public MobEntry[] mobs;
     private String id = "NewMobGroup";
     private AssetExtraInfo.Data data;
 

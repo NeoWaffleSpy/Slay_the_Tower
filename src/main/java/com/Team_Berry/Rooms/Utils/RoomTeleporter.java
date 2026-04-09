@@ -21,12 +21,12 @@ public class RoomTeleporter {
 
     public static void teleportToRoom(PlayerRef playerRef, RoomCodec room) {
         if (room == null) throw new IllegalArgumentException("Cannot teleport to a null room!");
-        if (room.playerSpawns.isEmpty()) return;
+        if (room.playerSpawns.length == 0) return;
 
         Ref<EntityStore> ref = playerRef.getReference();
         Store<EntityStore> store = ref.getStore();
 
-        RoomCodec.SpawnPoint spawn = room.playerSpawns.get(RANDOM.nextInt(room.playerSpawns.size()));
+        RoomCodec.SpawnPoint spawn = room.playerSpawns[RANDOM.nextInt(room.playerSpawns.length)];
 
         store.getExternalData().getWorld().execute(() -> {
             Vector3d pos = new Vector3d(spawn.pos.x, spawn.pos.y + 1.0, spawn.pos.z);
@@ -68,7 +68,7 @@ public class RoomTeleporter {
             return false;
         }
 
-        if (room.playerSpawns.isEmpty()) {
+        if (room.playerSpawns.length == 0) {
             RoomPlugin.LOGGER.atWarning().log("Validation failed: Room %s has no spawn points.", room.worldName);
             return false;
         }

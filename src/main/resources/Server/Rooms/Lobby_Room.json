@@ -2,12 +2,13 @@
   "PlayerSpawns": [
     {
       "Position": {
-        "X": 4,
-        "Z": -52
+        "X": -2,
+        "Z": -2,
+        "Y": 127
       }
     }
   ],
-  "WorldName": "run",
+  "WorldName": "void",
   "Tags": {
     "Category": [
       "Lobby"

@@ -37,7 +37,7 @@
       }
     ],
     "Interactions": {
-      "CollisionEnter": {
+      "Use": {
         "Interactions": [
           {
             "Type": "InitiateStageInteraction"
@@ -68,5 +68,14 @@
       -13.5
     ]
   },
-  "ItemSoundSetId": "ISS_Blocks_Stone"
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Interactions": {
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "InitiateStageInteraction"
+        }
+      ]
+    }
+  }
 }

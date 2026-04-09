@@ -25,9 +25,9 @@ public class GameState {
     }
 
     private void updateMilestoneStatus() {
-        if (skillMilestones == null || skillMilestones.milestones.isEmpty()) return;
+        if (skillMilestones == null || skillMilestones.milestones.length == 0) return;
 
-        SkillMilestoneCodec.MilestoneEntry bestMatch = skillMilestones.milestones.get(0);
+        SkillMilestoneCodec.MilestoneEntry bestMatch = skillMilestones.milestones[0];
 
         for (SkillMilestoneCodec.MilestoneEntry entry : skillMilestones.milestones) {
             if (this.clearedStagesNumber >= entry.roomCount) {

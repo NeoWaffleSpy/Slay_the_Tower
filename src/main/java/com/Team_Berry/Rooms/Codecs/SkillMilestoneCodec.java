@@ -1,7 +1,6 @@
 package com.Team_Berry.Rooms.Codecs;
 
 import com.Team_Berry.Rooms.RoomPlugin;
-import com.Team_Berry.Utils.Codecs.CustomArrayCodec;
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
@@ -13,9 +12,8 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
-
-import java.util.ArrayList;
 
 public class SkillMilestoneCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, SkillMilestoneCodec>> {
     public static final AssetBuilderCodec<String, SkillMilestoneCodec> CODEC;
@@ -25,14 +23,14 @@ public class SkillMilestoneCodec implements JsonAssetWithMap<String, DefaultAsse
         CODEC = AssetBuilderCodec.builder(SkillMilestoneCodec.class, SkillMilestoneCodec::new, Codec.STRING,
                         (t, k) -> t.id = k, (t) -> t.id,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
-                .append(new KeyedCodec<>("Milestones", new CustomArrayCodec<>(MilestoneEntry.CODEC, ArrayList::new)),
+                .append(new KeyedCodec<>("Milestones", new ArrayCodec<>(MilestoneEntry.CODEC, MilestoneEntry[]::new)),
                         (obj, val) -> obj.milestones = val,
                         obj -> obj.milestones)
                 .documentation("A list of progressive milestones based on room clears.").add()
                 .build();
     }
 
-    public ArrayList<MilestoneEntry> milestones = new ArrayList<>();
+    public MilestoneEntry[] milestones;
     private String id;
     private AssetExtraInfo.Data data;
 
@@ -87,8 +85,8 @@ public class SkillMilestoneCodec implements JsonAssetWithMap<String, DefaultAsse
      * Gets a milestone by its index in the progression (0 = first, 1 = second, etc.)
      */
     public MilestoneEntry getMilestoneByIndex(int index) {
-        if (index >= 0 && index < milestones.size()) {
-            return milestones.get(index);
+        if (index >= 0 && index < milestones.length) {
+            return milestones[index];
         }
         return null;
     }
@@ -97,7 +95,7 @@ public class SkillMilestoneCodec implements JsonAssetWithMap<String, DefaultAsse
      * Gets the total number of milestones defined in this skill tree.
      */
     public int getTotalMilestoneCount() {
-        return milestones.size();
+        return milestones.length;
     }
 
     /**
@@ -105,8 +103,8 @@ public class SkillMilestoneCodec implements JsonAssetWithMap<String, DefaultAsse
      */
     public int getMilestoneIndexForRooms(int clearedRooms) {
         int currentIdx = -1;
-        for (int i = 0; i < milestones.size(); i++) {
-            if (clearedRooms >= milestones.get(i).roomCount) {
+        for (int i = 0; i < milestones.length; i++) {
+            if (clearedRooms >= milestones[i].roomCount) {
                 currentIdx = i;
             } else {
                 break; // Since the list is sorted, we can stop once we hit a count too high

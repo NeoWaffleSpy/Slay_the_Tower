@@ -1,8 +1,6 @@
 package com.Team_Berry.Artefacts.Commandes;
 
-import au.ellie.hyui.builders.HudBuilder;
-import au.ellie.hyui.builders.PageBuilder;
-import com.Team_Berry.Artefacts.ArtefactHud;
+import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;

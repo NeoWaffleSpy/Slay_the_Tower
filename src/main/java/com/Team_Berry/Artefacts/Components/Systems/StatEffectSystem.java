@@ -6,10 +6,12 @@ import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
 import com.Team_Berry.Utils.TooltipInjector.StringFormatter;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.component.system.RefChangeSystem;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageCause;
@@ -19,6 +21,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -36,6 +39,7 @@ public class StatEffectSystem {
     public static void register() {
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectTickingSystem(EntityStatsModule.get().getEntityStatMapComponentType()));
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectDamageSystem());
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectRefChangeSystem());
     }
 
     public static class StatEffectDamageSystem extends DamageEventSystem {
@@ -140,29 +144,6 @@ public class StatEffectSystem {
         }
     }
 
-    private static void applyTempStats(StatEffectComponent originEntityComponent, EntityStatMap originEntityStatMap, EntityStatMap targetEntityStatMap, TriggerType type) {
-        if (originEntityComponent == null || targetEntityStatMap == null)
-            return;
-        originEntityComponent.artefactList.forEach(((artefact, count) -> {
-            artefact.getStatArray().forEach(stat -> {
-                if (stat.trigger != type)
-                    return;
-                if (Math.random() >= stat.probability)
-                    return;
-                EntityStatMap targetMap;
-                if (stat.target == TargetType.ENEMY)
-                    targetMap = targetEntityStatMap;
-                else if (stat.target == TargetType.SELF)
-                    targetMap = originEntityStatMap;
-                else
-                    return;
-                String key = ArtefactPlugin.get().getName() + "-" + artefact.getId() + "-" + stat.hashCode();
-                targetMap.putModifier(getEntityIndex(stat.getType()), key, new StaticModifier(Modifier.ModifierTarget.MAX, stat.calc,stat.value*count));
-                scheduler.schedule(key, () -> targetMap.removeModifier(getEntityIndex(stat.getType()), key), (long) (stat.duration*1000), TimeUnit.MILLISECONDS);
-            });
-        }));
-    }
-
     public static class StatEffectTickingSystem extends EntityTickingSystem<EntityStore> {
         @Nonnull
         private final ComponentType<EntityStore, EntityStatMap> entityStatMapComponentType;
@@ -203,6 +184,57 @@ public class StatEffectSystem {
         public @Nullable Query getQuery() {
             return this.query;
         }
+    }
+
+    public static class StatEffectRefChangeSystem extends RefChangeSystem<EntityStore, StatEffectComponent> {
+
+        @Override
+        public @NonNull ComponentType<EntityStore, StatEffectComponent> componentType() {
+            return StatEffectComponent.getComponentType();
+        }
+
+        @Override
+        public void onComponentAdded(@NonNull Ref<EntityStore> ref, @NonNull StatEffectComponent component, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
+            component.artefactHud = new ArtefactHud(component, store.getComponent(ref, PlayerRef.getComponentType()));
+        }
+
+        @Override
+        public void onComponentSet(@NonNull Ref<EntityStore> ref, @Nullable StatEffectComponent component, @NonNull StatEffectComponent t1, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
+
+        }
+
+        @Override
+        public void onComponentRemoved(@NonNull Ref<EntityStore> ref, @NonNull StatEffectComponent component, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
+
+        }
+
+        @Override
+        public @Nullable Query<EntityStore> getQuery() {
+            return StatEffectComponent.getComponentType();
+        }
+    }
+
+    private static void applyTempStats(StatEffectComponent originEntityComponent, EntityStatMap originEntityStatMap, EntityStatMap targetEntityStatMap, TriggerType type) {
+        if (originEntityComponent == null || targetEntityStatMap == null)
+            return;
+        originEntityComponent.artefactList.forEach(((artefact, count) -> {
+            artefact.getStatArray().forEach(stat -> {
+                if (stat.trigger != type)
+                    return;
+                if (Math.random() >= stat.probability)
+                    return;
+                EntityStatMap targetMap;
+                if (stat.target == TargetType.ENEMY)
+                    targetMap = targetEntityStatMap;
+                else if (stat.target == TargetType.SELF)
+                    targetMap = originEntityStatMap;
+                else
+                    return;
+                String key = ArtefactPlugin.get().getName() + "-" + artefact.getId() + "-" + stat.hashCode();
+                targetMap.putModifier(getEntityIndex(stat.getType()), key, new StaticModifier(Modifier.ModifierTarget.MAX, stat.calc,stat.value*count));
+                scheduler.schedule(key, () -> targetMap.removeModifier(getEntityIndex(stat.getType()), key), (long) (stat.duration*1000), TimeUnit.MILLISECONDS);
+            });
+        }));
     }
 
     private static int getEntityIndex(EntityStatType statType) {

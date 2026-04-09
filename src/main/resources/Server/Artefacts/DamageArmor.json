@@ -2,5 +2,6 @@
   "Stats": [
     "Armor",
     "Bonus_Attack"
-  ]
+  ],
+  "Icon": "UI/Custom/Strength.png"
 }

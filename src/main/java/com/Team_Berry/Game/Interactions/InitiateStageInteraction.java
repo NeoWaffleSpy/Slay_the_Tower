@@ -21,6 +21,6 @@ public class InitiateStageInteraction extends SimpleInstantInteraction {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
         PlayerRef playerRef = commandBuffer.getComponent(interactionContext.getOwningEntity(), PlayerRef.getComponentType());
         playerRef.sendMessage(Message.raw("interaction started"));
-        GamePlugin.get().getGameManager().initiateStage(playerRef);
+       // GamePlugin.get().getGameManager().initiateRoom(playerRef);
     }
 }

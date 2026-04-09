@@ -12,9 +12,11 @@ import com.hypixel.hytale.server.core.asset.type.model.config.Model;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.asset.builder.Builder;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.server.npc.role.Role;
 import com.hypixel.hytale.server.spawning.ISpawnableWithModel;
 import com.hypixel.hytale.server.spawning.SpawningContext;
+import it.unimi.dsi.fastutil.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -64,12 +66,12 @@ public class RoomNPCSpawner {
 
         Vector3f rotation = new Vector3f(0, (float) (ThreadLocalRandom.current().nextDouble() * Math.PI * 2), 0);
 
-        //Pair<Ref<EntityStore>, NPCEntity> npcEntityPair = npcPlugin.spawnEntity(store, roleIndex, position, rotation, model, null);
-        //  Ref<EntityStore> ref = npcEntityPair.left();
-        store.getExternalData().getWorld().execute(() -> {
-            store.addComponent(npcPlugin.spawnEntity(store, roleIndex, position, rotation, model, null).left(), GamePlugin.getQuestNPCComponentType());
-        });
-        return null;
+        Pair<Ref<EntityStore>, NPCEntity> npcEntityPair = npcPlugin.spawnEntity(store, roleIndex, position, rotation, model, null);
+        Ref<EntityStore> ref = npcEntityPair.left();
+
+        store.addComponent(npcEntityPair.left(), GamePlugin.getQuestNPCComponentType());
+
+        return ref;
     }
 
 
@@ -97,7 +99,6 @@ public class RoomNPCSpawner {
             for (int i = 0; i < entry.quantity; i++) {
                 Ref<EntityStore> ref = spawnInRoom(store, room, entry.npcRoleId);
 
-                // Only add if the spawn was successful (not null)
                 if (ref != null) {
                     spawnedRefs.add(ref);
                 }

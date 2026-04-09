@@ -3,7 +3,7 @@
     "Crit_Rate",
     "Crit_Damage"
   ],
-  "Icon": "Icons/Items/EditorTools/Extrude.png",
+  "Icon": "UI/Custom/test.png",
   "HudUI": [
     {}
   ]

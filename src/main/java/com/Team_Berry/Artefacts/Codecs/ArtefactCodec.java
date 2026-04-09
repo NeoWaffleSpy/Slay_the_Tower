@@ -36,6 +36,7 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     private static AssetStore<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> ASSET_STORE;
     public static final AssetBuilderCodec<String, ArtefactCodec> CODEC;
     public static final ValidatorCache<String> VALIDATOR_CACHE = new ValidatorCache<>(new AssetKeyValidator<>(ArtefactCodec::getAssetStore));
+    public static final CommonAssetValidator ICON_ARTEFACT = new CommonAssetValidator("png", "UI/Custom");
 
     private String artefactName = "Template";
     private AssetExtraInfo.Data data;
@@ -99,7 +100,7 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .append(new KeyedCodec<>("Icon", Codec.STRING),
                         (artefact, s) -> artefact.icon = s,
                         (artefact) -> artefact.icon)
-                .addValidator(CommonAssetValidator.ICON_ITEM)
+                .addValidator(ICON_ARTEFACT)
                 /*.metadata(new UIEditor(new UIEditor.Icon("Icons/ItemsGenerated/{assetId}.png", 64, 64)))
                 .metadata(new UIRebuildCaches(UIRebuildCaches.ClientCache.ITEM_ICONS))*/.add()
                 .append(new KeyedCodec<>("StatusEffect", new ArrayCodec<>(new AssetWrapperCodec<>(StatusEffectCodec.class, StatusEffectCodec.CODEC), String[]::new)),

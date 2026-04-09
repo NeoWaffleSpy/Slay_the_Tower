@@ -1,30 +1,94 @@
 package com.Team_Berry.Artefacts.UI;
 
 import au.ellie.hyui.builders.HudBuilder;
+import au.ellie.hyui.builders.HyUIHud;
 import au.ellie.hyui.html.TemplateProcessor;
+import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArtefactHud {
-    private static String artefactPreview = """
-            <div style='layout-mode: top'>
-                <div id='Groupcc1863b0' style='layout-mode: top; anchor-left: 0; anchor-top: 0; anchor-bottom: 0; anchor-width: 64; anchor-height: 504'>
-                    {{#each image}}
-                    <img src='{{$item}}' width='64' height='64'>
-                    {{/each}}
-                </div>
+    public StatEffectComponent statComp;
+    public PlayerRef playerRef;
+    public TemplateProcessor template = new TemplateProcessor();
+    public HyUIHud hud;
+
+    public ArtefactHud(StatEffectComponent statComp, PlayerRef playerRef) {
+        this.statComp = statComp;
+        this.playerRef = playerRef;
+        buildHudPlayer();
+    }
+
+    public void buildHudPlayer() {
+        List<ImageClass> imgs = new ArrayList<>();
+        imgs.add(new ImageClass("Bomb.png", 3));
+        imgs.add(new ImageClass("Thorn.png", 1));
+        imgs.add(new ImageClass("test.png", 2));
+        this.template.setVariable("images", imgs);
+        this.template.registerComponent("artefactContainer", artefactContainer);
+        hud = HudBuilder.hudForPlayer(this.playerRef)
+                .enableRuntimeTemplateUpdates(true)
+                .fromTemplate(artefactPreview, this.template)
+                .show();
+    }
+
+    public void refresh() {
+        List<ImageClass> imgs = new ArrayList<>();
+        statComp.artefactList.keySet().stream().toList().forEach(artefact -> {
+            if (statComp.getAmount(artefact) == 0)
+                return;
+            imgs.add(new ImageClass(artefact.icon.replace("UI/Custom/", ""), statComp.getAmount(artefact)));
+        });
+        this.template.setVariable("images", imgs);
+        hud.refreshOrRerender(true, true);
+    }
+
+    private record ImageClass(String image, int count) {}
+
+    private static final String style = """
+            <style>
+                .artefactColumn {
+                    layout-mode: top;
+                    anchor-left: 0;
+                    anchor-top: 0;
+                    anchor-bottom: 0;
+                    anchor-width: 64;
+                    anchor-height: 504;
+                }
+            
+                .artefactBox {
+                    width: 64px;
+                    height: 64px;
+                    text-align: right;
+                    vertical-align: bottom;
+                }
+            
+                .artefactCount {
+                    anchor-left: 35;
+                    anchor-top: 30;
+                    anchor-right: 0;
+                    anchor-bottom: 0;
+                    color: #ffffff;
+                    text-outline-color: #000000;
+                    font-weight: bold;
+                    font-size: 20;
+                }
+            </style>
+            """;
+
+    private static final String artefactPreview = """
+            <div class='artefactColumn'>
+                {{#each images}}
+                {{@artefactContainer:image={{$image}},count={{$count}}}}
+                {{/each}}
             </div>
             """;
 
-    private static List<String> list = List.of("Bleed.png", "Bomb.png", "Fender.png", "Leap.png", "Life.png");
-
-    private static TemplateProcessor template = new TemplateProcessor()
-            .setVariable("image", list);
-
-    public static void buildHudPlayer(PlayerRef playerRef) {
-        HudBuilder.hudForPlayer(playerRef)
-                .fromTemplate(artefactPreview, template)
-                .show();
-    }
+    private static final String artefactContainer = style + """
+            <div class='artefactBox' style='background-image: url({{$image}})'>
+                <p class='artefactCount'>{{$count}}</p>
+            </div>
+            """;
 }

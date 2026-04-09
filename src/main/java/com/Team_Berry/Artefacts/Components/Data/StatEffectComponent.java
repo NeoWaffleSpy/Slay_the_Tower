@@ -2,6 +2,7 @@ package com.Team_Berry.Artefacts.Components.Data;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Camera.CameraPlugin;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.component.Component;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class StatEffectComponent implements Component<EntityStore> {
     public Map<ArtefactCodec, Integer> artefactList = new HashMap<>();
     public ArrayList<ArtefactCodec> artefactUpdated = new ArrayList<>();
+    public ArtefactHud artefactHud;
 
     public StatEffectComponent() {}
 
@@ -30,16 +32,22 @@ public class StatEffectComponent implements Component<EntityStore> {
         else
             artefactList.put(artefact, amount);
         artefactUpdated.add(artefact);
+        if (artefactHud != null)
+            artefactHud.refresh();
     }
 
     public void setStackArtefact(ArtefactCodec artefact, int amount) {
             artefactList.put(artefact, amount);
         artefactUpdated.add(artefact);
+        if (artefactHud != null)
+            artefactHud.refresh();
     }
 
     public void flush() {
         artefactUpdated.addAll(artefactList.keySet());
         artefactList.clear();
+        if (artefactHud != null)
+            artefactHud.refresh();
     }
 
     public int getAmount(ArtefactCodec artefact) {

@@ -1,0 +1,16 @@
+{
+  "PlayerSpawns": [
+    {
+      "Position": {
+        "X": 4,
+        "Z": -52
+      }
+    }
+  ],
+  "WorldName": "run",
+  "Tags": {
+    "Category": [
+      "Lobby"
+    ]
+  }
+}

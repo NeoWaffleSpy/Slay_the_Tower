@@ -1,0 +1,15 @@
+{
+  "Mobs": [
+    {
+      "NPCRole": "A_Zombie_Kweebec",
+      "Quantity": 1
+    },
+    {
+      "NPCRole": "A_Skeleton_Archer",
+      "Quantity": 1
+    }
+  ],
+  "Tags": {
+    "Difficulty": []
+  }
+}

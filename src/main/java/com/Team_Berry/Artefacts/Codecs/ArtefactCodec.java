@@ -19,6 +19,7 @@ import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
@@ -38,14 +39,15 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     public static final ValidatorCache<String> VALIDATOR_CACHE = new ValidatorCache<>(new AssetKeyValidator<>(ArtefactCodec::getAssetStore));
     public static final CommonAssetValidator ICON_ARTEFACT = new CommonAssetValidator("png", "UI/Custom");
 
-    private String artefactName = "Template";
     private AssetExtraInfo.Data data;
-    public String icon = null;
 
+    public String artefactName = "Template";
+    public String icon = null;
+    public String shortIconPath = null;
     public String[] statusList;
     public String[] statList;
-    private RarityEnum rarity = RarityEnum.DEBUG;
-    private ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
+    public RarityEnum rarity = RarityEnum.DEBUG;
+    public ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
 
     public ArtefactCodec() {}
     public ArtefactCodec(String artefactName) {
@@ -118,7 +120,14 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                         (artefact, s) -> artefact.translationProperties = s,
                         (artefact) -> artefact.translationProperties)
                 .documentation("The translation properties for this item asset.").add()
+                .afterDecode(ArtefactCodec::process)
                 .build();
+    }
+
+    private void process(ExtraInfo u) {
+        if (this.icon == null)
+            return;
+        this.shortIconPath = this.icon.replace("UI/Custom/", "");
     }
 
     public ArrayList<StatusEffectCodec> getStatusEffectArray() {

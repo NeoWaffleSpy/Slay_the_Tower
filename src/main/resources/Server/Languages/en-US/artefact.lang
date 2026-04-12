@@ -1,2 +1,10 @@
 Hemorrage.name=Hemorrage
 Hemorrage.description=Hemorrage desc
+Critical.name=Hawk-Eye
+Critical.description=This artefact improve crit rate and crit damage.
+DamageArmor.name=Weaponized Fortress
+DamageArmor.description=This artefact attack damage and damage negation.
+MegaBuff.name=Roids
+MegaBuff.description=This artefact massively improve health.
+Template.name=Template Artifact
+Template.description=This is a template artifact

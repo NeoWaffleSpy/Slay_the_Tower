@@ -1,0 +1,53 @@
+<style>
+    .artefactColumn {
+        layout-mode: top;
+        anchor-left: 10;
+        anchor-top: 0;
+        anchor-bottom: 0;
+        anchor-width: 64;
+        anchor-height: 504;
+    }
+
+    .artefactBox {
+        width: 64;
+        height: 64;
+        anchor-width: 64;
+        anchor-height: 64;
+        text-align: right;
+        vertical-align: bottom;
+        anchor-top: 10;
+    }
+
+    .artefactCountBox {
+        anchor-width: 100;
+        anchor-height: 64;
+        anchor-left: 60;
+        anchor-top: 30;
+    }
+
+    .artefactCount {
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 25;
+    }
+
+    .artefactCountShadow {
+        anchor-left: 2;
+        anchor-top: 2;
+        color: #000000;
+        font-weight: bold;
+        font-size: 25;
+    }
+</style>
+<div class='artefactColumn'>
+    {{#each images}}
+    <div class='artefactBox' style='background-image: url({{$image}})'>
+        {{#if count > 1}}
+        <div class='artefactCountBox'>
+            <p class='artefactCountShadow'>{{$count}}</p>
+            <p class='artefactCount'>{{$count}}</p>
+        </div>
+        {{/if}}
+    </div>
+    {{/each}}
+</div>

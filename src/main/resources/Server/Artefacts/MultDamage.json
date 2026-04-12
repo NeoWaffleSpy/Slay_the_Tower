@@ -3,5 +3,10 @@
     "MultDamage",
     "MultDamage"
   ],
-  "Icon": "UI/Custom/Speed.png"
+  "Icon": "UI/Custom/Speed.png",
+  "TranslationProperties": {
+    "Name": "Template.name",
+    "Description": "Template.description"
+  },
+  "Rarity": "Common"
 }

@@ -2,5 +2,10 @@
   "Stats": [
     "ArmorDebuff"
   ],
-  "Icon": "UI/Custom/Fender.png"
+  "Icon": "UI/Custom/Fender.png",
+  "TranslationProperties": {
+    "Name": "Template.name",
+    "Description": "Template.description"
+  },
+  "Rarity": "Rare"
 }

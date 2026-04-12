@@ -2,7 +2,7 @@ package com.Team_Berry.Game;
 
 import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.Interactions.InitiateStageInteraction;
-import com.Team_Berry.Game.Systems.ParticipantPlayerDeathSystem;
+import com.Team_Berry.Game.Systems.ParticipantPlayerSystem;
 import com.Team_Berry.Game.Systems.QuestNPCDeathSystem;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
@@ -41,9 +41,7 @@ public class GamePlugin extends JavaPlugin {
 
         this.gameManager = new GameManager(milestoneData);
         getEntityStoreRegistry().registerSystem(new QuestNPCDeathSystem(questNPCComponentType, gameManager));
-        getEntityStoreRegistry().registerSystem(new ParticipantPlayerDeathSystem(gameManager));
-
-
+        getEntityStoreRegistry().registerSystem(new ParticipantPlayerSystem(gameManager));
 
 
     }

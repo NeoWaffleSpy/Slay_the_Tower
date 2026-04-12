@@ -1,0 +1,15 @@
+{
+  "Type": "TeleportInstance",
+  "InstanceName": "Haven",
+  "PositionOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 2
+  },
+  "Rotation": {
+    "Yaw": 180
+  },
+  "OriginSource": "Block",
+  "PersonalReturnPoint": true,
+  "CloseOnBlockRemove": false
+}

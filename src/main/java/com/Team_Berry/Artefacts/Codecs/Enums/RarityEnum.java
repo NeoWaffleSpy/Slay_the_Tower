@@ -1,10 +1,19 @@
 package com.Team_Berry.Artefacts.Codecs.Enums;
 
-public enum RarityEnum {
-    COMMON { public final float weight = 0.6f; },
-    RARE { public final float weight = 0.3f; },
-    LEGENDARY { public final float weight = 0.1f; },
+import com.hypixel.hytale.protocol.io.ProtocolException;
 
-    STARTER { public final float weight = 0f; },
-    DEBUG { public final float weight = 0f; }
+public enum RarityEnum {
+    COMMON(0.6f, 0),
+    RARE(0.3f, 1),
+    LEGENDARY(0.1f, 2),
+
+    STARTER(0f, 3),
+    DEBUG(0f, 4);
+
+    public final float weight;
+    public final int index;
+    private RarityEnum(float weight, int index) {
+        this.weight = weight;
+        this.index = index;
+    }
 }

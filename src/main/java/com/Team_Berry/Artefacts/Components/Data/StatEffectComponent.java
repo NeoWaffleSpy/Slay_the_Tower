@@ -7,10 +7,15 @@ import com.Team_Berry.Camera.CameraPlugin;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +25,9 @@ public class StatEffectComponent implements Component<EntityStore> {
     public ArrayList<ArtefactCodec> artefactUpdated = new ArrayList<>();
     public ArtefactHud artefactHud;
 
-    public StatEffectComponent() {}
+    public StatEffectComponent() {
+        this.flush();
+    }
 
     public Map<ArtefactCodec, Integer> getArtefactList() { return artefactList; }
     public void addArtifact(ArtefactCodec artefact) { addStackToArtifact(artefact, 1); }
@@ -44,8 +51,8 @@ public class StatEffectComponent implements Component<EntityStore> {
     }
 
     public void flush() {
+        ArtefactCodec.getAssetMap().getAssetMap().forEach((assetName, asset) -> artefactList.put(asset, 0));
         artefactUpdated.addAll(artefactList.keySet());
-        artefactList.clear();
         if (artefactHud != null)
             artefactHud.refresh();
     }
@@ -56,6 +63,17 @@ public class StatEffectComponent implements Component<EntityStore> {
 
     public static @NonNull ComponentType<EntityStore, StatEffectComponent> getComponentType() {
         return ArtefactPlugin.get().getStatEffectComponentType();
+    }
+
+    public static StatEffectComponent getPlayerStatComp(PlayerRef player) {
+        Ref<EntityStore> ref = player.getReference();
+        Store<EntityStore> store = ref.getStore();
+        StatEffectComponent statComp = store.getComponent(ref, StatEffectComponent.getComponentType());
+        if (statComp == null) {
+            store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
+            statComp = store.getComponent(ref, StatEffectComponent.getComponentType());
+        }
+        return statComp;
     }
 
     @Override

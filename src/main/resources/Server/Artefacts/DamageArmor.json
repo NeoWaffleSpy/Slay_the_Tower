@@ -3,5 +3,10 @@
     "Armor",
     "Bonus_Attack"
   ],
-  "Icon": "UI/Custom/Strength.png"
+  "Icon": "UI/Custom/Strength.png",
+  "TranslationProperties": {
+    "Name": "DamageArmor.name",
+    "Description": "DamageArmor.description"
+  },
+  "Rarity": "Legendary"
 }

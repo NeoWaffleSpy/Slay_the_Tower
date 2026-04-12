@@ -13,6 +13,6 @@
     "SuperBleed",
     "MegaBleed"
   ],
-  "Rarity": "Rare",
+  "Rarity": "Debug",
   "Icon": "UI/Custom/Bleed.png"
 }

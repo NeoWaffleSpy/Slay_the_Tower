@@ -7,17 +7,17 @@
     "Blocks.Deco"
   ],
   "Set": "Furniture_Human",
-  "Icon": "Icons/ItemsGenerated/Furniture_Ancient_Statue.png",
+  "Icon": "Icons/ItemsGenerated/Statue.png",
   "IconProperties": {
-    "Scale": 0.264,
+    "Scale": 0.2,
     "Rotation": [
-      22.5,
-      45,
-      22.5
+      11,
+      30,
+      0
     ],
     "Translation": [
-      0,
-      -45.07
+      2,
+      -56
     ]
   },
   "BlockType": {

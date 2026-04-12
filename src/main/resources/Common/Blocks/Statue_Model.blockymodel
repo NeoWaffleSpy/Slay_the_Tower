@@ -829,7 +829,7 @@
                   "orientation": {"x": 0.13028, "y": 0, "z": 0, "w": 0.99148},
                   "shape": {
                     "type": "box",
-                    "offset": {"x": -1, "y": -3, "z": -9},
+                    "offset": {"x": 0, "y": -3, "z": -9},
                     "stretch": {"x": 0.99, "y": 1, "z": 1},
                     "settings": {
                       "isPiece": false,
@@ -871,7 +871,7 @@
                     {
                       "id": "28",
                       "name": "Statue-Collar-int",
-                      "position": {"x": 1, "y": 0, "z": 6},
+                      "position": {"x": 0, "y": 0, "z": 6},
                       "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
                       "shape": {
                         "type": "box",

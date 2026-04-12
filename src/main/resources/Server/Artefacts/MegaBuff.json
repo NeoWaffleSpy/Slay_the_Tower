@@ -4,5 +4,10 @@
     "Health",
     "Health"
   ],
-  "Icon": "UI/Custom/Leap.png"
+  "Icon": "UI/Custom/Leap.png",
+  "TranslationProperties": {
+    "Name": "MegaBuff.name",
+    "Description": "MegaBuff.description"
+  },
+  "Rarity": "Common"
 }

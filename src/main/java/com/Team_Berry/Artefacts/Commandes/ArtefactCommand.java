@@ -6,5 +6,7 @@ public class ArtefactCommand extends AbstractCommandCollection {
     public ArtefactCommand() {
         super("Artefact", "Artefact command collection");
         addSubCommand(new GiveArtefactCommand());
+        addSubCommand(new ShowArtefactSelectionCommand());
+        addSubCommand(new ClearArtefactsCommand());
     }
 }

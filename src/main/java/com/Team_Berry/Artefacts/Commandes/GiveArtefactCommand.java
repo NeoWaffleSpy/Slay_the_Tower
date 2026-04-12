@@ -30,15 +30,11 @@ public class GiveArtefactCommand extends AbstractPlayerCommand {
 
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
-        StatEffectComponent statComp = store.getComponent(ref, StatEffectComponent.getComponentType());
+        StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
         if (statComp == null) {
-            playerRef.getReference().getStore().addComponent(playerRef.getReference(), StatEffectComponent.getComponentType(), new StatEffectComponent());
-            statComp = store.getComponent(ref, StatEffectComponent.getComponentType());
-            if (statComp == null) {
-                commandContext.sendMessage(Message.raw("Error while initializing StatEffectComponent").color(Color.RED));
-                ArtefactPlugin.LOGGER.atSevere().log("Error while initializing StatEffectComponent");
-                return;
-            }
+            commandContext.sendMessage(Message.raw("Error while initializing StatEffectComponent").color(Color.RED));
+            ArtefactPlugin.LOGGER.atSevere().log("Error while initializing StatEffectComponent");
+            return;
         }
         ArtefactCodec artefact = ArtefactCodec.getAssetMap().getAsset(artefactName.get(commandContext));
         if (artefact == null) {

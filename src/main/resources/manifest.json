@@ -10,7 +10,6 @@
   ],
   "Website": "${plugin_website}",
   "ServerVersion": "${server_version}",
-  "Dependencies": {},
   "OptionalDependencies": {},
   "DisabledByDefault": false,
   "IncludesAssetPack": true,
@@ -58,5 +57,8 @@
       "Main": "com.Team_Berry.Game.GamePlugin",
       "ServerVersion": "${server_version}"
     }
-  ]
+  ],
+  "Dependencies": {
+    "Ellie:HyUI": "*"
+  }
 }

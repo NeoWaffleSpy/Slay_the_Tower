@@ -3,5 +3,10 @@
     "Crit_Rate",
     "Crit_Damage"
   ],
-  "Icon": "UI/Custom/Unknown.png"
+  "Icon": "UI/Custom/Unknown.png",
+  "TranslationProperties": {
+    "Name": "Critical.name",
+    "Description": "Critical.description"
+  },
+  "Rarity": "Rare"
 }

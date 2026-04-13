@@ -1,7 +1,7 @@
 package com.Team_Berry.Game;
 
 import com.Team_Berry.Game.Components.QuestNPCComponent;
-import com.Team_Berry.Game.Interactions.InitiateStageInteraction;
+import com.Team_Berry.Game.Interactions.InstanceGameStartInteraction;
 import com.Team_Berry.Game.Systems.ParticipantPlayerSystem;
 import com.Team_Berry.Game.Systems.QuestNPCDeathSystem;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
@@ -49,7 +49,7 @@ public class GamePlugin extends JavaPlugin {
     @Override
     protected void setup() {
         questNPCComponentType = getEntityStoreRegistry().registerComponent(QuestNPCComponent.class, QuestNPCComponent::new);
-        this.getCodecRegistry(Interaction.CODEC).register("InitiateStageInteraction", InitiateStageInteraction.class, InitiateStageInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("InitiateStageInteraction", InstanceGameStartInteraction.class, InstanceGameStartInteraction.CODEC);
 
     }
 

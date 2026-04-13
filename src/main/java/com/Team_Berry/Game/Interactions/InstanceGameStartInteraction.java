@@ -14,15 +14,14 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
 
-public class InitiateStageInteraction extends SimpleInstantInteraction {
+public class InstanceGameStartInteraction extends SimpleInstantInteraction {
 
-    public static final BuilderCodec<InitiateStageInteraction> CODEC = BuilderCodec.builder(InitiateStageInteraction.class, InitiateStageInteraction::new, SimpleInstantInteraction.CODEC).build();
+    public static final BuilderCodec<InstanceGameStartInteraction> CODEC = BuilderCodec.builder(InstanceGameStartInteraction.class, InstanceGameStartInteraction::new, SimpleInstantInteraction.CODEC).build();
 
     @Override
     protected void firstRun(@NotNull InteractionType interactionType, @NotNull InteractionContext interactionContext, @NotNull CooldownHandler cooldownHandler) {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
         PlayerRef playerRef = commandBuffer.getComponent(interactionContext.getOwningEntity(), PlayerRef.getComponentType());
-        playerRef.sendMessage(Message.raw("interaction started"));
         World world = InstancesPlugin.get().spawnInstance("Haven", playerRef.getReference().getStore().getExternalData().getWorld(), commandBuffer.getComponent(playerRef.getReference(), TransformComponent.getComponentType()).getTransform()).join();
         playerRef.sendMessage(Message.raw(world.getName()));
 

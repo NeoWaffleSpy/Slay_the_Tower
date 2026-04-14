@@ -1,10 +1,8 @@
 package com.Team_Berry.Game.Data;
 
-import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
 
 public class GameState {
-    private RoomCodec currentRoom;
     private int clearedStagesNumber = 0;
     private SkillMilestoneCodec skillMilestones;
     private SkillMilestoneCodec.MilestoneEntry currentMilestone;
@@ -50,17 +48,9 @@ public class GameState {
 
     public void reset() {
         this.clearedStagesNumber = 0;
-        this.currentRoom = null;
         updateMilestoneStatus();
     }
 
-    public RoomCodec getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(RoomCodec room) {
-        this.currentRoom = room;
-    }
 
     public SkillMilestoneCodec.MilestoneEntry getCurrentMilestone() {
         return currentMilestone;

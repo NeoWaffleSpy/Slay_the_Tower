@@ -1,5 +1,6 @@
 package com.Team_Berry.Game;
 
+import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.Data.GameState;
 import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Game.Enums.EndStageResult;
@@ -11,25 +12,26 @@ import com.Team_Berry.Rooms.Utils.RoomNPCSpawner;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
-import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.RemoveReason;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import it.unimi.dsi.fastutil.Pair;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
-    private World world = null;
     private final GameState gameState;
     private final Set<PlayerRef> participants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
-    private List<RoomCodec> currentMilestoneRooms;
-    private List<MobGroupCodec> currentMilestoneMobGroups;
-    private Quest currentQuest;
+    private World world = null;
+    private Pair<RoomCodec, Quest> currentRoom;
+    private Pair<RoomCodec, Quest> futureRoom;
 
     public GameManager(SkillMilestoneCodec milestoneData) {
         this.gameState = new GameState();
@@ -43,37 +45,73 @@ public class GameManager {
         }
     }
 
-    public void initiateRoom(RoomCodec room, MobGroupCodec mobGroup) {
-        world.execute(() -> {
-            RoomNPCSpawner.spawnMobGroup(world.getEntityStore().getStore(), room, mobGroup);
+    public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude) {
+
+        List<RoomCodec> validRooms = findValidRooms();
+
+        if (exclude != null && validRooms.size() > 1) {
+            validRooms.removeIf(room -> room.equals(exclude));
+        }
+        if (validRooms.isEmpty()) return null;
+
+        RoomCodec selectedRoom = validRooms.get(ThreadLocalRandom.current().nextInt(validRooms.size()));
+
+        int difficulty = this.gameState.getCurrentMilestone().difficulty;
+        List<MobGroupCodec> mobGroups = findValidMobGroups(difficulty);
+        Quest quest = new Quest(0);
+        if (mobGroups != null && !mobGroups.isEmpty()) {
+            MobGroupCodec selectedGroup = mobGroups.get(ThreadLocalRandom.current().nextInt(mobGroups.size()));
+            quest = new Quest(selectedGroup.getTotalMobCount());
+            world.execute(() -> {
+                killQuestMobsInRoom(selectedRoom);
+                RoomNPCSpawner.spawnMobGroup(world.getEntityStore().getStore(), selectedRoom, selectedGroup);
+            });
+        }
+
+        return Pair.of(selectedRoom, quest);
+    }
+
+    public void killQuestMobsInRoom(RoomCodec room) {
+        Store<EntityStore> store = world.getEntityStore().getStore();
+
+
+        store.forEachChunk(GamePlugin.getQuestNPCComponentType(), (chunk, commandBuffer) -> {
+            for (int i = 0; i < chunk.size(); i++) {
+                QuestNPCComponent questComp = chunk.getComponent(i, GamePlugin.getQuestNPCComponentType());
+
+                if (questComp != null && questComp.getRoom().equals(room)) {
+                    commandBuffer.removeEntity(chunk.getReferenceTo(i), RemoveReason.REMOVE);
+                }
+            }
         });
     }
 
-
     public void initializeMilestone() {
-        this.currentMilestoneRooms = findValidRooms();
-        this.currentMilestoneMobGroups = findValidMobGroups(gameState.getCurrentMilestone().difficulty);
+        this.currentRoom = prepareRoom(null);
+        this.futureRoom = prepareRoom(this.currentRoom.left());
+    }
+
+    private void goNextRoom() {
+        this.participantsInRoom.clear();
+
+        this.currentRoom = this.futureRoom;
+
+        tpParticipantsToRoom();
+
+        this.futureRoom = prepareRoom(this.currentRoom.left());
     }
 
 
     public void addParticipant(PlayerRef playerRef) {
-        if (this.participants.add(playerRef)){
+        if (this.participants.add(playerRef)) {
             playerRef.sendMessage(Message.raw("Welcome to slay the tower !"));
         }
         if (this.participants.size() == 1) startGame(playerRef);
     }
 
-    private void startQuest(List<Ref<EntityStore>> questMobList) {
-        this.currentQuest = new Quest(questMobList);
-    }
-
-    private void startQuest(int spawnedMobs) {
-        this.currentQuest = new Quest(spawnedMobs);
-    }
-
     public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef) {
-        if (currentQuest == null) return;
-
+        if (currentRoom == null || currentRoom.right() == null) return;
+        Quest currentQuest = currentRoom.right();
         if (questUpdate == QuestUpdate.MOB_DEATH) {
             currentQuest.incrementDeadMobs();
             if (currentQuest.isComplete()) {
@@ -85,7 +123,7 @@ public class GameManager {
     }
 
     public void endStage(EndStageResult result) {
-        this.currentQuest = null;
+
         switch (result) {
             case SUCCESS:
 
@@ -101,11 +139,6 @@ public class GameManager {
 
     }
 
-    private void goNextRoom() {
-
-    }
-
-
 
     private void tpParticipantsToLobby() {
         RoomCodec lobby = findLobbyRoom();
@@ -117,12 +150,11 @@ public class GameManager {
     }
 
     private void tpParticipantsToRoom() {
-        RoomCodec currentRoom = gameState.getCurrentRoom();
         if (currentRoom == null) return;
 
         for (PlayerRef p : participants) {
             if (!participantsInRoom.contains(p)) {
-                RoomTeleporter.teleportToRoom(p, currentRoom);
+                RoomTeleporter.teleportToRoom(p, currentRoom.left());
                 this.participantsInRoom.add(p);
             }
         }
@@ -167,6 +199,7 @@ public class GameManager {
 
         return validGroups.isEmpty() ? null : validGroups;
     }
+
     private RoomCodec findLobbyRoom() {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
         int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Lobby");
@@ -190,7 +223,6 @@ public class GameManager {
     }
 
     private void resetQuest() {
-        this.currentQuest = null;
         this.deadParticipants.clear();
         this.participantsInRoom.clear();
     }

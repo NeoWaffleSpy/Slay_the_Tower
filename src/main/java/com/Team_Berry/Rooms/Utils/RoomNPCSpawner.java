@@ -1,5 +1,6 @@
 package com.Team_Berry.Rooms.Utils;
 
+import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
@@ -45,11 +46,11 @@ public class RoomNPCSpawner {
                 safeLerp(area.minPos.z, area.maxPos.z)
         );
 
-        return executeInternalSpawn(store, roleIndex, spawnPos);
+        return executeInternalSpawn(store, roleIndex, spawnPos, room);
     }
 
 
-    static @Nullable Ref<EntityStore> executeInternalSpawn(Store<EntityStore> store, int roleIndex, Vector3d position) {
+    static @Nullable Ref<EntityStore> executeInternalSpawn(Store<EntityStore> store, int roleIndex, Vector3d position, RoomCodec room) {
         NPCPlugin npcPlugin = NPCPlugin.get();
 
         Builder<Role> roleBuilder = npcPlugin.tryGetCachedValidRole(roleIndex);
@@ -69,7 +70,7 @@ public class RoomNPCSpawner {
         Pair<Ref<EntityStore>, NPCEntity> npcEntityPair = npcPlugin.spawnEntity(store, roleIndex, position, rotation, model, null);
         Ref<EntityStore> ref = npcEntityPair.left();
 
-        store.addComponent(npcEntityPair.left(), GamePlugin.getQuestNPCComponentType());
+        store.addComponent(npcEntityPair.left(), GamePlugin.getQuestNPCComponentType(), new QuestNPCComponent(room));
 
         return ref;
     }

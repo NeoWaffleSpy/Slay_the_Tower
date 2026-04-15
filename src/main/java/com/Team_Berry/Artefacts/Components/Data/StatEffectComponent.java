@@ -3,13 +3,10 @@ package com.Team_Berry.Artefacts.Components.Data;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.UI.ArtefactHud;
-import com.Team_Berry.Camera.CameraPlugin;
-import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
@@ -29,7 +26,6 @@ public class StatEffectComponent implements Component<EntityStore> {
         this.flush();
     }
 
-    public Map<ArtefactCodec, Integer> getArtefactList() { return artefactList; }
     public void addArtifact(ArtefactCodec artefact) { addStackToArtifact(artefact, 1); }
     public void removeArtifact(ArtefactCodec artefact) { addStackToArtifact(artefact, -1); }
 

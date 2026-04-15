@@ -33,4 +33,8 @@ public class KeyedScheduler {
         ScheduledFuture<?> future = tasks.get(key);
         return future != null && !future.isDone();
     }
+
+    public void stop() {
+        scheduler.shutdown();
+    }
 }

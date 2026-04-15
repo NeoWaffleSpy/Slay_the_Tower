@@ -8,7 +8,6 @@ import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
-import com.Team_Berry.Utils.TooltipInjector.StringFormatter;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefChangeSystem;
@@ -29,8 +28,6 @@ import org.jspecify.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class StatEffectSystem {
@@ -41,6 +38,8 @@ public class StatEffectSystem {
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectDamageSystem());
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectRefChangeSystem());
     }
+
+    public static void stop() { scheduler.stop(); }
 
     public static class StatEffectDamageSystem extends DamageEventSystem {
         public StatEffectDamageSystem() {}
@@ -195,7 +194,10 @@ public class StatEffectSystem {
 
         @Override
         public void onComponentAdded(@NonNull Ref<EntityStore> ref, @NonNull StatEffectComponent component, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
-            component.artefactHud = new ArtefactHud(component, store.getComponent(ref, PlayerRef.getComponentType()));
+            PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
+            component.artefactHud = new ArtefactHud(component, playerRef);
+            if (playerRef != null)
+                StatEffectSystem.clearTempStats(playerRef);
         }
 
         @Override
@@ -212,6 +214,22 @@ public class StatEffectSystem {
         public @Nullable Query<EntityStore> getQuery() {
             return StatEffectComponent.getComponentType();
         }
+    }
+
+    private static void clearTempStats(PlayerRef playerRef) {
+        Ref<EntityStore> ref = playerRef.getReference();
+        if (ref == null) return;
+        Store<EntityStore> store = ref.getStore();
+        EntityStatMap targetEntityStatMap = store.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
+        if (targetEntityStatMap == null) return;
+        ArtefactCodec.getAssetMap().getAssetMap().forEach((assetName, artefact) -> {
+            artefact.getStatArray().forEach(stat -> {
+                if (stat.trigger != TriggerType.PASSIVE) {
+                    String key = ArtefactPlugin.get().getName() + "-" + artefact.getId() + "-" + stat.hashCode();
+                    targetEntityStatMap.removeModifier(getEntityIndex(stat.getType()), key);
+                }
+            });
+        });
     }
 
     private static void applyTempStats(StatEffectComponent originEntityComponent, EntityStatMap originEntityStatMap, EntityStatMap targetEntityStatMap, TriggerType type) {

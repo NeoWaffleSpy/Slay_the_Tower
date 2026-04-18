@@ -22,7 +22,7 @@ public class InstanceGameStartInteraction extends SimpleInstantInteraction {
     protected void firstRun(@NotNull InteractionType interactionType, @NotNull InteractionContext interactionContext, @NotNull CooldownHandler cooldownHandler) {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
         PlayerRef playerRef = commandBuffer.getComponent(interactionContext.getOwningEntity(), PlayerRef.getComponentType());
-        World world = InstancesPlugin.get().spawnInstance("Haven", playerRef.getReference().getStore().getExternalData().getWorld(), commandBuffer.getComponent(playerRef.getReference(), TransformComponent.getComponentType()).getTransform()).join();
+        World world = InstancesPlugin.get().spawnInstance("SlayTheTower", playerRef.getReference().getStore().getExternalData().getWorld(), commandBuffer.getComponent(playerRef.getReference(), TransformComponent.getComponentType()).getTransform()).join();
         playerRef.sendMessage(Message.raw(world.getName()));
 
     }

@@ -26,27 +26,24 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
     private final GameState gameState;
-    private final Set<PlayerRef> participants = new HashSet<>();
+
+    private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
+    private final Map<UUID, Integer> historicalSpellCounts = new HashMap<>();
+
     private World world = null;
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
+    private int globalMaxSpells = 1;
 
-    public GameManager(SkillMilestoneCodec milestoneData) {
+    public GameManager(World world, SkillMilestoneCodec milestoneData) {
+        this.world = world;
         this.gameState = new GameState();
         this.gameState.initialize(milestoneData);
     }
 
-    public void startGame(PlayerRef playerRef) {
-        if (world == null) {
-            this.world = playerRef.getReference().getStore().getExternalData().getWorld();
-            initializeMilestone();
-        }
-    }
-
     public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude) {
-
         List<RoomCodec> validRooms = findValidRooms();
 
         if (exclude != null && validRooms.size() > 1) {
@@ -59,6 +56,7 @@ public class GameManager {
         int difficulty = this.gameState.getCurrentMilestone().difficulty;
         List<MobGroupCodec> mobGroups = findValidMobGroups(difficulty);
         Quest quest = new Quest(0);
+
         if (mobGroups != null && !mobGroups.isEmpty()) {
             MobGroupCodec selectedGroup = mobGroups.get(ThreadLocalRandom.current().nextInt(mobGroups.size()));
             quest = new Quest(selectedGroup.getTotalMobCount());
@@ -73,7 +71,6 @@ public class GameManager {
 
     public void killQuestMobsInRoom(RoomCodec room) {
         Store<EntityStore> store = world.getEntityStore().getStore();
-
 
         store.forEachChunk(GamePlugin.getQuestNPCComponentType(), (chunk, commandBuffer) -> {
             for (int i = 0; i < chunk.size(); i++) {
@@ -93,20 +90,37 @@ public class GameManager {
 
     private void goNextRoom() {
         this.participantsInRoom.clear();
-
         this.currentRoom = this.futureRoom;
-
         tpParticipantsToRoom();
-
         this.futureRoom = prepareRoom(this.currentRoom.left());
     }
 
-
     public void addParticipant(PlayerRef playerRef) {
-        if (this.participants.add(playerRef)) {
-            playerRef.sendMessage(Message.raw("Welcome to slay the tower !"));
+        this.activeParticipants.add(playerRef);
+        System.out.println("player added " + playerRef.getUsername());
+        if (this.historicalSpellCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
+            playerRef.sendMessage(Message.raw("Welcome to Slay the Tower!"));
         }
-        if (this.participants.size() == 1) startGame(playerRef);
+    }
+
+    public void removeParticipant(PlayerRef playerRef) {
+        this.activeParticipants.remove(playerRef);
+        this.participantsInRoom.remove(playerRef);
+        this.deadParticipants.remove(playerRef);
+    }
+
+    public boolean canPlayerPickSpell(PlayerRef playerRef) {
+        int possessedSpells = historicalSpellCounts.getOrDefault(playerRef.getUuid(), 0);
+        return possessedSpells < globalMaxSpells;
+    }
+
+    public Set<PlayerRef> getActiveParticipants() {
+        return this.activeParticipants;
+    }
+
+    public void incrementPlayerSpellCount(PlayerRef playerRef) {
+        int currentSpells = historicalSpellCounts.getOrDefault(playerRef.getUuid(), 0);
+        historicalSpellCounts.put(playerRef.getUuid(), currentSpells + 1);
     }
 
     public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef) {
@@ -123,27 +137,37 @@ public class GameManager {
     }
 
     public void endStage(EndStageResult result) {
-
         switch (result) {
             case SUCCESS:
+                int oldDifficulty = this.gameState.getCurrentMilestone().difficulty;
+                this.gameState.incrementClearedStages();
+                int newDifficulty = this.gameState.getCurrentMilestone().difficulty;
 
+                // Check for milestone level up
+                if (newDifficulty > oldDifficulty) {
+                    this.globalMaxSpells++;
+                    for (PlayerRef p : activeParticipants) {
+                        p.sendMessage(Message.raw("Milestone Reached! Your spell capacity is now " + globalMaxSpells));
+                    }
+                }
+
+                reviveDeadPlayers();
+                goNextRoom();
                 break;
 
             case FAILURE:
-
+                tpParticipantsToLobby();
+                this.gameState.reset();
+                resetQuest();
                 break;
         }
     }
 
-    private void ResolveNextStage() {
-
-    }
-
-
     private void tpParticipantsToLobby() {
         RoomCodec lobby = findLobbyRoom();
         if (lobby != null) {
-            for (PlayerRef participant : participants) {
+            // Updated to use activeParticipants
+            for (PlayerRef participant : activeParticipants) {
                 RoomTeleporter.teleportToRoom(participant, lobby);
             }
         }
@@ -152,14 +176,13 @@ public class GameManager {
     private void tpParticipantsToRoom() {
         if (currentRoom == null) return;
 
-        for (PlayerRef p : participants) {
+        for (PlayerRef p : activeParticipants) {
             if (!participantsInRoom.contains(p)) {
                 RoomTeleporter.teleportToRoom(p, currentRoom.left());
                 this.participantsInRoom.add(p);
             }
         }
     }
-
 
     public List<RoomCodec> findValidRooms() {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
@@ -232,5 +255,9 @@ public class GameManager {
 
         // TODO: Revive the player at the location of a living participant
         deadParticipants.clear();
+    }
+
+    public World getWorld() {
+        return this.world;
     }
 }

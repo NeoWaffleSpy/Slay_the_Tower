@@ -17,6 +17,7 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import it.unimi.dsi.fastutil.Pair;
 import org.jspecify.annotations.Nullable;
@@ -131,7 +132,12 @@ public class GameManager {
         log("Player joined the party: " + playerRef.getUsername());
         this.activeParticipants.add(playerRef);
         if (this.historicalSpellCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
-            playerRef.sendMessage(Message.raw("Welcome to Slay the Tower!"));
+            EventTitleUtil.showEventTitleToPlayer(
+                    playerRef,
+                    Message.raw("SLAY THE TOWER"),
+                    Message.raw("Good luck, traveler..."),
+                    true
+            );
         }
     }
 
@@ -206,7 +212,12 @@ public class GameManager {
             this.globalMaxSpells++;
             this.pendingMilestoneTransition = true;
             log("MILESTONE REACHED. Spell capacity increased to: " + globalMaxSpells);
-            broadcastMessage("Milestone Reached! Your spell capacity is now " + globalMaxSpells);
+            broadcastEventTitle(
+                    "MILESTONE REACHED",
+                    "Spell capacity increased to " + globalMaxSpells,
+                    true,
+                    null
+            );
         } else {
             this.pendingMilestoneTransition = false;
         }
@@ -216,7 +227,7 @@ public class GameManager {
 
     private void grantArtifactRewards() {
         log("Granting artifact rewards UI to all players.");
-        broadcastMessage("Room Cleared! Claim your rewards.");
+        broadcastEventTitle("ROOM CLEAR", "Select your reward...", false, null);
 
         for (PlayerRef player : activeParticipants) {
             com.Team_Berry.Artefacts.UI.ArtefactSelection ui = new com.Team_Berry.Artefacts.UI.ArtefactSelection(player, world.getEntityStore().getStore());
@@ -281,7 +292,7 @@ public class GameManager {
     private void handleStageFailure() {
         GamePlugin.get().destroyGameInstance(this.world);
         log("CRITICAL: Party Fall. Resetting milestone progress.");
-        broadcastMessage("Your party has fallen... Resetting milestone.");
+        broadcastEventTitle("DEFEATED", "The tower claims another soul...", true, null);
         this.gameState.reset();
         this.globalMaxSpells = 1;
 
@@ -293,6 +304,24 @@ public class GameManager {
     private void broadcastMessage(String text) {
         for (PlayerRef p : activeParticipants) {
             p.sendMessage(Message.raw(text));
+        }
+    }
+
+    private void broadcastEventTitle(String primary, String secondary, boolean isMajor, @Nullable String icon) {
+        Message primaryMsg = Message.raw(primary);
+        Message secondaryMsg = Message.raw(secondary);
+
+        for (PlayerRef p : activeParticipants) {
+            EventTitleUtil.showEventTitleToPlayer(
+                    p,
+                    primaryMsg,
+                    secondaryMsg,
+                    isMajor,
+                    icon,
+                    2.0F,
+                    0.5F,
+                    0.5F
+            );
         }
     }
 

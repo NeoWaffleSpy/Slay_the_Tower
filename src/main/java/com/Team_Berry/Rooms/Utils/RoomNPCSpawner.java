@@ -1,7 +1,5 @@
 package com.Team_Berry.Rooms.Utils;
 
-import com.Team_Berry.Game.Components.QuestNPCComponent;
-import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.RoomPlugin;
@@ -68,11 +66,10 @@ public class RoomNPCSpawner {
         Vector3f rotation = new Vector3f(0, (float) (ThreadLocalRandom.current().nextDouble() * Math.PI * 2), 0);
 
         Pair<Ref<EntityStore>, NPCEntity> npcEntityPair = npcPlugin.spawnEntity(store, roleIndex, position, rotation, model, null);
-        Ref<EntityStore> ref = npcEntityPair.left();
+        //doesn't seem to work correctly
+        //store.addComponent(npcEntityPair.left(), GamePlugin.getQuestNPCComponentType(), new QuestNPCComponent(room));
 
-        store.addComponent(npcEntityPair.left(), GamePlugin.getQuestNPCComponentType(), new QuestNPCComponent(room));
-
-        return ref;
+        return (npcEntityPair != null) ? npcEntityPair.left() : null;
     }
 
 

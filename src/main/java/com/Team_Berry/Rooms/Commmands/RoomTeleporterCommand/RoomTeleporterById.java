@@ -1,6 +1,5 @@
 package com.Team_Berry.Rooms.Commmands.RoomTeleporterCommand;
 
-import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -24,6 +23,6 @@ public class RoomTeleporterById extends AbstractPlayerCommand {
 
     @Override
     protected void execute(@NotNull CommandContext commandContext, @NotNull Store<EntityStore> store, @NotNull Ref<EntityStore> ref, @NotNull PlayerRef playerRef, @NotNull World world) {
-        RoomTeleporter.teleportToRoomById(playerRef, roomName.get(commandContext));
+        //RoomTeleporter.teleportToRoomById(playerRef, roomName.get(commandContext));
     }
 }

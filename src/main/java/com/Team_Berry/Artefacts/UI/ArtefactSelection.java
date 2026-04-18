@@ -8,16 +8,17 @@ import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
-import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.Team_Berry.Game.GameManager;
+import com.Team_Berry.Game.GamePlugin;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.modules.i18n.I18nModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +32,38 @@ public class ArtefactSelection {
     public ArtefactSelection(PlayerRef playerRef, Store<EntityStore> store) {
         this.playerRef = playerRef;
         this.store = store;
+    }
+
+    public static List<ArtefactCodec> weightedDraw(List<ArtefactCodec> input, int count) {
+        List<ArtefactCodec> pool = new ArrayList<>(input);
+        List<ArtefactCodec> result = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < count && !pool.isEmpty(); i++) {
+            float totalWeight = 0;
+            for (ArtefactCodec obj : pool) {
+                if (obj.rarity.weight > 0) {
+                    totalWeight += obj.rarity.weight;
+                }
+            }
+            if (totalWeight <= 0) break;
+            float r = random.nextFloat(totalWeight);
+            float cumulative = 0;
+            ArtefactCodec selected = null;
+            for (ArtefactCodec obj : pool) {
+                float w = obj.rarity.weight;
+                if (w <= 0) continue;
+                cumulative += w;
+                if (r < cumulative) {
+                    selected = obj;
+                    break;
+                }
+            }
+
+            if (selected == null) break;
+            result.add(selected);
+            pool.remove(selected);
+        }
+        return result;
     }
 
     public void buildPage() {
@@ -85,39 +118,20 @@ public class ArtefactSelection {
         if (statComp == null || artefacts.isEmpty())
             return;
         statComp.addArtifact(artefacts.get(index).artefact);
+
+        World world = store.getExternalData().getWorld();
+        GameManager manager = GamePlugin.get().getGameManagers().get(world);
+
+        if (manager != null) {
+            manager.onPlayerClaimedReward(this.playerRef);
+        }
+
+        if (this.page != null) {
+            this.page.close();
+        }
     }
 
-    private record ArtefactInfos(String name, String icon, String description, ArrayList<String> status, ArrayList<String> stats, ArtefactCodec artefact, int rarity, int index) {}
-
-    public static List<ArtefactCodec> weightedDraw(List<ArtefactCodec> input, int count) {
-        List<ArtefactCodec> pool = new ArrayList<>(input);
-        List<ArtefactCodec> result = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < count && !pool.isEmpty(); i++) {
-            float totalWeight = 0;
-            for (ArtefactCodec obj : pool) {
-                if (obj.rarity.weight > 0) {
-                    totalWeight += obj.rarity.weight;
-                }
-            }
-            if (totalWeight <= 0) break;
-            float r = random.nextFloat(totalWeight);
-            float cumulative = 0;
-            ArtefactCodec selected = null;
-            for (ArtefactCodec obj : pool) {
-                float w = obj.rarity.weight;
-                if (w <= 0) continue;
-                cumulative += w;
-                if (r < cumulative) {
-                    selected = obj;
-                    break;
-                }
-            }
-
-            if (selected == null) break;
-            result.add(selected);
-            pool.remove(selected);
-        }
-        return result;
+    private record ArtefactInfos(String name, String icon, String description, ArrayList<String> status,
+                                 ArrayList<String> stats, ArtefactCodec artefact, int rarity, int index) {
     }
 }

@@ -1,6 +1,5 @@
 package com.Team_Berry.Game.Systems;
 
-import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.Enums.QuestUpdate;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
@@ -15,20 +14,15 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class QuestNPCDeathSystem extends RefChangeSystem<EntityStore, DeathComponent> {
 
-    private final ComponentType<EntityStore, QuestNPCComponent> questNPCComponentType;
-
-    public QuestNPCDeathSystem(ComponentType<EntityStore, QuestNPCComponent> questNPCComponentType) {
-        this.questNPCComponentType = questNPCComponentType;
-    }
-
     @Override
     public @Nullable Query<EntityStore> getQuery() {
-        return questNPCComponentType;
+        return NPCEntity.getComponentType();
     }
 
     @Override
@@ -40,6 +34,7 @@ public class QuestNPCDeathSystem extends RefChangeSystem<EntityStore, DeathCompo
     public void onComponentAdded(@NotNull Ref<EntityStore> ref, @NotNull DeathComponent death, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
         World world = store.getExternalData().getWorld();
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
+
         if (manager == null) return;
 
         PlayerRef killerPlayer = null;
@@ -54,7 +49,6 @@ public class QuestNPCDeathSystem extends RefChangeSystem<EntityStore, DeathCompo
             }
         }
 
-
         manager.updateQuest(QuestUpdate.MOB_DEATH, killerPlayer);
     }
 
@@ -65,6 +59,4 @@ public class QuestNPCDeathSystem extends RefChangeSystem<EntityStore, DeathCompo
     @Override
     public void onComponentRemoved(@NotNull Ref<EntityStore> ref, @NotNull DeathComponent death, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
     }
-
-
 }

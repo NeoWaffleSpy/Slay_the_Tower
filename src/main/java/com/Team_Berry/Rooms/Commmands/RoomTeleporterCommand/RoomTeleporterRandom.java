@@ -1,7 +1,6 @@
 package com.Team_Berry.Rooms.Commmands.RoomTeleporterCommand;
 
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
-import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -27,7 +26,7 @@ public class RoomTeleporterRandom extends AbstractPlayerCommand {
 
         if (!rooms.isEmpty()) {
             RoomCodec randomRoom = rooms.get(ThreadLocalRandom.current().nextInt(rooms.size()));
-            RoomTeleporter.teleportToRoom(playerRef, randomRoom);
+            // RoomTeleporter.teleportToRoom(playerRef, randomRoom);
         } else {
             playerRef.sendMessage(Message.raw("No rooms exist"));
         }

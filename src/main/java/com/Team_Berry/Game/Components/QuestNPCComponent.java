@@ -6,7 +6,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.Nullable;
 
 public class QuestNPCComponent implements Component<EntityStore> {
-    RoomCodec room;
+    RoomCodec room = null;
 
     public QuestNPCComponent() {
     }

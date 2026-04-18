@@ -40,7 +40,7 @@
       "Use": {
         "Interactions": [
           {
-            "Type": "InitiateStageInteraction"
+            "Type": "StartRoomFromLobbyInteraction"
           }
         ]
       }
@@ -73,7 +73,7 @@
     "Use": {
       "Interactions": [
         {
-          "Type": "InitiateStageInteraction"
+          "Type": "StartRoomFromLobbyInteraction"
         }
       ]
     }

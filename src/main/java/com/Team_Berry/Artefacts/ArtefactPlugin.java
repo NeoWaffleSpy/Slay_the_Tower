@@ -9,10 +9,12 @@ import com.Team_Berry.Artefacts.Components.Systems.StatEffectSystem;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.registry.Registration;
 import com.hypixel.hytale.server.core.command.system.CommandRegistration;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -53,14 +55,22 @@ public class ArtefactPlugin extends JavaPlugin {
         StatCodec.register();
         ArtefactCodec.register();
         StatEffectSystem.register();
+        getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
         this.getCommandRegistry().registerCommand(new ArtefactCommand());
     }
 
     @Override
     protected void shutdown() {
         LOGGER.atInfo().log("%s shutting down", this.getName());
+        StatEffectSystem.stop();
         commands.forEach(Registration::unregister);
         commands.clear();
         super.shutdown();
+    }
+
+    private static void addComponent(PlayerReadyEvent event) {
+        Ref<EntityStore> ref = event.getPlayerRef();
+        Store<EntityStore> store = ref.getStore();
+        store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
     }
 }

@@ -11,6 +11,7 @@ import com.Team_Berry.Rooms.Utils.RoomNPCSpawner;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -293,12 +294,19 @@ public class GameManager {
         GamePlugin.get().destroyGameInstance(this.world);
         log("CRITICAL: Party Fall. Resetting milestone progress.");
         broadcastEventTitle("DEFEATED", "The tower claims another soul...", true, null);
-        this.gameState.reset();
-        this.globalMaxSpells = 1;
-
-        tpParticipantsToLobby();
-        reviveDeadPlayers();
-        resetQuest();
+        
+        for (PlayerRef p : activeParticipants) {
+            Ref<EntityStore> ref = p.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+                try {
+                    // This physically kicks them out of the instance and back to their original world/coordinates
+                    com.hypixel.hytale.builtin.instances.InstancesPlugin.exitInstance(ref, store);
+                } catch (IllegalArgumentException e) {
+                    log("Failed to exit instance for player: " + p.getUsername());
+                }
+            }
+        }
     }
 
     private void broadcastMessage(String text) {

@@ -1,6 +1,6 @@
 {
   "Type": "TeleportInstance",
-  "InstanceName": "Haven",
+  "InstanceName": "SlayTheTower",
   "PositionOffset": {
     "X": 0,
     "Y": 0,
@@ -9,7 +9,5 @@
   "Rotation": {
     "Yaw": 180
   },
-  "OriginSource": "Block",
-  "PersonalReturnPoint": true,
-  "CloseOnBlockRemove": false
+  "OriginSource": "Block"
 }

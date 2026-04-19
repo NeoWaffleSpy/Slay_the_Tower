@@ -66,14 +66,5 @@
       -13.5
     ]
   },
-  "ItemSoundSetId": "ISS_Blocks_Stone",
-  "Interactions": {
-    "Use": {
-      "Interactions": [
-        {
-          "Type": "InitiateStageInteraction"
-        }
-      ]
-    }
-  }
+  "ItemSoundSetId": "ISS_Blocks_Stone"
 }

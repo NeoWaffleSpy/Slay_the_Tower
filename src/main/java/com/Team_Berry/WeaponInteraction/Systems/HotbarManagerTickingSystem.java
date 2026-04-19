@@ -66,16 +66,22 @@ public class HotbarManagerTickingSystem extends EntityTickingSystem<EntityStore>
         }
         return durabilityChanged;
     }
-
+    
     private void syncHotbarSlot(InventoryComponent.Hotbar hotbarComp, PlayerRef playerRef) {
         int currentSlot = hotbarComp.getActiveSlot();
         UUID uuid = playerRef.getUuid();
-        Integer lastSlot = lastSyncedSlot.get(uuid);
 
-        if (lastSlot == null || lastSlot != currentSlot) {
-            playerRef.getPacketHandler().writeNoCache(new SetActiveSlot(HOTBAR_SECTION_ID, currentSlot));
-            lastSyncedSlot.put(uuid, currentSlot);
-            System.out.println("Slot Synced: " + currentSlot);
+        if (currentSlot >= 0 && currentSlot <= 3) {
+            Integer lastSlot = lastSyncedSlot.get(uuid);
+
+            if (lastSlot == null || lastSlot != currentSlot) {
+                playerRef.getPacketHandler().writeNoCache(new SetActiveSlot(HOTBAR_SECTION_ID, currentSlot));
+                lastSyncedSlot.put(uuid, currentSlot);
+                System.out.println("Slot Synced: " + currentSlot);
+            }
+        } else {
+
+            lastSyncedSlot.remove(uuid);
         }
     }
 

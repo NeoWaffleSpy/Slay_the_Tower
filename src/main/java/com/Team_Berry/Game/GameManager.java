@@ -1,5 +1,6 @@
 package com.Team_Berry.Game;
 
+import com.Team_Berry.Artefacts.UI.ArtefactSelection;
 import com.Team_Berry.Game.Data.GameState;
 import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Game.Enums.EndStageResult;
@@ -32,7 +33,7 @@ public class GameManager {
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
-    private final Map<UUID, Integer> historicalSpellCounts = new HashMap<>();
+    private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
 
     private final Set<PlayerRef> playersReady = new HashSet<>();
 
@@ -41,7 +42,7 @@ public class GameManager {
     private World world = null;
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
-    private int globalMaxSpells = 0;
+    private int globalMaxSkills = 1;
 
     public GameManager(World world, SkillMilestoneCodec milestoneData) {
         this.world = world;
@@ -132,7 +133,7 @@ public class GameManager {
     public void addParticipant(PlayerRef playerRef) {
         log("Player joined the party: " + playerRef.getUsername());
         this.activeParticipants.add(playerRef);
-        if (this.historicalSpellCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
+        if (this.historicalSkillCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
             EventTitleUtil.showEventTitleToPlayer(
                     playerRef,
                     Message.raw("SLAY THE TOWER"),
@@ -155,19 +156,19 @@ public class GameManager {
         }
     }
 
-    public boolean canPlayerPickSpell(PlayerRef playerRef) {
-        int possessedSpells = historicalSpellCounts.getOrDefault(playerRef.getUuid(), 0);
-        return possessedSpells < globalMaxSpells;
+    public boolean canPlayerPickSkill(PlayerRef playerRef) {
+        int possessedSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
+        return possessedSkills < globalMaxSkills;
     }
 
     public Set<PlayerRef> getActiveParticipants() {
         return this.activeParticipants;
     }
 
-    public void incrementPlayerSpellCount(PlayerRef playerRef) {
-        int currentSpells = historicalSpellCounts.getOrDefault(playerRef.getUuid(), 0);
-        historicalSpellCounts.put(playerRef.getUuid(), currentSpells + 1);
-        log("Player " + playerRef.getUsername() + " incremented spells to: " + (currentSpells + 1));
+    public void incrementPlayerSkillCount(PlayerRef playerRef) {
+        int currentSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
+        historicalSkillCounts.put(playerRef.getUuid(), currentSkills + 1);
+        log("Player " + playerRef.getUsername() + " incremented skills to: " + (currentSkills + 1));
     }
 
     public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef) {
@@ -209,13 +210,20 @@ public class GameManager {
         SkillMilestoneCodec.MilestoneEntry newMilestone = this.gameState.getCurrentMilestone();
 
         reviveDeadPlayers();
+
+        if (this.gameState.isRunComplete()) {
+            log("VICTORY! The final milestone has been cleared.");
+            handleRunVictory();
+            return;
+        }
+
         if (oldMilestone != newMilestone) {
-            this.globalMaxSpells++;
+            this.globalMaxSkills++;
             this.pendingMilestoneTransition = true;
-            log("MILESTONE REACHED. Spell capacity increased to: " + globalMaxSpells);
+            log("MILESTONE REACHED. Skill capacity increased to: " + globalMaxSkills);
             broadcastEventTitle(
                     "MILESTONE REACHED",
-                    "Spell capacity increased to " + globalMaxSpells,
+                    "Skill capacity increased to " + globalMaxSkills,
                     true,
                     null
             );
@@ -226,17 +234,58 @@ public class GameManager {
         grantArtifactRewards();
     }
 
+    private void handleRunVictory() {
+        log("Ending successful run and ejecting players.");
+        broadcastEventTitle("TOWER CONQUERED", "You have beaten the Slay the Tower!", true, null);
+        ejectPlayersFromInstanceAndDestroy();
+    }
+
     private void grantArtifactRewards() {
         log("Granting artifact rewards UI to all players.");
         broadcastEventTitle("ROOM CLEAR", "Select your reward...", false, null);
 
         for (PlayerRef player : activeParticipants) {
-            com.Team_Berry.Artefacts.UI.ArtefactSelection ui = new com.Team_Berry.Artefacts.UI.ArtefactSelection(player, world.getEntityStore().getStore());
+            ArtefactSelection ui = new ArtefactSelection(player, world.getEntityStore().getStore());
             ui.buildPage();
         }
     }
 
-    public void onPlayerClaimedReward(PlayerRef playerRef) {
+    public void grantSkillRewards(PlayerRef playerRef) {
+        if (!canPlayerPickSkill(playerRef)) {
+            log("Player " + playerRef.getUsername() + " attempted to claim a skill, but is already at their cap.");
+            playerRef.sendMessage(Message.raw("You have already remembered all you can right now..."));
+            return;
+        }
+
+        log("Granting skill rewards UI to : " + playerRef.getUsername());
+
+        EventTitleUtil.showEventTitleToPlayer(
+                playerRef,
+                Message.raw("The statue helps you remember training.."),
+                Message.raw("Choose a skill!"),
+                false,
+                null,
+                2.0F, 0.5F, 0.5F
+        );
+
+        // show skill ui and remove the line bellow which should be called by the ui after the skill choice
+        onPlayerClaimedSkillReward(playerRef);
+    }
+
+    public void onPlayerClaimedSkillReward(PlayerRef playerRef) {
+        if (!activeParticipants.contains(playerRef)) return;
+        if (!canPlayerPickSkill(playerRef)) {
+            log("Player " + playerRef.getUsername() + " attempted to claim a skill, but is already at their cap.");
+            return;
+        }
+
+        incrementPlayerSkillCount(playerRef);
+
+        playerRef.sendMessage(Message.raw("Skill acquired!"));
+        log(playerRef.getUsername() + " successfully claimed a skill reward.");
+    }
+
+    public void onPlayerClaimedArtefactReward(PlayerRef playerRef) {
         if (!activeParticipants.contains(playerRef) || playersReady.contains(playerRef)) return;
 
         log("Reward claimed by: " + playerRef.getUsername());
@@ -259,6 +308,7 @@ public class GameManager {
         playersReady.clear();
     }
 
+
     public void startRoomFromLobby() {
         log("Request to start run from Lobby received.");
         if (currentRoom == null) return;
@@ -266,7 +316,7 @@ public class GameManager {
         List<String> unpreparedPlayers = new ArrayList<>();
 
         for (PlayerRef p : activeParticipants) {
-            if (canPlayerPickSpell(p)) {
+            if (canPlayerPickSkill(p)) {
                 unpreparedPlayers.add(p.getUsername());
             }
         }
@@ -274,7 +324,7 @@ public class GameManager {
         if (!unpreparedPlayers.isEmpty()) {
             String names = String.join(", ", unpreparedPlayers);
             log("Start aborted. Unprepared players: " + names);
-            broadcastMessage("Cannot start yet! Waiting for players to select their spells: " + names);
+            broadcastMessage("Cannot start yet! Waiting for players to select their skills: " + names + ". They should go to the statue.");
             return;
         }
 
@@ -291,22 +341,10 @@ public class GameManager {
     }
 
     private void handleStageFailure() {
-        GamePlugin.get().destroyGameInstance(this.world);
         log("CRITICAL: Party Fall. Resetting milestone progress.");
         broadcastEventTitle("DEFEATED", "The tower claims another soul...", true, null);
-        
-        for (PlayerRef p : activeParticipants) {
-            Ref<EntityStore> ref = p.getReference();
-            if (ref != null && ref.isValid()) {
-                Store<EntityStore> store = ref.getStore();
-                try {
-                    // This physically kicks them out of the instance and back to their original world/coordinates
-                    com.hypixel.hytale.builtin.instances.InstancesPlugin.exitInstance(ref, store);
-                } catch (IllegalArgumentException e) {
-                    log("Failed to exit instance for player: " + p.getUsername());
-                }
-            }
-        }
+
+        ejectPlayersFromInstanceAndDestroy();
     }
 
     private void broadcastMessage(String text) {
@@ -426,6 +464,25 @@ public class GameManager {
         if (deadParticipants.isEmpty()) return;
         log("Reviving " + deadParticipants.size() + " dead participants.");
         deadParticipants.clear();
+    }
+
+    private void ejectPlayersFromInstanceAndDestroy() {
+        world.execute(() -> {
+            for (PlayerRef p : activeParticipants) {
+                Ref<EntityStore> ref = p.getReference();
+                if (ref != null && ref.isValid()) {
+                    Store<EntityStore> store = ref.getStore();
+                    try {
+                        com.hypixel.hytale.builtin.instances.InstancesPlugin.exitInstance(ref, store);
+                        log("Successfully ejected " + p.getUsername());
+                    } catch (Exception e) {
+                        log("Failed to exit instance for player: " + p.getUsername());
+                    }
+                }
+            }
+            activeParticipants.clear();
+            GamePlugin.get().destroyGameInstance(this.world);
+        });
     }
 
     public World getWorld() {

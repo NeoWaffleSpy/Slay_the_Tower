@@ -3,6 +3,7 @@ package com.Team_Berry.Game;
 import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.Interactions.InstanceGameStartInteraction;
 import com.Team_Berry.Game.Interactions.StartRoomFromLobbyInteraction;
+import com.Team_Berry.Game.Interactions.StatueClaimSkillInteraction;
 import com.Team_Berry.Game.Systems.PlayerDeathSystem;
 import com.Team_Berry.Game.Systems.QuestNPCDeathSystem;
 import com.Team_Berry.Game.Systems.QuestNPCTaggerSystem;
@@ -70,6 +71,8 @@ public class GamePlugin extends JavaPlugin {
         questNPCComponentType = getEntityStoreRegistry().registerComponent(QuestNPCComponent.class, QuestNPCComponent::new);
         this.getCodecRegistry(Interaction.CODEC).register("InitiateStageInteraction", InstanceGameStartInteraction.class, InstanceGameStartInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StartRoomFromLobbyInteraction", StartRoomFromLobbyInteraction.class, StartRoomFromLobbyInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("StatueClaimSkillInteraction", StatueClaimSkillInteraction.class, StatueClaimSkillInteraction.CODEC);
+
 
     }
 
@@ -147,6 +150,6 @@ public class GamePlugin extends JavaPlugin {
         config.markChanged();
         InstancesPlugin.safeRemoveInstance(world);
         LOGGER.atInfo().log("Instance and Files marked for deletion: " + world.getName());
-    
+
     }
 }

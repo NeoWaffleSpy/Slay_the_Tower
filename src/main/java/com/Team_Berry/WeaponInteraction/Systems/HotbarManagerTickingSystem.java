@@ -35,9 +35,13 @@ public class HotbarManagerTickingSystem extends EntityTickingSystem<EntityStore>
 
     @Override
     public void tick(float dt, int i, @NonNull ArchetypeChunk<EntityStore> chunk, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
+
         InventoryComponent.Hotbar hotbarComponent = chunk.getComponent(i, InventoryComponent.Hotbar.getComponentType());
         PlayerRef playerRef = chunk.getComponent(i, PlayerRef.getComponentType());
-
+        
+        if (!isPlayerInActiveGame(store, playerRef)) {
+            return;
+        }
         validateHotbarItems(chunk, i, store, hotbarComponent, playerRef);
 
         boolean durabilityChanged = refillDurability(dt, hotbarComponent);
@@ -47,6 +51,14 @@ public class HotbarManagerTickingSystem extends EntityTickingSystem<EntityStore>
         if (durabilityChanged || hotbarComponent.consumeIsDirty()) {
             hotbarComponent.markDirty();
         }
+    }
+
+    private boolean isPlayerInActiveGame(Store<EntityStore> store, PlayerRef playerRef) {
+        World world = store.getExternalData().getWorld();
+        if (world == null) return false;
+
+        com.Team_Berry.Game.GameManager manager = com.Team_Berry.Game.GamePlugin.get().getGameManagers().get(world);
+        return manager != null && manager.getActiveParticipants().contains(playerRef);
     }
 
 
@@ -66,12 +78,12 @@ public class HotbarManagerTickingSystem extends EntityTickingSystem<EntityStore>
         }
         return durabilityChanged;
     }
-    
+
     private void syncHotbarSlot(InventoryComponent.Hotbar hotbarComp, PlayerRef playerRef) {
         int currentSlot = hotbarComp.getActiveSlot();
         UUID uuid = playerRef.getUuid();
 
-        if (currentSlot >= 0 && currentSlot <= 3) {
+        if ((currentSlot >= 0 && currentSlot <= 3) || currentSlot == 8) {
             Integer lastSlot = lastSyncedSlot.get(uuid);
 
             if (lastSlot == null || lastSlot != currentSlot) {

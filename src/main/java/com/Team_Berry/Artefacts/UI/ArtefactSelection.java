@@ -123,7 +123,7 @@ public class ArtefactSelection {
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
 
         if (manager != null) {
-            manager.onPlayerClaimedReward(this.playerRef);
+            manager.onPlayerClaimedArtefactReward(this.playerRef);
         }
 
         if (this.page != null) {

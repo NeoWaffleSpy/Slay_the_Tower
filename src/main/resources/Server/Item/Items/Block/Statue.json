@@ -63,7 +63,16 @@
         },
         "Color": "#ffb500"
       }
-    ]
+    ],
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "StatueClaimSkillInteraction"
+          }
+        ]
+      }
+    }
   },
   "Tags": {
     "Type": [

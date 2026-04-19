@@ -71,6 +71,10 @@ public class ArtefactPlugin extends JavaPlugin {
     private static void addComponent(PlayerReadyEvent event) {
         Ref<EntityStore> ref = event.getPlayerRef();
         Store<EntityStore> store = ref.getStore();
-        store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
+        StatEffectComponent comp = store.getComponent(ref, StatEffectComponent.getComponentType());
+        if (comp != null)
+            comp.flush();
+        else
+            store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
     }
 }

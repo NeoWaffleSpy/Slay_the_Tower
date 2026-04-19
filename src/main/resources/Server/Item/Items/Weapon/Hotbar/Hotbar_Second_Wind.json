@@ -8,7 +8,7 @@
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Daggers",
   "Reticle": "DefaultMelee",
-  "Quality": "Rare",
+  "Quality": "Epic",
   "ItemSoundSetId": "ISS_Weapon_Blade_Small",
   "Categories": [
     "Slay_The_Tower.Weapons"
@@ -59,5 +59,7 @@
       ]
     }
   },
-  "Scale": 0.75
+  "Scale": 0.75,
+  "SubCategory": "Dagger",
+  "MaxStack": 1
 }

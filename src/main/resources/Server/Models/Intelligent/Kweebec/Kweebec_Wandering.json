@@ -29,31 +29,48 @@
   "DefaultAttachments": [
     {
       "Model": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Eyes.blockymodel",
-      "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Eyes.png"
+      "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Eyes.png",
+      "Weight": 55
     },
     {
       "Model": "NPC/Kweebec_Wandering/BackpackKweebec.blockymodel",
-      "Texture": "NPC/Kweebec_Wandering/Kweebec_Backpack.png"
+      "Texture": "NPC/Kweebec_Wandering/Kweebec_Backpack.png",
+      "Weight": 54
     },
     {
       "Model": "NPC/Intelligent/Kweebec_Sapling/Models/Attachments/Cosmetics/Head/Eyebrows.blockymodel",
-      "Texture": "NPC/Kweebec_Wandering/Kweebec_Eyebrows_Sharp.png"
+      "Texture": "NPC/Kweebec_Wandering/Kweebec_Eyebrows_Sharp.png",
+      "Weight": 53
     },
     {
       "Model": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Head/Kweebec_Rootling_Headband_Sungwood.blockymodel",
-      "Texture": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Head/Kweebec_Rootling_Headband_Sungwood.png"
+      "Texture": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Head/Kweebec_Rootling_Headband_Sungwood.png",
+      "Weight": 52
     },
     {
       "Model": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Mouth.blockymodel",
-      "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Mouth.png"
+      "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Mouth.png",
+      "Weight": 49
     },
     {
       "Model": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Chest_Petalwear.blockymodel",
-      "Texture": "NPC/Kweebec_Wandering/Kweebec_Rootling_Chest_Petalwear.png"
+      "Texture": "NPC/Kweebec_Wandering/Kweebec_Rootling_Chest_Petalwear.png",
+      "Weight": 51
     },
     {
       "Model": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Belt_Petalwear.blockymodel",
-      "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Belt_Petalwear.png"
+      "Texture": "NPC/Intelligent/Kweebec_Rootling/Kweebec_Rootling_Belt_Petalwear.png",
+      "Weight": 50
+    },
+    {
+      "Texture": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Hand/Kweebec_Rootling_Wristvine.png",
+      "Weight": 47,
+      "Model": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Hand/Kweebec_Rootling_Wristvine.blockymodel"
+    },
+    {
+      "Model": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Hand/Kweebec_Rootling_Simplecuff.blockymodel",
+      "Texture": "NPC/Intelligent/Kweebec_Rootling/Models/Attachments/Hand/Kweebec_Rootling_Simplecuff.png",
+      "Weight": 48
     }
   ]
 }

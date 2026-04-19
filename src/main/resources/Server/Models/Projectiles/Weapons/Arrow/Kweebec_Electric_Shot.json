@@ -5,36 +5,29 @@
     {
       "PositionOffset": {
         "X": 0.5,
-        "Y": 0
+        "Y": 0,
+        "Z": 0
       },
       "TargetNodeName": "Handle",
+      "TrailId": "Large_Charged",
       "RotationOffset": {
         "Yaw": 90,
-        "Pitch": 0
+        "Pitch": 0,
+        "Roll": 45
       }
     },
     {
       "PositionOffset": {
         "X": 0.5,
-        "Y": 0
+        "Y": 0,
+        "Z": 0
       },
       "TargetNodeName": "Handle",
       "TrailId": "Large_Charged",
       "RotationOffset": {
         "Yaw": 0,
-        "Pitch": 60
-      }
-    },
-    {
-      "PositionOffset": {
-        "X": 0.5,
-        "Y": 0
-      },
-      "TargetNodeName": "Handle",
-      "TrailId": "Large_Charged",
-      "RotationOffset": {
-        "Yaw": 0,
-        "Pitch": 120
+        "Pitch": 45,
+        "Roll": 90
       }
     }
   ],
@@ -66,9 +59,5 @@
       "Y": 0.075,
       "X": 0.075
     }
-  },
-  "Light": {
-    "Color": "#fe8",
-    "Radius": 5
   }
 }

@@ -1,5 +1,5 @@
 {
-  "Parent": "Template_Weapon_Daggers",
+  "Parent": "Template_Weapon_Daggers_Kweebec",
   "TranslationProperties": {
     "Name": "server.items.Weapon_Daggers_Iron.name"
   },
@@ -430,8 +430,6 @@
       ]
     }
   },
-  "MaxDurability": 120,
-  "DurabilityLossOnHit": 0.1,
   "Scale": 0.75,
   "IconProperties": {
     "Scale": 0.4,
@@ -444,5 +442,9 @@
       -10,
       -7
     ]
-  }
+  },
+  "Categories": [
+    "Slay_The_Tower.Weapons"
+  ],
+  "SubCategory": "Weapons"
 }

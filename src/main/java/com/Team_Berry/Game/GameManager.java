@@ -13,6 +13,8 @@ import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
+import com.hypixel.hytale.builtin.weather.resources.WeatherResource;
+import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
@@ -32,19 +34,20 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
+    private static final List<String> RANDOM_WEATHERS = Arrays.asList(
+            "Weather_Red", "Weather_Blue", "Weather_Purple", "Weather_Green"
+    );
     private final GameState gameState;
     private final RoomCodec lobby;
-
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
     private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
-
     private final Set<PlayerRef> playersReady = new HashSet<>();
 
     private boolean pendingMilestoneTransition = false;
 
-    private World world = null;
+    private World world;
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
     private int globalMaxSkills = 1;
@@ -233,6 +236,9 @@ public class GameManager {
 
         reviveDeadPlayers();
 
+        setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
+        log("Weather changed to Transition state.");
+
         if (this.gameState.isRunComplete()) {
             log("VICTORY! The final milestone has been cleared.");
             handleRunVictory();
@@ -401,7 +407,10 @@ public class GameManager {
                 RoomTeleporter.teleportToRoom(participant, lobby, this.world);
             }
         }
+
+        setLobbyWeather();
     }
+
 
     private void tpParticipantsToRoom() {
         if (currentRoom == null) return;
@@ -413,7 +422,9 @@ public class GameManager {
                 this.participantsInRoom.add(p);
             }
         }
+        setRandomRoomWeather();
     }
+
 
     public List<RoomCodec> findValidRooms() {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
@@ -510,5 +521,24 @@ public class GameManager {
 
     public World getWorld() {
         return this.world;
+    }
+
+    private void setForcedWeather(@Nullable String forcedWeather, ComponentAccessor<EntityStore> componentAccessor) {
+        WeatherResource weatherResource = (WeatherResource) componentAccessor.getResource(WeatherResource.getResourceType());
+        weatherResource.setForcedWeather(forcedWeather);
+        WorldConfig config = this.world.getWorldConfig();
+        config.setForcedWeather(forcedWeather);
+        config.markChanged();
+    }
+
+    private void setRandomRoomWeather() {
+        String randomWeather = RANDOM_WEATHERS.get(ThreadLocalRandom.current().nextInt(RANDOM_WEATHERS.size()));
+        setForcedWeather(randomWeather, world.getEntityStore().getStore());
+        log("Weather changed to random state: " + randomWeather);
+    }
+
+    private void setLobbyWeather() {
+        setForcedWeather("Weather_Prison", world.getEntityStore().getStore());
+        log("Weather changed to Prison state for the Lobby.");
     }
 }

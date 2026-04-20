@@ -22,6 +22,8 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.WorldConfig;
+import com.hypixel.hytale.server.core.universe.world.events.StartWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.HashMap;
@@ -34,7 +36,6 @@ public class GamePlugin extends JavaPlugin {
     public static GamePlugin instance;
     private static ComponentType<EntityStore, QuestNPCComponent> questNPCComponentType;
     private final Map<World, GameManager> gameManagers = new HashMap<>();
-    private GameManager gameManager;
     private SkillMilestoneCodec cachedMilestoneData;
 
     public GamePlugin(JavaPluginInit init) {
@@ -50,20 +51,20 @@ public class GamePlugin extends JavaPlugin {
         return questNPCComponentType;
     }
 
-
     @Override
     protected void start() {
-
         DefaultAssetMap<String, SkillMilestoneCodec> assetMap = SkillMilestoneCodec.getAssetMap();
         this.cachedMilestoneData = assetMap.getAsset("Slay_The_Tower_Milestones");
 
+        // Register our new StartWorldEvent
+        this.getEventRegistry().registerGlobal(StartWorldEvent.class, this::onStartWorld);
+
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, this::onPlayerReady);
         this.getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, this::onPlayerDisconnect);
+
         getEntityStoreRegistry().registerSystem(new QuestNPCDeathSystem());
         getEntityStoreRegistry().registerSystem(new PlayerDeathSystem());
         getEntityStoreRegistry().registerSystem(new QuestNPCTaggerSystem());
-
-
     }
 
     @Override
@@ -72,8 +73,6 @@ public class GamePlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("InitiateStageInteraction", InstanceGameStartInteraction.class, InstanceGameStartInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StartRoomFromLobbyInteraction", StartRoomFromLobbyInteraction.class, StartRoomFromLobbyInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StatueClaimSkillInteraction", StatueClaimSkillInteraction.class, StatueClaimSkillInteraction.CODEC);
-
-
     }
 
     protected void shutdown() {
@@ -87,6 +86,22 @@ public class GamePlugin extends JavaPlugin {
         super.shutdown();
     }
 
+    private void onStartWorld(StartWorldEvent event) {
+        World world = event.getWorld();
+        String worldName = world.getName();
+
+        if (worldName.contains("SlayTheTower")) {
+            WorldConfig config = world.getWorldConfig();
+            config.setDeleteOnUniverseStart(true);
+            config.markChanged();
+
+            GameManager manager = new GameManager(world, cachedMilestoneData);
+            manager.initializeMilestone();
+            gameManagers.put(world, manager);
+
+            LOGGER.atInfo().log("Initialized GameManager and set auto-cleanup flags for instance: %s", worldName);
+        }
+    }
 
     private void onPlayerReady(PlayerReadyEvent event) {
         Ref<EntityStore> ref = event.getPlayerRef();
@@ -94,7 +109,6 @@ public class GamePlugin extends JavaPlugin {
         World currentWorld = store.getExternalData().getWorld();
 
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-
         String worldName = currentWorld.getName();
 
         for (Map.Entry<World, GameManager> entry : gameManagers.entrySet()) {
@@ -103,15 +117,10 @@ public class GamePlugin extends JavaPlugin {
             }
         }
 
-        if (worldName != null && worldName.contains("SlayTheTower")) {
-            GameManager manager = gameManagers.computeIfAbsent(currentWorld, w -> {
-                GameManager newManager = new GameManager(currentWorld, cachedMilestoneData);
-                newManager.initializeMilestone();
-                return newManager;
-            });
-
-            for (PlayerRef pRef : currentWorld.getPlayerRefs()) {
-                manager.addParticipant(pRef);
+        if (worldName.contains("SlayTheTower")) {
+            GameManager manager = gameManagers.get(currentWorld);
+            if (manager != null) {
+                manager.addParticipant(playerRef);
             }
         }
     }
@@ -144,12 +153,10 @@ public class GamePlugin extends JavaPlugin {
         if (world == null) return;
 
         gameManagers.remove(world);
-        var config = world.getWorldConfig();
+        WorldConfig config = world.getWorldConfig();
         config.setDeleteOnRemove(true);
-        config.setDeleteOnUniverseStart(true);
         config.markChanged();
         InstancesPlugin.safeRemoveInstance(world);
-        LOGGER.atInfo().log("Instance and Files marked for deletion: " + world.getName());
-
+        LOGGER.atInfo().log("Instance marked for deletion: " + world.getName());
     }
 }

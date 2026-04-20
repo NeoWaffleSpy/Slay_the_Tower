@@ -40,7 +40,10 @@ public class PlayerDeathSystem extends RefChangeSystem<EntityStore, DeathCompone
             World world = store.getExternalData().getWorld();
             GameManager manager = GamePlugin.get().getGameManagers().get(world);
             if (manager != null) {
+                death.setShowDeathMenu(false);
+                DeathComponent.respawn(store, ref);
                 manager.updateQuest(QuestUpdate.PLAYER_DEATH, playerRef);
+
             }
         }
     }

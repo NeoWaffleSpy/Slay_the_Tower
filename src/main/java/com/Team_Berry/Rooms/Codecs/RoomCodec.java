@@ -14,6 +14,7 @@ import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
+import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.Direction;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
@@ -88,6 +89,13 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     @Override
     public String getId() {
         return roomName;
+    }
+
+    public Vector3d getFirstSpawnPosition() {
+        if (playerSpawns != null && playerSpawns.length > 0 && playerSpawns[0] != null) {
+            return new Vector3d(playerSpawns[0].pos.x, playerSpawns[0].pos.y + 1, playerSpawns[0].pos.z);
+        }
+        return null;
     }
 
     public static class SpawnPoint {

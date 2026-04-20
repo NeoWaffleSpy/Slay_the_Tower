@@ -4,6 +4,7 @@ import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
@@ -21,13 +22,14 @@ public class StatueClaimSkillInteraction extends SimpleInstantInteraction {
     protected void firstRun(@NotNull InteractionType interactionType, @NotNull InteractionContext interactionContext, @NotNull CooldownHandler cooldownHandler) {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
         PlayerRef playerRef = commandBuffer.getComponent(interactionContext.getOwningEntity(), PlayerRef.getComponentType());
-
+        Ref<EntityStore> ref = interactionContext.getOwningEntity();
         if (playerRef == null || !playerRef.getReference().isValid()) return;
         World world = playerRef.getReference().getStore().getExternalData().getWorld();
 
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
         if (manager != null) {
             manager.grantSkillRewards(playerRef);
+            manager.setStatueSpawn();
         }
     }
 }

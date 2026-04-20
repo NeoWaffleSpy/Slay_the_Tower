@@ -12,12 +12,16 @@ import com.Team_Berry.Rooms.Utils.RoomNPCSpawner;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.WorldConfig;
+import com.hypixel.hytale.server.core.universe.world.spawn.GlobalSpawnProvider;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
@@ -29,6 +33,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameManager {
     private final GameState gameState;
+    private final RoomCodec lobby;
 
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
@@ -43,12 +48,29 @@ public class GameManager {
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
     private int globalMaxSkills = 1;
+    private boolean statueSpawn = false;
 
     public GameManager(World world, SkillMilestoneCodec milestoneData) {
         this.world = world;
         this.gameState = new GameState();
         this.gameState.initialize(milestoneData);
+        this.lobby = findLobbyRoom();
         log("Manager initialized for world.");
+    }
+
+    public void setStatueSpawn() {
+        if (!statueSpawn) {
+            WorldConfig config = world.getWorldConfig();
+            if (lobby.getFirstSpawnPosition() != null) {
+                Transform transform = new Transform(lobby.getFirstSpawnPosition());
+                config.setSpawnProvider(new GlobalSpawnProvider(transform));
+                config.markChanged();
+                statueSpawn = true;
+                log("Statue spawn set!");
+            } else {
+                log("Could not set statue spawn because there is no lobby or lobby SpawnPoint");
+            }
+        }
     }
 
     private void log(String message) {
@@ -372,8 +394,8 @@ public class GameManager {
     }
 
     private void tpParticipantsToLobby() {
-        RoomCodec lobby = findLobbyRoom();
-        if (lobby != null) {
+
+        if (this.lobby != null) {
             log("Teleporting participants to Lobby asset: " + lobby.worldName);
             for (PlayerRef participant : activeParticipants) {
                 RoomTeleporter.teleportToRoom(participant, lobby, this.world);
@@ -473,12 +495,13 @@ public class GameManager {
                 if (ref != null && ref.isValid()) {
                     Store<EntityStore> store = ref.getStore();
                     try {
-                        com.hypixel.hytale.builtin.instances.InstancesPlugin.exitInstance(ref, store);
+                        InstancesPlugin.exitInstance(ref, store);
                         log("Successfully ejected " + p.getUsername());
                     } catch (Exception e) {
                         log("Failed to exit instance for player: " + p.getUsername());
                     }
                 }
+
             }
             activeParticipants.clear();
             GamePlugin.get().destroyGameInstance(this.world);

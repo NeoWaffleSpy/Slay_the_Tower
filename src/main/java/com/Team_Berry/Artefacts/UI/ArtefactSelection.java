@@ -68,20 +68,19 @@ public class ArtefactSelection {
     }
 
     public void buildPage() {
-        List<ArtefactCodec> artefactCodecs = weightedDraw(ArtefactCodec.getAssetMap().getAssetMap().values().stream().filter(a -> a.rarity.weight > 0).toList(), 3);
-        if (artefactCodecs.size() < 3)
+        this.buildPageWithCount(3);
+    }
+
+    public void buildPageWithCount(int count) {
+        List<ArtefactCodec> artefactCodecs = weightedDraw(ArtefactCodec.getAssetMap().getAssetMap().values().stream().filter(a -> a.rarity.weight > 0).toList(), count);
+        if (artefactCodecs.size() < count)
             return;
-        artefacts.add(parseInfo(artefactCodecs.get(0), 0));
-        artefacts.add(parseInfo(artefactCodecs.get(1), 1));
-        artefacts.add(parseInfo(artefactCodecs.get(2), 2));
+        for (int i = 0; i < count; i++)
+            artefacts.add(parseInfo(artefactCodecs.get(i), i));
         this.template.setVariable("artefacts", artefacts);
-        page = PageBuilder.pageForPlayer(this.playerRef)
-                .loadHtml("Pages/ArtefactSelection.html", this.template)
-                .addEventListener("my-button-0", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(0))
-                .addEventListener("my-button-1", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(1))
-                .addEventListener("my-button-2", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(2))
-                .withLifetime(CustomPageLifetime.CantClose)
-                .open(store);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/ArtefactSelection.html", this.template);
+        artefacts.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
+        page = builder.open(store);
     }
 
     private ArtefactInfos parseInfo(ArtefactCodec artefact, int index) {

@@ -3,6 +3,10 @@
   "$Comment": "Effects and VFX/SFX would be applied here in the Serial interaction chain",
   "Interactions": [
     {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Stamina_Broken"
+    },
+    {
       "Type": "ApplyEffect",
       "EffectId": "Second_Wind",
       "Effects": {

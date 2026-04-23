@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Template_Weapon_Shortbow.name"
+    "Name": "WolfForm.name",
+    "Description": "WolfForm.description"
   },
   "Icon": "Icons/Items/EditorTools/Revolve.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
@@ -32,7 +33,7 @@
   "MaxDurability": 6,
   "PlayerAnimationsId": "Kweebec_Bow",
   "Weapon": {},
-  "SubCategory": "Shapeshift",
+  "SubCategory": "Bow",
   "Particles": [
     {
       "TargetNodeName": "ARROW-PARTS-PLACEHOLDER",

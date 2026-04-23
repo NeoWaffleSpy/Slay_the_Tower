@@ -1,8 +1,9 @@
 {
+  "RequireNewClick": false,
   "Interactions": [
     {
       "Type": "CooldownCondition",
-      "Id": "Wolf_Dash",
+      "Id": "Bear_Form",
       "Next": {
         "Type": "Serial",
         "Interactions": [
@@ -10,22 +11,16 @@
           {
             "Type": "TriggerCooldown",
             "Cooldown": {
-              "Id": "Wolf_Dash",
-              "Cooldown": 6
+              "Id": "Bear_Form",
+              "Cooldown": 8
             },
             "CancelOnItemChange": false
           },
-          "Wolf_Dash"
+          "Bear_Form"
         ]
       },
       "CancelOnItemChange": false
-    }
-  ],
-  "Rules": {
-    "InterruptedBy": [
-      "Primary",
-      "Secondary",
-      "SwapFrom"
-    ]
-  }
+    },
+    "Hotbar9_Reset"
+  ]
 }

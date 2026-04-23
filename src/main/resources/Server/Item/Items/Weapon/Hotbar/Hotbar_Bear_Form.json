@@ -20,9 +20,6 @@
       0
     ]
   },
-  "Interactions": {
-    "SwapTo": "Root_Poison_Cloud"
-  },
   "Tags": {
     "Type": [
       "Weapon"
@@ -32,12 +29,10 @@
     ]
   },
   "ItemSoundSetId": "ISS_Weapons_Wood",
-  "MaxDurability": 17,
+  "MaxDurability": 8,
   "PlayerAnimationsId": "Kweebec_Bow",
-  "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
-  "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Weapon": {},
-  "SubCategory": "Ranger",
+  "SubCategory": "Shapeshift",
   "Particles": [
     {
       "TargetNodeName": "ARROW-PARTS-PLACEHOLDER",
@@ -48,5 +43,34 @@
         "Roll": -90
       }
     }
-  ]
+  ],
+  "InteractionVars": {
+    "Stomp_Damage": {
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "Parent": "Bear_Grizzly_Stomp_Damage",
+          "DamageCalculator": {
+            "Class": "Charged",
+            "BaseDamage": {
+              "Physical": 35
+            }
+          },
+          "DamageEffects": {
+            "Knockback": {
+              "Force": -15,
+              "Duration": 0.1,
+              "VelocityY": 5.5,
+              "VelocityConfig": {
+                "Style": "Exp"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "Interactions": {
+    "SwapTo": "Root_Bear_Form"
+  }
 }

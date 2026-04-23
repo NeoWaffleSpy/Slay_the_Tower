@@ -47,7 +47,7 @@
           "Parent": "Whirl_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 8
+              "Physical": 15
             }
           },
           "DamageEffects": {
@@ -81,7 +81,7 @@
           "Parent": "Whirl_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 12
+              "Physical": 18
             }
           },
           "DamageEffects": {

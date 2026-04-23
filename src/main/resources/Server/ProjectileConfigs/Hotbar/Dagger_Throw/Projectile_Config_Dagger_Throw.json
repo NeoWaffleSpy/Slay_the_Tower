@@ -20,14 +20,14 @@
       "Interactions": [
         {
           "Type": "Replace",
-          "Var": "Dagger_Damage",
+          "Var": "Dagger_Throw_Damage",
           "DefaultValue": {
             "Interactions": [
               "Dagger_Throw_Damage"
             ]
           },
           "CancelOnItemChange": false,
-          "DefaultOk": true
+          "DefaultOk": false
         },
         {
           "Type": "Replace",

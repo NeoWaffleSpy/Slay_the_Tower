@@ -1,0 +1,15 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "ApplyEffect",
+      "EffectId": "Bear_Form_Effect",
+      "Effects": {}
+    },
+    "Bear_Grizzly_Stomp",
+    {
+      "Type": "ClearEntityEffect",
+      "EntityEffectId": "Bear_Form_Effect"
+    }
+  ]
+}

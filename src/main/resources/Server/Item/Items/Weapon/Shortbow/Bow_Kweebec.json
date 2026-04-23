@@ -71,10 +71,11 @@
     "Primary_Shoot_Damage_Strength_0": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_0",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 6
+              "Projectile": 3
             }
           }
         }
@@ -83,10 +84,11 @@
     "Primary_Shoot_Damage_Strength_1": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_1",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 9
+              "Projectile": 5
             }
           }
         }
@@ -95,10 +97,11 @@
     "Primary_Shoot_Damage_Strength_2": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_2",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 12
+              "Projectile": 9
             }
           }
         }
@@ -107,10 +110,11 @@
     "Primary_Shoot_Damage_Strength_3": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_3",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 16
+              "Projectile": 12
             }
           }
         }
@@ -119,17 +123,18 @@
     "Primary_Shoot_Damage_Strength_4": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_4",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 19
+              "Projectile": 15
             }
           },
           "TargetedDamage": {
             "Head": {
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Projectile": 25
+                  "Projectile": 17
                 }
               },
               "DamageEffects": {
@@ -264,6 +269,5 @@
         ]
       }
     ]
-  },
-  "MaxDurability": 1000000000000
+  }
 }

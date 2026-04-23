@@ -44,7 +44,7 @@
           "Parent": "TwinStab_Right_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 12
+              "Physical": 14
             }
           },
           "DamageEffects": {

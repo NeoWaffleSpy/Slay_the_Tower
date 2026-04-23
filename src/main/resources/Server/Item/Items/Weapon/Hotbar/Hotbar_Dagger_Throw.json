@@ -41,13 +41,15 @@
     "SwapTo": "Root_Dagger_Throw"
   },
   "InteractionVars": {
-    "Dagger_Damage": {
+    "Dagger_Throw_Damage": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Dagger_Throw_Damage",
           "DamageCalculator": {
+            "Class": "Light",
             "BaseDamage": {
-              "Physical": 12
+              "Physical": 10
             }
           }
         }

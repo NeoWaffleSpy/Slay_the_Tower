@@ -3,7 +3,7 @@
   "EffectId": "Burst_Effect",
   "Next": {
     "Type": "Repeat",
-    "Repeat": 30,
+    "Repeat": 17,
     "Rules": {
       "InterruptedBy": [
         "Secondary",

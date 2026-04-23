@@ -25,10 +25,19 @@
   "ExplosionConfig": {
     "DamageEntities": true,
     "DamageBlocks": false,
-    "BlockDamageRadius": 5,
-    "EntityDamageRadius": 5,
+    "BlockDamageRadius": 4,
+    "EntityDamageRadius": 4,
     "EntityDamageFalloff": 0,
-    "EntityDamage": 5
+    "EntityDamage": 22,
+    "Knockback": {
+      "Type": "Directional",
+      "Force": -15,
+      "VelocityY": 5,
+      "VelocityConfig": {
+        "Style": "Exp"
+      },
+      "Duration": 0.1
+    }
   },
   "SticksVertically": true
 }

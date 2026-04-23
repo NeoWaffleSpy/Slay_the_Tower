@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Slow Bomb"
+    "Name": "Pocket Bomb"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
@@ -36,7 +36,7 @@
   "Weapon": {
     "RenderDualWielded": true
   },
-  "MaxDurability": 6,
+  "MaxDurability": 9,
   "Interactions": {
     "SwapTo": "Root_Slow_Bomb"
   },

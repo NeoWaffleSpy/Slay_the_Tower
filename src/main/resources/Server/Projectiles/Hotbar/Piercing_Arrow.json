@@ -9,7 +9,7 @@
   "DeadTimeMiss": 0,
   "DeadTime": 0,
   "SticksVertically": true,
-  "Damage": 30,
+  "Damage": 35,
   "DeathEffectsOnHit": true,
   "PitchAdjustShot": false,
   "VerticalCenterShot": 0.1,

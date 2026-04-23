@@ -1,5 +1,5 @@
 {
-  "Duration": 3,
+  "Duration": 0,
   "OverlapBehavior": "Overwrite",
   "RemovalBehavior": "Duration",
   "ApplicationEffects": {

@@ -1,4 +1,5 @@
 {
+  "Type": "DamageEntity",
   "Parent": "DamageEntityParent",
   "DamageCalculator": {
     "Class": "Light",

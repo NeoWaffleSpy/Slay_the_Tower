@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "Dagger Throw"
+    "Name": "DaggerThrow.name",
+    "Description": "DaggerThrow.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
@@ -23,14 +24,6 @@
     "Translation": [
       -19.2,
       -21
-    ]
-  },
-  "Tags": {
-    "Type": [
-      "Weapon"
-    ],
-    "Family": [
-      "Dagger"
     ]
   },
   "Weapon": {
@@ -57,5 +50,13 @@
     }
   },
   "Scale": 0.75,
-  "SubCategory": "Dagger"
+  "SubCategory": "Dagger",
+  "Tags": {
+    "Family": [
+      "Dagger"
+    ],
+    "Type": [
+      "Weapon"
+    ]
+  }
 }

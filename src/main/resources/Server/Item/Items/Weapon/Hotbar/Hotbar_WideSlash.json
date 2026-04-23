@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "Wide Slash"
+    "Name": "WideSlash.name",
+    "Description": "WideSlash.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",

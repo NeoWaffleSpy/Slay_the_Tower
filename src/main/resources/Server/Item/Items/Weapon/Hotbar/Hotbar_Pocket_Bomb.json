@@ -1,11 +1,11 @@
 {
   "TranslationProperties": {
-    "Name": "Whirl.name",
-    "Description": "Whirl.description"
+    "Name": "PocketBomb.name",
+    "Description": "PocketBomb.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
-  "Icon": "Icons/ItemsGenerated/Whirl_Ability_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Fire_Goblin.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Daggers",
   "Reticle": "DefaultMelee",
@@ -37,18 +37,18 @@
   "Weapon": {
     "RenderDualWielded": true
   },
-  "MaxDurability": 7,
+  "MaxDurability": 9,
   "Interactions": {
-    "SwapTo": "Root_Whirl"
+    "SwapTo": "Root_Slow_Bomb"
   },
   "InteractionVars": {
-    "Whirl_Lunge_Damage": {
+    "WideSlash_Damage": {
       "Interactions": [
         {
-          "Parent": "Whirl_Damage",
+          "Parent": "Weapon_Daggers_Primary_Stab_Right_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 15
+              "Physical": 12
             }
           },
           "DamageEffects": {
@@ -62,41 +62,7 @@
                 "Threshold": 3.0,
                 "Style": "Linear"
               },
-              "Force": 10,
-              "VelocityType": "Set",
-              "Direction": {
-                "X": 0,
-                "Y": 0,
-                "Z": -1
-              }
-            },
-            "WorldSoundEventId": "SFX_Daggers_T2_Stab_Impact",
-            "LocalSoundEventId": "SFX_Daggers_T2_Stab_Impact"
-          }
-        }
-      ]
-    },
-    "Whirl_Spin_Damage": {
-      "Interactions": [
-        {
-          "Parent": "Whirl_Damage",
-          "DamageCalculator": {
-            "BaseDamage": {
-              "Physical": 18
-            }
-          },
-          "DamageEffects": {
-            "Knockback": {
-              "Type": "Force",
-              "VelocityConfig": {
-                "AirResistance": 0.99,
-                "AirResistanceMax": 0.98,
-                "GroundResistance": 0.94,
-                "GroundResistanceMax": 0.3,
-                "Threshold": 3.0,
-                "Style": "Linear"
-              },
-              "Force": 20,
+              "Force": 15,
               "VelocityType": "Set",
               "Direction": {
                 "X": 0,

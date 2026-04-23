@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "Disengage"
+    "Name": "Disengage.name",
+    "Description": "Disengage.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",

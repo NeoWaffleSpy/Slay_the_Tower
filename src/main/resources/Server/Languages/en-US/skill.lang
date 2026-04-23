@@ -1,0 +1,23 @@
+DaggerThrow.name=Dagger Throw
+DaggerThrow.description=Throw a fast dagger.
+
+Disengage.name=Disengage
+Disengage.description=Leap back and throw 3 daggers in front of you.
+
+SecondWind.name=Second Wind
+SecondWind.description=Instant dash in any direction. Grants Invincibility and refills stamina.
+
+ShadowDash.name=Shadow Dash
+ShadowDash.description=Dash forward at extreme speed. Stuns and damages enemies.
+
+PocketBomb.name=Pocket Bomb
+PocketBomb.description=Throw a bomb that deals damage and knocks back enemies.
+
+TwinStab.name=Twin Stab
+TwinStab.description=Stab twice fast directly in front of you.
+
+Whirl.name=Whirl
+Whirl.description=Dash forward and spin, dealing heavy damage to nearby enemies.
+
+WideSlash.name=Wide Slash
+WideSlash.description=Wide slash that deals damage and knocks back enemies.

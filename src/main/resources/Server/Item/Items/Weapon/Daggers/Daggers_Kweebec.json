@@ -161,7 +161,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 47
+                  "Physical": 17
                 }
               }
             }
@@ -175,7 +175,7 @@
           "Parent": "Weapon_Daggers_Primary_Pounce_Stab_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 21
+              "Physical": 18
             }
           },
           "EntityStatsOnHit": [
@@ -227,7 +227,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 59
+                  "Physical": 20
                 }
               }
             }
@@ -288,7 +288,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 38
+                  "Physical": 28
                 }
               }
             }

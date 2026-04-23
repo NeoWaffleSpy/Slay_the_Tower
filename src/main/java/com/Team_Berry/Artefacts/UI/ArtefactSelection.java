@@ -11,6 +11,7 @@ import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.modules.i18n.I18nModule;
@@ -79,6 +80,7 @@ public class ArtefactSelection {
                 .addEventListener("my-button-0", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(0))
                 .addEventListener("my-button-1", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(1))
                 .addEventListener("my-button-2", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(2))
+                .withLifetime(CustomPageLifetime.CantClose)
                 .open(store);
     }
 

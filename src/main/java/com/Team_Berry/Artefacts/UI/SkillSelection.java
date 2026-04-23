@@ -25,7 +25,7 @@ public class SkillSelection {
     private final PlayerRef playerRef;
     private final Store<EntityStore> store;
     private final TemplateProcessor template = new TemplateProcessor();
-    private final List<SkillInfos> Skills = new ArrayList<>();
+    private final List<SkillInfos> skills = new ArrayList<>();
     private HyUIPage page;
 
     public SkillSelection(PlayerRef playerRef, Store<EntityStore> store) {
@@ -75,19 +75,24 @@ public class SkillSelection {
     }
 
     public void buildPage() {
-        List<Item> SkillsCodecs = getSkillsFromItemList();
-        if (SkillsCodecs.size() < 3)
+        List<Item> skillsCodecs = getSkillsFromItemList();
+        if (skillsCodecs.size() < 3)
             return;
-        Skills.add(parseInfo(SkillsCodecs.get(0), 0));
-        Skills.add(parseInfo(SkillsCodecs.get(1), 1));
-        Skills.add(parseInfo(SkillsCodecs.get(2), 2));
-        this.template.setVariable("Skills", Skills);
-        page = PageBuilder.pageForPlayer(this.playerRef)
-                .loadHtml("Pages/SkillSelection.html", this.template)
-                .addEventListener("my-button-0", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(0))
-                .addEventListener("my-button-1", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(1))
-                .addEventListener("my-button-2", CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(2))
-                .open(store);
+        for (int i = 0; i < 3; i++)
+            skills.add(parseInfo(skillsCodecs.get(i), i));
+        this.template.setVariable("Skills", skills);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
+        skills.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
+        page = builder.open(store);
+    }
+
+    public void buildPageWithList(List<Item> items) {
+        for (int i = 0; i < items.size(); i++)
+            skills.add(parseInfo(items.get(i), i));
+        this.template.setVariable("Skills", skills);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
+        skills.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
+        page = builder.open(store);
     }
 
     private SkillInfos parseInfo(Item item, int index) {
@@ -117,7 +122,7 @@ public class SkillSelection {
 
     private void buttonEvent(int index) {
         StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
-        if (statComp == null || Skills.isEmpty())
+        if (statComp == null || skills.isEmpty())
             return;
         //statComp.addArtifact(Skills.get(index).item);
         //TODO: Give item to player

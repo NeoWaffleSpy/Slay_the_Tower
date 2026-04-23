@@ -1,6 +1,5 @@
 package com.Team_Berry.Artefacts.Commandes;
 
-import com.Team_Berry.Artefacts.UI.ArtefactSelection;
 import com.Team_Berry.Artefacts.UI.SkillSelection;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -13,7 +12,7 @@ import org.jspecify.annotations.NonNull;
 
 public class ShowSkillSelectionCommand extends AbstractPlayerCommand {
     public ShowSkillSelectionCommand() {
-        super("skillSelect", "Show the Artefact Selection page");
+        super("skillSelect", "Show the Skill Selection page");
     }
 
     @Override

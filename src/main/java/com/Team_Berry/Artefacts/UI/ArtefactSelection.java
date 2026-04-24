@@ -78,7 +78,7 @@ public class ArtefactSelection {
         for (int i = 0; i < count; i++)
             artefacts.add(parseInfo(artefactCodecs.get(i), i));
         this.template.setVariable("artefacts", artefacts);
-        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/ArtefactSelection.html", this.template);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/ArtefactSelection.html", this.template).withLifetime(CustomPageLifetime.CantClose);
         artefacts.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
         page = builder.open(store);
     }
@@ -118,13 +118,17 @@ public class ArtefactSelection {
         StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
         if (statComp == null || artefacts.isEmpty())
             return;
-        statComp.addArtifact(artefacts.get(index).artefact);
+
+        ArtefactCodec claimedArtefact = artefacts.get(index).artefact();
+        String claimedArtefactId = claimedArtefact.getId();
+
+        statComp.addArtifact(claimedArtefact);
 
         World world = store.getExternalData().getWorld();
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
 
         if (manager != null) {
-            manager.onPlayerClaimedArtefactReward(this.playerRef);
+            manager.onPlayerClaimedArtefactReward(this.playerRef, claimedArtefactId);
         }
 
         if (this.page != null) {

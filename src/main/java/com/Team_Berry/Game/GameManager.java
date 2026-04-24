@@ -1,10 +1,14 @@
 package com.Team_Berry.Game;
 
+import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.ArtefactSelection;
+import com.Team_Berry.Artefacts.UI.SkillSelection;
 import com.Team_Berry.Game.Data.GameState;
 import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Game.Enums.EndStageResult;
 import com.Team_Berry.Game.Enums.QuestUpdate;
+import com.Team_Berry.Game.Objectives.CustomRoomTask;
 import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
@@ -12,6 +16,9 @@ import com.Team_Berry.Rooms.Utils.RoomNPCSpawner;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.builtin.adventure.objectives.Objective;
+import com.hypixel.hytale.builtin.adventure.objectives.ObjectivePlugin;
+import com.hypixel.hytale.builtin.adventure.objectives.task.ObjectiveTask;
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.builtin.weather.resources.WeatherResource;
 import com.hypixel.hytale.component.ComponentAccessor;
@@ -19,7 +26,11 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
+import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -33,6 +44,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class GameManager {
     private static final List<String> RANDOM_WEATHERS = Arrays.asList(
@@ -44,9 +56,13 @@ public class GameManager {
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
     private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
+    private final Map<UUID, String> playerClasses = new HashMap<>();
+    private final Map<UUID, Set<String>> playerOwnedSkills = new HashMap<>();
+    private final Map<UUID, List<String>> playerOwnedArtefacts = new HashMap<>();
     private final Set<PlayerRef> playersReady = new HashSet<>();
-    private boolean pendingMilestoneTransition = false;
     private World world;
+    private UUID currentRoomObjectiveId = null;
+    private boolean pendingMilestoneTransition = false;
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
     private int globalMaxSkills = 1;
@@ -159,9 +175,19 @@ public class GameManager {
             Ref<EntityStore> ref = playerRef.getReference();
             Store<EntityStore> store = ref.getStore();
             EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
-//TODO : Add 50 max health to the player and then remove it on remove participant
+            //TODO : Add 50 max health to the player and then remove it on remove participant
             // stats.addStatValue(EntityStatType.getAssetMap().getIndex("Health"), 50);
+
+            teleportPlayerToSpawn(playerRef);
+            forceSurvivalMode(playerRef);
         }
+
+        restorePlayerArtefacts(playerRef);
+
+        if (!playerClasses.containsKey(playerRef.getUuid())) {
+            setPlayerClass(playerRef, "Dagger");
+        }
+
         if (this.historicalSkillCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
             EventTitleUtil.showEventTitleToPlayer(
                     playerRef,
@@ -169,6 +195,24 @@ public class GameManager {
                     Message.raw("Good luck, traveler..."),
                     true
             );
+        }
+    }
+
+    private void restorePlayerArtefacts(PlayerRef playerRef) {
+        if (playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
+            StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
+            if (statComp != null) {
+                DefaultAssetMap<String, ArtefactCodec> artefactMap = ArtefactCodec.getAssetMap();
+                List<String> savedArtefacts = playerOwnedArtefacts.get(playerRef.getUuid());
+
+                for (String artefactId : savedArtefacts) {
+                    ArtefactCodec artefact = artefactMap.getAsset(artefactId);
+                    if (artefact != null) {
+                        statComp.addArtifact(artefact);
+                    }
+                }
+                log("Restored " + savedArtefacts.size() + " artefacts for returning player: " + playerRef.getUsername());
+            }
         }
     }
 
@@ -185,6 +229,11 @@ public class GameManager {
             log("Final undecided player left. Force-completing reward phase.");
             completeRewardPhase();
         }
+    }
+
+    public void setPlayerClass(PlayerRef playerRef, String className) {
+        playerClasses.put(playerRef.getUuid(), className);
+        log("Assigned class '" + className + "' to " + playerRef.getUsername());
     }
 
     public boolean canPlayerPickSkill(PlayerRef playerRef) {
@@ -214,6 +263,7 @@ public class GameManager {
             if (playerRef != null) {
                 playerRef.sendMessage(Message.raw("Mob killed ! only " + currentQuest.getMobsLeft() + " left!"));
             }
+            updateSharedRoomObjective();
 
             if (currentQuest.isComplete()) {
                 log("Room Quest successfully completed.");
@@ -236,6 +286,7 @@ public class GameManager {
     }
 
     private void handleStageSuccess() {
+        completeSharedRoomObjective();
         SkillMilestoneCodec.MilestoneEntry oldMilestone = this.gameState.getCurrentMilestone();
         this.gameState.incrementClearedStages();
         SkillMilestoneCodec.MilestoneEntry newMilestone = this.gameState.getCurrentMilestone();
@@ -295,18 +346,53 @@ public class GameManager {
 
         EventTitleUtil.showEventTitleToPlayer(
                 playerRef,
-                Message.raw("The statue helps you remember training.."),
                 Message.raw("Choose a skill!"),
+                Message.raw("The statue helps you remember training.."),
                 false,
                 null,
                 2.0F, 0.5F, 0.5F
         );
 
-        // show skill ui and remove the line bellow which should be called by the ui after the skill choice
-        onPlayerClaimedSkillReward(playerRef);
+        List<Item> skillsToOffer = generateSkillOptions(playerRef);
+
+        SkillSelection ui = new SkillSelection(playerRef, world.getEntityStore().getStore());
+        ui.buildPageWithList(skillsToOffer);
     }
 
-    public void onPlayerClaimedSkillReward(PlayerRef playerRef) {
+    private List<Item> generateSkillOptions(PlayerRef playerRef) {
+        DefaultAssetMap<String, Item> itemMap = Item.getAssetMap();
+
+        String playerClass = playerClasses.getOrDefault(playerRef.getUuid(), "Dagger");
+        String tagToSearch = "HotbarClass=" + playerClass;
+
+        int tagIndex = AssetRegistry.getOrCreateTagIndex(tagToSearch);
+        Set<String> validKeys = itemMap.getKeysForTag(tagIndex);
+        if (validKeys == null || validKeys.isEmpty()) {
+            log("WARNING: No skills found in Asset Store with tag: " + tagToSearch);
+            return Collections.emptyList();
+        }
+
+        Set<String> ownedSkills = playerOwnedSkills.getOrDefault(playerRef.getUuid(), Collections.emptySet());
+
+        List<Item> options = new ArrayList<>();
+        for (String key : validKeys) {
+            if (!ownedSkills.contains(key)) {
+                Item item = itemMap.getAsset(key);
+                if (item != null) {
+                    options.add(item);
+                }
+            }
+        }
+
+        Collections.shuffle(options);
+
+        if (options.size() > 3) {
+            return options.subList(0, 3);
+        }
+        return options;
+    }
+
+    public void onPlayerClaimedSkillReward(PlayerRef playerRef, String claimedSkillId) {
         if (!activeParticipants.contains(playerRef)) return;
         if (!canPlayerPickSkill(playerRef)) {
             log("Player " + playerRef.getUsername() + " attempted to claim a skill, but is already at their cap.");
@@ -315,14 +401,18 @@ public class GameManager {
 
         incrementPlayerSkillCount(playerRef);
 
+        playerOwnedSkills.computeIfAbsent(playerRef.getUuid(), k -> new HashSet<>()).add(claimedSkillId);
+
         playerRef.sendMessage(Message.raw("Skill acquired!"));
-        log(playerRef.getUsername() + " successfully claimed a skill reward.");
+        log(playerRef.getUsername() + " successfully claimed a skill reward: " + claimedSkillId);
     }
 
-    public void onPlayerClaimedArtefactReward(PlayerRef playerRef) {
+    public void onPlayerClaimedArtefactReward(PlayerRef playerRef, String artefactId) {
         if (!activeParticipants.contains(playerRef) || playersReady.contains(playerRef)) return;
 
-        log("Reward claimed by: " + playerRef.getUsername());
+        playerOwnedArtefacts.computeIfAbsent(playerRef.getUuid(), k -> new ArrayList<>()).add(artefactId);
+
+        log("Reward claimed by: " + playerRef.getUsername() + " (Artefact: " + artefactId + ")");
         playersReady.add(playerRef);
         playerRef.sendMessage(Message.raw("Reward claimed! Waiting for the rest of your party..."));
 
@@ -367,6 +457,7 @@ public class GameManager {
 
     private void transitionToLobby() {
         log("Moving party to Lobby.");
+        completeSharedRoomObjective();
         this.participantsInRoom.clear();
         tpParticipantsToLobby();
         initializeMilestone();
@@ -375,7 +466,9 @@ public class GameManager {
 
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
+        completeSharedRoomObjective();
         broadcastEventTitle("DEFEATED", "The tower claims another soul...", true, null);
+
 
         ejectPlayersFromInstanceAndDestroy();
     }
@@ -426,6 +519,7 @@ public class GameManager {
                 this.participantsInRoom.add(p);
             }
         }
+        startSharedRoomObjective();
         setRandomRoomWeather();
     }
 
@@ -545,4 +639,92 @@ public class GameManager {
         log("Weather changed to Prison state for the Lobby.");
     }
 
+    private void startSharedRoomObjective() {
+        completeSharedRoomObjective();
+
+        Set<UUID> playerUUIDs = activeParticipants.stream()
+                .map(PlayerRef::getUuid)
+                .collect(Collectors.toSet());
+
+        if (playerUUIDs.isEmpty()) return;
+
+        Objective obj = ObjectivePlugin.get().startObjective(
+                "Slay_The_Tower_Room_Quest",
+                playerUUIDs,
+                world.getWorldConfig().getUuid(),
+                null,
+                world.getEntityStore().getStore()
+        );
+
+        if (obj != null) {
+            this.currentRoomObjectiveId = obj.getObjectiveUUID();
+            updateSharedRoomObjective();
+            log("Started shared UI objective for party: " + currentRoomObjectiveId);
+        }
+    }
+
+    private void updateSharedRoomObjective() {
+        if (currentRoomObjectiveId == null || currentRoom == null || currentRoom.right() == null) return;
+
+        Objective obj = ObjectivePlugin.get().getObjectiveDataStore().getObjective(currentRoomObjectiveId);
+        if (obj != null && obj.getCurrentTasks() != null && obj.getCurrentTasks().length > 0) {
+            ObjectiveTask task = obj.getCurrentTasks()[0];
+
+            if (task instanceof CustomRoomTask customTask) {
+                int deadMobs = currentRoom.right().getDeadMobs();
+                int totalMobs = currentRoom.right().getSpawnedMobs();
+
+                customTask.setProgress(deadMobs, totalMobs);
+                customTask.sendUpdateObjectiveTaskPacket(obj);
+            }
+        }
+    }
+
+    private void completeSharedRoomObjective() {
+        if (currentRoomObjectiveId == null) return;
+
+        Objective obj = ObjectivePlugin.get().getObjectiveDataStore().getObjective(currentRoomObjectiveId);
+        if (obj != null) {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+
+            if (obj.getCurrentTasks() != null) {
+                for (ObjectiveTask task : obj.getCurrentTasks()) {
+                    task.complete(obj, null);
+                }
+            }
+            obj.checkTaskSetCompletion(store);
+            log("Cleared shared UI objective.");
+        }
+        currentRoomObjectiveId = null;
+    }
+
+    private void teleportPlayerToSpawn(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+                Transform spawn = world.getWorldConfig().getSpawnProvider().getSpawnPoint(world, playerRef.getUuid());
+
+                if (spawn != null) {
+                    world.execute(() -> {
+                        Teleport teleportComponent = Teleport.createForPlayer(world, spawn);
+                        store.addComponent(ref, Teleport.getComponentType(), teleportComponent);
+                        log("Teleported " + playerRef.getUsername() + " to world spawn.");
+                    });
+                }
+            }
+        });
+    }
+
+    private void forceSurvivalMode(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+
+                Player.setGameMode(ref, GameMode.Adventure, store);
+                log("Forced " + playerRef.getUsername() + " into Survival mode.");
+            }
+        });
+    }
 }

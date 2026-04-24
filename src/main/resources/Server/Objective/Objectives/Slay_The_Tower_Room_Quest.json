@@ -1,0 +1,14 @@
+{
+  "TaskSets": [
+    {
+      "DescriptionId": "Slay_The_Tower_Room_Quest",
+      "Tasks": [
+        {
+          "Type": "CustomRoomTaskAsset",
+          "DescriptionId": "Slay_The_Tower_Room_Quest"
+        }
+      ]
+    }
+  ],
+  "TitleId": "RoomObjective.Title"
+}

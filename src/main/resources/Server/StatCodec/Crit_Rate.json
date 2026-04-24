@@ -1,5 +1,5 @@
 {
   "Stat": "Crit_Rate",
-  "Value": 0.2,
+  "Value": 0.1,
   "CalculationType": "Multiplicative"
 }

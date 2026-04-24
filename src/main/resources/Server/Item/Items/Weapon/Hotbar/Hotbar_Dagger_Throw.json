@@ -57,6 +57,9 @@
     ],
     "Type": [
       "Weapon"
+    ],
+    "HotbarClass": [
+      "Dagger"
     ]
   }
 }

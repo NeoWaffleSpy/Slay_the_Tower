@@ -1,7 +1,6 @@
 {
   "Stats": [
-    "Crit_Rate",
-    "Crit_Damage"
+    "Crit_Rate"
   ],
   "Icon": "UI/Custom/Unknown.png",
   "TranslationProperties": {

@@ -28,6 +28,11 @@ import java.util.List;
 import java.util.Random;
 
 public class SkillSelection {
+    private static final String[] skillStringList = new String[]{
+            "Hotbar_Second_Wind",
+            "Hotbar_Shadow_Dash",
+            "Hotbar_Slow_Bomb"
+    };
     private final PlayerRef playerRef;
     private final Store<EntityStore> store;
     private final TemplateProcessor template = new TemplateProcessor();
@@ -75,7 +80,7 @@ public class SkillSelection {
         ArrayList<Item> items = new ArrayList<>();
         DefaultAssetMap<String, Item> itemMap = Item.getAssetMap();
         for (String skill : skillStringList) {
-           items.add(itemMap.getAsset(skill));
+            items.add(itemMap.getAsset(skill));
         }
         return items;
     }
@@ -115,7 +120,7 @@ public class SkillSelection {
         String description = tl.getDescription();
         if (tl.getDescription() != null)
             description = I18nModule.get().getMessage("en-US", tl.getDescription());
-        if (description == null)
+        if (description == null || description.isEmpty())
             description = "Template";
         String icon = item.getIcon().replace("icons/ItemsGenerated/", "");
         return new SkillInfos(
@@ -133,6 +138,9 @@ public class SkillSelection {
 
         Ref<EntityStore> ref = playerRef.getReference();
         Player playerComponent = store.getComponent(ref, Player.getComponentType());
+
+        String claimedSkillId = skills.get(index).item().getId();
+
         ItemStack stack = new ItemStack(skills.get(index).item.getId(), 1, null);
         ItemStackTransaction transaction = playerComponent.giveItem(stack, ref, store);
         ItemStack remainder = transaction.getRemainder();
@@ -147,7 +155,7 @@ public class SkillSelection {
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
 
         if (manager != null) {
-            //manager.onPlayerClaimedReward(this.playerRef);
+            manager.onPlayerClaimedSkillReward(this.playerRef, claimedSkillId);
         }
 
         if (this.page != null) {
@@ -155,10 +163,6 @@ public class SkillSelection {
         }
     }
 
-    private record SkillInfos(String name, String icon, String description, Item item, int index) {}
-    private static final String[] skillStringList = new String[] {
-            "Hotbar_Second_Wind",
-            "Hotbar_Shadow_Dash",
-            "Hotbar_Slow_Bomb"
-    };
+    private record SkillInfos(String name, String icon, String description, Item item, int index) {
+    }
 }

@@ -1,5 +1,5 @@
 {
   "Stat": "Crit_Damage",
-  "Value": 0.5,
+  "Value": 0.2,
   "CalculationType": "Multiplicative"
 }

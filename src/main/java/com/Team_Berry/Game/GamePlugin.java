@@ -4,6 +4,7 @@ import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.Interactions.InstanceGameStartInteraction;
 import com.Team_Berry.Game.Interactions.StartRoomFromLobbyInteraction;
 import com.Team_Berry.Game.Interactions.StatueClaimSkillInteraction;
+import com.Team_Berry.Game.Objectives.CustomRoomTaskAsset;
 import com.Team_Berry.Game.Systems.PlayerDeathSystem;
 import com.Team_Berry.Game.Systems.QuestNPCDeathSystem;
 import com.Team_Berry.Game.Systems.QuestNPCTaggerSystem;
@@ -56,7 +57,6 @@ public class GamePlugin extends JavaPlugin {
         DefaultAssetMap<String, SkillMilestoneCodec> assetMap = SkillMilestoneCodec.getAssetMap();
         this.cachedMilestoneData = assetMap.getAsset("Slay_The_Tower_Milestones");
 
-        // Register our new StartWorldEvent
         this.getEventRegistry().registerGlobal(StartWorldEvent.class, this::onStartWorld);
 
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, this::onPlayerReady);
@@ -65,6 +65,7 @@ public class GamePlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new QuestNPCDeathSystem());
         getEntityStoreRegistry().registerSystem(new PlayerDeathSystem());
         getEntityStoreRegistry().registerSystem(new QuestNPCTaggerSystem());
+        CustomRoomTaskAsset.registerLogic();
     }
 
     @Override
@@ -73,6 +74,7 @@ public class GamePlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("InitiateStageInteraction", InstanceGameStartInteraction.class, InstanceGameStartInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StartRoomFromLobbyInteraction", StartRoomFromLobbyInteraction.class, StartRoomFromLobbyInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StatueClaimSkillInteraction", StatueClaimSkillInteraction.class, StatueClaimSkillInteraction.CODEC);
+        CustomRoomTaskAsset.registerCodecs();
     }
 
     protected void shutdown() {

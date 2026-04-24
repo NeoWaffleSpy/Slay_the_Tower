@@ -30,6 +30,9 @@
     ],
     "Family": [
       "Bow"
+    ],
+    "HotbarClass": [
+      "Bow"
     ]
   },
   "ItemSoundSetId": "ISS_Weapons_Wood",

@@ -1,14 +1,19 @@
 {
   "Milestones": [
     {
-      "RoomCount": 2,
-      "Name": "1er sors",
+      "RoomCount": 4,
+      "Name": "Milestone 1",
       "Difficulty": 1
     },
     {
-      "RoomCount": 2,
-      "Difficulty": 1,
-      "Name": "2e sors"
+      "RoomCount": 6,
+      "Difficulty": 2,
+      "Name": "Milestone 2"
+    },
+    {
+      "Name": "Milestone 3",
+      "RoomCount": 10,
+      "Difficulty": 3
     }
   ]
 }

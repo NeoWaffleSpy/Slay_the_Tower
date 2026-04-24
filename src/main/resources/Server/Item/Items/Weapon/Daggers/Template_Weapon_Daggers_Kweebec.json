@@ -43,9 +43,6 @@
     ]
   },
   "Weapon": {
-    "EntityStatsToClear": [
-      "SignatureEnergy"
-    ],
     "StatModifiers": {
       "SignatureEnergy": [
         {
@@ -55,5 +52,103 @@
       ]
     },
     "RenderDualWielded": true
+  },
+  "ItemAppearanceConditions": {
+    "SignatureEnergy": [
+      {
+        "Condition": [
+          100,
+          100
+        ],
+        "ConditionValueType": "Percent",
+        "Particles": [
+          {
+            "SystemId": "Daggers_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.5
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Sword_Signature_Status_Spawn",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.4
+            },
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.7
+          },
+          {
+            "SystemId": "Dagger_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.4
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Daggers_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.5
+            },
+            "TargetEntityPart": "SecondaryItem"
+          },
+          {
+            "SystemId": "Sword_Signature_Status_Spawn",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.4
+            },
+            "TargetEntityPart": "SecondaryItem",
+            "Scale": 0.7
+          },
+          {
+            "SystemId": "Dagger_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.4
+            },
+            "TargetEntityPart": "SecondaryItem"
+          }
+        ],
+        "ModelVFXId": "Sword_Signature_Status",
+        "FirstPersonParticles": [
+          {
+            "SystemId": "Daggers_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.5
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Dagger_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.4
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Daggers_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.5
+            },
+            "TargetEntityPart": "SecondaryItem"
+          },
+          {
+            "SystemId": "Dagger_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.4
+            },
+            "TargetEntityPart": "SecondaryItem"
+          }
+        ]
+      }
+    ]
   }
 }

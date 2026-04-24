@@ -26,11 +26,9 @@
       "Collision": {
         "Interactions": [
           {
-            "Type": "DamageEntity",
-            "DamageCalculator": {
-              "BaseDamage": {
-                "Environmental": -1000
-              }
+            "Type": "ApplyEffect",
+            "EffectId": {
+              "Parent": "Death"
             }
           }
         ]

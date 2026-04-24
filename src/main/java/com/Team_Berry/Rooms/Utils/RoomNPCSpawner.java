@@ -3,7 +3,6 @@ package com.Team_Berry.Rooms.Utils;
 import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.RoomPlugin;
-import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
@@ -11,21 +10,19 @@ import com.hypixel.hytale.server.core.asset.type.model.config.Model;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.asset.builder.Builder;
-import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.server.npc.role.Role;
 import com.hypixel.hytale.server.spawning.ISpawnableWithModel;
 import com.hypixel.hytale.server.spawning.SpawningContext;
-import it.unimi.dsi.fastutil.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RoomNPCSpawner {
 
-
-    public static @Nullable Ref<EntityStore> spawnInRoom(Store<EntityStore> store, RoomCodec room, String roleId) {
+    public static @Nullable UUID spawnInRoom(Store<EntityStore> store, RoomCodec room, String roleId) {
         if (room == null || room.npcSpawnAreas.length == 0) return null;
 
         NPCPlugin npcPlugin = NPCPlugin.get();
@@ -47,8 +44,7 @@ public class RoomNPCSpawner {
         return executeInternalSpawn(store, roleIndex, spawnPos, room);
     }
 
-
-    static @Nullable Ref<EntityStore> executeInternalSpawn(Store<EntityStore> store, int roleIndex, Vector3d position, RoomCodec room) {
+    static @Nullable UUID executeInternalSpawn(Store<EntityStore> store, int roleIndex, Vector3d position, RoomCodec room) {
         NPCPlugin npcPlugin = NPCPlugin.get();
 
         Builder<Role> roleBuilder = npcPlugin.tryGetCachedValidRole(roleIndex);
@@ -62,18 +58,29 @@ public class RoomNPCSpawner {
         if (!spawningContext.setSpawnable(spawnable)) return null;
 
         Model model = spawningContext.getModel();
-
         Vector3f rotation = new Vector3f(0, (float) (ThreadLocalRandom.current().nextDouble() * Math.PI * 2), 0);
 
-        Pair<Ref<EntityStore>, NPCEntity> npcEntityPair = npcPlugin.spawnEntity(store, roleIndex, position, rotation, model, null);
-        //doesn't seem to work correctly
-        //store.addComponent(npcEntityPair.left(), GamePlugin.getQuestNPCComponentType(), new QuestNPCComponent(room));
+        // We use a 1-size array to safely extract the UUID from inside the lambda
+        UUID[] caughtUuid = new UUID[1];
 
-        return (npcEntityPair != null) ? npcEntityPair.left() : null;
+        npcPlugin.spawnEntity(
+                store, roleIndex, position, rotation, model,
+                (npcComponent, holder, entityStore) -> {
+                    // Snatch the UUID directly from the blueprint before it hits the Store queue!
+                    com.hypixel.hytale.server.core.entity.UUIDComponent uuidComp =
+                            (com.hypixel.hytale.server.core.entity.UUIDComponent) holder.getComponent(com.hypixel.hytale.server.core.entity.UUIDComponent.getComponentType());
+
+                    if (uuidComp != null) {
+                        caughtUuid[0] = uuidComp.getUuid();
+                    }
+                },
+                null
+        );
+
+        return caughtUuid[0];
     }
 
-
-    public static @Nullable Ref<EntityStore> spawnInRoomById(Store<EntityStore> store, String roomId, String roleId) {
+    public static @Nullable UUID spawnInRoomById(Store<EntityStore> store, String roomId, String roleId) {
         RoomCodec room = RoomCodec.getAssetMap().getAsset(roomId);
         if (room != null) {
             return spawnInRoom(store, room, roleId);
@@ -90,22 +97,22 @@ public class RoomNPCSpawner {
         return min + (max - min) * ThreadLocalRandom.current().nextDouble();
     }
 
-    public static List<Ref<EntityStore>> spawnMobGroup(Store<EntityStore> store, RoomCodec room, MobGroupCodec group) {
-        List<Ref<EntityStore>> spawnedRefs = new ArrayList<>();
+    public static List<UUID> spawnMobGroup(Store<EntityStore> store, RoomCodec room, MobGroupCodec group) {
+        List<UUID> spawnedUUIDs = new ArrayList<>();
 
         for (MobGroupCodec.MobEntry entry : group.mobs) {
             for (int i = 0; i < entry.quantity; i++) {
-                Ref<EntityStore> ref = spawnInRoom(store, room, entry.npcRoleId);
+                UUID mobId = spawnInRoom(store, room, entry.npcRoleId);
 
-                if (ref != null) {
-                    spawnedRefs.add(ref);
+                if (mobId != null) {
+                    spawnedUUIDs.add(mobId);
                 }
             }
         }
-        return spawnedRefs;
+        return spawnedUUIDs;
     }
 
-    public static List<Ref<EntityStore>> spawnMobGroupById(Store<EntityStore> store, String roomId, String mobGroupId) {
+    public static List<UUID> spawnMobGroupById(Store<EntityStore> store, String roomId, String mobGroupId) {
         RoomCodec room = RoomCodec.getAssetMap().getAsset(roomId);
         if (room == null) {
             RoomPlugin.LOGGER.atWarning().log("Cannot spawn MobGroup: Room '" + roomId + "' not found.");

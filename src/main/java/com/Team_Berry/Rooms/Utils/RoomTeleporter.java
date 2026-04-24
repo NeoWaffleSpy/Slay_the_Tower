@@ -13,6 +13,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.util.Collection;
 import java.util.Random;
 
 public class RoomTeleporter {
@@ -39,6 +40,32 @@ public class RoomTeleporter {
 
             Teleport teleport = Teleport.createForPlayer(targetWorld, pos, rot);
             store.addComponent(ref, Teleport.getComponentType(), teleport);
+        });
+    }
+
+    public static void teleportGroupToRoom(Collection<PlayerRef> players, RoomCodec room, World targetWorld) {
+        if (room == null) throw new IllegalArgumentException("Cannot teleport to a null room!");
+        if (targetWorld == null) throw new IllegalArgumentException("Cannot teleport to a null world!");
+        if (room.playerSpawns.length == 0 || players == null || players.isEmpty()) return;
+
+        RoomCodec.SpawnPoint spawn = room.playerSpawns[RANDOM.nextInt(room.playerSpawns.length)];
+
+        targetWorld.execute(() -> {
+            Vector3d pos = new Vector3d(spawn.pos.x, spawn.pos.y + 1.0, spawn.pos.z);
+            Vector3f rot = new Vector3f(
+                    (float) Math.toDegrees(spawn.rot.yaw),
+                    (float) Math.toDegrees(spawn.rot.pitch),
+                    (float) Math.toDegrees(spawn.rot.roll)
+            );
+
+            for (PlayerRef playerRef : players) {
+                Ref<EntityStore> ref = playerRef.getReference();
+                if (ref != null && ref.isValid()) {
+                    Store<EntityStore> store = ref.getStore();
+                    Teleport teleport = Teleport.createForPlayer(targetWorld, pos, rot);
+                    store.addComponent(ref, Teleport.getComponentType(), teleport);
+                }
+            }
         });
     }
 

@@ -9,6 +9,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.RefChangeSystem;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -17,6 +18,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public class QuestNPCDeathSystem extends RefChangeSystem<EntityStore, DeathComponent> {
 
@@ -49,7 +52,12 @@ public class QuestNPCDeathSystem extends RefChangeSystem<EntityStore, DeathCompo
             }
         }
 
-        manager.updateQuest(QuestUpdate.MOB_DEATH, killerPlayer);
+        UUIDComponent uuidComp = store.getComponent(ref, UUIDComponent.getComponentType());
+
+        if (uuidComp != null) {
+            UUID deadMobUuid = uuidComp.getUuid();
+            manager.updateQuest(QuestUpdate.MOB_DEATH, killerPlayer, deadMobUuid);
+        }
     }
 
     @Override

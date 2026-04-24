@@ -64,7 +64,7 @@ public class GamePlugin extends JavaPlugin {
 
         getEntityStoreRegistry().registerSystem(new QuestNPCDeathSystem());
         getEntityStoreRegistry().registerSystem(new PlayerDeathSystem());
-        getEntityStoreRegistry().registerSystem(new QuestNPCTaggerSystem());
+        getEntityStoreRegistry().registerSystem(new QuestNPCTaggerSystem(questNPCComponentType));
         CustomRoomTaskAsset.registerLogic();
     }
 

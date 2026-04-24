@@ -29,6 +29,7 @@ import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -38,12 +39,12 @@ import com.hypixel.hytale.server.core.universe.world.WorldConfig;
 import com.hypixel.hytale.server.core.universe.world.spawn.GlobalSpawnProvider;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.EventTitleUtil;
-import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import it.unimi.dsi.fastutil.Pair;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class GameManager {
@@ -60,6 +61,8 @@ public class GameManager {
     private final Map<UUID, Set<String>> playerOwnedSkills = new HashMap<>();
     private final Map<UUID, List<String>> playerOwnedArtefacts = new HashMap<>();
     private final Set<PlayerRef> playersReady = new HashSet<>();
+    private final Set<UUID> currentRoomMobs = new HashSet<>();
+    private final Set<UUID> futureRoomMobs = new HashSet<>();
     private World world;
     private UUID currentRoomObjectiveId = null;
     private boolean pendingMilestoneTransition = false;
@@ -98,26 +101,17 @@ public class GameManager {
 
     public void initializeMilestone() {
         log("Initializing Milestone buffer...");
-        massiveCleanWorldNPCs(); //if we can live without it, we probably should
+        cleanupLeftoverObjectives();
 
-        this.currentRoom = prepareRoom(null);
-        this.futureRoom = prepareRoom(this.currentRoom.left());
+        this.currentRoom = prepareRoom(null, currentRoomMobs);
+        this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
+
         log(String.format("Buffer Ready. Current: %s | Future: %s",
                 currentRoom.left().worldName, futureRoom.left().worldName));
     }
 
-    public void massiveCleanWorldNPCs() {
-        log("Commencing massive wipe of ALL NPCs in the world...");
-        Store<EntityStore> store = world.getEntityStore().getStore();
-        store.forEachChunk(NPCEntity.getComponentType(), (chunk, commandBuffer) -> {
-            for (int i = 0; i < chunk.size(); i++) {
-                commandBuffer.removeEntity(chunk.getReferenceTo(i), RemoveReason.REMOVE);
-            }
-        });
-        log("World wipe complete.");
-    }
 
-    public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude) {
+    public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, Set<UUID> targetMobTracker) {
         log("Preparing a new room...");
         List<RoomCodec> validRooms = findValidRooms();
 
@@ -143,7 +137,10 @@ public class GameManager {
                     selectedRoom.worldName, quest.getSpawnedMobs(), difficulty));
 
             world.execute(() -> {
-                RoomNPCSpawner.spawnMobGroup(world.getEntityStore().getStore(), selectedRoom, selectedGroup);
+                List<UUID> spawnedMobs = RoomNPCSpawner.spawnMobGroup(world.getEntityStore().getStore(), selectedRoom, selectedGroup);
+                targetMobTracker.clear();
+                targetMobTracker.addAll(spawnedMobs);
+                log("Successfully registered " + spawnedMobs.size() + " mob UUIDs for room.");
             });
         } else {
             quest = new Quest(0);
@@ -154,6 +151,47 @@ public class GameManager {
         return Pair.of(selectedRoom, quest);
     }
 
+    public void cleanRoom(Set<UUID> mobTracker) {
+        if (mobTracker.isEmpty()) return;
+
+        List<UUID> mobsToDelete = new ArrayList<>(mobTracker);
+        mobTracker.clear();
+
+        world.execute(() -> {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+            int deletedCount = 0;
+
+            for (UUID mobId : mobsToDelete) {
+                Ref<EntityStore> ref = getRefByUUID(store, mobId);
+                if (ref != null && ref.isValid()) {
+                    store.removeEntity(ref, RemoveReason.REMOVE);
+                    deletedCount++;
+                }
+            }
+            log("Room cleaned. " + deletedCount + " remaining mobs deleted.");
+        });
+    }
+
+    private Ref<EntityStore> getRefByUUID(Store<EntityStore> store, UUID targetUUID) {
+        AtomicReference<Ref<EntityStore>> foundRef = new AtomicReference<>(null);
+
+        store.forEachChunk(UUIDComponent.getComponentType(), (chunk, commandBuffer) -> {
+            if (foundRef.get() != null) return;
+
+            for (int i = 0; i < chunk.size(); i++) {
+                UUIDComponent uuidComp =
+                        (UUIDComponent) chunk.getComponent(i, UUIDComponent.getComponentType());
+
+                if (uuidComp != null && uuidComp.getUuid().equals(targetUUID)) {
+                    foundRef.set(chunk.getReferenceTo(i));
+                    break;
+                }
+            }
+        });
+
+        return foundRef.get();
+    }
+
     public Pair<RoomCodec, Quest> getCurrentRoom() {
         return this.currentRoom;
     }
@@ -161,11 +199,17 @@ public class GameManager {
     public void advanceToNextRoom() {
         log("Advancing tower. Shifting buffer...");
         this.participantsInRoom.clear();
+        cleanRoom(currentRoomMobs);
+
         this.currentRoom = this.futureRoom;
+
+        this.currentRoomMobs.clear();
+        this.currentRoomMobs.addAll(this.futureRoomMobs);
+        this.futureRoomMobs.clear();
 
         tpParticipantsToRoom();
 
-        this.futureRoom = prepareRoom(this.currentRoom.left());
+        this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
         log("Advance complete. Current Room is now: " + currentRoom.left().worldName);
     }
 
@@ -220,6 +264,8 @@ public class GameManager {
         //TODO : Remove the added 50 max health to the player on add participant
 
         log("Player left the party: " + playerRef.getUsername());
+
+        cleanupLeftoverObjectives();
         this.activeParticipants.remove(playerRef);
         this.participantsInRoom.remove(playerRef);
         this.deadParticipants.remove(playerRef);
@@ -251,25 +297,31 @@ public class GameManager {
         log("Player " + playerRef.getUsername() + " incremented skills to: " + (currentSkills + 1));
     }
 
-    public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef) {
+    public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef, @Nullable UUID deadMobId) {
         if (currentRoom == null || currentRoom.right() == null) return;
 
-        Quest currentQuest = currentRoom.right();
+        if (questUpdate == QuestUpdate.MOB_DEATH && deadMobId != null) {
 
-        if (questUpdate == QuestUpdate.MOB_DEATH) {
-            currentQuest.incrementDeadMobs();
-            log(String.format("Mob Death recorded. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
+            if (currentRoomMobs.remove(deadMobId)) {
+                Quest currentQuest = currentRoom.right();
+                currentQuest.incrementDeadMobs();
+                log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
 
-            if (playerRef != null) {
-                playerRef.sendMessage(Message.raw("Mob killed ! only " + currentQuest.getMobsLeft() + " left!"));
+                if (playerRef != null) {
+                    playerRef.sendMessage(Message.raw("Mob killed! only " + currentQuest.getMobsLeft() + " left!"));
+                }
+                updateSharedRoomObjective();
+
+                if (currentQuest.isComplete()) {
+                    log("Room Quest successfully completed.");
+                    if (playerRef != null) playerRef.sendMessage(Message.raw("Room Complete"));
+                    endStage(EndStageResult.SUCCESS);
+                }
+            } else if (futureRoom != null && futureRoom.right() != null && futureRoomMobs.remove(deadMobId)) {
+                futureRoom.right().incrementDeadMobs();
+                log("A Future Room Mob died prematurely! Lowered future quest requirements.");
             }
-            updateSharedRoomObjective();
 
-            if (currentQuest.isComplete()) {
-                log("Room Quest successfully completed.");
-                if (playerRef != null) playerRef.sendMessage(Message.raw("Room Complete"));
-                endStage(EndStageResult.SUCCESS);
-            }
         } else if (questUpdate == QuestUpdate.PLAYER_DEATH && playerRef != null) {
             log("Player Death event: " + playerRef.getUsername());
             resolvePlayerDeath(playerRef);
@@ -277,6 +329,7 @@ public class GameManager {
     }
 
     public void endStage(EndStageResult result) {
+        completeSharedRoomObjective();
         log("Triggering EndStage with result: " + result);
         if (result == EndStageResult.SUCCESS) {
             handleStageSuccess();
@@ -459,6 +512,9 @@ public class GameManager {
         log("Moving party to Lobby.");
         completeSharedRoomObjective();
         this.participantsInRoom.clear();
+        cleanRoom(currentRoomMobs);
+        cleanRoom(futureRoomMobs);
+
         tpParticipantsToLobby();
         initializeMilestone();
         this.pendingMilestoneTransition = false;
@@ -513,14 +569,19 @@ public class GameManager {
         if (currentRoom == null) return;
         log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
 
+        List<PlayerRef> playersToTeleport = new ArrayList<>();
         for (PlayerRef p : activeParticipants) {
             if (!participantsInRoom.contains(p)) {
-                RoomTeleporter.teleportToRoom(p, currentRoom.left(), this.world);
+                playersToTeleport.add(p);
                 this.participantsInRoom.add(p);
+                startSharedRoomObjective();
+                setRandomRoomWeather();
+
             }
         }
-        startSharedRoomObjective();
-        setRandomRoomWeather();
+
+        RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
+
     }
 
     public List<RoomCodec> findValidRooms() {
@@ -726,5 +787,21 @@ public class GameManager {
                 log("Forced " + playerRef.getUsername() + " into Survival mode.");
             }
         });
+    }
+
+    private void cleanupLeftoverObjectives() {
+        ObjectivePlugin plugin = ObjectivePlugin.get();
+        if (plugin != null && plugin.getObjectiveDataStore() != null) {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+
+            List<Objective> activeObjectives = new ArrayList<>(plugin.getObjectiveDataStore().getObjectiveCollection());
+
+            for (Objective obj : activeObjectives) {
+                if (obj.getObjectiveId().equals("Slay_The_Tower_Room_Quest")) {
+                    plugin.cancelObjective(obj.getObjectiveUUID(), store);
+                    log("Forcefully cleaned up a ghost objective from a previous game: " + obj.getObjectiveUUID());
+                }
+            }
+        }
     }
 }

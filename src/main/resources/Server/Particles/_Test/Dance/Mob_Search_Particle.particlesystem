@@ -1,0 +1,13 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Mob_Search_Ray",
+      "PositionOffset": {
+        "Y": 0.9
+      },
+      "FixedRotation": false,
+      "StartDelay": 0.5
+    }
+  ],
+  "CullDistance": 200
+}

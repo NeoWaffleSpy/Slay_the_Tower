@@ -1,0 +1,15 @@
+{
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "TargetEntityPart": "Self",
+        "SystemId": "Mob_Search_Particle"
+      }
+    ]
+  },
+  "RemovalBehavior": "Duration",
+  "OverlapBehavior": "Extend",
+  "Infinite": true,
+  "Name": "Mob Search",
+  "Duration": 2
+}

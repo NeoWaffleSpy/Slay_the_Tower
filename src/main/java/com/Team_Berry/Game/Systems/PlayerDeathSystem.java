@@ -42,7 +42,7 @@ public class PlayerDeathSystem extends RefChangeSystem<EntityStore, DeathCompone
             if (manager != null) {
                 death.setShowDeathMenu(false);
                 DeathComponent.respawn(store, ref);
-                manager.updateQuest(QuestUpdate.PLAYER_DEATH, playerRef);
+                manager.updateQuest(QuestUpdate.PLAYER_DEATH, playerRef, null);
 
             }
         }

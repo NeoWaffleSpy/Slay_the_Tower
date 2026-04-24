@@ -28,5 +28,5 @@
   "Debuff": true,
   "StatusEffectIcon": "UI/StatusEffects/Burn.png",
   "Duration": 5,
-  "DeathMessageKey": "Void"
+  "DeathMessageKey": "Congrats, you've escaped the map. Too bad the developers didn't build a 'survival' floor out here."
 }

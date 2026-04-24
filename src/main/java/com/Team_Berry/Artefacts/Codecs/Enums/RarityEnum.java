@@ -8,7 +8,8 @@ public enum RarityEnum {
     LEGENDARY(0.1f, 2),
 
     STARTER(0f, 3),
-    DEBUG(0f, 4);
+    DEBUG(0f, 4),
+    INVISIBLE(0f, 5);
 
     public final float weight;
     public final int index;

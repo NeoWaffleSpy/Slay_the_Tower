@@ -3,15 +3,21 @@ package com.Team_Berry.Artefacts.UI;
 import au.ellie.hyui.builders.HyUIPage;
 import au.ellie.hyui.builders.PageBuilder;
 import au.ellie.hyui.html.TemplateProcessor;
+import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProperties;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction;
 import com.hypixel.hytale.server.core.modules.i18n.I18nModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -124,8 +130,18 @@ public class SkillSelection {
         StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
         if (statComp == null || skills.isEmpty())
             return;
-        //statComp.addArtifact(Skills.get(index).item);
-        //TODO: Give item to player
+
+        Ref<EntityStore> ref = playerRef.getReference();
+        Player playerComponent = store.getComponent(ref, Player.getComponentType());
+        ItemStack stack = new ItemStack(skills.get(index).item.getId(), 1, null);
+        ItemStackTransaction transaction = playerComponent.giveItem(stack, ref, store);
+        ItemStack remainder = transaction.getRemainder();
+        Message itemNameMessage = Message.translation(skills.get(index).item.getTranslationKey());
+        if (remainder != null && !remainder.isEmpty()) {
+            ArtefactPlugin.LOGGER.atSevere().log(Message.translation("server.commands.give.insufficientInvSpace").param("quantity", 1).param("item", itemNameMessage).toString());
+        } else {
+            ArtefactPlugin.LOGGER.atSevere().log(Message.translation("server.commands.give.received").param("quantity", 1).param("item", itemNameMessage).toString());
+        }
 
         World world = store.getExternalData().getWorld();
         GameManager manager = GamePlugin.get().getGameManagers().get(world);

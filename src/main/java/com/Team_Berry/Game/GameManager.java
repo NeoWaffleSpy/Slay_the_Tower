@@ -27,13 +27,18 @@ import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.protocol.GameMode;
+import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
+import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.WorldConfig;
 import com.hypixel.hytale.server.core.universe.world.spawn.GlobalSpawnProvider;
@@ -51,6 +56,8 @@ public class GameManager {
     private static final List<String> RANDOM_WEATHERS = Arrays.asList(
             "Weather_Red", "Weather_Blue", "Weather_Purple", "Weather_Green"
     );
+    private static final String MOB_SEARCH_EFFECT = "Mob_Search_Effect";
+    private static final String SFX_ROOM_START = "SFX_Room_Start";
     private final GameState gameState;
     private final RoomCodec lobby;
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
@@ -70,6 +77,7 @@ public class GameManager {
     private Pair<RoomCodec, Quest> futureRoom;
     private int globalMaxSkills = 1;
     private boolean statueSpawn = false;
+    private boolean searchEffectApplied = false;
 
     public GameManager(World world, SkillMilestoneCodec milestoneData) {
         this.world = world;
@@ -103,13 +111,14 @@ public class GameManager {
         log("Initializing Milestone buffer...");
         cleanupLeftoverObjectives();
 
+        this.searchEffectApplied = false;
+
         this.currentRoom = prepareRoom(null, currentRoomMobs);
         this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
 
         log(String.format("Buffer Ready. Current: %s | Future: %s",
                 currentRoom.left().worldName, futureRoom.left().worldName));
     }
-
 
     public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, Set<UUID> targetMobTracker) {
         log("Preparing a new room...");
@@ -201,6 +210,8 @@ public class GameManager {
         this.participantsInRoom.clear();
         cleanRoom(currentRoomMobs);
 
+        this.searchEffectApplied = false;
+
         this.currentRoom = this.futureRoom;
 
         this.currentRoomMobs.clear();
@@ -265,7 +276,7 @@ public class GameManager {
 
         log("Player left the party: " + playerRef.getUsername());
 
-        cleanupLeftoverObjectives();
+        detachPlayerFromObjective(playerRef);
         this.activeParticipants.remove(playerRef);
         this.participantsInRoom.remove(playerRef);
         this.deadParticipants.remove(playerRef);
@@ -274,6 +285,17 @@ public class GameManager {
         if (!activeParticipants.isEmpty() && playersReady.size() >= activeParticipants.size()) {
             log("Final undecided player left. Force-completing reward phase.");
             completeRewardPhase();
+        }
+    }
+
+    private void detachPlayerFromObjective(PlayerRef playerRef) {
+        if (currentRoomObjectiveId != null) {
+            ObjectivePlugin.get().removePlayerFromExistingObjective(
+                    world.getEntityStore().getStore(),
+                    playerRef.getUuid(),
+                    currentRoomObjectiveId
+            );
+            log("Detached objective from player: " + playerRef.getUsername());
         }
     }
 
@@ -311,6 +333,12 @@ public class GameManager {
                     playerRef.sendMessage(Message.raw("Mob killed! only " + currentQuest.getMobsLeft() + " left!"));
                 }
                 updateSharedRoomObjective();
+
+                if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
+                    searchEffectApplied = true;
+                    broadcastMessage("The remaining monsters have been revealed!");
+                    applyEffectToMobs(currentRoomMobs, MOB_SEARCH_EFFECT);
+                }
 
                 if (currentQuest.isComplete()) {
                     log("Room Quest successfully completed.");
@@ -515,6 +543,8 @@ public class GameManager {
         cleanRoom(currentRoomMobs);
         cleanRoom(futureRoomMobs);
 
+        this.searchEffectApplied = false;
+
         tpParticipantsToLobby();
         initializeMilestone();
         this.pendingMilestoneTransition = false;
@@ -581,6 +611,8 @@ public class GameManager {
         }
 
         RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
+
+        playSoundToPlayers(playersToTeleport, SFX_ROOM_START);
 
     }
 
@@ -802,6 +834,45 @@ public class GameManager {
                     log("Forcefully cleaned up a ghost objective from a previous game: " + obj.getObjectiveUUID());
                 }
             }
+        }
+    }
+
+    private void applyEffectToMobs(Set<UUID> mobTracker, String effectId) {
+        world.execute(() -> {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+            EntityEffect effect = EntityEffect.getAssetMap().getAsset(effectId);
+
+            if (effect == null) {
+                log("Warning: Cannot apply effect! Asset not found: " + effectId);
+                return;
+            }
+
+            int appliedCount = 0;
+            for (UUID mobId : mobTracker) {
+                Ref<EntityStore> ref = getRefByUUID(store, mobId);
+                if (ref != null && ref.isValid()) {
+                    EffectControllerComponent effectController = store.getComponent(ref, EffectControllerComponent.getComponentType());
+
+                    if (effectController != null) {
+                        effectController.addEffect(ref, effect, store);
+                        appliedCount++;
+                    }
+                }
+            }
+            log("Applied " + effectId + " to " + appliedCount + " mobs.");
+        });
+    }
+
+    private void playSoundToPlayers(List<PlayerRef> players, String soundEventId) {
+        int soundIndex = SoundEvent.getAssetMap().getIndex(soundEventId);
+
+        if (soundIndex == 0) {
+            log("Warning: Sound ID not found: " + soundEventId);
+            return;
+        }
+
+        for (PlayerRef p : players) {
+            SoundUtil.playSoundEvent2dToPlayer(p, soundIndex, SoundCategory.SFX);
         }
     }
 }

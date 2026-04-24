@@ -21,7 +21,6 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Int
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.WorldConfig;
 import com.hypixel.hytale.server.core.universe.world.events.StartWorldEvent;
@@ -129,20 +128,9 @@ public class GamePlugin extends JavaPlugin {
 
     private void onPlayerDisconnect(PlayerDisconnectEvent event) {
         PlayerRef playerRef = event.getPlayerRef();
-
-        if (playerRef != null) {
-            World world = Universe.get().getWorld(playerRef.getWorldUuid());
-
-            if (world != null) {
-                String worldName = world.getName();
-
-                if (worldName != null && worldName.contains("SlayTheTower")) {
-                    GameManager manager = gameManagers.get(world);
-
-                    if (manager != null) {
-                        manager.removeParticipant(playerRef);
-                    }
-                }
+        for (GameManager manager : gameManagers.values()) {
+            if (manager.getActiveParticipants().contains(playerRef)) {
+                manager.removeParticipant(playerRef);
             }
         }
     }

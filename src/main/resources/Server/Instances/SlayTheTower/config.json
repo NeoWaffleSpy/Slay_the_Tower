@@ -53,8 +53,8 @@
   "SaveNewChunks": true,
   "IsUnloadingChunks": true,
   "IsObjectiveMarkersEnabled": true,
-  "DeleteOnUniverseStart": true,
-  "DeleteOnRemove": true,
+  "DeleteOnUniverseStart": false,
+  "DeleteOnRemove": false,
   "DisabledFluidTickers": [],
   "ResourceStorage": {
     "Type": "Hytale"

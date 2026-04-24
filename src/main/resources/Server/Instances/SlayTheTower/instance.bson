@@ -1,10 +1,10 @@
 {
   "Version": 4,
   "UUID": {
-    "$binary": "FHt1aQ/4RKiYUVDNUbeKNg==",
+    "$binary": "xAhsZLuwTLiIs1ttOS7WUw==",
     "$type": "04"
   },
-  "Seed": 1775763681770,
+  "Seed": 1777030956667,
   "SpawnProvider": {
     "Id": "Global",
     "SpawnPoint": {

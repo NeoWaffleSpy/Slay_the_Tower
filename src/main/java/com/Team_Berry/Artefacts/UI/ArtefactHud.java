@@ -3,6 +3,7 @@ package com.Team_Berry.Artefacts.UI;
 import au.ellie.hyui.builders.HudBuilder;
 import au.ellie.hyui.builders.HyUIHud;
 import au.ellie.hyui.html.TemplateProcessor;
+import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 
@@ -33,7 +34,7 @@ public class ArtefactHud {
     public void refresh() {
         List<ImageClass> imgs = new ArrayList<>();
         statComp.artefactList.keySet().stream().toList().forEach(artefact -> {
-            if (statComp.getAmount(artefact) == 0)
+            if (artefact.rarity == RarityEnum.INVISIBLE || statComp.getAmount(artefact) == 0)
                 return;
             imgs.add(new ImageClass(artefact.shortIconPath, statComp.getAmount(artefact)));
         });

@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Template_Weapon_Shortbow.name"
+    "Name": "ElectricShot.name",
+    "Description": "ElectricShot.description"
   },
   "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
@@ -37,7 +38,7 @@
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Weapon": {},
-  "SubCategory": "Ranger",
+  "SubCategory": "Bow",
   "InteractionVars": {
     "Frost_Volley_Damage": {
       "Interactions": [

@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "Twin Stab"
+    "Name": "TwinStab.name",
+    "Description": "TwinStab.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",

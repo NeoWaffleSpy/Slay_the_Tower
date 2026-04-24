@@ -223,51 +223,5 @@
         }
       ]
     }
-  },
-  "ItemAppearanceConditions": {
-    "DeployablePreview": [
-      {
-        "Condition": [
-          1,
-          100
-        ],
-        "ConditionValueType": "Percent",
-        "Particles": [
-          {
-            "SystemId": "Bow_Signature_Charge",
-            "TargetNodeName": "ARROW-PLACEHOLDER",
-            "PositionOffset": {
-              "X": 0.5,
-              "Y": 0.25,
-              "Z": 0
-            },
-            "Scale": 0.5,
-            "TargetEntityPart": "PrimaryItem"
-          },
-          {
-            "SystemId": "Bow_Signature_Charge",
-            "TargetNodeName": "ARROW-PLACEHOLDER",
-            "PositionOffset": {
-              "X": 0.5,
-              "Y": 0,
-              "Z": 0
-            },
-            "Scale": 0.5,
-            "TargetEntityPart": "PrimaryItem"
-          },
-          {
-            "SystemId": "Bow_Signature_Charge",
-            "TargetNodeName": "ARROW-PLACEHOLDER",
-            "PositionOffset": {
-              "X": 0.5,
-              "Y": -0.25,
-              "Z": 0
-            },
-            "Scale": 0.5,
-            "TargetEntityPart": "PrimaryItem"
-          }
-        ]
-      }
-    ]
   }
 }

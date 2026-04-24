@@ -19,9 +19,9 @@
           "Order": 1
         },
         {
-          "Id": "Ranger",
-          "Name": "Ranger Skills",
-          "Description": "Ranger Skills",
+          "Id": "Bow",
+          "Name": "Bow Skills",
+          "Description": "Bow Skills",
           "Order": 2
         },
         {

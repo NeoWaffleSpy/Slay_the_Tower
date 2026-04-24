@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "Second Wind"
+    "Name": "SecondWind.name",
+    "Description": "SecondWind.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",

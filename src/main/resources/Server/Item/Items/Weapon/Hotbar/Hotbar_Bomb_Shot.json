@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Template_Weapon_Shortbow.name"
+    "Name": "BombShot.name",
+    "Description": "BombShot.description"
   },
   "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Fire_Goblin.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
@@ -37,7 +38,7 @@
   "Texture": "Items/Weapons/BombBow_Kweebec_Texture.png",
   "Model": "Items/Weapons/BombBow_Kweebec.blockymodel",
   "Weapon": {},
-  "SubCategory": "Ranger",
+  "SubCategory": "Bow",
   "Particles": [
     {
       "SystemId": "Fuse_Bomb_Weapon",

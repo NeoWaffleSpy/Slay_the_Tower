@@ -1,0 +1,47 @@
+DaggerThrow.name=Dagger Throw
+DaggerThrow.description=Throw a fast dagger.
+
+Disengage.name=Disengage
+Disengage.description=Leap back and throw 3 daggers in front of you.
+
+SecondWind.name=Second Wind
+SecondWind.description=Instant dash in any direction. Grants an invincibility window and refills stamina.
+
+ShadowDash.name=Shadow Dash
+ShadowDash.description=Dash forward at extreme speed. Stuns and damages enemies.
+
+PocketBomb.name=Pocket Bomb
+PocketBomb.description=Throw a bomb that deals damage and knocks back enemies.
+
+TwinStab.name=Twin Stab
+TwinStab.description=Stab twice fast directly in front of you.
+
+Whirl.name=Whirl
+Whirl.description=Dash forward and spin, dealing heavy damage to nearby enemies.
+
+WideSlash.name=Wide Slash
+WideSlash.description=Wide slash that deals damage and knocks back enemies.
+
+BombShot.name=Bomb Shot
+BombShot.description=Shoot an explosive arrow that deals area damage.
+
+Burst.name=Burst
+Burst.description=Shoot arrows repeatedly and grants movement speed.
+
+ElectricShot.name=Electric Shot
+ElectricShot.description=Shoot an electric arrow that pierces enemies and deals heavy damage.
+
+FrostVolley.name=Frost Volley
+FrostVolley.description=Shoot a volley of ice arrows that damages and slows enemies.
+
+PoisonCloud.name=Poison Cloud
+PoisonCloud.description=Shoot an arrow that creates a poison cloud, dealing area damage over time.
+
+JumpShot.name=Jump Shot
+JumpShot.description=Leap back and shoot a burst of air.
+
+WolfForm.name=Wolf Form
+WolfForm.description=Transform into a wolf and leap forward. Damages enemies and grants movement speed.
+
+BearForm.name=Bear Form
+BearForm.description=Transform into a bear and stomp. Deals heavy area damage and knocks back enemies.

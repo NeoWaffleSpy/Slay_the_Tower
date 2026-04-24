@@ -20,6 +20,7 @@ import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.WorldConfig;
@@ -44,9 +45,7 @@ public class GameManager {
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
     private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
     private final Set<PlayerRef> playersReady = new HashSet<>();
-
     private boolean pendingMilestoneTransition = false;
-
     private World world;
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
@@ -143,7 +142,6 @@ public class GameManager {
         return this.currentRoom;
     }
 
-
     public void advanceToNextRoom() {
         log("Advancing tower. Shifting buffer...");
         this.participantsInRoom.clear();
@@ -157,7 +155,13 @@ public class GameManager {
 
     public void addParticipant(PlayerRef playerRef) {
         log("Player joined the party: " + playerRef.getUsername());
-        this.activeParticipants.add(playerRef);
+        if (this.activeParticipants.add(playerRef)) {
+            Ref<EntityStore> ref = playerRef.getReference();
+            Store<EntityStore> store = ref.getStore();
+            EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
+//TODO : Add 50 max health to the player and then remove it on remove participant
+            // stats.addStatValue(EntityStatType.getAssetMap().getIndex("Health"), 50);
+        }
         if (this.historicalSkillCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
             EventTitleUtil.showEventTitleToPlayer(
                     playerRef,
@@ -169,6 +173,8 @@ public class GameManager {
     }
 
     public void removeParticipant(PlayerRef playerRef) {
+        //TODO : Remove the added 50 max health to the player on add participant
+
         log("Player left the party: " + playerRef.getUsername());
         this.activeParticipants.remove(playerRef);
         this.participantsInRoom.remove(playerRef);
@@ -336,7 +342,6 @@ public class GameManager {
         playersReady.clear();
     }
 
-
     public void startRoomFromLobby() {
         log("Request to start run from Lobby received.");
         if (currentRoom == null) return;
@@ -411,7 +416,6 @@ public class GameManager {
         setLobbyWeather();
     }
 
-
     private void tpParticipantsToRoom() {
         if (currentRoom == null) return;
         log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
@@ -424,7 +428,6 @@ public class GameManager {
         }
         setRandomRoomWeather();
     }
-
 
     public List<RoomCodec> findValidRooms() {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
@@ -541,4 +544,5 @@ public class GameManager {
         setForcedWeather("Weather_Prison", world.getEntityStore().getStore());
         log("Weather changed to Prison state for the Lobby.");
     }
+
 }

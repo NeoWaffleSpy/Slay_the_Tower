@@ -10,14 +10,20 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 public class TooltipInjector {
+    private static final Color tierLow = Color.GREEN;
+    private static final Color tierMed = Color.ORANGE;
+    private static final Color tierHigh = Color.RED;
+    private static final Color colorMobility = new Color(255, 215, 0);
+    private static final Color colorDamage = new Color(200, 42, 42);
+    private static final Color colorKnockback = new Color(149, 157, 255);
+    private static final Color colorEffect = Color.GREEN;
+    private static final Color textWhite = Color.WHITE;
     private static Map<String, String> languagesCache;
+
     private static void getLanguages() {
         try {
             I18nModule i18n = I18nModule.get();
@@ -27,7 +33,7 @@ public class TooltipInjector {
             }
             Field languagesField = I18nModule.class.getDeclaredField("languages");
             languagesField.setAccessible(true);
-            Map<String, Map<String, String>> tmpLanguages = (Map)languagesField.get(i18n);
+            Map<String, Map<String, String>> tmpLanguages = (Map) languagesField.get(i18n);
             if (tmpLanguages == null) {
                 UtilsPlugin.LOGGER.atWarning().log("Languages map is null. Cannot inject tooltips.");
                 return;
@@ -49,7 +55,10 @@ public class TooltipInjector {
         }
     }
 
-    public static void setItemTranslation(String i, StringFormatter d) { setItemTranslation(i, d.toString()); }
+    public static void setItemTranslation(String i, StringFormatter d) {
+        setItemTranslation(i, d.toString());
+    }
+
     public static void setItemTranslation(String itemKey, String description) {
         if (languagesCache == null)
             getLanguages();
@@ -58,7 +67,10 @@ public class TooltipInjector {
         languagesCache.put(itemKey, description);
     }
 
-    public static void addToItemTranslation(String i, StringFormatter d) { addToItemTranslation(i, d.toString()); }
+    public static void addToItemTranslation(String i, StringFormatter d) {
+        addToItemTranslation(i, d.toString());
+    }
+
     public static void addToItemTranslation(String itemKey, String description) {
         if (languagesCache == null)
             getLanguages();
@@ -85,7 +97,7 @@ public class TooltipInjector {
 
                 String line;
                 try {
-                    while((line = reader.readLine()) != null) {
+                    while ((line = reader.readLine()) != null) {
                         line = line.trim();
                         if (!line.isEmpty() && !line.startsWith("#")) {
                             int eqIndex = line.indexOf(61);
@@ -123,6 +135,58 @@ public class TooltipInjector {
                 .endColor();
         setItemTranslation("items.Weapon_Battleaxe_Custom.description", sf);
         setItemTranslation("client.itemTooltip.damageCauseResistance.environmental", "Environmental Resistance");
+        injectDaggerTooltips();
+        injectBowTooltips();
+    }
+
+    public static void injectDaggerTooltips() {
+        registerSkill("DaggerThrow", false, tierLow, "Low", null, null, null, "1.2");
+        registerSkill("Disengage", true, tierLow, "Low", null, null, null, "6");
+        registerSkill("SecondWind", true, null, null, null, null, "Invincibility", "30");
+        registerSkill("ShadowDash", true, tierMed, "Medium", null, null, "Stun", "8");
+        registerSkill("PocketBomb", false, tierHigh, "High", tierMed, "Medium", null, "8");
+        registerSkill("TwinStab", false, tierHigh, "High", null, null, null, "1.9");
+        registerSkill("Whirl", true, tierHigh, "High", null, null, null, "7");
+        registerSkill("WideSlash", false, tierMed, "Medium", tierMed, "Medium", null, "4");
+    }
+
+    public static void injectBowTooltips() {
+        registerSkill("BombShot", false, tierMed, "Medium", null, null, null, "8");
+        registerSkill("Burst", true, tierHigh, "High", null, null, "Speed", "10");
+        registerSkill("ElectricShot", false, tierHigh, "High", null, null, null, "8");
+        registerSkill("FrostVolley", false, tierLow, "Low", null, null, "Slow", "5");
+        registerSkill("PoisonCloud", false, tierMed, "dps", null, null, null, "17");
+        registerSkill("JumpShot", true, tierMed, "Medium", null, null, null, "5");
+        registerSkill("WolfForm", true, tierLow, "Low", null, null, "Speed", "6");
+        registerSkill("BearForm", false, tierHigh, "High", tierHigh, "High", null, "8");
+    }
+
+    private static void registerSkill(String id, boolean hasMobility,
+                                      Color damageTierColor, String damageTier,
+                                      Color kbTierColor, String kbTier,
+                                      String effect,
+                                      String cooldown) {
+        StringFormatter sf = new StringFormatter();
+
+
+        sf.color(Color.white).append(getItemTranslation(id + ".description")).append("\n");
+
+        if (hasMobility) {
+            sf.color(colorMobility).append("Mobility").endColor().append("\n");
+        }
+        if (damageTier != null) {
+            sf.color(colorDamage).append("Damage: ").color(damageTierColor).append(damageTier).endColor().append("\n");
+        }
+        if (kbTier != null) {
+            sf.color(colorKnockback).append("Knockback: ").color(kbTierColor).append(kbTier).endColor().append("\n");
+        }
+        if (effect != null) {
+            sf.color(colorEffect).append("Effect: ").color(textWhite).append(effect).endColor().append("\n");
+        }
+
+        sf.color(Color.GRAY).setItalic().append("Cooldown ").append(cooldown).setItalic(false).endColor();
+
+        setItemTranslation(id + ".description", sf.toString());
 
     }
 }

@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Dance_Light_Player_Sparks"
+    },
+    {
+      "SpawnerId": "Dance_Lights_Floor",
+      "PositionOffset": {
+        "Y": 0.5
+      }
+    }
+  ],
+  "CullDistance": 50
+}

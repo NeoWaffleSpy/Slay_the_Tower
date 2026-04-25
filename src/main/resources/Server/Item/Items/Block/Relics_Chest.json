@@ -98,7 +98,7 @@
     "VariantRotation": "NESW",
     "InteractionHint": "server.interactionHints.openDoor",
     "Interactions": {
-      "Use": "Open_Container"
+      "Use": "Root_Relic_Chest_Claim"
     },
     "Particles": [
       {

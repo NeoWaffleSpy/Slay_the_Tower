@@ -1,6 +1,8 @@
 package com.Team_Berry.Game;
 
+import com.Team_Berry.Game.Commands.GetParticipantsIndices;
 import com.Team_Berry.Game.Components.QuestNPCComponent;
+import com.Team_Berry.Game.Interactions.ChestClaimInteraction;
 import com.Team_Berry.Game.Interactions.InstanceGameStartInteraction;
 import com.Team_Berry.Game.Interactions.StartRoomFromLobbyInteraction;
 import com.Team_Berry.Game.Interactions.StatueClaimSkillInteraction;
@@ -73,7 +75,11 @@ public class GamePlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("InitiateStageInteraction", InstanceGameStartInteraction.class, InstanceGameStartInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StartRoomFromLobbyInteraction", StartRoomFromLobbyInteraction.class, StartRoomFromLobbyInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StatueClaimSkillInteraction", StatueClaimSkillInteraction.class, StatueClaimSkillInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("ChestClaimInteraction", ChestClaimInteraction.class, ChestClaimInteraction.CODEC);
+        this.getCommandRegistry().registerCommand(new GetParticipantsIndices("getparticipantsindices", "get all indexes of all active participants"));
+
         CustomRoomTaskAsset.registerCodecs();
+
     }
 
     protected void shutdown() {
@@ -148,5 +154,9 @@ public class GamePlugin extends JavaPlugin {
         config.markChanged();
         InstancesPlugin.safeRemoveInstance(world);
         LOGGER.atInfo().log("Instance marked for deletion: " + world.getName());
+    }
+
+    public GameManager getGameManager(World world) {
+        return gameManagers.get(world);
     }
 }

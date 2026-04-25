@@ -15,12 +15,18 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.Direction;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 
 public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, RoomCodec>> {
     public static final AssetBuilderCodec<String, RoomCodec> CODEC;
+    public static final BuilderCodec<BlockPosition> BLOCK_POS_CODEC = BuilderCodec.builder(BlockPosition.class, BlockPosition::new)
+            .append(new KeyedCodec<>("X", Codec.INTEGER, true), (obj, val) -> obj.x = val, obj -> obj.x).add()
+            .append(new KeyedCodec<>("Y", Codec.INTEGER, true), (obj, val) -> obj.y = val, obj -> obj.y).add()
+            .append(new KeyedCodec<>("Z", Codec.INTEGER, true), (obj, val) -> obj.z = val, obj -> obj.z).add()
+            .build();
     private static AssetStore<String, RoomCodec, DefaultAssetMap<String, RoomCodec>> ASSET_STORE;
 
     static {
@@ -39,11 +45,16 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                         (obj, val) -> obj.npcSpawnAreas = val,
                         obj -> obj.npcSpawnAreas)
                 .documentation("Defined area for NPC spawning.").add()
+                .append(new KeyedCodec<>("ChestPositions", new ArrayCodec<>(BLOCK_POS_CODEC, BlockPosition[]::new)),
+                        (obj, val) -> obj.chestPositions = val,
+                        obj -> obj.chestPositions)
+                .documentation("List of chest block positions in this room.").add()
                 .build();
     }
 
     public SpawnPoint[] playerSpawns;
     public NPCSpawnArea[] npcSpawnAreas;
+    public BlockPosition[] chestPositions;
     public String worldName = "default";
     private String roomName = "NewRoom";
     private AssetExtraInfo.Data data;

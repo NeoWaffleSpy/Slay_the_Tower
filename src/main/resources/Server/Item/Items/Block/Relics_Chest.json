@@ -117,7 +117,10 @@
         "Color": "#fff800",
         "SystemId": "Chest_Particles"
       }
-    ]
+    ],
+    "Light": {
+      "Color": "#fe9"
+    }
   },
   "Tags": {
     "Type": [

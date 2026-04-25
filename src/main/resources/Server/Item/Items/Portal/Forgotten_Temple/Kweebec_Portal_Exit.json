@@ -29,11 +29,12 @@
     },
     "Particles": [
       {
+        "Scale": 1.35,
+        "DetachedFromModel": false,
         "PositionOffset": {
-          "Y": -1.1
+          "Y": -2.5
         },
-        "Scale": 1,
-        "SystemId": "Portal_Round_Blue2"
+        "SystemId": "Portal_Purple"
       }
     ],
     "Interactions": {
@@ -47,8 +48,7 @@
     },
     "Light": {
       "Color": "#f77"
-    },
-    "ParticleColor": "#ff0000"
+    }
   },
   "PlayerAnimationsId": "Block",
   "Tags": {

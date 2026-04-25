@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Instance Kweebec Portal",
+    "Name": "Kweebec Portal Exit",
     "Description": "server.items.Forgotten_Temple_Portal_Exit.description"
   },
   "Icon": "Icons/ItemsGenerated/Portal_Return.png",
@@ -15,7 +15,8 @@
     "CustomModel": "Blocks/_Debug/Model.blockymodel",
     "CustomModelTexture": [
       {
-        "Texture": "Blocks/_Debug/TextureEmpty.png"
+        "Texture": "Blocks/_Debug/TextureEmpty.png",
+        "Weight": 1
       }
     ],
     "HitboxType": "Pad_Portal",
@@ -29,22 +30,30 @@
     },
     "Particles": [
       {
-        "SystemId": "Portal_Kweebec_ParticIes",
         "PositionOffset": {
-          "Y": -1.1
+          "Y": -2.35
         },
-        "Scale": 1
+        "Scale": 1.25,
+        "SystemId": "Portal_Purple"
       }
     ],
     "Interactions": {
       "CollisionEnter": {
         "Interactions": [
-          "Test_Instance"
+          {
+            "Type": "ExitInstance",
+            "Next": {
+              "Type": "Simple",
+              "Effects": {
+                "LocalSoundEventId": "SFX_Portal_Neutral_Teleport_Local"
+              }
+            }
+          }
         ]
       }
     },
     "Light": {
-      "Color": "#f77"
+      "Color": "#59d"
     }
   },
   "PlayerAnimationsId": "Block",

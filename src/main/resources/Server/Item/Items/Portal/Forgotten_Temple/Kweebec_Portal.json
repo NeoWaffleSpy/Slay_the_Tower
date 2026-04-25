@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Forgotten_Temple_Portal_Exit.name",
+    "Name": "Kweebec Portal Start",
     "Description": "server.items.Forgotten_Temple_Portal_Exit.description"
   },
   "Icon": "Icons/ItemsGenerated/Portal_Return.png",
@@ -29,11 +29,12 @@
     },
     "Particles": [
       {
-        "SystemId": "Portal_Kweebec_ParticIes",
+        "Scale": 1,
         "PositionOffset": {
           "Y": -1.1
         },
-        "Scale": 1
+        "SystemId": "Portal_Kweebec_ParticIes",
+        "DetachedFromModel": true
       }
     ],
     "Interactions": {

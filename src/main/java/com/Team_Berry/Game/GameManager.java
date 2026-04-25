@@ -26,6 +26,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
+import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
@@ -70,6 +71,8 @@ public class GameManager {
     private final Set<PlayerRef> playersReady = new HashSet<>();
     private final Set<UUID> currentRoomMobs = new HashSet<>();
     private final Set<UUID> futureRoomMobs = new HashSet<>();
+    private final Map<UUID, Set<BlockPosition>> playerClaimedChests = new HashMap<>();
+    private final Map<UUID, BlockPosition> pendingChestClaims = new HashMap<>();
     private World world;
     private UUID currentRoomObjectiveId = null;
     private boolean pendingMilestoneTransition = false;
@@ -218,6 +221,7 @@ public class GameManager {
         this.currentRoomMobs.addAll(this.futureRoomMobs);
         this.futureRoomMobs.clear();
 
+        resetClaimedChests();
         tpParticipantsToRoom();
 
         this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
@@ -280,7 +284,7 @@ public class GameManager {
         this.activeParticipants.remove(playerRef);
         this.participantsInRoom.remove(playerRef);
         this.deadParticipants.remove(playerRef);
-        this.playersReady.remove(playerRef);
+        // this.playersReady.remove(playerRef);
 
         if (!activeParticipants.isEmpty() && playersReady.size() >= activeParticipants.size()) {
             log("Final undecided player left. Force-completing reward phase.");
@@ -396,8 +400,8 @@ public class GameManager {
         } else {
             this.pendingMilestoneTransition = false;
         }
-
-        grantArtifactRewards();
+        completeRewardPhase();
+//        grantArtifactRewards();
     }
 
     private void handleRunVictory() {
@@ -406,15 +410,15 @@ public class GameManager {
         ejectPlayersFromInstanceAndDestroy();
     }
 
-    private void grantArtifactRewards() {
-        log("Granting artifact rewards UI to all players.");
-        broadcastEventTitle("ROOM CLEAR", "Select your reward...", false, null);
-
-        for (PlayerRef player : activeParticipants) {
-            ArtefactSelection ui = new ArtefactSelection(player, world.getEntityStore().getStore());
-            ui.buildPage();
-        }
-    }
+//    private void grantArtifactRewards() {
+//        log("Granting artifact rewards UI to all players.");
+//        broadcastEventTitle("ROOM CLEAR", "Select your reward...", false, null);
+//
+//        for (PlayerRef player : activeParticipants) {
+//            ArtefactSelection ui = new ArtefactSelection(player, world.getEntityStore().getStore());
+//            ui.buildPage();
+//        }
+//    }
 
     public void grantSkillRewards(PlayerRef playerRef) {
         if (!canPlayerPickSkill(playerRef)) {
@@ -489,18 +493,17 @@ public class GameManager {
     }
 
     public void onPlayerClaimedArtefactReward(PlayerRef playerRef, String artefactId) {
-        if (!activeParticipants.contains(playerRef) || playersReady.contains(playerRef)) return;
+        if (!activeParticipants.contains(playerRef)) return;
 
         playerOwnedArtefacts.computeIfAbsent(playerRef.getUuid(), k -> new ArrayList<>()).add(artefactId);
 
-        log("Reward claimed by: " + playerRef.getUsername() + " (Artefact: " + artefactId + ")");
-        playersReady.add(playerRef);
-        playerRef.sendMessage(Message.raw("Reward claimed! Waiting for the rest of your party..."));
-
-        if (playersReady.size() >= activeParticipants.size()) {
-            log("All players finished. Proceeding with phase completion.");
-            completeRewardPhase();
+        BlockPosition pendingPos = pendingChestClaims.remove(playerRef.getUuid());
+        if (pendingPos != null) {
+            playerClaimedChests.computeIfAbsent(playerRef.getUuid(), k -> new HashSet<>()).add(pendingPos);
+            log("Reward claimed by: " + playerRef.getUsername() + " (Artefact: " + artefactId + ") from chest.");
         }
+
+        playerRef.sendMessage(Message.raw("Artefact acquired!"));
     }
 
     public void completeRewardPhase() {
@@ -544,6 +547,8 @@ public class GameManager {
         cleanRoom(futureRoomMobs);
 
         this.searchEffectApplied = false;
+
+        resetClaimedChests();
 
         tpParticipantsToLobby();
         initializeMilestone();
@@ -874,5 +879,61 @@ public class GameManager {
         for (PlayerRef p : players) {
             SoundUtil.playSoundEvent2dToPlayer(p, soundIndex, SoundCategory.SFX);
         }
+        log("Played Sound");
+    }
+
+    public void playerChestClaim(BlockPosition pos, PlayerRef playerRef) {
+        if (!activeParticipants.contains(playerRef)) return;
+
+        UUID playerId = playerRef.getUuid();
+        Set<BlockPosition> claimedChests = playerClaimedChests.getOrDefault(playerId, Collections.emptySet());
+
+        if (claimedChests.contains(pos)) {
+            playerRef.sendMessage(Message.raw("You have already looted this chest!"));
+            return;
+        }
+
+        pendingChestClaims.put(playerId, pos.clone());
+        log(playerRef.getUsername() + " is viewing chest loot at " + pos.x + ", " + pos.y + ", " + pos.z);
+
+        EventTitleUtil.showEventTitleToPlayer(
+                playerRef,
+                Message.raw("Chest Looted!"),
+                Message.raw("Select your reward..."),
+                false,
+                null,
+                2.0F, 0.5F, 0.5F
+        );
+
+        ArtefactSelection ui = new ArtefactSelection(playerRef, world.getEntityStore().getStore());
+        ui.buildPage();
+    }
+
+    private void resetClaimedChests() {
+        this.playerClaimedChests.clear();
+        this.pendingChestClaims.clear();
+        log("Reset chest claim and pending histories for the new room.");
+    }
+
+    public String getParticipantIndices(Collection<PlayerRef> activeParticipants) {
+        return activeParticipants.stream()
+                .filter(p -> p.getReference() != null && p.getReference().isValid())
+                .map(p -> p.getUsername() + " " + p.getReference().getIndex())
+                .collect(Collectors.joining("\n"));
+    }
+
+    public void breakBlockAt(BlockPosition pos) {
+        if (pos == null || world == null) return;
+
+        world.execute(() -> {
+            boolean success = world.breakBlock(pos.x, pos.y, pos.z, 0);
+
+            if (success) {
+                log("Successfully broke the block at " + pos.x + ", " + pos.y + ", " + pos.z);
+            } else {
+                // Useful for debugging if the chunk isn't loaded or the block is already gone
+                log("Failed to break block at " + pos.x + ", " + pos.y + ", " + pos.z + ". It may already be empty.");
+            }
+        });
     }
 }

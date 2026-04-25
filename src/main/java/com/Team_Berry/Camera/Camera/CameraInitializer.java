@@ -179,7 +179,7 @@ public class CameraInitializer {
 
     public static void reload(PlayerRef playerRef) {
         PlayerPOVComponent pPOV = getPOV(playerRef);
-        if (pPOV != null)
+        if (pPOV != null && !pPOV.getPOVName().equals("Custom"))
             get(pPOV.getPOVName()).setPOV(playerRef);
         else
             CameraInitializer.deletePOV(playerRef);

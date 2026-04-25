@@ -124,17 +124,6 @@ public class TooltipInjector {
 
     public static void injectTooltips() {
         TooltipInjector.reloadLanguages();
-        StringFormatter sf = new StringFormatter();
-        setItemTranslation("items.Weapon_Battleaxe_Custom.name", "Doomer");
-        sf.clear().color(Color.CYAN).append("This weapon of mass destruction is said to have been given by the ")
-                .color(Color.GRAY).setUnder().append("Doom Reaper").setUnder(false)
-                .color(Color.CYAN).append(" to it's strongest warrior: ")
-                .color(Color.RED).setBold().append("DOOMSTACK").setBold(false).append("\n\n")
-                .color(Color.MAGENTA).append("Somehow it fell into your hand...\n")
-                .append("Will it be a blessing, or a curse ?")
-                .endColor();
-        setItemTranslation("items.Weapon_Battleaxe_Custom.description", sf);
-        setItemTranslation("client.itemTooltip.damageCauseResistance.environmental", "Environmental Resistance");
         injectDaggerTooltips();
         injectBowTooltips();
     }

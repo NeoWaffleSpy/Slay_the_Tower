@@ -30,6 +30,7 @@ import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
@@ -59,6 +60,8 @@ public class GameManager {
     );
     private static final String MOB_SEARCH_EFFECT = "Mob_Search_Effect";
     private static final String SFX_ROOM_START = "SFX_Room_Start";
+    private static final String RELICS_CHEST = "Relics_Chest";
+
     private final GameState gameState;
     private final RoomCodec lobby;
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
@@ -943,17 +946,35 @@ public class GameManager {
             return;
         }
 
-        List<BlockPosition> allChests = new ArrayList<>(Arrays.asList(room.chestPositions));
+        world.execute(() -> {
+            List<BlockPosition> validChests = new ArrayList<>();
 
-        Collections.shuffle(allChests);
+            for (BlockPosition pos : room.chestPositions) {
+                BlockType blockType = world.getBlockType(pos.x, pos.y, pos.z);
 
-        int amountToBreak = allChests.size() / 2;
+                if (blockType != null && blockType.getId().equals(RELICS_CHEST)) {
+                    validChests.add(pos);
+                } else {
+                    String actualId = (blockType != null) ? blockType.getId().toString() : "Empty/Air";
+                    log(String.format("Position %d, %d, %d is NOT a '%s'! (Found: %s)",
+                            pos.x, pos.y, pos.z, RELICS_CHEST, actualId));
+                }
+            }
 
-        for (int i = 0; i < amountToBreak; i++) {
-            BlockPosition pos = allChests.get(i);
-            breakBlockAt(pos);
-        }
+            log(String.format("Chest RNG: Found a total of %d '%s'(s) in room '%s'.",
+                    validChests.size(), RELICS_CHEST, room.getId()));
 
-        log(String.format("Chest RNG: Queued removal of %d out of %d possible chests for room '%s'.", amountToBreak, allChests.size(), room.getId()));
+            if (!validChests.isEmpty()) {
+                Collections.shuffle(validChests);
+                int amountToBreak = validChests.size() / 2;
+
+                for (int i = 0; i < amountToBreak; i++) {
+                    BlockPosition pos = validChests.get(i);
+                    breakBlockAt(pos);
+                }
+
+                log(String.format("Chest RNG: Queued removal of %d '%s'(s).", amountToBreak, RELICS_CHEST));
+            }
+        });
     }
 }

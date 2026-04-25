@@ -1,0 +1,16 @@
+{
+  "PlayerSpawns": [
+    {
+      "Position": {
+        "X": -9,
+        "Z": 202,
+        "Y": 137
+      }
+    }
+  ],
+  "Tags": {
+    "Category": [
+      "Postgame"
+    ]
+  }
+}

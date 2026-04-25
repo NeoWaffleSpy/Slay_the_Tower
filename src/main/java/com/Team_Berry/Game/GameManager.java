@@ -14,6 +14,7 @@ import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
 import com.Team_Berry.Rooms.Utils.RoomNPCSpawner;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
+import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.builtin.adventure.objectives.Objective;
@@ -53,19 +54,24 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class GameManager {
+    private static final KeyedScheduler scheduler = new KeyedScheduler();
+
     private static final List<String> RANDOM_WEATHERS = Arrays.asList(
             "Weather_Red", "Weather_Blue", "Weather_Purple", "Weather_Green"
     );
     private static final String MOB_SEARCH_EFFECT = "Mob_Search_Effect";
     private static final String SFX_ROOM_START = "SFX_Room_Start";
     private static final String RELICS_CHEST = "Relics_Chest";
+    private static final int TELEPORT_DELAY = 7;
 
     private final GameState gameState;
     private final RoomCodec lobby;
+    private final RoomCodec postgameRoom;
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
@@ -81,6 +87,7 @@ public class GameManager {
     private World world;
     private UUID currentRoomObjectiveId = null;
     private boolean pendingMilestoneTransition = false;
+    private boolean pendingSkillBroadcast = false;
     private Pair<RoomCodec, Quest> currentRoom;
     private Pair<RoomCodec, Quest> futureRoom;
     private int globalMaxSkills = 1;
@@ -89,6 +96,7 @@ public class GameManager {
 
     public GameManager(World world, SkillMilestoneCodec milestoneData) {
         this.world = world;
+        this.postgameRoom = findPostgameRoom();
         this.gameState = new GameState();
         this.gameState.initialize(milestoneData);
         this.lobby = findLobbyRoom();
@@ -216,23 +224,31 @@ public class GameManager {
     }
 
     public void advanceToNextRoom() {
-        log("Advancing tower. Shifting buffer...");
-        this.participantsInRoom.clear();
-        cleanRoom(currentRoomMobs);
+        log("Queueing tower advance in " + TELEPORT_DELAY + " seconds...");
+        setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
 
-        this.searchEffectApplied = false;
+        scheduler.schedule("advance_room_" + world.getName(), () -> {
+            world.execute(() -> {
+                log("Advancing tower. Shifting buffer...");
+                this.participantsInRoom.clear();
+                cleanRoom(currentRoomMobs);
 
-        this.currentRoom = this.futureRoom;
+                this.searchEffectApplied = false;
 
-        this.currentRoomMobs.clear();
-        this.currentRoomMobs.addAll(this.futureRoomMobs);
-        this.futureRoomMobs.clear();
+                this.currentRoom = this.futureRoom;
 
-        resetClaimedChests();
-        tpParticipantsToRoom();
+                this.currentRoomMobs.clear();
+                this.currentRoomMobs.addAll(this.futureRoomMobs);
+                this.futureRoomMobs.clear();
 
-        this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
-        log("Advance complete. Current Room is now: " + currentRoom.left().worldName);
+                resetClaimedChests();
+
+                tpParticipantsToRoom();
+
+                this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
+                log("Advance complete. Current Room is now: " + currentRoom.left().worldName);
+            });
+        }, TELEPORT_DELAY, TimeUnit.SECONDS);
     }
 
     public void addParticipant(PlayerRef playerRef) {
@@ -385,9 +401,6 @@ public class GameManager {
 
         reviveDeadPlayers();
 
-        setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
-        log("Weather changed to Transition state.");
-
         if (this.gameState.isRunComplete()) {
             log("VICTORY! The final milestone has been cleared.");
             handleRunVictory();
@@ -395,15 +408,15 @@ public class GameManager {
         }
 
         if (oldMilestone != newMilestone) {
-            this.globalMaxSkills++;
             this.pendingMilestoneTransition = true;
-            log("MILESTONE REACHED. Skill capacity increased to: " + globalMaxSkills);
-            broadcastEventTitle(
-                    "MILESTONE REACHED",
-                    "Skill capacity increased to " + globalMaxSkills,
-                    true,
-                    null
-            );
+
+            if (this.globalMaxSkills < 4) {
+                this.globalMaxSkills++;
+                this.pendingSkillBroadcast = true;
+                log("MILESTONE REACHED. Skill capacity increased to: " + globalMaxSkills);
+            } else {
+                log("MILESTONE REACHED. Skill capacity is already at max (4).");
+            }
         } else {
             this.pendingMilestoneTransition = false;
         }
@@ -414,7 +427,8 @@ public class GameManager {
     private void handleRunVictory() {
         log("Ending successful run and ejecting players.");
         broadcastEventTitle("TOWER CONQUERED", "You have beaten the Slay the Tower!", true, null);
-        ejectPlayersFromInstanceAndDestroy();
+        //ejectPlayersFromInstanceAndDestroy();
+        tpParticipantsToPostgame();
     }
 
 //    private void grantArtifactRewards() {
@@ -547,19 +561,36 @@ public class GameManager {
     }
 
     private void transitionToLobby() {
-        log("Moving party to Lobby.");
-        completeSharedRoomObjective();
-        this.participantsInRoom.clear();
-        cleanRoom(currentRoomMobs);
-        cleanRoom(futureRoomMobs);
+        log("Queueing transition to Lobby in " + TELEPORT_DELAY + " seconds...");
+        setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
 
-        this.searchEffectApplied = false;
+        scheduler.schedule("tp_lobby_" + world.getName(), () -> {
+            world.execute(() -> {
+                log("Moving party to Lobby.");
+                completeSharedRoomObjective();
+                this.participantsInRoom.clear();
+                cleanRoom(currentRoomMobs);
+                cleanRoom(futureRoomMobs);
 
-        resetClaimedChests();
+                this.searchEffectApplied = false;
 
-        tpParticipantsToLobby();
-        initializeMilestone();
-        this.pendingMilestoneTransition = false;
+                resetClaimedChests();
+
+                tpParticipantsToLobby();
+                initializeMilestone();
+                this.pendingMilestoneTransition = false;
+
+                if (this.pendingSkillBroadcast) {
+                    broadcastEventTitle(
+                            "MILESTONE REACHED",
+                            "Skill capacity increased to " + globalMaxSkills,
+                            true,
+                            null
+                    );
+                    this.pendingSkillBroadcast = false; // Reset the flag
+                }
+            });
+        }, TELEPORT_DELAY, TimeUnit.SECONDS);
     }
 
     private void handleStageFailure() {
@@ -568,7 +599,8 @@ public class GameManager {
         broadcastEventTitle("DEFEATED", "The tower claims another soul...", true, null);
 
 
-        ejectPlayersFromInstanceAndDestroy();
+        //ejectPlayersFromInstanceAndDestroy();
+        tpParticipantsToPostgame();
     }
 
     private void broadcastMessage(String text) {
@@ -596,24 +628,18 @@ public class GameManager {
     }
 
     private void tpParticipantsToLobby() {
-
-        showAllDeadPlayers();
-
         if (this.lobby != null) {
             log("Teleporting participants to Lobby asset: " + lobby.worldName);
             for (PlayerRef participant : activeParticipants) {
                 RoomTeleporter.teleportToRoom(participant, lobby, this.world);
             }
         }
-
         setLobbyWeather();
     }
 
     private void tpParticipantsToRoom() {
-
-        showAllDeadPlayers();
-
         if (currentRoom == null) return;
+
         log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
 
         List<PlayerRef> playersToTeleport = new ArrayList<>();
@@ -623,14 +649,11 @@ public class GameManager {
                 this.participantsInRoom.add(p);
                 startSharedRoomObjective();
                 setRandomRoomWeather();
-
             }
         }
 
         RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
-
         playSoundToPlayers(playersToTeleport, SFX_ROOM_START);
-
     }
 
     public List<RoomCodec> findValidRooms() {
@@ -681,6 +704,22 @@ public class GameManager {
         return roomMap.getAsset(randomKey);
     }
 
+    private RoomCodec findPostgameRoom() {
+        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
+        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Postgame");
+        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
+
+        if (roomKeys == null || roomKeys.isEmpty()) {
+            log("Warning: No Postgame room found with tag 'Category=Postgame'.");
+            return null;
+        }
+
+        List<String> keyList = new ArrayList<>(roomKeys);
+        String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
+
+        return roomMap.getAsset(randomKey);
+    }
+
     public void resolvePlayerDeath(PlayerRef playerRef) {
         if (this.participantsInRoom.contains(playerRef)) {
             this.deadParticipants.add(playerRef);
@@ -705,6 +744,7 @@ public class GameManager {
 
     private void reviveDeadPlayers() {
         if (deadParticipants.isEmpty()) return;
+        showAllDeadPlayers();
         log("Reviving " + deadParticipants.size() + " dead participants.");
         deadParticipants.clear();
     }
@@ -1023,18 +1063,36 @@ public class GameManager {
 
     private void showAllDeadPlayers() {
         if (deadParticipants.isEmpty()) return;
+        log("inside show");
 
+        List<PlayerRef> deadPlayersSnapshot = new ArrayList<>(deadParticipants);
         world.execute(() -> {
-            for (PlayerRef deadPlayer : deadParticipants) {
+            for (PlayerRef deadPlayer : deadPlayersSnapshot) {
                 UUID deadUuid = deadPlayer.getUuid();
+                log("dead player found : " + deadPlayer.getUsername());
 
                 for (PlayerRef participant : activeParticipants) {
                     if (!participant.equals(deadPlayer)) {
                         participant.getHiddenPlayersManager().showPlayer(deadUuid);
+                        log("shown : " + deadPlayer.getUsername());
                     }
                 }
             }
             log("Revealed all dead participants before teleportation.");
         });
+    }
+
+    private void tpParticipantsToPostgame() {
+        showAllDeadPlayers();
+
+        if (this.postgameRoom != null) {
+            log("Teleporting participants to Postgame asset: " + postgameRoom.worldName);
+            for (PlayerRef participant : activeParticipants) {
+                RoomTeleporter.teleportToRoom(participant, postgameRoom, this.world);
+            }
+        } else {
+            log("Error: No postgame room defined! Falling back to immediate instance ejection.");
+            ejectPlayersFromInstanceAndDestroy();
+        }
     }
 }

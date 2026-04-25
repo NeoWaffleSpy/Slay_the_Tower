@@ -27,7 +27,6 @@ public class ChestClaimInteraction extends SimpleInstantInteraction {
 
         if (playerRef == null || !playerRef.getReference().isValid()) return;
 
-        // Extract the target block position using the method you found
         BlockPosition targetBlock = interactionContext.getTargetBlock();
         if (targetBlock == null) return;
 
@@ -35,7 +34,6 @@ public class ChestClaimInteraction extends SimpleInstantInteraction {
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
 
         if (manager != null) {
-            // Pass the BlockPosition and PlayerRef directly to the GameManager
             manager.playerChestClaim(targetBlock, playerRef);
         }
     }

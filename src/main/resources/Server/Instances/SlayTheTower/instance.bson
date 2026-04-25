@@ -32,7 +32,7 @@
   "IsFallDamageEnabled": true,
   "IsGameTimePaused": false,
   "GameTime": "0001-01-01T05:30:00Z",
-  "ForcedWeather": "lobby",
+  "ForcedWeather": "Weather_Prison",
   "ClientEffects": {
     "SunHeightPercent": 100.0,
     "SunAngleDegrees": 0.0,

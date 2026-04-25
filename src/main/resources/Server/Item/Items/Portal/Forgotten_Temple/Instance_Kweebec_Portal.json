@@ -37,7 +37,7 @@
       }
     ],
     "Interactions": {
-      "Use": {
+      "CollisionEnter": {
         "Interactions": [
           "Test_Instance"
         ]

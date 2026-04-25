@@ -30,7 +30,7 @@ public class CinematicPlayer {
     public void runCinematic(PlayerRef player, Position origin, World world, CommandContext commandContext) {
         PlayerPOVComponent pPOV = player.getReference().getStore().getComponent(player.getReference(), PlayerPOVComponent.getComponentType());
         if (pPOV == null)
-            CameraInitializer.setPlayerPov("custom", player);
+            CameraInitializer.setPlayerPov("Custom", player);
         if (commandContext != null)
             commandContext.sendMessage(Message.raw("Starting Cinematic Player").color(Color.GREEN));
         AtomicReference<Long> delta = new AtomicReference<>(0L);

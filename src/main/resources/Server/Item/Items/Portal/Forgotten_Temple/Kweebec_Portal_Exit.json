@@ -29,11 +29,11 @@
     },
     "Particles": [
       {
-        "SystemId": "Portal_Kweebec_ParticIes",
         "PositionOffset": {
           "Y": -1.1
         },
-        "Scale": 1
+        "Scale": 1,
+        "SystemId": "Portal_Round_Blue2"
       }
     ],
     "Interactions": {
@@ -47,7 +47,8 @@
     },
     "Light": {
       "Color": "#f77"
-    }
+    },
+    "ParticleColor": "#ff0000"
   },
   "PlayerAnimationsId": "Block",
   "Tags": {

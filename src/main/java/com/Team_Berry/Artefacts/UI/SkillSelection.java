@@ -26,12 +26,15 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SkillSelection {
     private static final String[] skillStringList = new String[]{
             "Hotbar_Second_Wind",
             "Hotbar_Shadow_Dash",
-            "Hotbar_Slow_Bomb"
+            "Hotbar_Dagger_Throw"
     };
     private final PlayerRef playerRef;
     private final Store<EntityStore> store;
@@ -42,38 +45,6 @@ public class SkillSelection {
     public SkillSelection(PlayerRef playerRef, Store<EntityStore> store) {
         this.playerRef = playerRef;
         this.store = store;
-    }
-
-    public static List<ArtefactCodec> weightedDraw(List<ArtefactCodec> input, int count) {
-        List<ArtefactCodec> pool = new ArrayList<>(input);
-        List<ArtefactCodec> result = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < count && !pool.isEmpty(); i++) {
-            float totalWeight = 0;
-            for (ArtefactCodec obj : pool) {
-                if (obj.rarity.weight > 0) {
-                    totalWeight += obj.rarity.weight;
-                }
-            }
-            if (totalWeight <= 0) break;
-            float r = random.nextFloat(totalWeight);
-            float cumulative = 0;
-            ArtefactCodec selected = null;
-            for (ArtefactCodec obj : pool) {
-                float w = obj.rarity.weight;
-                if (w <= 0) continue;
-                cumulative += w;
-                if (r < cumulative) {
-                    selected = obj;
-                    break;
-                }
-            }
-
-            if (selected == null) break;
-            result.add(selected);
-            pool.remove(selected);
-        }
-        return result;
     }
 
     private ArrayList<Item> getSkillsFromItemList() {
@@ -118,8 +89,10 @@ public class SkillSelection {
         if (name == null)
             name = item.getId();
         String description = tl.getDescription();
-        if (tl.getDescription() != null)
+        if (tl.getDescription() != null) {
             description = I18nModule.get().getMessage("en-US", tl.getDescription());
+            description = toHyuiHtml(description);
+        }
         if (description == null || description.isEmpty())
             description = "Template";
         String icon = item.getIcon().replace("icons/ItemsGenerated/", "");
@@ -130,6 +103,80 @@ public class SkillSelection {
                 item,
                 index);
     }
+
+    public static String toHyuiHtml(String input) {
+        StringBuilder output = new StringBuilder();
+
+        String[] lines = input.split("\n");
+
+        for (String line : lines) {
+            StringBuilder lineBuilder = new StringBuilder();
+
+            Pattern pattern = Pattern.compile(
+                    "<color is=\"(#[0-9a-fA-F]{6})\">|</color>|<(b|i)>|</(b|i)>"
+            );
+            Matcher matcher = pattern.matcher(line);
+
+            String currentColor = null;
+            boolean bold = false;
+            boolean italic = false;
+
+            int lastIndex = 0;
+
+            while (matcher.find()) {
+                if (matcher.start() > lastIndex) {
+                    String text = line.substring(lastIndex, matcher.start());
+                    appendStyledSpan(lineBuilder, text, currentColor, bold, italic);
+                }
+
+                if (matcher.group(1) != null) {
+                    currentColor = matcher.group(1);
+                } else if (matcher.group().equals("</color>")) {
+                    currentColor = null;
+                } else if ("b".equals(matcher.group(2))) {
+                    bold = true;
+                } else if ("i".equals(matcher.group(2))) {
+                    italic = true;
+                } else if ("b".equals(matcher.group(3))) {
+                    bold = false;
+                } else if ("i".equals(matcher.group(3))) {
+                    italic = false;
+                }
+
+                lastIndex = matcher.end();
+            }
+
+            if (lastIndex < line.length()) {
+                String text = line.substring(lastIndex);
+                appendStyledSpan(lineBuilder, text, currentColor, bold, italic);
+            }
+
+            output.append("<p class='txt txtDesc'>").append(lineBuilder).append("</p>\n");
+        }
+
+        return output.toString();
+    }
+
+    private static void appendStyledSpan(StringBuilder sb, String text, String color, boolean bold, boolean italic) {
+        if (text.isEmpty()) return;
+
+        sb.append("<span");
+
+        if (color != null) {
+            sb.append(" data-hyui-color=\"").append(color).append("\"");
+        }
+        if (bold) {
+            sb.append(" data-hyui-bold=\"true\"");
+        }
+        if (italic) {
+            sb.append(" data-hyui-italic=\"true\"");
+        }
+
+        sb.append(">");
+        sb.append(text);
+        sb.append("</span>");
+    }
+
 
     private void buttonEvent(int index) {
         StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);

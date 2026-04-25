@@ -134,8 +134,8 @@ public class CameraInitializer {
             this.eventRegistry.enable();
             this.isActive = true;
             //this.eventRegistry.register(PlayerConnectEvent.class, (event) -> this.setPOV(event.getPlayerRef()));
-            this.eventRegistry.register(PlayerMouseButtonEvent.class, this::dispatchControl);
-            this.eventRegistry.registerGlobal(PlayerInteractEvent.class, (event) -> { if (mouseControl != null) event.setCancelled(true); });
+            //this.eventRegistry.register(PlayerMouseButtonEvent.class, this::dispatchControl);
+            //this.eventRegistry.registerGlobal(PlayerInteractEvent.class, (event) -> { if (mouseControl != null) event.setCancelled(true); });
             Universe.get().getPlayers().forEach((pRef) -> {
                 PlayerPOVComponent pPOV = getPOV(pRef);
                 if (pPOV != null) {

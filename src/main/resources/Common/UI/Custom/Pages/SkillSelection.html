@@ -36,7 +36,7 @@
     }
 
     .artefactTitleBox {
-        flex-weight: 2;
+        flex-weight: 3;
         background-color: #ff00ff00;
     }
 
@@ -51,7 +51,7 @@
         flex-weight: 4;
         background-color: #0000ff00;
         anchor-width: 300;
-        layout-mode: Middle;
+        layout-mode: Top;
     }
 
     .artefactRarityBox {
@@ -75,6 +75,7 @@
     }
 
     .txtName {
+        color: #ffffff;
         font-size: 20;
     }
 
@@ -84,8 +85,7 @@
     }
 
     .txtDesc {
-        color: #999999;
-        font-size: 14;
+        font-size: 16;
     }
 </style>
 <div class='page-overlay'>
@@ -102,7 +102,7 @@
                             <p class='txt txtName'>{{$name}}</p>
                         </div>
                         <div class='artefactDescBox'>
-                            <p class='txt txtDesc'>{{$description}}</p>
+                            {{$description}}
                         </div>
                     </div>
                 </button>

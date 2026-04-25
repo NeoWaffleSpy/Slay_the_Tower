@@ -49,12 +49,17 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                         (obj, val) -> obj.chestPositions = val,
                         obj -> obj.chestPositions)
                 .documentation("List of chest block positions in this room.").add()
+                .append(new KeyedCodec<>("SpectatePosition", CodecUtils.POS_CODEC, true),
+                        (obj, val) -> obj.spectatePosition = val,
+                        obj -> obj.spectatePosition)
+                .documentation("The precise location for a spectator to spawn.").add()
                 .build();
     }
 
     public SpawnPoint[] playerSpawns;
     public NPCSpawnArea[] npcSpawnAreas;
     public BlockPosition[] chestPositions;
+    public Position spectatePosition;
     public String worldName = "default";
     private String roomName = "NewRoom";
     private AssetExtraInfo.Data data;

@@ -26,8 +26,10 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
+import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.GameMode;
+import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
@@ -595,6 +597,8 @@ public class GameManager {
 
     private void tpParticipantsToLobby() {
 
+        showAllDeadPlayers();
+
         if (this.lobby != null) {
             log("Teleporting participants to Lobby asset: " + lobby.worldName);
             for (PlayerRef participant : activeParticipants) {
@@ -606,6 +610,9 @@ public class GameManager {
     }
 
     private void tpParticipantsToRoom() {
+
+        showAllDeadPlayers();
+
         if (currentRoom == null) return;
         log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
 
@@ -683,6 +690,9 @@ public class GameManager {
             if (this.deadParticipants.size() == this.participantsInRoom.size()) {
                 log("Full Wipe detected.");
                 endStage(EndStageResult.FAILURE);
+            } else {
+                teleportToSpectatorPosition(playerRef);
+                hidePlayer(playerRef);
             }
         }
     }
@@ -975,6 +985,56 @@ public class GameManager {
 
                 log(String.format("Chest RNG: Queued removal of %d '%s'(s).", amountToBreak, RELICS_CHEST));
             }
+        });
+    }
+
+    private void teleportToSpectatorPosition(PlayerRef playerRef) {
+        if (currentRoom == null || currentRoom.left() == null || currentRoom.left().spectatePosition == null) {
+            log("Warning: No spectate position defined for the current room.");
+            return;
+        }
+
+        Position pos = currentRoom.left().spectatePosition;
+        Transform spectateTransform = new Transform(new Vector3d(pos.x, pos.y, pos.z));
+
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+                Teleport teleportComponent = Teleport.createForPlayer(world, spectateTransform);
+                store.addComponent(ref, Teleport.getComponentType(), teleportComponent);
+                log("Teleported spectator " + playerRef.getUsername() + " to the spectate position.");
+            }
+        });
+    }
+
+    private void hidePlayer(PlayerRef deadPlayer) {
+        UUID deadUuid = deadPlayer.getUuid();
+
+        world.execute(() -> {
+            for (PlayerRef participant : activeParticipants) {
+                if (!participant.equals(deadPlayer)) {
+                    participant.getHiddenPlayersManager().hidePlayer(deadUuid);
+                }
+            }
+            log("Hid " + deadPlayer.getUsername() + " from all active participants.");
+        });
+    }
+
+    private void showAllDeadPlayers() {
+        if (deadParticipants.isEmpty()) return;
+
+        world.execute(() -> {
+            for (PlayerRef deadPlayer : deadParticipants) {
+                UUID deadUuid = deadPlayer.getUuid();
+
+                for (PlayerRef participant : activeParticipants) {
+                    if (!participant.equals(deadPlayer)) {
+                        participant.getHiddenPlayersManager().showPlayer(deadUuid);
+                    }
+                }
+            }
+            log("Revealed all dead participants before teleportation.");
         });
     }
 }

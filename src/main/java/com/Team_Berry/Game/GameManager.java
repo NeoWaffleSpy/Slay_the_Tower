@@ -154,6 +154,8 @@ public class GameManager {
                 targetMobTracker.addAll(spawnedMobs);
                 log("Successfully registered " + spawnedMobs.size() + " mob UUIDs for room.");
             });
+
+            randomizeRoomChests(selectedRoom);
         } else {
             quest = new Quest(0);
             log("Room selected: " + selectedRoom.worldName + " (Empty: No mob groups found).");
@@ -931,9 +933,27 @@ public class GameManager {
             if (success) {
                 log("Successfully broke the block at " + pos.x + ", " + pos.y + ", " + pos.z);
             } else {
-                // Useful for debugging if the chunk isn't loaded or the block is already gone
                 log("Failed to break block at " + pos.x + ", " + pos.y + ", " + pos.z + ". It may already be empty.");
             }
         });
+    }
+
+    public void randomizeRoomChests(RoomCodec room) {
+        if (room == null || room.chestPositions == null || room.chestPositions.length == 0) {
+            return;
+        }
+
+        List<BlockPosition> allChests = new ArrayList<>(Arrays.asList(room.chestPositions));
+
+        Collections.shuffle(allChests);
+
+        int amountToBreak = allChests.size() / 2;
+
+        for (int i = 0; i < amountToBreak; i++) {
+            BlockPosition pos = allChests.get(i);
+            breakBlockAt(pos);
+        }
+
+        log(String.format("Chest RNG: Queued removal of %d out of %d possible chests for room '%s'.", amountToBreak, allChests.size(), room.getId()));
     }
 }

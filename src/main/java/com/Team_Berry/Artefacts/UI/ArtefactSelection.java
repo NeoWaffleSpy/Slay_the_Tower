@@ -10,9 +10,11 @@ import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
+import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProperties;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.modules.i18n.I18nModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -86,10 +88,25 @@ public class ArtefactSelection {
     private ArtefactInfos parseInfo(ArtefactCodec artefact, int index) {
         if (artefact == null)
             return null;
+        ItemTranslationProperties tl = artefact.translationProperties;
+        if (tl == null)
+            tl = new ItemTranslationProperties("Template", "Template");
+        String name = tl.getName();
+        if (tl.getName() != null)
+            name = I18nModule.get().getMessage("en-US", tl.getName());
+        if (name == null)
+            name = artefact.getId();
+        String description = tl.getDescription();
+        if (tl.getDescription() != null) {
+            description = I18nModule.get().getMessage("en-US", tl.getDescription());
+            description = TooltipInjector.toHyuiHtml(description, "txt txtDesc");
+        }
+        if (description == null || description.isEmpty())
+            description = "Template";
         return new ArtefactInfos(
-                I18nModule.get().getMessage("en-US", artefact.translationProperties.getName()),
+                name,
                 artefact.shortIconPath,
-                I18nModule.get().getMessage("en-US", artefact.translationProperties.getDescription()),
+                description,
                 null,
                 parseStats(artefact.getStatArray()),
                 artefact,

@@ -1,0 +1,19 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/SFX_Electric_Shot.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -2,
+        "MaxPitch": 2,
+        "MinVolume": -3
+      },
+      "StartDelay": 0,
+      "Volume": 0.0
+    }
+  ],
+  "Volume": -0.12,
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_Shortbow"
+}

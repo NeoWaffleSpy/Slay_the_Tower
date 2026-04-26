@@ -12,7 +12,8 @@
         }
       ],
       "ItemAnimationId": "ShootCharged",
-      "CameraEffect": "Mace_Bash"
+      "CameraEffect": "Mace_Bash",
+      "LocalSoundEventId": "SFX_Electric_Shot"
     },
     "RunTime": 1,
     "CancelOnItemChange": false
@@ -26,6 +27,8 @@
         "TargetEntityPart": "PrimaryItem",
         "TargetNodeName": "ARROW-PARTS-PLACEHOLDER"
       }
-    ]
+    ],
+    "LocalSoundEventId": "SFX_Bow_T2_Draw_Local",
+    "WorldSoundEventId": "SFX_Bow_T2_Draw"
   }
 }

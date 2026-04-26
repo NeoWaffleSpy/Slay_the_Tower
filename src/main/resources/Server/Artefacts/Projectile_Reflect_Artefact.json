@@ -1,0 +1,11 @@
+{
+  "Icon": "UI/Custom/Thorn.png",
+  "Rarity": "Rare",
+  "TranslationProperties": {
+    "Name": "azer",
+    "Description": "azer"
+  },
+  "Stats": [
+    "Bonus_Projectile_Reflect_Damage"
+  ]
+}

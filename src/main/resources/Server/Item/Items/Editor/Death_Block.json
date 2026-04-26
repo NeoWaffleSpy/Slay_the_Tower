@@ -19,7 +19,7 @@
     "CubeShadingMode": "Flat",
     "Textures": [
       {
-        "All": "BlockTextures/Editor_Empty.png"
+        "All": "Blocks/_Debug/TextureEmpty.png"
       }
     ],
     "Interactions": {

@@ -140,13 +140,12 @@
     "Secondary": "Block_Secondary"
   },
   "BlockType": {
-    "Material": "Solid",
+    "Material": "Empty",
     "DrawType": "Model",
     "Opacity": "Transparent",
-    "CustomModel": "Blocks/Miscellaneous/Kweebec_Plush.blockymodel",
     "CustomModelTexture": [
       {
-        "Texture": "Blocks/Miscellaneous/Kweebec_Plush_Pink_Texture.png",
+        "Texture": "Blocks/_Debug/TextureEmpty.png",
         "Weight": 1
       }
     ],
@@ -162,24 +161,6 @@
     },
     "BlockParticleSetId": "Leaves",
     "ParticleColor": "#228b22",
-    "BlockSoundSetId": "Plushie",
-    "Interactions": {
-      "Use": {
-        "Interactions": [
-          {
-            "Type": "ChangeState",
-            "Changes": {
-              "default": "Off",
-              "On": "Off",
-              "Off": "On"
-            },
-            "Effects": {
-              "LocalSoundEventId": "SFX_Plushie_Build"
-            }
-          }
-        ]
-      }
-    },
     "InteractionHint": "server.interactionHints.deactivate",
     "State": {
       "Definitions": {

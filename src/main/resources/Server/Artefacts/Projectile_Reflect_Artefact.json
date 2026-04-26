@@ -1,6 +1,6 @@
 {
   "Icon": "UI/Custom/ArtefactIcons/Thorn.png",
-  "Rarity": "Rare",
+  "Rarity": "Legendary",
   "TranslationProperties": {
     "Name": "Projectile_Reflect_Artefact.name",
     "Description": "Projectile_Reflect_Artefact.description"

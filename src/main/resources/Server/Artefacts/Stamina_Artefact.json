@@ -6,5 +6,6 @@
   "TranslationProperties": {
     "Name": "Stamina_Artefact.name",
     "Description": "Stamina_Artefact.description"
-  }
+  },
+  "Rarity": "Common"
 }

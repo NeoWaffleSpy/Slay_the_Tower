@@ -7,6 +7,7 @@ import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.ArtefactHud;
+import com.Team_Berry.Artefacts.UI.ShieldHud;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -305,6 +306,7 @@ public class StatEffectSystem {
         public void onComponentAdded(@NonNull Ref<EntityStore> ref, @NonNull StatEffectComponent component, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
             PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
             component.artefactHud = new ArtefactHud(component, playerRef);
+            component.shieldHud = new ShieldHud(component, playerRef);
             if (playerRef != null)
                 StatEffectSystem.clearTempStats(playerRef);
         }

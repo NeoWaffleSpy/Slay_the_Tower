@@ -11,6 +11,7 @@ import com.Team_Berry.Game.Systems.PlayerDeathSystem;
 import com.Team_Berry.Game.Systems.QuestNPCDeathSystem;
 import com.Team_Berry.Game.Systems.QuestNPCTaggerSystem;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
+import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.component.ComponentType;
@@ -35,6 +36,7 @@ import java.util.Set;
 
 public class GamePlugin extends JavaPlugin {
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private static final KeyedScheduler scheduler = new KeyedScheduler();
     public static GamePlugin instance;
     private static ComponentType<EntityStore, QuestNPCComponent> questNPCComponentType;
     private final Map<World, GameManager> gameManagers = new HashMap<>();
@@ -103,11 +105,19 @@ public class GamePlugin extends JavaPlugin {
             config.setDeleteOnUniverseStart(true);
             config.markChanged();
 
-            GameManager manager = new GameManager(world, cachedMilestoneData);
-            manager.initializeMilestone();
-            gameManagers.put(world, manager);
+            scheduler.schedule("init_gm_" + worldName, () -> {
+                world.execute(() -> {
+                    if (!world.isStarted()) return;
 
-            LOGGER.atInfo().log("Initialized GameManager and set auto-cleanup flags for instance: %s", worldName);
+                    GameManager manager = new GameManager(world, cachedMilestoneData);
+                    manager.initializeMilestone();
+                    gameManagers.put(world, manager);
+
+                    LOGGER.atInfo().log("Initialized GameManager and set auto-cleanup flags for instance: %s", worldName);
+
+                    manager.addAllPresentPlayers();
+                });
+            }, 1, java.util.concurrent.TimeUnit.SECONDS);
         }
     }
 

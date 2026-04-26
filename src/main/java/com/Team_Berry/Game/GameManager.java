@@ -248,6 +248,19 @@ public class GameManager {
         }, TELEPORT_DELAY, TimeUnit.SECONDS);
     }
 
+    public void addAllPresentPlayers() {
+        world.execute(() -> {
+            log("Scanning world for already-connected players...");
+
+            // Use the non-deprecated getPlayerRefs() directly!
+            for (PlayerRef playerRef : world.getPlayerRefs()) {
+                if (playerRef != null && playerRef.getReference() != null && playerRef.getReference().isValid()) {
+                    addParticipant(playerRef);
+                }
+            }
+        });
+    }
+
     public void addParticipant(PlayerRef playerRef) {
         log("Player joined the party: " + playerRef.getUsername());
         if (this.activeParticipants.add(playerRef)) {
@@ -823,7 +836,9 @@ public class GameManager {
             if (task instanceof CustomRoomTask customTask) {
                 int deadMobs = currentRoom.right().getDeadMobs();
                 int totalMobs = currentRoom.right().getSpawnedMobs();
-
+                if (totalMobs <= 0) {
+                    totalMobs = 1;
+                }
                 customTask.setProgress(deadMobs, totalMobs);
                 customTask.sendUpdateObjectiveTaskPacket(obj);
             }

@@ -1,0 +1,148 @@
+{
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": 0.5,
+      "Max": 0.7
+    },
+    "Y": {
+      "Min": 0.5,
+      "Max": 0.7
+    },
+    "Z": {
+      "Min": 0.5,
+      "Max": 0.7
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "TrailSpawnerPositionMultiplier": 1,
+  "TrailSpawnerRotationMultiplier": 1,
+  "MaxConcurrentParticles": 200,
+  "ParticleLifeSpan": {
+    "Min": 0.4166666666666667,
+    "Max": 0.5
+  },
+  "SpawnRate": {
+    "Min": 12,
+    "Max": 15
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.6,
+      "Max": 3
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Shapes/Mud_Bubble.png",
+    "FrameSize": {
+      "Width": 32,
+      "Height": 32
+    },
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "RandomFlipU",
+    "Animation": {
+      "0": {
+        "FrameIndex": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Opacity": 0,
+        "Color": "#8e0707",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        },
+        "Rotation": {
+          "X": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Y": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      },
+      "30": {
+        "FrameIndex": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Opacity": 1,
+        "Color": "#ff4545"
+      },
+      "100": {
+        "Opacity": 0,
+        "Rotation": {
+          "X": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Y": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Rotation": {
+        "X": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Y": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Z": {
+          "Min": -90,
+          "Max": 90
+        }
+      },
+      "Scale": {
+        "X": {
+          "Min": 0.05,
+          "Max": 0.09
+        },
+        "Y": {
+          "Min": 0.05,
+          "Max": 0.09
+        }
+      },
+      "Opacity": 1,
+      "Color": "#8e0707",
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    }
+  },
+  "UseEmitDirection": true,
+  "TotalParticles": {
+    "Min": 800,
+    "Max": 800
+  },
+  "SpawnBurst": true,
+  "WaveDelay": {
+    "Min": 1,
+    "Max": 1
+  }
+}

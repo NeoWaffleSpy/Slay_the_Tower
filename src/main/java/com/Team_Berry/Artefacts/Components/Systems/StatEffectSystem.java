@@ -42,6 +42,7 @@ import org.jspecify.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class StatEffectSystem {
@@ -136,10 +137,34 @@ public class StatEffectSystem {
                 damageValue = applyCritical(damageValue, statMapAttack);
                 damageValue = applyArmor(damageValue, statMapTarget);
                 damage.setAmount(damageValue);
+
+                handleBleedArtefact(attackerRef, targetRef, commandBuffer);
                 StatEffectSystem.applyTempStats(commandBuffer.getComponent(attackerRef, StatEffectComponent.getComponentType()), statMapAttack, statMapTarget, TriggerType.ON_HIT);
                 int damageIndex = DamageCause.getAssetMap().getIndex("Skill");
                 if (damageIndex == damage.getDamageCauseIndex())
                     StatEffectSystem.applyTempStats(commandBuffer.getComponent(attackerRef, StatEffectComponent.getComponentType()), statMapAttack, statMapTarget, TriggerType.ON_SKILL_USE);
+            }
+        }
+
+        private void handleBleedArtefact(Ref<EntityStore> attackerRef, Ref<EntityStore> targetRef, CommandBuffer<EntityStore> commandBuffer) {
+            StatEffectComponent statComp = commandBuffer.getComponent(attackerRef, StatEffectComponent.getComponentType());
+            if (statComp == null) return;
+
+            ArtefactCodec bleedArtefact = ArtefactCodec.getAssetMap().getAsset("Bleed_Artefact");
+            if (bleedArtefact == null) return;
+
+            int stacks = statComp.getAmount(bleedArtefact);
+            if (stacks <= 0) return;
+
+            double chance = stacks * 0.10;
+
+            if (Math.random() < chance) {
+                EffectControllerComponent effectController = commandBuffer.getComponent(targetRef, EffectControllerComponent.getComponentType());
+                EntityEffect bleedEffect = EntityEffect.getAssetMap().getAsset("Artefact_Bleed_Damage_Flat");
+
+                if (effectController != null && bleedEffect != null) {
+                    effectController.addEffect(targetRef, bleedEffect, commandBuffer);
+                }
             }
         }
 
@@ -249,6 +274,11 @@ public class StatEffectSystem {
                         else
                             statMap.putModifier(getEntityIndex(stat.getType()), key, new StaticModifier(Modifier.ModifierTarget.MAX, stat.calc, stat.value * comp.getAmount(artefact)));
                     }
+
+                    if (Objects.equals(artefact.getId(), "Shield_Artefact")) {
+                        comp.shieldHud.displayShield(true);
+
+                    }
                 }
             });
 
@@ -256,7 +286,6 @@ public class StatEffectSystem {
         }
 
         private void checkShieldCooldown(int index, ArchetypeChunk<EntityStore> archetypeChunk, StatEffectComponent comp, long now, CommandBuffer<EntityStore> commandBuffer) {
-            System.out.println("checking on cd");
             ArtefactCodec shield = ArtefactCodec.getAssetMap().getAsset("Shield_Artefact");
             if (shield == null) return;
 
@@ -275,7 +304,6 @@ public class StatEffectSystem {
             if (now - lastUsed >= finalCooldown) {
                 Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
                 EffectControllerComponent effectController = (EffectControllerComponent) commandBuffer.getComponent(ref, EffectControllerComponent.getComponentType());
-                System.out.println("SHIELD READY");
                 EntityEffect readyEffect = EntityEffect.getAssetMap().getAsset("Artefact_Shield_Ready");
 
                 if (effectController != null && readyEffect != null) {
@@ -283,8 +311,8 @@ public class StatEffectSystem {
 
                     comp.lastNotifiedReady.put(shield, now);
                 }
-            } else {
-                System.out.println("shield not on cd");
+
+                comp.shieldHud.displayShield(true);
 
             }
         }
@@ -467,6 +495,8 @@ public class StatEffectSystem {
                 if (effectController != null && effect != null) {
                     effectController.addEffect(targetRef, effect, commandBuffer);
                 }
+
+                statComp.shieldHud.displayShield(false);
             }
         }
 

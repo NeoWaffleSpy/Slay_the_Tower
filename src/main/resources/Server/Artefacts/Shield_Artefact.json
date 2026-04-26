@@ -1,4 +1,8 @@
 {
-  "Icon": "UI/Custom/Fender.png",
-  "Rarity": "Rare"
+  "Icon": "UI/Custom/ArtefactIcons/Fender.png",
+  "Rarity": "Rare",
+  "TranslationProperties": {
+    "Name": "Shield_Artefact.name",
+    "Description": "Shield_Artefact.description"
+  }
 }

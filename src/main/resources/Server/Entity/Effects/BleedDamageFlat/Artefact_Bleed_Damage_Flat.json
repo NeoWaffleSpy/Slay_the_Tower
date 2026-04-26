@@ -1,0 +1,39 @@
+{
+  "OverlapBehavior": "Overwrite",
+  "Duration": 4,
+  "RemovalBehavior": "Duration",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ff2d2d",
+    "Particles": [
+      {
+        "SystemId": "Impact_Bleed",
+        "Color": "#ff0000",
+        "TargetEntityPart": "Self",
+        "PositionOffset": {
+          "Y": 1
+        }
+      }
+    ]
+  },
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 10
+    },
+    "Class": "Light",
+    "SequentialModifierStep": 1,
+    "SequentialModifierMinimum": 1
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageEffects": {
+    "WorldParticles": [
+      {
+        "SystemId": "Impact_Bleed",
+        "Color": "#ff0000",
+        "TargetEntityPart": "Self",
+        "PositionOffset": {
+          "Y": 1
+        }
+      }
+    ]
+  }
+}

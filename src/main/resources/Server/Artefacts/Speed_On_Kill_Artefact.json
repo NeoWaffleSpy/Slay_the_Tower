@@ -1,4 +1,8 @@
 {
   "Rarity": "Rare",
-  "Icon": "UI/Custom/Speed.png"
+  "Icon": "UI/Custom/ArtefactIcons/Speed.png",
+  "TranslationProperties": {
+    "Name": "Speed_On_Kill_Artefact.name",
+    "Description": "Speed_On_Kill_Artefact.description"
+  }
 }

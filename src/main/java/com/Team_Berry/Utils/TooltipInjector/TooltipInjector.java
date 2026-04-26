@@ -126,6 +126,8 @@ public class TooltipInjector {
         TooltipInjector.reloadLanguages();
         injectDaggerTooltips();
         injectBowTooltips();
+        injectArtifactTooltips();
+
     }
 
     public static void injectDaggerTooltips() {
@@ -177,5 +179,69 @@ public class TooltipInjector {
 
         setItemTranslation(id + ".description", sf.toString());
 
+    }
+
+    public static void injectArtifactTooltips() {
+        Color colorDamage = new Color(200, 42, 42);
+        Color colorUtility = new Color(149, 157, 255);
+        Color colorMobility = new Color(255, 215, 0);
+        Color colorHealth = Color.GREEN;
+
+        registerArtifact("Bleed_Artefact", "Rare", "Bleed Chance", "+10%", colorDamage, "+10% Chance");
+
+        registerArtifact("Critical_Damage", "Rare", "Crit Damage", "+20%", colorDamage, null);
+
+        registerArtifact("Critical", "Common", "Crit Chance", "+10%", colorDamage, null);
+
+        registerArtifact("Debuff", "Rare", "Effect", "Armor Shred", colorUtility, null);
+
+        registerArtifact("Explosion_On_Kill_Artefact", "Rare", "Effect", "Explosion on Kill", colorDamage, "+5 Explosion Damage");
+
+        registerArtifact("Health", "Common", "Max Health", "+10", colorHealth, null);
+
+        registerArtifact("MultDamage", "Common", "Damage", "+10%", colorDamage, null);
+
+        registerArtifact("Projectile_Reflect_Artefact", "Legendary", "Effect", "Reflect Projectiles", colorUtility, "+10 Reflected Damage");
+
+        registerArtifact("Shield_Artefact", "Rare", "Base Cooldown", "60s", colorUtility, "-10% Cooldown (min 10s)");
+
+        registerArtifact("Speed_On_Kill_Artefact", "Common", "Effect", "Speed on Kill", colorMobility, "Increases speed gained");
+
+        registerArtifact("Stamina_Artefact", "Common", "Max Stamina", "+5", colorMobility, null);
+    }
+
+    private static void registerArtifact(String id, String rarity,
+                                         String primaryStatName, String primaryStatValue, Color primaryColor,
+                                         String stackEffect) {
+        StringFormatter sf = new StringFormatter();
+
+        Color colorCommon = Color.LIGHT_GRAY;
+        Color colorRare = new Color(50, 150, 255);
+        Color colorLegendary = new Color(255, 165, 0);
+        Color colorStack = new Color(255, 105, 180);
+        Color textWhite = Color.WHITE;
+
+        Color rarityColor = colorCommon;
+        if (rarity.equalsIgnoreCase("Rare")) rarityColor = colorRare;
+        else if (rarity.equalsIgnoreCase("Legendary")) rarityColor = colorLegendary;
+
+        sf.color(rarityColor).setBold().append(rarity).setBold(false).endColor().append("\n");
+
+        String originalDesc = getItemTranslation(id + ".description");
+        if (originalDesc != null) {
+            sf.color(textWhite).append(originalDesc).endColor().append("\n");
+        }
+
+        if (primaryStatName != null && primaryStatValue != null) {
+            sf.color(primaryColor).append(primaryStatName).append(": ")
+                    .color(textWhite).append(primaryStatValue).endColor().append("\n");
+        }
+
+        if (stackEffect != null) {
+            sf.color(colorStack).setItalic().append("Per Stack: ")
+                    .color(textWhite).append(stackEffect).setItalic(false).endColor().append("\n");
+        }
+
+        setItemTranslation(id + ".description", sf.toString().trim());
     }
 }

@@ -1,0 +1,8 @@
+{
+  "Icon": "UI/Custom/ArtefactIcons/Bleed.png",
+  "Rarity": "Rare",
+  "TranslationProperties": {
+    "Name": "Bleed_Artefact.name",
+    "Description": "Bleed_Artefact.description"
+  }
+}

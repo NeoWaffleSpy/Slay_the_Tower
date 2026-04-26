@@ -3,5 +3,9 @@
     "Bonus_Explosion_Damage"
   ],
   "Rarity": "Rare",
-  "Icon": "UI/Custom/Bomb.png"
+  "Icon": "UI/Custom/ArtefactIcons/Bomb.png",
+  "TranslationProperties": {
+    "Name": "Explosion_On_Kill_Artefact.name",
+    "Description": "Explosion_On_Kill_Artefact.description"
+  }
 }

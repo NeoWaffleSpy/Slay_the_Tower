@@ -1,9 +1,9 @@
 {
-  "Icon": "UI/Custom/Thorn.png",
+  "Icon": "UI/Custom/ArtefactIcons/Thorn.png",
   "Rarity": "Rare",
   "TranslationProperties": {
-    "Name": "azer",
-    "Description": "azer"
+    "Name": "Projectile_Reflect_Artefact.name",
+    "Description": "Projectile_Reflect_Artefact.description"
   },
   "Stats": [
     "Bonus_Projectile_Reflect_Damage"

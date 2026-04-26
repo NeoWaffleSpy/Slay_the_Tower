@@ -1,5 +1,5 @@
 {
   "Stat": "Bonus_Damage",
   "CalculationType": "Multiplicative",
-  "Value": 0.05
+  "Value": 0.1
 }

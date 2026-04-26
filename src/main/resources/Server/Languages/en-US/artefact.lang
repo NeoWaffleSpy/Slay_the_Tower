@@ -1,10 +1,32 @@
-Hemorrage.name=Hemorrage
-Hemorrage.description=Hemorrage desc
-Critical.name=Hawk-Eye
-Critical.description=This artefact improve crit rate and crit damage.
-DamageArmor.name=Weaponized Fortress
-DamageArmor.description=This artefact attack damage and damage negation.
-MegaBuff.name=Roids
-MegaBuff.description=This artefact massively improve health.
-Template.name=Template Artifact
-Template.description=This is a template artifact
+Bleed_Artefact.name=Hemorrhage
+Bleed_Artefact.description=Grants a chance to inflict bleed.
+
+Critical_Damage.name=Critical Damage
+Critical_Damage.description=Increases the damage done by critical hits.
+
+Critical.name=Critical Chance
+Critical.description=Increases your critical hit chance.
+
+Debuff.name=Armor Shred
+Debuff.description=Applies an armor shred debuff, increasing the damage taken by enemies for a short time.
+
+Explosion_On_Kill_Artefact.name=Bomb Planted
+Explosion_On_Kill_Artefact.description=Enemies explode on death!
+
+Health.name=Health Boost
+Health.description=Increases your maximum health.
+
+MultDamage.name=Damage Boost
+MultDamage.description=Increases your overall damage output.
+
+Projectile_Reflect_Artefact.name=Projectile Reflector
+Projectile_Reflect_Artefact.description=Reflect all projectiles while blocking with your weapon.
+
+Shield_Artefact.name=Aura of Protection
+Shield_Artefact.description=Protects you from 1 instance of damage. Decrease cooldown per stack by 10%.
+
+Speed_On_Kill_Artefact.name=Maniac
+Speed_On_Kill_Artefact.description=Gain a burst of speed after killing an enemy.
+
+Stamina_Artefact.name=Stamina Boost
+Stamina_Artefact.description=Increases your maximum stamina.

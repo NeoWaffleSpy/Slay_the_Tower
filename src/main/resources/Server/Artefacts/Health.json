@@ -1,0 +1,11 @@
+{
+  "Stats": [
+    "Health"
+  ],
+  "Icon": "UI/Custom/ArtefactIcons/Leap.png",
+  "TranslationProperties": {
+    "Name": "Health.name",
+    "Description": "Health.description"
+  },
+  "Rarity": "Common"
+}

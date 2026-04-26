@@ -4,7 +4,8 @@
   ],
   "Icon": "UI/Custom/ArtefactIcons/Fender.png",
   "TranslationProperties": {
-    "Name": "Template.name",
-    "Description": "Template.description"
-  }
+    "Name": "Debuff.name",
+    "Description": "Debuff.description"
+  },
+  "Rarity": "Rare"
 }

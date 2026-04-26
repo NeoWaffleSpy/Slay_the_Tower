@@ -1,0 +1,19 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Bleed_Bubbles_Burst",
+      "PositionOffset": {
+        "X": 0,
+        "Z": 0
+      }
+    },
+    {
+      "SpawnerId": "Bleed_Buff_Shockwave",
+      "PositionOffset": {
+        "X": 0,
+        "Z": 0
+      }
+    }
+  ],
+  "IsImportant": false
+}

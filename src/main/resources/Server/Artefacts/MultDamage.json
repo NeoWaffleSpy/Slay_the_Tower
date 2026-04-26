@@ -4,8 +4,8 @@
   ],
   "Icon": "UI/Custom/ArtefactIcons/Speed.png",
   "TranslationProperties": {
-    "Name": "Template.name",
-    "Description": "Template.description"
+    "Name": "MultDamage",
+    "Description": "MultDamage.description"
   },
   "Rarity": "Common"
 }

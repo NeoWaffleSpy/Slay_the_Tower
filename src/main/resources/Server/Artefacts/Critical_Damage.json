@@ -1,0 +1,14 @@
+{
+  "Stats": [
+    "Crit_Damage"
+  ],
+  "Icon": "UI/Custom/ArtefactIcons/test.png",
+  "HudUI": [
+    {}
+  ],
+  "TranslationProperties": {
+    "Name": "Critical_Damage.name",
+    "Description": "Critical_Damage.description"
+  },
+  "Rarity": "Rare"
+}

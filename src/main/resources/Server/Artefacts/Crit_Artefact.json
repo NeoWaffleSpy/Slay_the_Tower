@@ -3,7 +3,7 @@
     "Crit_Rate",
     "Crit_Damage"
   ],
-  "Icon": "UI/Custom/test.png",
+  "Icon": "UI/Custom/ArtefactIcons/test.png",
   "HudUI": [
     {}
   ],

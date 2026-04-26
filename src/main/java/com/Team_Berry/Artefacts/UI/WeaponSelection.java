@@ -4,7 +4,6 @@ import au.ellie.hyui.builders.HyUIPage;
 import au.ellie.hyui.builders.PageBuilder;
 import au.ellie.hyui.html.TemplateProcessor;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
-import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
@@ -25,13 +24,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SkillSelection {
-    private static final String[] skillStringList = new String[]{
+public class WeaponSelection {
+    private static final String[] weaponStringList = new String[]{
             "Hotbar_Second_Wind",
             "Hotbar_Burst",
             "Hotbar_Dagger_Throw"
@@ -42,7 +39,7 @@ public class SkillSelection {
     private final List<SkillInfos> skills = new ArrayList<>();
     private HyUIPage page;
 
-    public SkillSelection(PlayerRef playerRef, Store<EntityStore> store) {
+    public WeaponSelection(PlayerRef playerRef, Store<EntityStore> store) {
         this.playerRef = playerRef;
         this.store = store;
     }
@@ -50,7 +47,7 @@ public class SkillSelection {
     private ArrayList<Item> getSkillsFromItemList() {
         ArrayList<Item> items = new ArrayList<>();
         DefaultAssetMap<String, Item> itemMap = Item.getAssetMap();
-        for (String skill : skillStringList) {
+        for (String skill : weaponStringList) {
             items.add(itemMap.getAsset(skill));
         }
         return items;
@@ -58,9 +55,9 @@ public class SkillSelection {
 
     public void buildPage() {
         List<Item> skillsCodecs = getSkillsFromItemList();
-        if (skillsCodecs.size() < 3)
+        if (skillsCodecs.size() < 2)
             return;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
             skills.add(parseInfo(skillsCodecs.get(i), i));
         this.template.setVariable("Skills", skills);
         PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
@@ -95,7 +92,7 @@ public class SkillSelection {
         }
         if (description == null || description.isEmpty())
             description = "Template";
-        String icon = item.getIcon().replace("Icons/ItemsGenerated/", "SkillIcons/");
+        String icon = item.getIcon().replace("icons/ItemsGenerated/", "");
         return new SkillInfos(
                 name,
                 icon,
@@ -105,8 +102,6 @@ public class SkillSelection {
     }
 
     public static String toHyuiHtml(String input) {
-        if (input == null)
-            return null;
         StringBuilder output = new StringBuilder();
 
         String[] lines = input.split("\n");

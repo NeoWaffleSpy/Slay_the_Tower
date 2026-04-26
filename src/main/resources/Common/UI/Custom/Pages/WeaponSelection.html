@@ -1,0 +1,113 @@
+<style>
+    .artefactPage {
+        anchor-height: 500;
+        anchor-width: 1000;
+    }
+
+    .artefactTab {
+        layout-mode: LeftCenterWrap;
+        padding: 6;
+    }
+
+    .buttonColumn {
+        anchor-top: 10;
+        anchor-width: 300;
+        anchor-height: 410;
+        flex-weight: 1;
+        layout-mode: MiddleCenter;
+    }
+
+    .artefactColumn {
+        anchor-width: 300;
+        anchor-height: 420;
+        flex-weight: 1;
+        layout-mode: MiddleCenter;
+        background-color: #ff000000;
+    }
+
+    .colElem {
+        padding: 5;
+        layout-mode: MiddleCenter;
+    }
+
+    .artefactImgBox {
+        flex-weight: 1;
+        background-color: #ff000000;
+    }
+
+    .artefactTitleBox {
+        flex-weight: 3;
+        background-color: #ff00ff00;
+    }
+
+    .artefactStatsBox {
+        flex-weight: 6;
+        background-color: #00ff0000;
+        anchor-width: 300;
+        layout-mode: Middle;
+    }
+
+    .artefactDescBox {
+        flex-weight: 4;
+        background-color: #0000ff00;
+        anchor-width: 300;
+        layout-mode: Top;
+    }
+
+    .artefactRarityBox {
+        flex-weight: 1;
+        background-color: #0000ff00;
+        anchor-width: 300;
+        layout-mode: Middle;
+    }
+
+    .textbutton {
+        flex-weight: 1;
+    }
+
+    .icon {
+        anchor-width: 64;
+        anchor-height: 64;
+    }
+
+    .txt {
+        white-space: wrap;
+    }
+
+    .txtName {
+        color: #ffffff;
+        font-size: 20;
+    }
+
+    .txtEffects {
+        font-size: 16;
+        anchor-top: 5;
+    }
+
+    .txtDesc {
+        font-size: 16;
+    }
+</style>
+<div class='page-overlay'>
+    <div class='decorated-container artefactPage' data-hyui-title='Artefact Reward'>
+        <div class='container-contents'>
+            <div class='artefactTab'>
+                {{#each Skills}}
+                <button id='my-button-{{$index}}' class='raw-button buttonColumn'>
+                    <div class='artefactColumn'>
+                        <div class='colElem artefactImgBox'>
+                            <img class='icon' src='{{$icon}}'>
+                        </div>
+                        <div class='colElem artefactTitleBox'>
+                            <p class='txt txtName'>{{$name}}</p>
+                        </div>
+                        <div class='artefactDescBox'>
+                            {{$description}}
+                        </div>
+                    </div>
+                </button>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

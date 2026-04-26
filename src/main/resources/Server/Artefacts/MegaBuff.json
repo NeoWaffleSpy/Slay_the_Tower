@@ -2,7 +2,7 @@
   "Stats": [
     "Health"
   ],
-  "Icon": "UI/Custom/Leap.png",
+  "Icon": "UI/Custom/ArtefactIcons/Leap.png",
   "TranslationProperties": {
     "Name": "MegaBuff.name",
     "Description": "MegaBuff.description"

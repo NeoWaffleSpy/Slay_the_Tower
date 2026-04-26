@@ -2,7 +2,7 @@
   "Stats": [
     "Crit_Rate"
   ],
-  "Icon": "UI/Custom/Unknown.png",
+  "Icon": "UI/Custom/ArtefactIcons/Unknown.png",
   "TranslationProperties": {
     "Name": "Critical.name",
     "Description": "Critical.description"

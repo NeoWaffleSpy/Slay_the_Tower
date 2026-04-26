@@ -14,8 +14,10 @@ import com.hypixel.hytale.component.system.RefChangeSystem;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
+import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
@@ -302,7 +304,8 @@ public class StatEffectSystem {
 
             Damage.Source source = damage.getSource();
             Ref<EntityStore> targetRef = archetypeChunk.getReferenceTo(i);
-
+            StatEffectComponent statComp = commandBuffer.getComponent(targetRef, StatEffectComponent.getComponentType());
+            handleShieldArtefact(targetRef, statComp, commandBuffer, damage);
             if (source instanceof Damage.ProjectileSource projectileSource) {
                 handleProjectileReflection(targetRef, commandBuffer, projectileSource, damage);
             }
@@ -390,6 +393,35 @@ public class StatEffectSystem {
             }
 
             commandBuffer.addEntity(holder, AddReason.SPAWN);
+        }
+
+        private void handleShieldArtefact(Ref<EntityStore> targetRef, StatEffectComponent statComp, CommandBuffer<EntityStore> commandBuffer, Damage damage) {
+            ArtefactCodec shieldArtefact = ArtefactCodec.getAssetMap().getAsset("Shield_Artefact");
+            if (shieldArtefact == null) return;
+
+            int stacks = statComp.getAmount(shieldArtefact);
+            if (stacks <= 0) return;
+
+
+            double baseCooldownMs = 60000.0;
+            double calculatedCooldown = baseCooldownMs * Math.pow(0.9, stacks);
+            long finalCooldown = (long) Math.max(10000.0, calculatedCooldown);
+
+            long now = commandBuffer.getResource(TimeResource.getResourceType()).getNow().toEpochMilli();
+            long lastUsed = statComp.artefactCooldowns.getOrDefault(shieldArtefact, 0L);
+
+            if (now - lastUsed >= finalCooldown) {
+                damage.setCancelled(true);
+
+                statComp.artefactCooldowns.put(shieldArtefact, now);
+                EffectControllerComponent effectController = commandBuffer.getComponent(targetRef, EffectControllerComponent.getComponentType());
+
+                EntityEffect effect = EntityEffect.getAssetMap().getAsset("Artefact_Shield_Break");
+
+                if (effectController != null && effect != null) {
+                    effectController.addEffect(targetRef, effect, commandBuffer);
+                }
+            }
         }
 
     }

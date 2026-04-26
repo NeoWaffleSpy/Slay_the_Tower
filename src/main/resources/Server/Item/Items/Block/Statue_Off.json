@@ -40,16 +40,11 @@
     "HitboxType": "Statue_Large",
     "Material": "Solid",
     "Opacity": "Transparent",
-    "Support": {
-      "Down": [
-        {
-          "FaceType": "Full"
-        }
-      ]
-    },
     "VariantRotation": "NESW",
     "ParticleColor": "#9f9e81",
-    "CustomModelScale": 2
+    "CustomModelScale": 2,
+    "SupportDropType": "Break",
+    "SupportsRequiredFor": "Any"
   },
   "Tags": {
     "Type": [

@@ -31,19 +31,16 @@ import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.protocol.Position;
-import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
-import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.WorldConfig;
 import com.hypixel.hytale.server.core.universe.world.spawn.GlobalSpawnProvider;
@@ -653,7 +650,7 @@ public class GameManager {
         }
 
         RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
-        playSoundToPlayers(playersToTeleport, SFX_ROOM_START);
+        // playSoundToPlayers(playersToTeleport, SFX_ROOM_START);
     }
 
     public List<RoomCodec> findValidRooms() {
@@ -923,19 +920,19 @@ public class GameManager {
         });
     }
 
-    private void playSoundToPlayers(List<PlayerRef> players, String soundEventId) {
-        int soundIndex = SoundEvent.getAssetMap().getIndex(soundEventId);
-
-        if (soundIndex == 0) {
-            log("Warning: Sound ID not found: " + soundEventId);
-            return;
-        }
-
-        for (PlayerRef p : players) {
-            SoundUtil.playSoundEvent2dToPlayer(p, soundIndex, SoundCategory.SFX);
-        }
-        log("Played Sound");
-    }
+//    private void playSoundToPlayers(List<PlayerRef> players, String soundEventId) {
+//        int soundIndex = SoundEvent.getAssetMap().getIndex(soundEventId);
+//
+//        if (soundIndex == 0) {
+//            log("Warning: Sound ID not found: " + soundEventId);
+//            return;
+//        }
+//
+//        for (PlayerRef p : players) {
+//            SoundUtil.playSoundEvent2dToPlayer(p, soundIndex, SoundCategory.SFX);
+//        }
+//        log("Played Sound");
+//    }
 
     public void playerChestClaim(BlockPosition pos, PlayerRef playerRef) {
         if (!activeParticipants.contains(playerRef)) return;

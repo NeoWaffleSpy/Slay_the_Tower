@@ -73,6 +73,8 @@ public class StatEffectComponent implements Component<EntityStore> {
         artefactUpdated.addAll(artefactList.keySet());
         if (artefactHud != null)
             artefactHud.refresh();
+        if (shieldHud != null)
+            shieldHud.displayShield(false);
     }
 
     public int getAmount(ArtefactCodec artefact) {

@@ -12,85 +12,29 @@ import com.hypixel.hytale.assetstore.AssetKeyValidator;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
-import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.assetstore.event.RemovedAssetsEvent;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
-import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEvent;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
-import com.hypixel.hytale.codec.schema.metadata.ui.*;
 import com.hypixel.hytale.codec.validation.ValidatorCache;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.asset.common.CommonAssetValidator;
 import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProperties;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, ArtefactCodec>> {
-    private static AssetStore<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> ASSET_STORE;
     public static final AssetBuilderCodec<String, ArtefactCodec> CODEC;
-    public static final ValidatorCache<String> VALIDATOR_CACHE = new ValidatorCache<>(new AssetKeyValidator<>(ArtefactCodec::getAssetStore));
     public static final CommonAssetValidator ICON_ARTEFACT = new CommonAssetValidator("png", "UI/Custom");
-
-    private AssetExtraInfo.Data data;
-
-    public String artefactName = "Template";
-    public String icon = null;
-    public String shortIconPath = null;
-    public String[] statusList;
-    public String[] statList;
-    public RarityEnum rarity = RarityEnum.DEBUG;
-    public ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
-
-    public ArtefactCodec() {}
-    public ArtefactCodec(String artefactName) {
-        this.artefactName = artefactName;
-    }
-
-    @Override
-    public String getId() {
-        return artefactName;
-    }
-
-    public static AssetStore<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> getAssetStore() {
-        if (ASSET_STORE == null) {
-            ASSET_STORE = AssetRegistry.getAssetStore(ArtefactCodec.class);
-        }
-        return ASSET_STORE;
-    }
-
-    public static DefaultAssetMap<String, ArtefactCodec> getAssetMap() {
-        return getAssetStore().getAssetMap();
-    }
-
-    public void updateTranslation() {
-        if (translationProperties == null
-                || translationProperties.getName() == null
-                || translationProperties.getDescription() == null)
-            return;
-        TooltipInjector.setItemTranslation(translationProperties.getName(),
-                new StringFormatter().clear().color(Color.RED).append(artefactName));
-        StringFormatter sf = new StringFormatter().clear().color(Color.GREEN)
-                .append(TooltipInjector.getItemTranslation(translationProperties.getDescription()));
-        TooltipInjector.setItemTranslation(translationProperties.getName(), sf);
-    }
-
-    public void updateCodecSetting(String name) {
-        updateTranslation();
-    }
-
-    public static void remove(String s) {
-    }
-
-    public ArrayList<String> statusStringArray() { return new ArrayList<>(List.of(statusList)); }
-    public ArrayList<String> statStringArray() { return new ArrayList<>(List.of(statList)); }
+    private static AssetStore<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> ASSET_STORE;
+    public static final ValidatorCache<String> VALIDATOR_CACHE = new ValidatorCache<>(new AssetKeyValidator<>(ArtefactCodec::getAssetStore));
 
     static {
         CODEC = AssetBuilderCodec.builder(ArtefactCodec.class, ArtefactCodec::new, Codec.STRING,
@@ -124,6 +68,89 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .build();
     }
 
+    public String artefactName = "Template";
+    public String icon = null;
+    public String shortIconPath = null;
+    public String[] statusList;
+    public String[] statList;
+    public RarityEnum rarity = RarityEnum.DEBUG;
+    public ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
+    private AssetExtraInfo.Data data;
+
+    public ArtefactCodec() {
+    }
+
+    public ArtefactCodec(String artefactName) {
+        this.artefactName = artefactName;
+    }
+
+    public static AssetStore<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> getAssetStore() {
+        if (ASSET_STORE == null) {
+            ASSET_STORE = AssetRegistry.getAssetStore(ArtefactCodec.class);
+        }
+        return ASSET_STORE;
+    }
+
+    public static DefaultAssetMap<String, ArtefactCodec> getAssetMap() {
+        return getAssetStore().getAssetMap();
+    }
+
+    public static void remove(String s) {
+    }
+
+    public static void register() {
+        ArtefactPlugin a = ArtefactPlugin.get();
+        a.getAssetRegistry()
+                .register(HytaleAssetStore.builder(ArtefactCodec.class, new DefaultAssetMap<>())
+                        .setPath("Artefacts")
+                        .setCodec(ArtefactCodec.CODEC)
+                        .setKeyFunction(ArtefactCodec::getId)
+                        .setReplaceOnRemove(ArtefactCodec::new)
+                        .build());
+        a.getEventRegistry().register(LoadedAssetsEvent.class, ArtefactCodec.class, ArtefactCodec::onLoaded);
+        a.getEventRegistry().register(RemovedAssetsEvent.class, ArtefactCodec.class, ArtefactCodec::onRemoved);
+    }
+
+    public static void onLoaded(LoadedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
+        event.getLoadedAssets().forEach((name, codec) -> codec.updateCodecSetting(name));
+    }
+
+    public static void onRemoved(RemovedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
+        event.getRemovedAssets().forEach(ArtefactCodec::remove);
+    }
+
+    @Override
+    public String getId() {
+        return artefactName;
+    }
+
+    public void updateTranslation() {
+        if (translationProperties == null
+                || translationProperties.getName() == null
+                || translationProperties.getDescription() == null)
+            return;
+        TooltipInjector.setItemTranslation(translationProperties.getName(),
+                new StringFormatter().clear().color(Color.RED).append(artefactName));
+        StringFormatter sf = new StringFormatter().clear().color(Color.GREEN)
+                .append(TooltipInjector.getItemTranslation(translationProperties.getDescription()));
+        TooltipInjector.setItemTranslation(translationProperties.getName(), sf);
+    }
+
+    public void updateCodecSetting(String name) {
+        updateTranslation();
+    }
+
+    public ArrayList<String> statusStringArray() {
+        return new ArrayList<>(List.of(statusList));
+    }
+
+    public ArrayList<String> statStringArray() {
+        if (this.statList == null) {
+            return new ArrayList<>(); // Return an empty ArrayList safely
+        }
+        return new ArrayList<>(List.of(this.statList));
+    }
+
     private void process(ExtraInfo u) {
         if (this.icon == null)
             return;
@@ -142,26 +169,5 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         ArrayList<StatCodec> list = new ArrayList<>();
         statStringArray().forEach((s) -> list.add(map.getAsset(s)));
         return list;
-    }
-
-    public static void register() {
-        ArtefactPlugin a = ArtefactPlugin.get();
-        a.getAssetRegistry()
-                .register(HytaleAssetStore.builder(ArtefactCodec.class, new DefaultAssetMap<>())
-                .setPath("Artefacts")
-                .setCodec(ArtefactCodec.CODEC)
-                .setKeyFunction(ArtefactCodec::getId)
-                .setReplaceOnRemove(ArtefactCodec::new)
-                .build());
-        a.getEventRegistry().register(LoadedAssetsEvent.class, ArtefactCodec.class, ArtefactCodec::onLoaded);
-        a.getEventRegistry().register(RemovedAssetsEvent.class, ArtefactCodec.class, ArtefactCodec::onRemoved);
-    }
-
-    public static void onLoaded(LoadedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
-        event.getLoadedAssets().forEach((name, codec) -> codec.updateCodecSetting(name));
-    }
-
-    public static void onRemoved(RemovedAssetsEvent<String, ArtefactCodec, DefaultAssetMap<String, ArtefactCodec>> event) {
-        event.getRemovedAssets().forEach(ArtefactCodec::remove);
     }
 }

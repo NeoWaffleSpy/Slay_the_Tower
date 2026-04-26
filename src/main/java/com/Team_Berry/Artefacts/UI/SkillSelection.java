@@ -8,6 +8,7 @@ import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
+import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -91,7 +92,7 @@ public class SkillSelection {
         String description = tl.getDescription();
         if (tl.getDescription() != null) {
             description = I18nModule.get().getMessage("en-US", tl.getDescription());
-            description = toHyuiHtml(description);
+            description = TooltipInjector.toHyuiHtml(description, "txt txtDesc");
         }
         if (description == null || description.isEmpty())
             description = "Template";
@@ -103,82 +104,6 @@ public class SkillSelection {
                 item,
                 index);
     }
-
-    public static String toHyuiHtml(String input) {
-        if (input == null)
-            return null;
-        StringBuilder output = new StringBuilder();
-
-        String[] lines = input.split("\n");
-
-        for (String line : lines) {
-            StringBuilder lineBuilder = new StringBuilder();
-
-            Pattern pattern = Pattern.compile(
-                    "<color is=\"(#[0-9a-fA-F]{6})\">|</color>|<(b|i)>|</(b|i)>"
-            );
-            Matcher matcher = pattern.matcher(line);
-
-            String currentColor = null;
-            boolean bold = false;
-            boolean italic = false;
-
-            int lastIndex = 0;
-
-            while (matcher.find()) {
-                if (matcher.start() > lastIndex) {
-                    String text = line.substring(lastIndex, matcher.start());
-                    appendStyledSpan(lineBuilder, text, currentColor, bold, italic);
-                }
-
-                if (matcher.group(1) != null) {
-                    currentColor = matcher.group(1);
-                } else if (matcher.group().equals("</color>")) {
-                    currentColor = null;
-                } else if ("b".equals(matcher.group(2))) {
-                    bold = true;
-                } else if ("i".equals(matcher.group(2))) {
-                    italic = true;
-                } else if ("b".equals(matcher.group(3))) {
-                    bold = false;
-                } else if ("i".equals(matcher.group(3))) {
-                    italic = false;
-                }
-
-                lastIndex = matcher.end();
-            }
-
-            if (lastIndex < line.length()) {
-                String text = line.substring(lastIndex);
-                appendStyledSpan(lineBuilder, text, currentColor, bold, italic);
-            }
-
-            output.append("<p class='txt txtDesc'>").append(lineBuilder).append("</p>\n");
-        }
-
-        return output.toString();
-    }
-
-    private static void appendStyledSpan(StringBuilder sb, String text, String color, boolean bold, boolean italic) {
-        if (text.isEmpty()) return;
-
-        sb.append("<span");
-
-        if (color != null) {
-            sb.append(" data-hyui-color=\"").append(color).append("\"");
-        }
-        if (bold) {
-            sb.append(" data-hyui-bold=\"true\"");
-        }
-        if (italic) {
-            sb.append(" data-hyui-italic=\"true\"");
-        }
-
-        sb.append(">");
-        sb.append(text);
-        sb.append("</span>");
-    }
-
 
     private void buttonEvent(int index) {
         StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);

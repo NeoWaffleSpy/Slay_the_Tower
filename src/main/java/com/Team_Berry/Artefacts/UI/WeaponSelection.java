@@ -7,6 +7,7 @@ import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
+import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -29,14 +30,13 @@ import java.util.regex.Pattern;
 
 public class WeaponSelection {
     private static final String[] weaponStringList = new String[]{
-            "Hotbar_Second_Wind",
-            "Hotbar_Burst",
-            "Hotbar_Dagger_Throw"
+            "Daggers_Kweebec",
+            "Bow_Kweebec"
     };
     private final PlayerRef playerRef;
     private final Store<EntityStore> store;
     private final TemplateProcessor template = new TemplateProcessor();
-    private final List<SkillInfos> skills = new ArrayList<>();
+    private final List<WeaponInfos> skills = new ArrayList<>();
     private HyUIPage page;
 
     public WeaponSelection(PlayerRef playerRef, Store<EntityStore> store) {
@@ -74,7 +74,7 @@ public class WeaponSelection {
         page = builder.open(store);
     }
 
-    private SkillInfos parseInfo(Item item, int index) {
+    private WeaponInfos parseInfo(Item item, int index) {
         if (item == null)
             return null;
         ItemTranslationProperties tl = item.getTranslationProperties();
@@ -88,92 +88,18 @@ public class WeaponSelection {
         String description = tl.getDescription();
         if (tl.getDescription() != null) {
             description = I18nModule.get().getMessage("en-US", tl.getDescription());
-            description = toHyuiHtml(description);
+            description = TooltipInjector.toHyuiHtml(description, "txt txtDesc");
         }
         if (description == null || description.isEmpty())
             description = "Template";
         String icon = item.getIcon().replace("icons/ItemsGenerated/", "");
-        return new SkillInfos(
+        return new WeaponInfos(
                 name,
                 icon,
                 description,
                 item,
                 index);
     }
-
-    public static String toHyuiHtml(String input) {
-        StringBuilder output = new StringBuilder();
-
-        String[] lines = input.split("\n");
-
-        for (String line : lines) {
-            StringBuilder lineBuilder = new StringBuilder();
-
-            Pattern pattern = Pattern.compile(
-                    "<color is=\"(#[0-9a-fA-F]{6})\">|</color>|<(b|i)>|</(b|i)>"
-            );
-            Matcher matcher = pattern.matcher(line);
-
-            String currentColor = null;
-            boolean bold = false;
-            boolean italic = false;
-
-            int lastIndex = 0;
-
-            while (matcher.find()) {
-                if (matcher.start() > lastIndex) {
-                    String text = line.substring(lastIndex, matcher.start());
-                    appendStyledSpan(lineBuilder, text, currentColor, bold, italic);
-                }
-
-                if (matcher.group(1) != null) {
-                    currentColor = matcher.group(1);
-                } else if (matcher.group().equals("</color>")) {
-                    currentColor = null;
-                } else if ("b".equals(matcher.group(2))) {
-                    bold = true;
-                } else if ("i".equals(matcher.group(2))) {
-                    italic = true;
-                } else if ("b".equals(matcher.group(3))) {
-                    bold = false;
-                } else if ("i".equals(matcher.group(3))) {
-                    italic = false;
-                }
-
-                lastIndex = matcher.end();
-            }
-
-            if (lastIndex < line.length()) {
-                String text = line.substring(lastIndex);
-                appendStyledSpan(lineBuilder, text, currentColor, bold, italic);
-            }
-
-            output.append("<p class='txt txtDesc'>").append(lineBuilder).append("</p>\n");
-        }
-
-        return output.toString();
-    }
-
-    private static void appendStyledSpan(StringBuilder sb, String text, String color, boolean bold, boolean italic) {
-        if (text.isEmpty()) return;
-
-        sb.append("<span");
-
-        if (color != null) {
-            sb.append(" data-hyui-color=\"").append(color).append("\"");
-        }
-        if (bold) {
-            sb.append(" data-hyui-bold=\"true\"");
-        }
-        if (italic) {
-            sb.append(" data-hyui-italic=\"true\"");
-        }
-
-        sb.append(">");
-        sb.append(text);
-        sb.append("</span>");
-    }
-
 
     private void buttonEvent(int index) {
         StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
@@ -207,6 +133,6 @@ public class WeaponSelection {
         }
     }
 
-    private record SkillInfos(String name, String icon, String description, Item item, int index) {
+    private record WeaponInfos(String name, String icon, String description, Item item, int index) {
     }
 }

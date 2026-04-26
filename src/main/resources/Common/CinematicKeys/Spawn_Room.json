@@ -1,0 +1,73 @@
+{
+  "origin": {
+    "x": -27.512907028198242,
+    "y": 143.0,
+    "z": -1019.2709350585938
+  },
+  "timeline": [
+    {
+      "distance": 0.0,
+      "positionType": "Custom",
+      "applyMovementType": "CharacterController",
+      "attachedToEntityId": 0,
+      "rotationType": "Custom",
+      "sendMouseMotion": false,
+      "movementForceRotation": {
+        "roll": 0.0,
+        "pitch": 0.0,
+        "yaw": 0.0
+      },
+      "rotationOffset": {
+        "roll": 0.0,
+        "pitch": 0.0,
+        "yaw": 0.0
+      },
+      "transitionTime": 2500,
+      "speedModifier": 1.0,
+      "rotationLerpSpeed": 0.02,
+      "displayReticle": false,
+      "mouseInputTargetType": "Any",
+      "movementForceRotationType": "AttachedToHead",
+      "canMoveType": "AttachedToLocalPlayer",
+      "planeNormal": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "displayCursor": false,
+      "allowPitchControls": false,
+      "applyLookType": "LocalPlayerLookOrientation",
+      "skipCharacterPhysics": false,
+      "rotation": {
+        "roll": 0.0,
+        "pitch": -0.47491568,
+        "yaw": 0.004432926
+      },
+      "positionDistanceOffsetType": "DistanceOffset",
+      "mouseInputType": "LookAtTarget",
+      "positionOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "movementMultiplier": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "isFirstPerson": false,
+      "lookMultiplier": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "positionLerpSpeed": 0.02,
+      "attachedToType": "LocalPlayer",
+      "eyeOffset": true,
+      "position": {
+        "x": -0.033367156982421875,
+        "y": 5.610504150390625,
+        "z": 7.56231689453125
+      }
+    }
+  ]
+}

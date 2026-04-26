@@ -15,15 +15,14 @@ import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+import com.hypixel.hytale.server.core.entity.ExplosionConfig;
+import com.hypixel.hytale.server.core.entity.ExplosionUtils;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
-import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
-import com.hypixel.hytale.server.core.modules.entity.damage.DamageCause;
-import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
-import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
+import com.hypixel.hytale.server.core.modules.entity.damage.*;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
@@ -32,7 +31,10 @@ import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifie
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath;
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -49,6 +51,7 @@ public class StatEffectSystem {
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectDamageSystem());
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectRefChangeSystem());
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectPreDamageSystem());
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectDeathSystem());
 
 
     }
@@ -218,21 +221,27 @@ public class StatEffectSystem {
             this.query = Query.and(ArtefactPlugin.get().getStatEffectComponentType());
         }
 
-        @Override
-        public void tick(float dt, int index, @NonNull ArchetypeChunk archetypeChunk, @NonNull Store store, @NonNull CommandBuffer commandBuffer) {
-            StatEffectComponent comp = (StatEffectComponent) archetypeChunk.getComponent(index, ArtefactPlugin.get().getStatEffectComponentType());
-            if (comp == null || comp.artefactUpdated.isEmpty())
-                return;
-            EntityStatMap statMap = (EntityStatMap) archetypeChunk.getComponent(index, EntityStatsModule.get().getEntityStatMapComponentType());
-            if (statMap == null)
-                return;
+        public void tick(float v, int i, @NotNull ArchetypeChunk<EntityStore> archetypeChunk, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
+            StatEffectComponent comp = (StatEffectComponent) archetypeChunk.getComponent(i, ArtefactPlugin.get().getStatEffectComponentType());
+
+            if (comp == null) return;
+
+
+            long now = store.getResource(TimeResource.getResourceType()).getNow().toEpochMilli();
+            checkShieldCooldown(i, archetypeChunk, comp, now, commandBuffer);
+
+
+            if (comp.artefactUpdated.isEmpty()) return;
+
+            EntityStatMap statMap = (EntityStatMap) archetypeChunk.getComponent(i, EntityStatsModule.get().getEntityStatMapComponentType());
+            if (statMap == null) return;
+
             comp.artefactUpdated.forEach(artefact -> {
                 ArrayList<StatCodec> list = artefact.getStatArray();
-                for (int i = 0; i < list.size(); i++) {
-                    StatCodec stat = list.get(i);
+                for (int j = 0; j < list.size(); j++) {
+                    StatCodec stat = list.get(j);
                     String key = ArtefactPlugin.get().getName() + "-" + artefact.getId() + "-" + i;
-                    if (stat == null || stat.getType() == null)
-                        return;
+                    if (stat == null || stat.getType() == null) return;
                     if (stat.trigger == TriggerType.PASSIVE) {
                         if (!comp.artefactList.containsKey(artefact) || comp.getAmount(artefact) == 0)
                             statMap.removeModifier(getEntityIndex(stat.getType()), key);
@@ -241,11 +250,46 @@ public class StatEffectSystem {
                     }
                 }
             });
+
             comp.artefactUpdated.clear();
         }
 
+        private void checkShieldCooldown(int index, ArchetypeChunk<EntityStore> archetypeChunk, StatEffectComponent comp, long now, CommandBuffer<EntityStore> commandBuffer) {
+            System.out.println("checking on cd");
+            ArtefactCodec shield = ArtefactCodec.getAssetMap().getAsset("Shield_Artefact");
+            if (shield == null) return;
+
+            int stacks = comp.getAmount(shield);
+            if (stacks <= 0) return;
+
+            long lastUsed = comp.artefactCooldowns.getOrDefault(shield, 0L);
+            long lastNotified = comp.lastNotifiedReady.getOrDefault(shield, 0L);
+
+            if (lastUsed == 0 || lastNotified >= lastUsed) return;
+
+            double baseCooldownMs = 60000.0;
+            double calculatedCooldown = baseCooldownMs * Math.pow(0.9, stacks);
+            long finalCooldown = (long) Math.max(10000.0, calculatedCooldown);
+
+            if (now - lastUsed >= finalCooldown) {
+                Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
+                EffectControllerComponent effectController = (EffectControllerComponent) commandBuffer.getComponent(ref, EffectControllerComponent.getComponentType());
+                System.out.println("SHIELD READY");
+                EntityEffect readyEffect = EntityEffect.getAssetMap().getAsset("Artefact_Shield_Ready");
+
+                if (effectController != null && readyEffect != null) {
+                    effectController.addEffect(ref, readyEffect, commandBuffer);
+
+                    comp.lastNotifiedReady.put(shield, now);
+                }
+            } else {
+                System.out.println("shield not on cd");
+
+            }
+        }
+
         @Override
-        public @Nullable Query getQuery() {
+        public @Nullable Query<EntityStore> getQuery() {
             return this.query;
         }
     }
@@ -424,5 +468,117 @@ public class StatEffectSystem {
             }
         }
 
+    }
+
+    public static class StatEffectDeathSystem extends RefChangeSystem<EntityStore, DeathComponent> {
+
+        @Override
+        public @Nullable Query<EntityStore> getQuery() {
+            return Query.any();
+        }
+
+        @Override
+        public @NotNull ComponentType<EntityStore, DeathComponent> componentType() {
+            return DeathComponent.getComponentType();
+        }
+
+        @Override
+        public void onComponentAdded(@NotNull Ref<EntityStore> deadEntityRef, @NotNull DeathComponent death, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
+            if (death.getDeathInfo() == null) return;
+            Damage.Source source = death.getDeathInfo().getSource();
+            if (source instanceof Damage.EntitySource entitySource) {
+                Ref<EntityStore> attackerRef = entitySource.getRef();
+                StatEffectComponent statComp = store.getComponent(attackerRef, StatEffectComponent.getComponentType());
+                if (statComp != null) {
+                    handleExplosionArtefact(deadEntityRef, attackerRef, statComp, store, commandBuffer);
+                    handleSpeedOnKillArtefact(attackerRef, statComp, store, commandBuffer);
+                }
+            }
+        }
+
+        private void handleExplosionArtefact(Ref<EntityStore> deadEntityRef, Ref<EntityStore> attackerRef, StatEffectComponent statComp, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
+            ArtefactCodec explodeArtefact = ArtefactCodec.getAssetMap().getAsset("Explosion_On_Kill_Artefact");
+            if (explodeArtefact == null || statComp.getAmount(explodeArtefact) <= 0) return;
+
+            float EXPLOSION_RADIUS = 5.0f;
+            float BASE_DAMAGE = 5.0f;
+            float bonusExplosionDamage = 0;
+            float explosionMult = 1;
+
+            EntityStatMap playerStats = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
+            EntityStatType explosionStatType = StatCodec.getStatFromString("Bonus_Explosion_Damage");
+
+            if (playerStats != null && explosionStatType != null) {
+                int statIndex = ArtefactPlugin.getEntityStatTypeAssetStore().getIndex(explosionStatType.getId());
+                Map<String, Modifier> modMap = playerStats.get(statIndex).getModifiers();
+                if (modMap != null) {
+                    for (Modifier mod : modMap.values()) {
+                        StaticModifier modifier = (StaticModifier) mod;
+                        if (modifier.getCalculationType() == StaticModifier.CalculationType.ADDITIVE)
+                            bonusExplosionDamage += modifier.getAmount();
+                        else if (modifier.getCalculationType() == StaticModifier.CalculationType.MULTIPLICATIVE)
+                            explosionMult += modifier.getAmount();
+                    }
+                }
+            }
+
+            float finalExplosionDamage = (BASE_DAMAGE + bonusExplosionDamage) * explosionMult;
+            TransformComponent deadTransform = store.getComponent(deadEntityRef, TransformComponent.getComponentType());
+            if (deadTransform == null) return;
+            Vector3d explosionPos = deadTransform.getPosition();
+
+            World world = store.getExternalData().getWorld();
+            ComponentAccessor<ChunkStore> chunkStore = world.getChunkStore().getStore();
+            ExplosionConfig config = new ArtefactExplosionConfig(EXPLOSION_RADIUS, finalExplosionDamage);
+
+            com.hypixel.hytale.server.core.universe.world.ParticleUtil.spawnParticleEffect("Explosion_Big", explosionPos, store);
+
+            ExplosionUtils.performExplosion(
+                    new Damage.EntitySource(attackerRef),
+                    explosionPos,
+                    config,
+                    attackerRef,
+                    commandBuffer,
+                    chunkStore
+            );
+        }
+
+        @Override
+        public void onComponentSet(@NotNull Ref<EntityStore> ref, @Nullable DeathComponent oldComponent, @NotNull DeathComponent newComponent, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
+        }
+
+        @Override
+        public void onComponentRemoved(@NotNull Ref<EntityStore> ref, @NotNull DeathComponent death, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer) {
+        }
+
+        private void handleSpeedOnKillArtefact(Ref<EntityStore> attackerRef, StatEffectComponent statComp, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
+            ArtefactCodec speedArtefact = ArtefactCodec.getAssetMap().getAsset("Speed_On_Kill_Artefact");
+            if (speedArtefact == null) return;
+
+            int stacks = statComp.getAmount(speedArtefact);
+            if (stacks <= 0) return;
+
+            int cappedStacks = Math.min(stacks, 10);
+
+            String effectName = "Speed_On_Kill_Effect" + cappedStacks;
+
+            EffectControllerComponent effectController = store.getComponent(attackerRef, EffectControllerComponent.getComponentType());
+            EntityEffect effect = EntityEffect.getAssetMap().getAsset(effectName);
+
+            if (effectController != null && effect != null) {
+                effectController.addEffect(attackerRef, effect, commandBuffer);
+            }
+        }
+
+        public static class ArtefactExplosionConfig extends ExplosionConfig {
+            public ArtefactExplosionConfig(float radius, float damage) {
+                this.damageEntities = true;
+                this.entityDamageRadius = radius;
+                this.entityDamage = damage;
+                this.entityDamageFalloff = 0.0f;
+                this.damageBlocks = false;
+                this.knockback = null;
+            }
+        }
     }
 }

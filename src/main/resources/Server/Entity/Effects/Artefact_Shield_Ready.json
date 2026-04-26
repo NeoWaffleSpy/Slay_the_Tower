@@ -1,0 +1,76 @@
+{
+  "ApplicationEffects": {
+    "EntityBottomTint": "#0050ff",
+    "EntityTopTint": "#bdbcff",
+    "Particles": [
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 0.75,
+        "TargetEntityPart": "Self",
+        "PositionOffset": {
+          "Y": 0.5
+        }
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "PositionOffset": {
+          "Y": 0.5
+        },
+        "Scale": 0.75
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "PositionOffset": {
+          "Y": 0.5
+        },
+        "Scale": 0.75
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 0.75,
+        "PositionOffset": {
+          "Y": 0.5
+        }
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 0.75,
+        "PositionOffset": {
+          "Y": 0.5
+        }
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 0.75,
+        "PositionOffset": {
+          "Y": 0.5
+        }
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 0.75,
+        "PositionOffset": {
+          "Y": 0.5
+        }
+      },
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 0.75,
+        "PositionOffset": {
+          "Y": 0.5
+        }
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Aura_Sphere",
+        "Scale": 1
+      }
+    ],
+    "LocalSoundEventId": "SFX_Drop_Items_Metal",
+    "ScreenEffect": "ScreenEffects/Snow.png"
+  },
+  "Duration": 0.2,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration"
+}

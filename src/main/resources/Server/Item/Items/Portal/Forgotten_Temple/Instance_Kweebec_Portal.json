@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Instance Kweebec Portal",
+    "Name": "Rogue Kweebec Portal",
     "Description": "server.items.Forgotten_Temple_Portal_Exit.description"
   },
   "Icon": "Icons/ItemsGenerated/Portal_Return.png",
@@ -66,5 +66,25 @@
       -13.5
     ]
   },
-  "ItemSoundSetId": "ISS_Blocks_Stone"
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Life_Essence",
+        "Quantity": 20
+      },
+      {
+        "ItemId": "Deco_Kweebec_Plush",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Arcanebench",
+        "Categories": [
+          "Arcane_Portals"
+        ]
+      }
+    ]
+  }
 }

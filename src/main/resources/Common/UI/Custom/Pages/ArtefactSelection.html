@@ -31,12 +31,12 @@
     }
 
     .artefactImgBox {
-        flex-weight: 1;
+        flex-weight: 4;
         background-color: #ff000000;
     }
 
     .artefactTitleBox {
-        flex-weight: 2;
+        flex-weight: 4;
         background-color: #ff00ff00;
     }
 
@@ -48,10 +48,10 @@
     }
 
     .artefactDescBox {
-        flex-weight: 4;
+        flex-weight: 9;
         background-color: #0000ff00;
         anchor-width: 300;
-        layout-mode: Middle;
+        layout-mode: Top;
     }
 
     .artefactRarityBox {
@@ -66,8 +66,8 @@
     }
 
     .icon {
-        anchor-width: 64;
-        anchor-height: 64;
+        anchor-width: 96;
+        anchor-height: 96;
     }
 
     .txt {
@@ -85,7 +85,23 @@
 
     .txtDesc {
         color: #999999;
-        font-size: 14;
+        font-size: 18;
+    }
+
+    .grey {
+        color: #ffffff;
+    }
+
+    .blue {
+        color: #3295ff;
+    }
+
+    .orange {
+        color: #ffa600;
+    }
+
+    .txt16 {
+        font-size: 16;
     }
 </style>
 <div class='page-overlay'>
@@ -99,26 +115,18 @@
                             <img class='icon' src='{{$icon}}'>
                         </div>
                         <div class='colElem artefactTitleBox'>
-                            <p class='txt txtName'>{{$name}}</p>
-                        </div>
-                        <div class='artefactStatsBox'>
-                            {{#each stats}}
-                            <p class='txt txtEffects'>{{$item}}</p>
-                            {{/each}}
+                            {{#if rarity == 0}}<p class='txt txtName grey'>{{/if}}
+                            {{#if rarity == 1}}<p class='txt txtName blue'>{{/if}}
+                            {{#if rarity == 2}}<p class='txt txtName orange'>{{/if}}
+                            {{$name}}</p>
                         </div>
                         <div class='artefactDescBox'>
                             {{$description}}
                         </div>
                         <div class='artefactRarityBox'>
-                            {{#if rarity == 0}}
-                            <p class='txt txtDesc'>Common</p>
-                            {{/if}}
-                            {{#if rarity == 1}}
-                            <p class='txt txtDesc'>Rare</p>
-                            {{/if}}
-                            {{#if rarity == 2}}
-                            <p class='txt txtDesc'>Legendary</p>
-                            {{/if}}
+                            {{#if rarity == 0}}<p class='txt txt16 grey'>Common</p>{{/if}}
+                            {{#if rarity == 1}}<p class='txt txt16 blue'>Rare</p>{{/if}}
+                            {{#if rarity == 2}}<p class='txt txt16 orange'>Legendary</p>{{/if}}
                         </div>
                     </div>
                 </button>

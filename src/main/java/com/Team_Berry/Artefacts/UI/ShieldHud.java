@@ -15,7 +15,6 @@ public class ShieldHud {
     public ShieldHud(StatEffectComponent statComp, PlayerRef playerRef) {
         this.statComp = statComp;
         this.playerRef = playerRef;
-        buildHudPlayer();
     }
 
     public void buildHudPlayer() {
@@ -23,11 +22,11 @@ public class ShieldHud {
                 .loadHtml("HUDs/ShieldPreview.html", this.template)
                 .enableRuntimeTemplateUpdates(true)
                 .show();
-        //hud.hide();
     }
 
     public void displayShield(boolean visible) {
-        hud.remove();
+        if (hud != null)
+            hud.remove();
         if (visible)
             buildHudPlayer();
     }

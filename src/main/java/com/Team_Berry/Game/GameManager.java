@@ -4,6 +4,7 @@ import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.ArtefactSelection;
 import com.Team_Berry.Artefacts.UI.SkillSelection;
+import com.Team_Berry.Artefacts.UI.WeaponSelection;
 import com.Team_Berry.Game.Data.GameState;
 import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Game.Enums.EndStageResult;
@@ -69,6 +70,7 @@ public class GameManager {
     private final GameState gameState;
     private final RoomCodec lobby;
     private final RoomCodec postgameRoom;
+    private final RoomCodec prisonSpawnRoom;
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
@@ -97,6 +99,7 @@ public class GameManager {
         this.gameState = new GameState();
         this.gameState.initialize(milestoneData);
         this.lobby = findLobbyRoom();
+        this.prisonSpawnRoom = findPrisonSpawnRoom();
         log("Manager initialized for world.");
     }
 
@@ -276,9 +279,6 @@ public class GameManager {
 
         restorePlayerArtefacts(playerRef);
 
-        if (!playerClasses.containsKey(playerRef.getUuid())) {
-            setPlayerClass(playerRef, "Dagger");
-        }
 
         if (this.historicalSkillCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
             EventTitleUtil.showEventTitleToPlayer(
@@ -730,6 +730,22 @@ public class GameManager {
         return roomMap.getAsset(randomKey);
     }
 
+    private RoomCodec findPrisonSpawnRoom() {
+        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
+        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Prisonspawn");
+        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
+
+        if (roomKeys == null || roomKeys.isEmpty()) {
+            log("Warning: No Prisonspawn room found with tag 'Category=Prisonspawn'.");
+            return null;
+        }
+
+        List<String> keyList = new ArrayList<>(roomKeys);
+        String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
+
+        return roomMap.getAsset(randomKey);
+    }
+
     public void resolvePlayerDeath(PlayerRef playerRef) {
         if (this.participantsInRoom.contains(playerRef)) {
             this.deadParticipants.add(playerRef);
@@ -1107,4 +1123,40 @@ public class GameManager {
             ejectPlayersFromInstanceAndDestroy();
         }
     }
+
+    public void startingKweebecInteraction(PlayerRef playerRef) {
+        if (!activeParticipants.contains(playerRef)) return;
+
+        world.execute(() -> {
+            if (playerClasses.containsKey(playerRef.getUuid())) {
+                log(playerRef.getUsername() + " already has a weapon class. Teleporting to Lobby.");
+                if (this.lobby != null) {
+                    RoomTeleporter.teleportToRoom(playerRef, this.lobby, this.world);
+                    setLobbyWeather();
+                }
+            } else {
+                log(playerRef.getUsername() + " has no weapon. Opening Weapon Selection UI.");
+                WeaponSelection ui = new WeaponSelection(playerRef, world.getEntityStore().getStore());
+                ui.buildPage();
+            }
+        });
+    }
+
+    public void onPlayerSelectedWeapon(PlayerRef playerRef, String weaponClassId) {
+        if (!activeParticipants.contains(playerRef)) return;
+
+        setPlayerClass(playerRef, weaponClassId);
+        playerRef.sendMessage(Message.raw("Weapon acquired!"));
+        log(playerRef.getUsername() + " selected weapon: " + weaponClassId + ". Teleporting to Prisonspawn.");
+
+        world.execute(() -> {
+            if (this.prisonSpawnRoom != null) {
+                RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
+            } else {
+                log("Error: Prisonspawn room not found!");
+            }
+        });
+    }
+
+    
 }

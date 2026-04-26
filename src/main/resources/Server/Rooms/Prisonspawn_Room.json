@@ -2,15 +2,16 @@
   "PlayerSpawns": [
     {
       "Position": {
-        "X": 6,
-        "Z": 208,
-        "Y": 154
+        "X": -2,
+        "Z": 203,
+        "Y": 128
       }
     }
   ],
+  "WorldName": "void",
   "Tags": {
     "Category": [
-      "Postgame"
+      "Prisonspawn"
     ]
   }
 }

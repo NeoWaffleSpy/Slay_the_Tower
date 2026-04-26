@@ -3,7 +3,7 @@
   "CalculationType": "Additive",
   "TargetType": "Enemy",
   "Stat": "Bonus_Armor",
-  "Value": -10,
+  "Value": -5,
   "TriggerType": "OnHit",
   "Duration": 3
 }

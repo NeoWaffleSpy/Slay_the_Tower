@@ -25,8 +25,6 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class WeaponSelection {
     private static final String[] weaponStringList = new String[]{
@@ -125,7 +123,13 @@ public class WeaponSelection {
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
 
         if (manager != null) {
-            manager.onPlayerClaimedSkillReward(this.playerRef, claimedSkillId);
+            String playerClass = "Dagger";
+            if (claimedSkillId.contains("Bow")) {
+                playerClass = "Bow";
+            } else if (claimedSkillId.contains("Dagger")) {
+                playerClass = "Bow";
+            }
+            manager.onPlayerSelectedWeapon(this.playerRef, playerClass);
         }
 
         if (this.page != null) {

@@ -2,12 +2,10 @@ package com.Team_Berry.Game;
 
 import com.Team_Berry.Game.Commands.GetParticipantsIndices;
 import com.Team_Berry.Game.Components.QuestNPCComponent;
-import com.Team_Berry.Game.Interactions.ChestClaimInteraction;
-import com.Team_Berry.Game.Interactions.InstanceGameStartInteraction;
-import com.Team_Berry.Game.Interactions.StartRoomFromLobbyInteraction;
-import com.Team_Berry.Game.Interactions.StatueClaimSkillInteraction;
+import com.Team_Berry.Game.Interactions.*;
 import com.Team_Berry.Game.Objectives.CustomRoomTaskAsset;
 import com.Team_Berry.Game.Systems.*;
+import com.Team_Berry.Game.Utils.PlayerInventory;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
@@ -20,6 +18,8 @@ import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
 import com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
+import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -40,7 +40,9 @@ public class GamePlugin extends JavaPlugin {
     public static GamePlugin instance;
     private static ComponentType<EntityStore, QuestNPCComponent> questNPCComponentType;
     private final Map<World, GameManager> gameManagers = new HashMap<>();
+    private final Map<java.util.UUID, com.Team_Berry.Game.Utils.PlayerInventory> savedInventories = new java.util.concurrent.ConcurrentHashMap<>();
     private SkillMilestoneCodec cachedMilestoneData;
+    private PacketFilter inboundDropFilter;
 
     public GamePlugin(JavaPluginInit init) {
         super(init);
@@ -70,6 +72,8 @@ public class GamePlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new QuestNPCTaggerSystem(questNPCComponentType));
         getEntityStoreRegistry().registerSystem(new BreakBlockProtectionSystem(BreakBlockEvent.class));
         getEntityStoreRegistry().registerSystem(new PlaceBlockProtectionSystem(PlaceBlockEvent.class));
+
+
         CustomRoomTaskAsset.registerLogic();
     }
 
@@ -80,11 +84,15 @@ public class GamePlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("StartRoomFromLobbyInteraction", StartRoomFromLobbyInteraction.class, StartRoomFromLobbyInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("StatueClaimSkillInteraction", StatueClaimSkillInteraction.class, StatueClaimSkillInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("ChestClaimInteraction", ChestClaimInteraction.class, ChestClaimInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("ClaimStartWeaponInteraction", ClaimStartWeaponInteraction.class, ClaimStartWeaponInteraction.CODEC);
+
 
         this.getCommandRegistry().registerCommand(new GetParticipantsIndices("getparticipantsindices", "get all indexes of all active participants"));
 
         CustomRoomTaskAsset.registerCodecs();
 
+        DropItemPacketHandler dropHandler = new DropItemPacketHandler();
+        inboundDropFilter = PacketAdapters.registerInbound(dropHandler);
     }
 
     protected void shutdown() {
@@ -94,7 +102,9 @@ public class GamePlugin extends JavaPlugin {
         for (World world : activeWorlds) {
             destroyGameInstance(world);
         }
-
+        if (inboundDropFilter != null) {
+            PacketAdapters.deregisterInbound(inboundDropFilter);
+        }
         super.shutdown();
     }
 
@@ -138,9 +148,32 @@ public class GamePlugin extends JavaPlugin {
         }
 
         if (worldName.contains("SlayTheTower")) {
+
+            if (!savedInventories.containsKey(playerRef.getUuid())) {
+
+                savedInventories.put(playerRef.getUuid(), com.Team_Berry.Game.Utils.PlayerInventory.fromPlayer(ref, store));
+                com.Team_Berry.Game.Utils.PlayerInventory.clearPlayerInventory(ref, store);
+                LOGGER.atInfo().log("Saved inventory to bank and cleared for new run: " + playerRef.getUsername());
+
+            } else {
+
+
+                LOGGER.atInfo().log("Player reconnected mid-run, keeping current SlayTheTower inventory: " + playerRef.getUsername());
+
+            }
+
             GameManager manager = gameManagers.get(currentWorld);
             if (manager != null) {
                 manager.addParticipant(playerRef);
+            }
+
+        } else {
+
+
+            com.Team_Berry.Game.Utils.PlayerInventory inv = savedInventories.remove(playerRef.getUuid());
+            if (inv != null) {
+                inv.applyToPlayer(ref, store);
+                LOGGER.atInfo().log("Restored inventory from bank for " + playerRef.getUsername());
             }
         }
     }
@@ -171,5 +204,29 @@ public class GamePlugin extends JavaPlugin {
 
     public GameManager getGameManager(World world) {
         return gameManagers.get(world);
+    }
+
+    public void saveAndClearPlayerInventory(PlayerRef playerRef) {
+        playerRef.getReference().getStore().getExternalData().getWorld().execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                savedInventories.put(playerRef.getUuid(), PlayerInventory.fromPlayer(ref, ref.getStore()));
+                PlayerInventory.clearPlayerInventory(ref, ref.getStore());
+                LOGGER.atInfo().log("Saved and cleared inventory for " + playerRef.getUsername());
+            }
+        });
+    }
+
+    public void restorePlayerInventory(PlayerRef playerRef) {
+        playerRef.getReference().getStore().getExternalData().getWorld().execute(() -> {
+            com.Team_Berry.Game.Utils.PlayerInventory inv = savedInventories.remove(playerRef.getUuid());
+            if (inv != null) {
+                Ref<EntityStore> ref = playerRef.getReference();
+                if (ref != null && ref.isValid()) {
+                    inv.applyToPlayer(ref, ref.getStore());
+                    LOGGER.atInfo().log("Restored inventory for " + playerRef.getUsername());
+                }
+            }
+        });
     }
 }

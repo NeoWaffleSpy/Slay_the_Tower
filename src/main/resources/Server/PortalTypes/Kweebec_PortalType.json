@@ -1,13 +1,12 @@
 {
-  "InstanceId": "Default",
+  "InstanceId": "Portals_Oasis",
   "Description": {
     "DisplayName": "server.portals.oasis",
     "FlavorText": "server.portals.oasis.description",
     "ThemeColor": "#f3b33cec",
-    "SplashImage": "UI/CustomPages/Pages/Portals/SaveTheKweebecArtwork.png",
+    "SplashImage": "DefaultArtwork.png",
     "Tips": [
-      "Test",
-      "Test2"
+      "server.portals.windsurf_valley.tip1"
     ]
   }
 }

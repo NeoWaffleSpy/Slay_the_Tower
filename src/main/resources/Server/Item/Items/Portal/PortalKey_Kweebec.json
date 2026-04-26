@@ -3,7 +3,7 @@
     "Name": "server.items.PortalKey_Windsurf_Valley.name",
     "Description": "server.items.PortalKey_Windsurf_Valley.description"
   },
-  "Icon": "Icons/ItemsGenerated/PortalKey_Kweebec.png",
+  "Icon": "Icons/ItemsGenerated/PortalKey_Howling_Sands.png",
   "Categories": [
     "Blocks.Portals"
   ],
@@ -56,15 +56,15 @@
   "Quality": "Uncommon",
   "ItemLevel": 51,
   "IconProperties": {
-    "Scale": 1,
+    "Scale": 1.4,
     "Rotation": [
-      18,
-      99,
+      22.5,
+      137.0,
       22.5
     ],
     "Translation": [
-      -5,
-      -18
+      0.0,
+      1.0
     ]
   }
 }

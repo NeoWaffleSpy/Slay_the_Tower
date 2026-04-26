@@ -1,0 +1,170 @@
+{
+  "TranslationProperties": {
+    "Name": "Life"
+  },
+  "Quality": "Legendary",
+  "Icon": "Icons/ItemsGenerated/Life.png",
+  "Categories": [
+    "Items.Foods"
+  ],
+  "ItemLevel": 0,
+  "Utility": {
+    "Compatible": true
+  },
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 1.1,
+    "Rotation": [
+      20,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -10
+    ]
+  },
+  "Interactions": {
+    "Secondary": {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "Var": "ConsumeSFX",
+          "DefaultValue": {
+            "Interactions": [
+              "Consume_SFX"
+            ]
+          }
+        },
+        {
+          "Type": "Charging",
+          "FailOnDamage": false,
+          "Effects": {
+            "ItemAnimationId": "Consume",
+            "ClearAnimationOnFinish": true,
+            "ClearSoundEventOnFinish": true
+          },
+          "HorizontalSpeedMultiplier": 0.4,
+          "Next": {
+            "0.5": {
+              "Type": "ModifyInventory",
+              "AdjustHeldItemQuantity": -1,
+              "Next": {
+                "Type": "Serial",
+                "Interactions": [
+                  {
+                    "Type": "Replace",
+                    "Var": "ConsumedSFX",
+                    "DefaultOk": true,
+                    "DefaultValue": {
+                      "Interactions": [
+                        "Consumed_SFX"
+                      ]
+                    }
+                  },
+                  {
+                    "Type": "Replace",
+                    "DefaultValue": {
+                      "Interactions": [
+                        "Effect"
+                      ]
+                    },
+                    "Var": "Effect"
+                  },
+                  {
+                    "Type": "Simple",
+                    "RunTime": 0.2,
+                    "$Comment": "Delay before next consume cycle can start to prevent sound overlap"
+                  }
+                ]
+              }
+            }
+          },
+          "Failed": {
+            "Type": "Simple"
+          }
+        }
+      ]
+    }
+  },
+  "InteractionVars": {
+    "Consume_Charge": {
+      "Interactions": [
+        {
+          "Parent": "Consume_Charge_Food_T3_Inner",
+          "Effects": {
+            "ItemAnimationId": "Consume"
+          }
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Life_Effect"
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Consume_Bread_Local"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Consume_Bread_Local"
+          }
+        }
+      ]
+    }
+  },
+  "InteractionConfig": {
+    "CanPlace": false,
+    "Priorities": {
+      "Primary": -1,
+      "Secondary": 1
+    }
+  },
+  "Consumable": true,
+  "Tags": {
+    "Type": [],
+    "Family": [
+      "Fruit"
+    ]
+  },
+  "Scale": 1.5,
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Solid",
+    "CustomModel": "Resources/Life/Life_Model.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Resources/Life/Life_Texture.png"
+      }
+    ],
+    "Support": {
+      "Down": [
+        {
+          "TagId": "Nothing"
+        }
+      ]
+    },
+    "CustomModelScale": 0.55,
+    "CubeShadingMode": "Fullbright",
+    "Light": {
+      "Color": "#500",
+      "Radius": 1
+    }
+  }
+}

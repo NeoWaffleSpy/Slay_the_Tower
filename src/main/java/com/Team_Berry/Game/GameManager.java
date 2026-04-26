@@ -283,8 +283,8 @@ public class GameManager {
         if (this.historicalSkillCounts.putIfAbsent(playerRef.getUuid(), 0) == null) {
             EventTitleUtil.showEventTitleToPlayer(
                     playerRef,
-                    Message.raw("SLAY THE TOWER"),
-                    Message.raw("Good luck, traveler..."),
+                    Message.raw("Save the kweebecs !"),
+                    Message.raw("Good luck, adventurer..."),
                     true
             );
         }
@@ -366,9 +366,6 @@ public class GameManager {
                 currentQuest.incrementDeadMobs();
                 log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
 
-                if (playerRef != null) {
-                    playerRef.sendMessage(Message.raw("Mob killed! only " + currentQuest.getMobsLeft() + " left!"));
-                }
                 updateSharedRoomObjective();
 
                 if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
@@ -379,7 +376,6 @@ public class GameManager {
 
                 if (currentQuest.isComplete()) {
                     log("Room Quest successfully completed.");
-                    if (playerRef != null) playerRef.sendMessage(Message.raw("Room Complete"));
                     endStage(EndStageResult.SUCCESS);
                 }
             } else if (futureRoom != null && futureRoom.right() != null && futureRoomMobs.remove(deadMobId)) {
@@ -436,7 +432,7 @@ public class GameManager {
 
     private void handleRunVictory() {
         log("Ending successful run and ejecting players.");
-        broadcastEventTitle("TOWER CONQUERED", "You have beaten the Slay the Tower!", true, null);
+        broadcastEventTitle("MISSION COMPLETE !", "You have saved the kweebecs !", true, null);
         //ejectPlayersFromInstanceAndDestroy();
         tpParticipantsToPostgame();
     }
@@ -519,7 +515,7 @@ public class GameManager {
 
         playerOwnedSkills.computeIfAbsent(playerRef.getUuid(), k -> new HashSet<>()).add(claimedSkillId);
 
-        playerRef.sendMessage(Message.raw("Skill acquired!"));
+        playerRef.sendMessage(Message.raw("You remembered a part of yourself!"));
         log(playerRef.getUsername() + " successfully claimed a skill reward: " + claimedSkillId);
     }
 
@@ -534,7 +530,6 @@ public class GameManager {
             log("Reward claimed by: " + playerRef.getUsername() + " (Artefact: " + artefactId + ") from chest.");
         }
 
-        playerRef.sendMessage(Message.raw("Artefact acquired!"));
     }
 
     public void completeRewardPhase() {
@@ -606,7 +601,7 @@ public class GameManager {
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
         completeSharedRoomObjective();
-        broadcastEventTitle("DEFEATED", "The tower claims another soul...", true, null);
+        broadcastEventTitle("DEFEATED", "The kweebecs still need you... Try again !", true, null);
 
 
         //ejectPlayersFromInstanceAndDestroy();
@@ -1158,5 +1153,5 @@ public class GameManager {
         });
     }
 
-    
+
 }

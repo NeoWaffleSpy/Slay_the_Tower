@@ -23,6 +23,7 @@ public class StatEffectComponent implements Component<EntityStore> {
     public ArtefactHud artefactHud;
     public ShieldHud shieldHud;
     public Map<ArtefactCodec, Long> artefactCooldowns = new HashMap<>();
+    public Map<ArtefactCodec, Long> lastNotifiedReady = new HashMap<>();
 
     public StatEffectComponent() {
         this.flush();

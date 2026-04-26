@@ -1,0 +1,48 @@
+{
+  "Duration": 1.5,
+  "ApplicationEffects": {
+    "LocalSoundEventId": "SFX_Bow_T2_Signature_Nock_Local",
+    "WorldSoundEventId": "SFX_Bow_T2_Signature_Nock",
+    "Particles": [
+      {
+        "SystemId": "Daggers_Dash_Straight",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Hip",
+        "PositionOffset": {
+          "Y": 1.0
+        },
+        "Color": "#d7e5ec"
+      },
+      {
+        "SystemId": "Speed_Implosion",
+        "Scale": 1.5,
+        "Color": "#ffe400",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "ModelVFXId": "Dagger_Dash",
+    "HorizontalSpeedMultiplier": 1.5,
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Speed_Implosion",
+        "Scale": 5,
+        "PositionOffset": {
+          "Z": 0
+        },
+        "Color": "#ffe400",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "Debuff": false,
+  "DamageResistance": {
+    "Physical": [
+      {
+        "CalculationType": "Multiplicative",
+        "Amount": 100
+      }
+    ]
+  }
+}

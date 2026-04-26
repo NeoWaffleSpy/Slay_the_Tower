@@ -29,21 +29,6 @@ public class UltExplosionTickingSystem extends EntityTickingSystem<EntityStore> 
         return this.ultExplosionComponentComponentType;
     }
 
-    private static class MyUltExplosionConfig extends ExplosionConfig {
-        public MyUltExplosionConfig() {
-            this.damageEntities = true;
-            this.damageBlocks = true;
-            this.blockDamageRadius = 5;
-            this.blockDamageFalloff = 1.0F;
-            this.entityDamageRadius = 5.0F;
-            this.entityDamage = 50.0F;
-            this.entityDamageFalloff = 0F;
-            this.blockDropChance = 1.0F;
-            this.knockback = null;
-            this.itemTool = null;
-        }
-    }
-
     @Override
     public void tick(float v, int i, @NonNull ArchetypeChunk<EntityStore> archetypeChunk, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
         UltExplosionComponent ultExplosionComponent = archetypeChunk.getComponent(i, ultExplosionComponentComponentType);
@@ -58,6 +43,21 @@ public class UltExplosionTickingSystem extends EntityTickingSystem<EntityStore> 
             ExplosionConfig config = new MyUltExplosionConfig();
             ExplosionUtils.performExplosion(new Damage.EntitySource(ref), explosionPosition, config, ref, commandBuffer, chunkStore);
 
+        }
+    }
+
+    private static class MyUltExplosionConfig extends ExplosionConfig {
+        public MyUltExplosionConfig() {
+            this.damageEntities = true;
+            this.damageBlocks = true;
+            this.blockDamageRadius = 5;
+            this.blockDamageFalloff = 1.0F;
+            this.entityDamageRadius = 5.0F;
+            this.entityDamage = 50.0F;
+            this.entityDamageFalloff = 0F;
+            this.blockDropChance = 1.0F;
+            this.knockback = null;
+            this.itemTool = null;
         }
     }
 

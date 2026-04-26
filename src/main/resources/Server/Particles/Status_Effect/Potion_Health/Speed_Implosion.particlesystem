@@ -1,0 +1,18 @@
+{
+  "LifeSpan": 2.0,
+  "Spawners": [
+    {
+      "SpawnerId": "Speed_Implosion",
+      "Scale": 1.25,
+      "PositionOffset": {
+        "Y": -0.75
+      }
+    },
+    {
+      "SpawnerId": "Speed_Sparks",
+      "PositionOffset": {
+        "Y": -0.25
+      }
+    }
+  ]
+}

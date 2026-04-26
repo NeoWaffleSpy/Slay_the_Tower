@@ -9,43 +9,39 @@
   "BlockType": {
     "Material": "Empty",
     "DrawType": "Model",
-    "CustomModel": "Blocks/Structures/Roofs/Cloth_Roof_Horizontal.blockymodel",
     "CustomModelTexture": [
       {
-        "Texture": "Blocks/Structures/Roofs/Cloth_Roof_Textures/Tent_Leather.png",
+        "Texture": "Blocks/_Debug/TextureEmpty.png",
         "Weight": 1
       }
     ],
     "Group": "Roof",
-    "HitboxType": "Block_Flat",
     "VariantRotation": "UpDown",
-    "Flags": {},
-    "Gathering": {
-      "Breaking": {
-        "GatherType": "SoftBlocks",
-        "ItemId": "Cloth_Roof_Leather_Flat"
-      }
-    },
-    "BlockParticleSetId": "Grass",
-    "Supporting": {},
     "BlockSoundSetId": "Cloth",
     "RandomRotation": "YawStep90",
-    "ParticleColor": "#75402c"
+    "HitboxType": "Cage_Trork",
+    "Interactions": {
+      "Use": {}
+    },
+    "InteractionHitboxType": "Cage_Trork",
+    "Light": {
+      "Color": "#fda"
+    }
   },
   "PlayerAnimationsId": "Block",
   "IconProperties": {
     "Scale": 0.58823,
-    "Translation": [
-      0,
-      -4.8
-    ],
     "Rotation": [
       22.5,
       45,
       22.5
+    ],
+    "Translation": [
+      0,
+      -4.8
     ]
   },
-  "Icon": "Icons/ItemsGenerated/Cloth_Roof_Leather_Flat.png",
+  "Icon": "Icons/ItemsGenerated/Sword_Kweebec.png",
   "Tags": {
     "Type": [
       "Cloth"

@@ -1,0 +1,29 @@
+{
+  "StatModifiers": {
+    "Health": 100,
+    "Stamina": 100
+  },
+  "ValueType": "Percent",
+  "OverlapBehavior": "Overwrite",
+  "Duration": 1.5,
+  "DamageCalculatorCooldown": 0,
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Potion_Health_Implosion",
+        "Scale": 1.5
+      }
+    ],
+    "WorldSoundEventId": "SFX_Divine_Respawn",
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Potion_Health_Implosion",
+        "TargetEntityPart": "Self",
+        "Scale": 5,
+        "PositionOffset": {
+          "Z": 0
+        }
+      }
+    ]
+  }
+}

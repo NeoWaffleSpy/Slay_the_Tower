@@ -123,7 +123,7 @@ afterEvaluate {
     if (targetTask != null) {
         targetTask.finalizedBy(syncAssets)
         if (targetTask is JavaExec) {
-            targetTask.args("--backup", "--backup-dir", "./Backups")
+            targetTask.args("--backup", "--backup-dir", "./Backups", "--backup-frequency", "10")
             logger.lifecycle("Backup enabled with directory ./Backups")
         } else {
             logger.warn("Task '${targetTask.name}' is not a JavaExec, cannot inject args directly.")

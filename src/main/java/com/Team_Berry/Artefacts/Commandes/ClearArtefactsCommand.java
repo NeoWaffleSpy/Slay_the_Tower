@@ -3,6 +3,7 @@ package com.Team_Berry.Artefacts.Commandes;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.ArtefactSelection;
+import com.Team_Berry.Artefacts.UI.ShieldHud;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -23,6 +24,7 @@ public class ClearArtefactsCommand extends AbstractPlayerCommand {
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull Store<EntityStore> store, @NonNull Ref<EntityStore> ref, @NonNull PlayerRef playerRef, @NonNull World world) {
         StatEffectComponent statComp = store.getComponent(ref, StatEffectComponent.getComponentType());
+        statComp.shieldHud.displayShield(true);
         if (statComp == null) {
             playerRef.getReference().getStore().addComponent(playerRef.getReference(), StatEffectComponent.getComponentType(), new StatEffectComponent());
             statComp = store.getComponent(ref, StatEffectComponent.getComponentType());

@@ -3,6 +3,7 @@ package com.Team_Berry.Artefacts.Components.Data;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.UI.ArtefactHud;
+import com.Team_Berry.Artefacts.UI.ShieldHud;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
@@ -20,6 +21,7 @@ public class StatEffectComponent implements Component<EntityStore> {
     public Map<ArtefactCodec, Integer> artefactList = new HashMap<>();
     public ArrayList<ArtefactCodec> artefactUpdated = new ArrayList<>();
     public ArtefactHud artefactHud;
+    public ShieldHud shieldHud;
     public Map<ArtefactCodec, Long> artefactCooldowns = new HashMap<>();
 
     public StatEffectComponent() {

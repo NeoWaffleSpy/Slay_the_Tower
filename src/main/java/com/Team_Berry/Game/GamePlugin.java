@@ -7,9 +7,7 @@ import com.Team_Berry.Game.Interactions.InstanceGameStartInteraction;
 import com.Team_Berry.Game.Interactions.StartRoomFromLobbyInteraction;
 import com.Team_Berry.Game.Interactions.StatueClaimSkillInteraction;
 import com.Team_Berry.Game.Objectives.CustomRoomTaskAsset;
-import com.Team_Berry.Game.Systems.PlayerDeathSystem;
-import com.Team_Berry.Game.Systems.QuestNPCDeathSystem;
-import com.Team_Berry.Game.Systems.QuestNPCTaggerSystem;
+import com.Team_Berry.Game.Systems.*;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
@@ -18,6 +16,8 @@ import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
+import com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -68,6 +68,8 @@ public class GamePlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new QuestNPCDeathSystem());
         getEntityStoreRegistry().registerSystem(new PlayerDeathSystem());
         getEntityStoreRegistry().registerSystem(new QuestNPCTaggerSystem(questNPCComponentType));
+        getEntityStoreRegistry().registerSystem(new BreakBlockProtectionSystem(BreakBlockEvent.class));
+        getEntityStoreRegistry().registerSystem(new PlaceBlockProtectionSystem(PlaceBlockEvent.class));
         CustomRoomTaskAsset.registerLogic();
     }
 

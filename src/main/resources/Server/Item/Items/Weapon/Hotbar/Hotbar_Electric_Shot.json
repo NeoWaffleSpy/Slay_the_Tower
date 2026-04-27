@@ -3,7 +3,7 @@
     "Name": "ElectricShot.name",
     "Description": "ElectricShot.description"
   },
-  "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
+  "Icon": "Icons/ItemsGenerated/electric_shot.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [

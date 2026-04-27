@@ -1,0 +1,16 @@
+{
+  "Music": {
+    "Tracks": [
+      "Music/Oceans/ZO-SolemnTides.ogg"
+    ]
+  },
+  "Conditions": {
+    "WeatherIds": [
+      "Weather_Prison"
+    ],
+    "Never": false,
+    "EnvironmentIds": [
+      "Default"
+    ]
+  }
+}

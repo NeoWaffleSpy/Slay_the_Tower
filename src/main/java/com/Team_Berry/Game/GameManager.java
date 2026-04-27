@@ -37,9 +37,14 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.asset.type.model.config.Model;
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
+import com.hypixel.hytale.server.core.cosmetics.CosmeticsModule;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
+import com.hypixel.hytale.server.core.modules.entity.player.PlayerSkinComponent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
@@ -68,7 +73,9 @@ public class GameManager {
     private static final String SFX_ROOM_START = "SFX_Room_Start";
     private static final String RELICS_CHEST = "Relics_Chest";
     private static final int TELEPORT_DELAY = 7;
-
+    private static final List<String> STARTING_MODELS = Arrays.asList(
+            "Skeleton", "Skeleton_Fighter", "Skeleton_Mage", "Skeleton_Pirate_Striker", "Skeleton_Knight"
+    );
     private final GameState gameState;
     private final RoomCodec lobby;
     private final RoomCodec postgameRoom;
@@ -326,6 +333,7 @@ public class GameManager {
 
             teleportPlayerToSpawn(playerRef);
             forceSurvivalMode(playerRef);
+            applyRandomStartingModel(playerRef);
         }
 
         if (!playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
@@ -384,6 +392,7 @@ public class GameManager {
                 }
             }
         });
+        resetPlayerModel(playerRef);
         detachPlayerFromObjective(playerRef);
         this.activeParticipants.remove(playerRef);
         this.participantsInRoom.remove(playerRef);
@@ -590,6 +599,11 @@ public class GameManager {
 
         playerRef.sendMessage(Message.raw("You remembered a part of yourself!"));
         log(playerRef.getUsername() + " successfully claimed a skill reward: " + claimedSkillId);
+        int currentSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
+        if (currentSkills >= 4) {
+            resetPlayerModel(playerRef);
+            broadcastEventTitle("You have regained your humanity !", "You feel much better...", true, null);
+        }
     }
 
     public void onPlayerClaimedArtefactReward(PlayerRef playerRef, String artefactId) {
@@ -679,6 +693,7 @@ public class GameManager {
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
         completeSharedRoomObjective();
+
         broadcastEventTitle("DEFEATED", "The kweebecs still need you... Try again !", true, null);
 
 
@@ -1273,6 +1288,7 @@ public class GameManager {
 
                     Ref<EntityStore> ref = participant.getReference();
                     if (ref != null && ref.isValid()) {
+                        resetPlayerModel(participant);
                         PlayerInventory.clearPlayerInventory(ref, ref.getStore());
                         log("Cleared end-of-run inventory for: " + participant.getUsername());
                     }
@@ -1367,5 +1383,51 @@ public class GameManager {
                 log("Anti-Softlock: Detected and cleared vanished mob UUID: " + id);
             }
         }
+    }
+
+    private void applyRandomStartingModel(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+
+                String randomModelId = STARTING_MODELS.get(ThreadLocalRandom.current().nextInt(STARTING_MODELS.size()));
+
+                ModelAsset modelAsset = ModelAsset.getAssetMap().getAsset(randomModelId);
+                if (modelAsset != null) {
+                    Model model = Model.createScaledModel(modelAsset, 1.0f);
+                    store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(model));
+                    log("Applied starting model '" + randomModelId + "' to " + playerRef.getUsername());
+                } else {
+                    log("Warning: Could not find ModelAsset for ID: " + randomModelId);
+                }
+            }
+        });
+    }
+
+    private void resetPlayerModel(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+
+                PlayerSkinComponent skinComponent = store.getComponent(ref, PlayerSkinComponent.getComponentType());
+                if (skinComponent != null) {
+                    Model newModel = CosmeticsModule.get().createModel(skinComponent.getPlayerSkin());
+                    store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(newModel));
+                    skinComponent.setNetworkOutdated();
+
+                    EventTitleUtil.showEventTitleToPlayer(
+                            playerRef,
+                            Message.raw("HUMANITY REGAINED !"),
+                            Message.raw("Your true form has been restored."),
+                            true,
+                            null,
+                            2.0F, 0.5F, 0.5F
+                    );
+                    log("Restored original player skin for: " + playerRef.getUsername());
+                }
+            }
+        });
     }
 }

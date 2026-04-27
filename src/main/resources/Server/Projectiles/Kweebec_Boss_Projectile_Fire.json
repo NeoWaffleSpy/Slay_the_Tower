@@ -1,8 +1,8 @@
 {
   "Appearance": "Fireball_BOSS",
   "SticksVertically": true,
-  "MuzzleVelocity": 20,
-  "TerminalVelocity": 20,
+  "MuzzleVelocity": 50,
+  "TerminalVelocity": 50,
   "Gravity": 2,
   "ImpactSlowdown": 0.05,
   "TimeToLive": 1,

@@ -1,9 +1,9 @@
 {
   "Appearance": "Ball_Void_Model",
   "SticksVertically": true,
-  "MuzzleVelocity": 35,
-  "TerminalVelocity": 50,
-  "Gravity": 20,
+  "MuzzleVelocity": 25,
+  "TerminalVelocity": 35,
+  "Gravity": 50,
   "Bounciness": 1.01,
   "ImpactSlowdown": 0.05,
   "TimeToLive": 1,
@@ -14,7 +14,7 @@
     "SystemId": "VoidImpact"
   },
   "DepthShot": 0.5,
-  "PitchAdjustShot": false,
+  "PitchAdjustShot": true,
   "BounceParticles": {
     "SystemId": "VoidImpact",
     "Scale": 1
@@ -49,6 +49,6 @@
   "Density": 2000,
   "WaterHitImpulseLoss": 0.7,
   "SwimmingDampingFactor": 50,
-  "VerticalCenterShot": -0.5,
+  "VerticalCenterShot": -10,
   "HorizontalCenterShot": 2
 }

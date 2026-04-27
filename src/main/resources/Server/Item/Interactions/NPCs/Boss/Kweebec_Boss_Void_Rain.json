@@ -1,6 +1,6 @@
 {
   "Type": "Simple",
-  "RunTime": 0.1,
+  "RunTime": 0.2,
   "Next": {
     "Type": "Repeat",
     "Repeat": 4,
@@ -57,6 +57,12 @@
           ]
         }
       ]
-    }
+    },
+    "RunTime": 1.6
+  },
+  "Effects": {
+    "ItemPlayerAnimationsId": "Kweebec_Boss",
+    "ItemAnimationId": "VoidRain",
+    "WaitForAnimationToFinish": false
   }
 }

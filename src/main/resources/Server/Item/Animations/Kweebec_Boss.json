@@ -8,6 +8,10 @@
     "Idle": {
       "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Kweebec_Boss_Idle1.blockyanim",
       "Looping": true
+    },
+    "VoidRain": {
+      "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Void_Rain.blockyanim",
+      "Looping": false
     }
   },
   "WiggleWeights": {

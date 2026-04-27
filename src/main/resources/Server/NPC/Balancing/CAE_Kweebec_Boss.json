@@ -141,8 +141,7 @@
         "Actions": [
           "SelectTarget",
           "FireballAssault",
-          "VoidRain",
-          "Summon"
+          "VoidRain"
         ]
       }
     }

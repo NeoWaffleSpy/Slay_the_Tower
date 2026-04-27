@@ -1,17 +1,16 @@
 {
   "Model": "NPC/Kweebec_Boss/Boss_Kweebec_AOE.blockymodel",
   "Texture": "NPC/Kweebec_Boss/Kweebec_Boss_Texture1.png",
-  "CrouchOffset": -0.35,
   "HitBox": {
     "Max": {
-      "X": 0.85,
-      "Y": 2.8,
-      "Z": 0.85
+      "X": 1,
+      "Y": 4,
+      "Z": 1
     },
     "Min": {
-      "X": -0.5,
+      "X": -1,
       "Y": 0,
-      "Z": -0.85
+      "Z": -1
     }
   },
   "AnimationSets": {
@@ -66,5 +65,9 @@
   },
   "EyeHeight": 2,
   "MaxScale": 3.5,
-  "MinScale": 3.5
+  "MinScale": 3.5,
+  "PhysicsValues": {
+    "Mass": 1000,
+    "DragCoefficient": 100
+  }
 }

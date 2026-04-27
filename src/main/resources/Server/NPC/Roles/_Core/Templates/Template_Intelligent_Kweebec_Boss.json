@@ -412,14 +412,14 @@
     "Alerted",
     "Search"
   ],
-  "KnockbackScale": 0.5,
+  "KnockbackScale": 0,
   "MotionControllerList": [
     {
       "Type": "Walk",
       "MaxWalkSpeed": {
         "Compute": "MaxSpeed"
       },
-      "Gravity": 10,
+      "Gravity": 100,
       "RunThreshold": {
         "Compute": "RunThreshold"
       },

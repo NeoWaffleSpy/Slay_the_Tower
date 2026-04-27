@@ -380,9 +380,9 @@ public class GameManager {
                 currentQuest.incrementDeadMobs();
                 log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
 
-                validateRemainingMobs();
+                //TODO validateRemainingMobs();
 
-                //TODO updateSharedRoomObjective();
+                updateSharedRoomObjective();
 
                 if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
                     searchEffectApplied = true;

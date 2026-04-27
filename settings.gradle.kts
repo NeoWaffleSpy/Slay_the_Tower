@@ -12,4 +12,4 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-rootProject.name = "Slay_The_Tower"
+rootProject.name = "Save_The_Kweebec"

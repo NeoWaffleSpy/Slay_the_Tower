@@ -33,7 +33,7 @@
   "WaterHitImpulseLoss": 0.7,
   "SwimmingDampingFactor": 50,
   "ComputePitch": true,
-  "VerticalCenterShot": -0.5,
+  "VerticalCenterShot": -0.3,
   "HitSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
   "ComputeRoll": true,
   "ComputeYaw": true

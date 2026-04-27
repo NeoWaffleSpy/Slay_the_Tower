@@ -79,7 +79,6 @@ public class GameManager {
     );
     private static final String ROOM_MUSIC = "Room_Music";
     private static final String TREE_MUSIC = "Tree_Music";
-
     private final GameState gameState;
     private final RoomCodec lobby;
     private final RoomCodec postgameRoom;
@@ -98,6 +97,7 @@ public class GameManager {
     private final Map<UUID, Set<BlockPosition>> playerClaimedChests = new HashMap<>();
     private final Map<UUID, BlockPosition> pendingChestClaims = new HashMap<>();
     private final Set<UUID> pendingCleanup = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    private boolean isBossStage = false;
     private World world;
     private UUID currentRoomObjectiveId = null;
     private boolean pendingMilestoneTransition = false;
@@ -942,7 +942,7 @@ public class GameManager {
     }
 
     private void setLobbyWeather() {
-        setForcedWeather("Weather_Prison", world.getEntityStore().getStore());
+        setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
         log("Weather changed to Prison state for the Lobby.");
     }
 
@@ -1482,6 +1482,67 @@ public class GameManager {
                 }
             }
         });
+    }
+
+    private RoomCodec findBossRoom() {
+        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
+        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Boss");
+        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
+
+        if (roomKeys == null || roomKeys.isEmpty()) {
+            log("SEVERE: No Boss room found with tag 'Category=Boss'.");
+            return null;
+        }
+
+        List<String> keyList = new ArrayList<>(roomKeys);
+        return roomMap.getAsset(keyList.get(ThreadLocalRandom.current().nextInt(keyList.size())));
+    }
+
+    public List<MobGroupCodec> findBossMobGroups() {
+        DefaultAssetMap<String, MobGroupCodec> map = MobGroupCodec.getAssetMap();
+        int tagIndex = AssetRegistry.getOrCreateTagIndex("Difficulty=Boss");
+        Set<String> groupKeys = map.getKeysForTag(tagIndex);
+
+        if (groupKeys == null || groupKeys.isEmpty()) {
+            log("SEVERE: No Boss mob groups found with tag 'Difficulty=Boss'.");
+            return null;
+        }
+
+        List<MobGroupCodec> validGroups = new ArrayList<>();
+        for (String key : groupKeys) {
+            validGroups.add(map.getAsset(key));
+        }
+        return validGroups;
+    }
+
+    public Pair<RoomCodec, Quest> prepareBossRoom(Set<UUID> targetMobTracker) {
+        log("Preparing the Final Boss Room...");
+        RoomCodec bossRoom = findBossRoom();
+
+        if (bossRoom == null) return null;
+
+        List<MobGroupCodec> bossGroups = findBossMobGroups();
+        Quest quest;
+
+        if (bossGroups != null && !bossGroups.isEmpty()) {
+            MobGroupCodec selectedGroup = bossGroups.get(ThreadLocalRandom.current().nextInt(bossGroups.size()));
+            quest = new Quest(selectedGroup.getTotalMobCount());
+
+            log(String.format("Boss Room selected: %s. Spawning %d BOSS mobs.", bossRoom.worldName, quest.getSpawnedMobs()));
+
+            world.execute(() -> {
+                List<UUID> spawnedMobs = RoomNPCSpawner.spawnMobGroup(world.getEntityStore().getStore(), bossRoom, selectedGroup);
+                targetMobTracker.clear();
+                targetMobTracker.addAll(spawnedMobs);
+                log("Successfully registered " + spawnedMobs.size() + " Boss UUIDs.");
+            });
+
+        } else {
+            quest = new Quest(0);
+            log("Boss Room selected: " + bossRoom.worldName + " (Error: No boss groups found).");
+        }
+
+        return Pair.of(bossRoom, quest);
     }
 
 }

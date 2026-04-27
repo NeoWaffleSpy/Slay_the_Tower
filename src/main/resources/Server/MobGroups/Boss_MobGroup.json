@@ -1,0 +1,12 @@
+{
+  "Mobs": [
+    {
+      "NPCRole": "Kweebec_Boss_Role1"
+    }
+  ],
+  "Tags": {
+    "Difficulty": [
+      "Boss"
+    ]
+  }
+}

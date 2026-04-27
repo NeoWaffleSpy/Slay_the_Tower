@@ -44,7 +44,7 @@
         "AbilityType": "Primary",
         "AttackDistanceRange": [
           0,
-          10
+          100
         ],
         "Ability": {
           "Interactions": [

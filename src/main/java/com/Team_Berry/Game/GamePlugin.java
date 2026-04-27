@@ -91,6 +91,7 @@ public class GamePlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("ClaimStartWeaponInteraction", ClaimStartWeaponInteraction.class, ClaimStartWeaponInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("KweebecMerchantInteraction", KweebecMerchantInteraction.class, KweebecMerchantInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("SpawnAOEInteraction", SpawnAOEInteraction.class, SpawnAOEInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("ProjectileRainInteraction", ProjectileRainInteraction.class, ProjectileRainInteraction.CODEC);
 
         this.getCommandRegistry().registerCommand(new GetParticipantsIndices("getparticipantsindices", "get all indexes of all active participants"));
 

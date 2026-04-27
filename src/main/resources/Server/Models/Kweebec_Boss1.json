@@ -42,7 +42,7 @@
     "Run": {
       "Animations": [
         {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Default/Run.blockyanim",
+          "Animation": "NPC/Kweebec_Boss/punch_2.blockyanim",
           "Speed": 1
         }
       ]
@@ -75,7 +75,7 @@
     "Jump": {
       "Animations": [
         {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Default/Jump.blockyanim",
+          "Animation": "NPC/Kweebec_Boss/jump.blockyanim",
           "BlendingDuration": 0.1,
           "Looping": false,
           "Speed": 0.8
@@ -95,13 +95,7 @@
     "JumpRun": {
       "Animations": [
         {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Default/Jump_Far.blockyanim",
-          "BlendingDuration": 0.1,
-          "Looping": false,
-          "Speed": 0.8
-        },
-        {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Default/Jump_Far2.blockyanim",
+          "Animation": "NPC/Kweebec_Boss/jump_punch2.blockyanim",
           "BlendingDuration": 0.1,
           "Looping": false,
           "Speed": 0.8

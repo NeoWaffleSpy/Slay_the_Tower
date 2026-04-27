@@ -8,6 +8,7 @@
         anchor-height: 300;
         anchor-width: 1300;
         anchor-bottom: 0;
+        padding: 40;
     }
 
     .dialogueLayout {
@@ -114,7 +115,7 @@
     }
 </style>
 <div class='page-overlay'>
-    <div class='decorated-container artefactPage' style='display: {{#if Visibility}}block{{else}}none{{/if}};' data-hyui-title='Weapon Selection'>
+    <div class='decorated-container artefactPage' style='display: {{#if Visibility}}block{{else}}none{{/if}};' data-hyui-title='Here, do any of these weapons jog your memory?'>
         <div class='container-contents'>
             <div class='artefactTab'>
                 {{#each Skills}}
@@ -135,7 +136,7 @@
             </div>
         </div>
     </div>
-    <div class='decorated-container dialoguePage' style='display: {{#if Visibility}}none{{else}}block{{/if}};' data-hyui-title='Kweebec Ranger'>
+    <div class='decorated-container dialoguePage' style='display: {{#if Visibility}}none{{else}}block{{/if}};' data-hyui-title='The Wanderer'>
         <div class='dialogueLayout'>
             <div class='textBox'>
                 <p class='txtDesc'>Oh, you're finally awake! We've been trying to revive you for so long...</p>
@@ -143,7 +144,6 @@
                 <p class='txtDesc'>We need your help!</p>
                 <p class='txtDesc'>I'm not sure how much you remember... but you were a mighty adventurer in your time!</p>
                 <p class='txtDesc'>Well... before your infection...</p>
-                <p class='txtDesc'>Here, do any of these weapons jog your memory?</p>
             </div>
             <div class='buttonBox'>
                 <button class="custom-textbutton" id='dialogue-button'>Next</button>

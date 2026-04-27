@@ -1,0 +1,25 @@
+{
+  "Mobs": [
+    {
+      "NPCRole": "NPC_Zombie_Dash",
+      "Quantity": 6
+    },
+    {
+      "NPCRole": "NPC_Skeleton_Archer",
+      "Quantity": 4
+    },
+    {
+      "NPCRole": "NPC_Skeleton_Archmage",
+      "Quantity": 2
+    },
+    {
+      "NPCRole": "NPC_Bear",
+      "Quantity": 2
+    }
+  ],
+  "Tags": {
+    "Difficulty": [
+      "1"
+    ]
+  }
+}

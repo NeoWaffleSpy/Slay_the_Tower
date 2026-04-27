@@ -2,7 +2,7 @@
   "Type": "Variant",
   "Reference": "Template_Temple",
   "Modify": {
-    "Appearance": "Kweebec_Sapling_Pink",
+    "Appearance": "Kweebec_Sproutling_Blue",
     "GreetAnimation": "Wave",
     "HotbarItems": [],
     "MotionStatic": true,

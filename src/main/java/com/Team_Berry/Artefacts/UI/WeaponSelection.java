@@ -58,7 +58,10 @@ public class WeaponSelection {
         for (int i = 0; i < 2; i++)
             skills.add(parseInfo(skillsCodecs.get(i), i));
         this.template.setVariable("Skills", skills);
-        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
+        this.template.setVariable("Visibility", false);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/WeaponSelection.html", this.template);
+        builder.enableRuntimeTemplateUpdates(true);
+        builder.addEventListener("dialogue-button", CustomUIEventBindingType.Activating, (_, _) -> this.buttonDialogueEvent());
         skills.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
         page = builder.open(store);
     }
@@ -67,7 +70,10 @@ public class WeaponSelection {
         for (int i = 0; i < items.size(); i++)
             skills.add(parseInfo(items.get(i), i));
         this.template.setVariable("Skills", skills);
-        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
+        this.template.setVariable("Visibility", false);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/WeaponSelection.html", this.template);
+        builder.enableRuntimeTemplateUpdates(true);
+        builder.addEventListener("dialogue-button", CustomUIEventBindingType.Activating, (_, _) -> this.buttonDialogueEvent());
         skills.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
         page = builder.open(store);
     }
@@ -135,6 +141,11 @@ public class WeaponSelection {
         if (this.page != null) {
             this.page.close();
         }
+    }
+
+    private void buttonDialogueEvent() {
+        this.template.setVariable("Visibility", true);
+        this.page.updatePage(false);
     }
 
     private record WeaponInfos(String name, String icon, String description, Item item, int index) {

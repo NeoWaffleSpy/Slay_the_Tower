@@ -1,0 +1,29 @@
+{
+  "Mobs": [
+    {
+      "NPCRole": "NPC_Outlander_Berserker",
+      "Quantity": 4
+    },
+    {
+      "NPCRole": "NPC_Outlander_Hunter",
+      "Quantity": 5
+    },
+    {
+      "NPCRole": "NPC_Outlander_Cultist",
+      "Quantity": 3
+    },
+    {
+      "NPCRole": "NPC_Outlander_Brute",
+      "Quantity": 2
+    },
+    {
+      "NPCRole": "NPC_Ghoul",
+      "Quantity": 3
+    }
+  ],
+  "Tags": {
+    "Difficulty": [
+      "2"
+    ]
+  }
+}

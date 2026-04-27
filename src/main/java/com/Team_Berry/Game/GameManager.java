@@ -442,26 +442,33 @@ public class GameManager {
 
         if (questUpdate == QuestUpdate.MOB_DEATH && deadMobId != null) {
 
+            boolean isQuestMob = false;
+
             if (currentRoomMobs.remove(deadMobId)) {
                 currentQuest.incrementDeadMobs();
                 log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
+                isQuestMob = true;
             } else if (futureRoom != null && futureRoom.right() != null && futureRoomMobs.remove(deadMobId)) {
                 futureRoom.right().incrementDeadMobs();
                 log("A Future Room Mob died prematurely! Lowered future quest requirements.");
             }
 
-            validateRemainingMobs();
-            updateSharedRoomObjective();
 
-            if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
-                searchEffectApplied = true;
-                broadcastMessage("The remaining monsters have been revealed!");
-                applyEffectToMobs(currentRoomMobs, MOB_SEARCH_EFFECT);
-            }
+            if (isQuestMob) {
 
-            if (currentQuest.isComplete()) {
-                log("Room Quest successfully completed.");
-                endStage(EndStageResult.SUCCESS);
+                validateRemainingMobs();
+                updateSharedRoomObjective();
+
+                if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
+                    searchEffectApplied = true;
+                    broadcastMessage("The remaining monsters have been revealed!");
+                    applyEffectToMobs(currentRoomMobs, MOB_SEARCH_EFFECT);
+                }
+
+                if (currentQuest.isComplete()) {
+                    log("Room Quest successfully completed.");
+                    endStage(EndStageResult.SUCCESS);
+                }
             }
 
         } else if (questUpdate == QuestUpdate.PLAYER_DEATH && playerRef != null) {

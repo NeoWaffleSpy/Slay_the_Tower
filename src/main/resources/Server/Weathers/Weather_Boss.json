@@ -1,0 +1,114 @@
+{
+  "SkyTopColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff6700ff"
+    }
+  ],
+  "SkyBottomColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff0000ff"
+    }
+  ],
+  "SkySunsetColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff0000ff"
+    }
+  ],
+  "FogColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff6500"
+    }
+  ],
+  "FogDensities": [
+    {
+      "Hour": 0,
+      "Value": 0.15
+    }
+  ],
+  "FogHeightFalloffs": [
+    {
+      "Hour": 0,
+      "Value": 3.05
+    }
+  ],
+  "FogDistance": [
+    -125,
+    325
+  ],
+  "FogOptions": {
+    "FogHeightCameraFixed": 0.017,
+    "EffectiveViewDistanceMultiplier": 1,
+    "IgnoreFogLimits": false
+  },
+  "SunScales": [
+    {
+      "Hour": 0,
+      "Value": 3.5
+    }
+  ],
+  "MoonScales": [
+    {
+      "Hour": 0,
+      "Value": 5.5
+    }
+  ],
+  "Particle": {
+    "SystemId": "Embers",
+    "OvergroundOnly": false,
+    "Color": "#ff6b00"
+  },
+  "Clouds": [
+    {
+      "Texture": "Sky/Clouds/Twirled.png",
+      "Colors": [
+        {
+          "Hour": 0,
+          "Color": "#ffffffff"
+        }
+      ],
+      "Speeds": [
+        {
+          "Hour": 0,
+          "Value": 1.5
+        }
+      ]
+    }
+  ],
+  "SunGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffeb00ff"
+    }
+  ],
+  "SunColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffbe6d"
+    }
+  ],
+  "ScreenEffectColors": null,
+  "SunlightDampingMultipliers": null,
+  "SunlightColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffaeae"
+    }
+  ],
+  "ColorFilters": null,
+  "MoonColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff0000ff"
+    }
+  ],
+  "MoonGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff0000ff"
+    }
+  ]
+}

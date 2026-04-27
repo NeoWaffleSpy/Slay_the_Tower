@@ -1,0 +1,12 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Template_VoidSplash_Boss_Particles",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.1,
+        "Z": 0
+      }
+    }
+  ]
+}

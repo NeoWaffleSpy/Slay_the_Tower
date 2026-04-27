@@ -140,15 +140,11 @@
   "MaxDurability": 180,
   "DurabilityLossOnHit": 0.45,
   "Interactions": {
-    "Secondary": {
+    "Primary": {
       "Interactions": [
-        {
-          "Type": "SpawnAOEInteraction",
-          "Radius": 20,
-          "Particle Preview": "Fire_AoE_Grow2",
-          "Particle Explosion": "Explosion_Big"
-        }
+        "Kweebec_Boss_Projectile_Assault"
       ]
-    }
+    },
+    "Secondary": "Root_Kweebec_Boss_Punch_Aoe"
   }
 }

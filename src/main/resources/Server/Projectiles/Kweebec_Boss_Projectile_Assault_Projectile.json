@@ -1,0 +1,54 @@
+{
+  "Appearance": "Ball_Void_Model",
+  "SticksVertically": true,
+  "MuzzleVelocity": 25,
+  "TerminalVelocity": 35,
+  "Gravity": 50,
+  "Bounciness": 1.01,
+  "ImpactSlowdown": 0.05,
+  "TimeToLive": 1,
+  "Damage": 20,
+  "DeathEffectsOnHit": true,
+  "DeadTime": 0.01,
+  "HitParticles": {
+    "SystemId": "VoidImpact"
+  },
+  "DepthShot": 0.5,
+  "PitchAdjustShot": true,
+  "BounceParticles": {
+    "SystemId": "VoidImpact",
+    "Scale": 1
+  },
+  "Radius": 0,
+  "Height": 0,
+  "BounceSoundEventId": "SFX_Eye_Void_Attack_Blast",
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "DamageBlocks": false,
+    "BlockDamageRadius": 3,
+    "EntityDamageRadius": 5,
+    "EntityDamage": 0,
+    "Knockback": {
+      "Force": -3,
+      "Duration": 0.1,
+      "VelocityY": 5,
+      "VelocityConfig": {
+        "Style": "Exp"
+      }
+    }
+  },
+  "DeadTimeMiss": 0.01,
+  "DeathSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
+  "DeathParticles": {
+    "SystemId": "Explosion_Medium",
+    "Color": "#ff00ff"
+  },
+  "MissParticles": {
+    "SystemId": "Eye_Void_Smoke_Teal"
+  },
+  "Density": 2000,
+  "WaterHitImpulseLoss": 0.7,
+  "SwimmingDampingFactor": 50,
+  "VerticalCenterShot": -10,
+  "HorizontalCenterShot": 1
+}

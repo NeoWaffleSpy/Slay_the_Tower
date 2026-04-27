@@ -1,0 +1,41 @@
+{
+  "Type": "Simple",
+  "$Comment": "Prepare Delay before damage is applied via selector",
+  "Effects": {
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "ClearAnimationOnFinish": true,
+    "ItemAnimationId": "PunchAoe",
+    "ItemPlayerAnimationsId": "Kweebec_Boss"
+  },
+  "Next": {
+    "Type": "Selector",
+    "Selector": {
+      "Id": "AOECircle",
+      "Offset": {
+        "Z": -10
+      },
+      "Range": 5
+    },
+    "Effects": {
+      "Particles": [
+        {
+          "SystemId": "Explosion_Big",
+          "Scale": 10,
+          "PositionOffset": {
+            "Z": 10,
+            "X": 5
+          }
+        }
+      ]
+    },
+    "RunTime": 0.3,
+    "HitEntity": {
+      "Interactions": [
+        "NPC_Attack_Melee_Damage"
+      ]
+    }
+  },
+  "RunTime": 0.8
+}

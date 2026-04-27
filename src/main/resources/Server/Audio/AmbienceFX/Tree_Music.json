@@ -1,0 +1,24 @@
+{
+  "Music": {
+    "Tracks": [
+      "Music/Zone1/Z1V-KweebecVillageNight.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "WeatherIds": [
+      "Weather_Tree"
+    ],
+    "Never": false,
+    "EnvironmentIds": [
+      "Default"
+    ]
+  },
+  "SoundEffect": {
+    "ReverbEffectId": "Rev_Default",
+    "EqualizerEffectId": "EQ_Default",
+    "IsInstant": true
+  },
+  "Priority": 999,
+  "AudioCategory": "AudioCat_Music"
+}

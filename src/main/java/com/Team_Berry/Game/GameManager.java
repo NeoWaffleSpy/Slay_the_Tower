@@ -77,6 +77,9 @@ public class GameManager {
     private static final List<String> STARTING_MODELS = Arrays.asList(
             "Skeleton", "Skeleton_Fighter", "Skeleton_Mage", "Skeleton_Pirate_Striker", "Skeleton_Knight"
     );
+    private static final String ROOM_MUSIC = "Room_Music";
+    private static final String TREE_MUSIC = "Tree_Music";
+
     private final GameState gameState;
     private final RoomCodec lobby;
     private final RoomCodec postgameRoom;
@@ -1480,4 +1483,5 @@ public class GameManager {
             }
         });
     }
+
 }

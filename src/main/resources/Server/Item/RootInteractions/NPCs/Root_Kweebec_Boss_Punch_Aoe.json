@@ -1,0 +1,22 @@
+{
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  },
+  "Interactions": [
+    "Kweebec_Boss_Punch_AOE",
+    {
+      "Type": "Simple",
+      "RunTime": 1,
+      "Effects": {
+        "MovementEffects": {
+          "DisableAll": true
+        },
+        "ItemPlayerAnimationsId": "Kweebec_Boss",
+        "ClearAnimationOnFinish": true,
+        "ItemAnimationId": "Idle"
+      }
+    }
+  ]
+}

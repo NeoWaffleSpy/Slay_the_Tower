@@ -9,16 +9,20 @@
       "Quantity": 4
     },
     {
-      "NPCRole": "NPC_Outlander_Cultist",
+      "NPCRole": "NPC_Kweebec_Outlander_Cultist",
       "Quantity": 2
     },
     {
-      "NPCRole": "NPC_Outlander_Brute",
+      "NPCRole": "NPC_Kweebec_Outlander_Brut",
       "Quantity": 2
     },
     {
-      "NPCRole": "NPC_Ghoul",
+      "NPCRole": "NPC_Kweebec_Ghoul",
       "Quantity": 3
+    },
+    {
+      "NPCRole": "NPC_Werewolf",
+      "Quantity": 2
     }
   ],
   "Tags": {

@@ -16,8 +16,8 @@
     },
     "FlockArray": {
       "Value": [
-        "Skeleton_Fighter",
-        "Skeleton_Archer"
+        "Skeleton_Knight",
+        "Skeleton_Mage"
       ],
       "TypeHint": "String",
       "Description": "Array containing NPCs for this flock type."
@@ -27,22 +27,22 @@
       "Description": "When set to false, NPCs wont try to avoid each other or player, it can lead to them stacking together, but can help to avoid jerky-like movemenet in enclosed space."
     },
     "NameTranslationKey": {
-      "Value": "server.npcRoles.Skeleton_Archer.name",
+      "Value": "server.npcRoles.Skeleton_Archmage.name",
       "Description": "Translation key for NPC name display"
     }
   },
   "Modify": {
-    "MaxHealth": 50,
+    "MaxHealth": 70,
     "HearingRange": 8,
     "ViewSector": 270,
     "WakingPeriod": [
       0,
       24
     ],
-    "DropList": "Drop_Skeleton_Archer",
-    "Appearance": "Skeleton_Archer",
+    "DropList": "Drop_Skeleton_Archmage",
+    "Appearance": "Skeleton_Archmage",
     "Weapons": [
-      "Weapon_Shortbow_Iron_Rusty"
+      "Weapon_Staff_Wood_Rotten"
     ],
     "FlockArray": {
       "Compute": "FlockArray"
@@ -56,13 +56,18 @@
     "WanderRadius": {
       "Compute": "WanderRadius"
     },
-    "Attack": "Skeleton_Archer_Bow_Shoot",
+    "Attack": "Skeleton_Archmage_Staff_Corruption_Orb",
     "CombatBackOffAfterAttack": false,
     "AttackDistance": 15,
-    "CombatFleeIfTooCloseDistance": 4,
+    "CombatStrafeWeight": 3,
+    "CombatFleeIfTooCloseDistance": 1.5,
+    "CombatBackOffDistanceRange": [
+      5,
+      5
+    ],
     "DesiredAttackDistanceRange": [
       5,
-      14.5
+      15
     ],
     "CombatBehaviorDistance": 15,
     "TargetRange": 15,
@@ -72,7 +77,7 @@
     },
     "IsMemory": true,
     "MemoriesCategory": "Undead",
-    "MemoriesNameOverride": "Skeleton_Archer",
+    "MemoriesNameOverride": "Skeleton_Archmage",
     "BreathesInWater": true,
     "NameTranslationKey": {
       "Compute": "NameTranslationKey"

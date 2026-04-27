@@ -127,7 +127,7 @@ public class WeaponSelection {
             if (claimedSkillId.contains("Bow")) {
                 playerClass = "Bow";
             } else if (claimedSkillId.contains("Dagger")) {
-                playerClass = "Bow";
+                playerClass = "Dagger";
             }
             manager.onPlayerSelectedWeapon(this.playerRef, playerClass);
         }

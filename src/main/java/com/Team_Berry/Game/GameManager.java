@@ -10,6 +10,7 @@ import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Game.Enums.EndStageResult;
 import com.Team_Berry.Game.Enums.QuestUpdate;
 import com.Team_Berry.Game.Objectives.CustomRoomTask;
+import com.Team_Berry.Game.Utils.PlayerInventory;
 import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
@@ -41,6 +42,7 @@ import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.WorldConfig;
@@ -92,6 +94,7 @@ public class GameManager {
     private int globalMaxSkills = 1;
     private boolean statueSpawn = false;
     private boolean searchEffectApplied = false;
+    private boolean runEnded = false;
 
     public GameManager(World world, SkillMilestoneCodec milestoneData) {
         this.world = world;
@@ -167,8 +170,9 @@ public class GameManager {
                 targetMobTracker.addAll(spawnedMobs);
                 log("Successfully registered " + spawnedMobs.size() + " mob UUIDs for room.");
             });
+            setupRoomChests(selectedRoom);
 
-            randomizeRoomChests(selectedRoom);
+
         } else {
             quest = new Quest(0);
             log("Room selected: " + selectedRoom.worldName + " (Empty: No mob groups found).");
@@ -270,11 +274,14 @@ public class GameManager {
             Ref<EntityStore> ref = playerRef.getReference();
             Store<EntityStore> store = ref.getStore();
             EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
-            //TODO : Add 50 max health to the player and then remove it on remove participant
-            // stats.addStatValue(EntityStatType.getAssetMap().getIndex("Health"), 50);
 
             teleportPlayerToSpawn(playerRef);
             forceSurvivalMode(playerRef);
+        }
+
+        if (!playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
+            playerOwnedArtefacts.put(playerRef.getUuid(), new ArrayList<>(List.of("Invisible_Hp_Artefact")));
+            log("Granted starting Invisible_Hp_Artefact to new participant: " + playerRef.getUsername());
         }
 
         restorePlayerArtefacts(playerRef);
@@ -288,6 +295,13 @@ public class GameManager {
                     true
             );
         }
+
+        scheduler.schedule("tp_after_weapon_" + world.getName(), () -> {
+            world.execute(() -> {
+                healPlayerToFull(playerRef);
+            });
+        }, 500, TimeUnit.MILLISECONDS);
+
     }
 
     private void restorePlayerArtefacts(PlayerRef playerRef) {
@@ -366,7 +380,9 @@ public class GameManager {
                 currentQuest.incrementDeadMobs();
                 log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
 
-                updateSharedRoomObjective();
+                validateRemainingMobs();
+
+                //TODO updateSharedRoomObjective();
 
                 if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
                     searchEffectApplied = true;
@@ -434,6 +450,7 @@ public class GameManager {
         log("Ending successful run and ejecting players.");
         broadcastEventTitle("MISSION COMPLETE !", "You have saved the kweebecs !", true, null);
         //ejectPlayersFromInstanceAndDestroy();
+        this.runEnded = true;
         tpParticipantsToPostgame();
     }
 
@@ -566,33 +583,38 @@ public class GameManager {
     }
 
     private void transitionToLobby() {
-        log("Queueing transition to Lobby in " + TELEPORT_DELAY + " seconds...");
+        log("Queueing transition in " + TELEPORT_DELAY + " seconds...");
         setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
 
         scheduler.schedule("tp_lobby_" + world.getName(), () -> {
             world.execute(() -> {
-                log("Moving party to Lobby.");
                 completeSharedRoomObjective();
                 this.participantsInRoom.clear();
                 cleanRoom(currentRoomMobs);
                 cleanRoom(futureRoomMobs);
 
                 this.searchEffectApplied = false;
-
                 resetClaimedChests();
 
-                tpParticipantsToLobby();
-                initializeMilestone();
-                this.pendingMilestoneTransition = false;
+                if (runEnded) {
+                    log("Run has ended. Moving party to Postgame Room and queueing world destruction.");
+                    tpParticipantsToPostgame();
 
-                if (this.pendingSkillBroadcast) {
-                    broadcastEventTitle(
-                            "MILESTONE REACHED",
-                            "Skill capacity increased to " + globalMaxSkills,
-                            true,
-                            null
-                    );
-                    this.pendingSkillBroadcast = false; // Reset the flag
+                } else {
+                    log("Moving party to Lobby.");
+                    tpParticipantsToLobby();
+                    initializeMilestone();
+                    this.pendingMilestoneTransition = false;
+
+                    if (this.pendingSkillBroadcast) {
+                        broadcastEventTitle(
+                                "MILESTONE REACHED",
+                                "Skill capacity increased to " + globalMaxSkills,
+                                true,
+                                null
+                        );
+                        this.pendingSkillBroadcast = false;
+                    }
                 }
             });
         }, TELEPORT_DELAY, TimeUnit.SECONDS);
@@ -605,6 +627,7 @@ public class GameManager {
 
 
         //ejectPlayersFromInstanceAndDestroy();
+        this.runEnded = true;
         tpParticipantsToPostgame();
     }
 
@@ -637,6 +660,7 @@ public class GameManager {
             log("Teleporting participants to Lobby asset: " + lobby.worldName);
             for (PlayerRef participant : activeParticipants) {
                 RoomTeleporter.teleportToRoom(participant, lobby, this.world);
+                healPlayerToFull(participant);
             }
         }
         setLobbyWeather();
@@ -681,6 +705,7 @@ public class GameManager {
     public List<MobGroupCodec> findValidMobGroups(int difficulty) {
         DefaultAssetMap<String, MobGroupCodec> map = MobGroupCodec.getAssetMap();
         String tagSearch = "Difficulty=" + difficulty;
+        GamePlugin.LOGGER.atInfo().log("Looking for Mob Groups with tag: " + tagSearch);
         int tagIndex = AssetRegistry.getOrCreateTagIndex(tagSearch);
         Set<String> groupKeys = map.getKeysForTag(tagIndex);
 
@@ -691,6 +716,7 @@ public class GameManager {
             MobGroupCodec group = map.getAsset(key);
             if (group != null) {
                 validGroups.add(group);
+                GamePlugin.LOGGER.atInfo().log("Pulled group: " + key);
             }
         }
         return validGroups.isEmpty() ? null : validGroups;
@@ -1014,6 +1040,46 @@ public class GameManager {
         });
     }
 
+    public void setupRoomChests(RoomCodec room) {
+        if (room == null || room.chestPositions == null || room.chestPositions.length == 0) {
+            return;
+        }
+
+        world.execute(() -> {
+
+            int restoredCount = 0;
+            for (BlockPosition pos : room.chestPositions) {
+                BlockType currentBlock = world.getBlockType(pos.x, pos.y, pos.z);
+
+                if (currentBlock == null || !currentBlock.getId().equals(RELICS_CHEST)) {
+                    world.setBlock(pos.x, pos.y, pos.z, RELICS_CHEST);
+                    restoredCount++;
+                }
+            }
+
+            if (restoredCount > 0) {
+                log("Restored " + restoredCount + " missing " + RELICS_CHEST + "(s) in room " + room.getId());
+            }
+
+            List<BlockPosition> validChests = new ArrayList<>(Arrays.asList(room.chestPositions));
+            Collections.shuffle(validChests);
+
+            int amountToBreak = validChests.size() / 2;
+
+            for (int i = 0; i < amountToBreak; i++) {
+                BlockPosition pos = validChests.get(i);
+
+                boolean success = world.breakBlock(pos.x, pos.y, pos.z, 0);
+                if (success) {
+                    log("Successfully broke the block at " + pos.x + ", " + pos.y + ", " + pos.z);
+                }
+            }
+
+            log(String.format("Chest RNG: Setup complete. Removed %d '%s'(s) in room '%s'.",
+                    amountToBreak, RELICS_CHEST, room.getId()));
+        });
+    }
+
     public void randomizeRoomChests(RoomCodec room) {
         if (room == null || room.chestPositions == null || room.chestPositions.length == 0) {
             return;
@@ -1047,6 +1113,30 @@ public class GameManager {
                 }
 
                 log(String.format("Chest RNG: Queued removal of %d '%s'(s).", amountToBreak, RELICS_CHEST));
+            }
+        });
+    }
+
+    public void restoreRoomChests(RoomCodec room) {
+        if (room == null || room.chestPositions == null || room.chestPositions.length == 0) {
+            return;
+        }
+
+        world.execute(() -> {
+
+
+            int restoredCount = 0;
+            for (BlockPosition pos : room.chestPositions) {
+                BlockType currentBlock = world.getBlockType(pos.x, pos.y, pos.z);
+
+                if (currentBlock == null || !currentBlock.getId().equals(RELICS_CHEST)) {
+                    world.setBlock(pos.x, pos.y, pos.z, RELICS_CHEST);
+                    restoredCount++;
+                }
+            }
+
+            if (restoredCount > 0) {
+                log("Restored " + restoredCount + " missing " + RELICS_CHEST + "(s) in room " + room.getId());
             }
         });
     }
@@ -1108,15 +1198,25 @@ public class GameManager {
     private void tpParticipantsToPostgame() {
         showAllDeadPlayers();
 
-        if (this.postgameRoom != null) {
-            log("Teleporting participants to Postgame asset: " + postgameRoom.worldName);
-            for (PlayerRef participant : activeParticipants) {
-                RoomTeleporter.teleportToRoom(participant, postgameRoom, this.world);
+        world.execute(() -> {
+            if (this.postgameRoom != null) {
+                log("Teleporting participants to Postgame asset: " + postgameRoom.worldName);
+                for (PlayerRef participant : activeParticipants) {
+
+                    Ref<EntityStore> ref = participant.getReference();
+                    if (ref != null && ref.isValid()) {
+                        PlayerInventory.clearPlayerInventory(ref, ref.getStore());
+                        log("Cleared end-of-run inventory for: " + participant.getUsername());
+                    }
+
+                    RoomTeleporter.teleportToRoom(participant, postgameRoom, this.world);
+                }
+            } else {
+                log("Error: No postgame room defined! Falling back to immediate instance ejection.");
+                ejectPlayersFromInstanceAndDestroy();
             }
-        } else {
-            log("Error: No postgame room defined! Falling back to immediate instance ejection.");
-            ejectPlayersFromInstanceAndDestroy();
-        }
+        });
+        GamePlugin.get().destroyGameInstance(this.world);
     }
 
     public void startingKweebecInteraction(PlayerRef playerRef) {
@@ -1126,7 +1226,7 @@ public class GameManager {
             if (playerClasses.containsKey(playerRef.getUuid())) {
                 log(playerRef.getUsername() + " already has a weapon class. Teleporting to Lobby.");
                 if (this.lobby != null) {
-                    RoomTeleporter.teleportToRoom(playerRef, this.lobby, this.world);
+                    RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
                     setLobbyWeather();
                 }
             } else {
@@ -1146,12 +1246,58 @@ public class GameManager {
 
         world.execute(() -> {
             if (this.prisonSpawnRoom != null) {
-                RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
+                scheduler.schedule("tp_after_weapon_" + world.getName(), () -> {
+                    world.execute(() -> {
+                        RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
+                        EventTitleUtil.showEventTitleToPlayer(
+                                playerRef,
+                                Message.raw("Save the kweebecs !"),
+                                Message.raw("Good luck, adventurer..."),
+                                true
+                        );
+                    });
+                }, 1000, TimeUnit.MILLISECONDS);
+
             } else {
                 log("Error: Prisonspawn room not found!");
             }
         });
     }
 
+    private void healPlayerToFull(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+                EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
 
+                if (stats != null) {
+                    stats.setStatValue(DefaultEntityStatTypes.getHealth(), stats.get(DefaultEntityStatTypes.getHealth()).getMax());
+                    log("Healed " + playerRef.getUsername() + " to full health.");
+                }
+            }
+        });
+    }
+
+    private void validateRemainingMobs() {
+        if (currentRoomMobs.isEmpty()) return;
+
+        Store<EntityStore> store = world.getEntityStore().getStore();
+        List<UUID> vanishedIds = new ArrayList<>();
+
+        for (UUID mobId : currentRoomMobs) {
+            Ref<EntityStore> ref = getRefByUUID(store, mobId);
+            if (ref == null || !ref.isValid()) {
+                vanishedIds.add(mobId);
+            }
+        }
+
+        if (!vanishedIds.isEmpty()) {
+            for (UUID id : vanishedIds) {
+                currentRoomMobs.remove(id);
+                currentRoom.right().incrementDeadMobs();
+                log("Anti-Softlock: Detected and cleared vanished mob UUID: " + id);
+            }
+        }
+    }
 }

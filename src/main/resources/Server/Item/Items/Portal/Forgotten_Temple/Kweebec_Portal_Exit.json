@@ -38,7 +38,7 @@
       }
     ],
     "Interactions": {
-      "Use": {
+      "CollisionEnter": {
         "Interactions": [
           {
             "Type": "ExitInstance",

@@ -21,7 +21,13 @@
     "RandomRotation": "YawStep90",
     "HitboxType": "Cage_Trork",
     "Interactions": {
-      "Use": {}
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "ClaimStartWeaponInteraction"
+          }
+        ]
+      }
     },
     "InteractionHitboxType": "Cage_Trork",
     "Light": {

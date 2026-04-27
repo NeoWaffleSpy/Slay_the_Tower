@@ -38,7 +38,7 @@
       }
     ],
     "Interactions": {
-      "Use": {
+      "CollisionEnter": {
         "Interactions": [
           {
             "Type": "StartRoomFromLobbyInteraction"
@@ -69,14 +69,5 @@
       -13.5
     ]
   },
-  "ItemSoundSetId": "ISS_Blocks_Stone",
-  "Interactions": {
-    "Use": {
-      "Interactions": [
-        {
-          "Type": "StartRoomFromLobbyInteraction"
-        }
-      ]
-    }
-  }
+  "ItemSoundSetId": "ISS_Blocks_Stone"
 }

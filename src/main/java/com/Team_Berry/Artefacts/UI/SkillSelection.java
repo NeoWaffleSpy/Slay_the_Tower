@@ -4,7 +4,6 @@ import au.ellie.hyui.builders.HyUIPage;
 import au.ellie.hyui.builders.PageBuilder;
 import au.ellie.hyui.html.TemplateProcessor;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
-import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
@@ -12,6 +11,7 @@ import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
@@ -26,10 +26,6 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SkillSelection {
     private static final String[] skillStringList = new String[]{
@@ -64,7 +60,8 @@ public class SkillSelection {
         for (int i = 0; i < 3; i++)
             skills.add(parseInfo(skillsCodecs.get(i), i));
         this.template.setVariable("Skills", skills);
-        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template).withLifetime(CustomPageLifetime.CantClose);
+        ;
         skills.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
         page = builder.open(store);
     }
@@ -73,7 +70,7 @@ public class SkillSelection {
         for (int i = 0; i < items.size(); i++)
             skills.add(parseInfo(items.get(i), i));
         this.template.setVariable("Skills", skills);
-        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template);
+        PageBuilder builder = PageBuilder.pageForPlayer(this.playerRef).loadHtml("Pages/SkillSelection.html", this.template).withLifetime(CustomPageLifetime.CantClose);
         skills.forEach((s) -> builder.addEventListener("my-button-" + s.index, CustomUIEventBindingType.Activating, (_, _) -> this.buttonEvent(s.index)));
         page = builder.open(store);
     }

@@ -20,7 +20,7 @@
   "FogColors": [
     {
       "Hour": 0,
-      "Color": "#bcffaf"
+      "Color": "#519142"
     }
   ],
   "FogDensities": [
@@ -76,7 +76,7 @@
   "SunGlowColors": [
     {
       "Hour": 0,
-      "Color": "#3c772eff"
+      "Color": "#337922ff"
     }
   ],
   "SunColors": [
@@ -90,7 +90,7 @@
   "SunlightColors": [
     {
       "Hour": 0,
-      "Color": "#9bc77e"
+      "Color": "#7ed047"
     }
   ],
   "ColorFilters": [

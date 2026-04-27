@@ -9,16 +9,16 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlayTheTower extends JavaPlugin {
-    public static SlayTheTower instance;
+public class Save_The_Kweebec extends JavaPlugin {
+    public static Save_The_Kweebec instance;
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private final List<CommandRegistration> commands = new ArrayList<>();
 
-    public static SlayTheTower get() {
+    public static Save_The_Kweebec get() {
         return instance;
     }
 
-    public SlayTheTower(JavaPluginInit init) {
+    public Save_The_Kweebec(JavaPluginInit init) {
         super(init);
         instance = this;
         LOGGER.atInfo().log("Hello from %s version %s", this.getName(), this.getManifest().getVersion().toString());

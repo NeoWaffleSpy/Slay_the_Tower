@@ -3,7 +3,7 @@
     "Name": "BearForm.name",
     "Description": "BearForm.description"
   },
-  "Icon": "Icons/ItemsGenerated/PoisonCloud_Ability_Icon.png",
+  "Icon": "Icons/ItemsGenerated/Life.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [

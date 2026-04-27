@@ -32,6 +32,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifie
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath;
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -580,7 +581,7 @@ public class StatEffectSystem {
             ComponentAccessor<ChunkStore> chunkStore = world.getChunkStore().getStore();
             ExplosionConfig config = new ArtefactExplosionConfig(EXPLOSION_RADIUS, finalExplosionDamage);
 
-            com.hypixel.hytale.server.core.universe.world.ParticleUtil.spawnParticleEffect("Explosion_Big", explosionPos, store);
+            ParticleUtil.spawnParticleEffect("Explosion_Big", explosionPos, store);
 
             ExplosionUtils.performExplosion(
                     new Damage.EntitySource(attackerRef),

@@ -3,7 +3,7 @@
     "Name": "JumpShot.name",
     "Description": "JumpShot.description"
   },
-  "Icon": "Icons/ItemsGenerated/JumpShotSlow_Icon.png",
+  "Icon": "Icons/ItemsGenerated/jump_shot.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [

@@ -138,5 +138,17 @@
     }
   },
   "MaxDurability": 180,
-  "DurabilityLossOnHit": 0.45
+  "DurabilityLossOnHit": 0.45,
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SpawnAOEInteraction",
+          "Radius": 20,
+          "Particle Preview": "Fire_AoE_Grow2",
+          "Particle Explosion": "Explosion_Big"
+        }
+      ]
+    }
+  }
 }

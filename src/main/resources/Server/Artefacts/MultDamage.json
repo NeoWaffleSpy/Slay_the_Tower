@@ -4,7 +4,7 @@
   ],
   "Icon": "UI/Custom/ArtefactIcons/Strength.png",
   "TranslationProperties": {
-    "Name": "MultDamage",
+    "Name": "MultDamage.name",
     "Description": "MultDamage.description"
   },
   "Rarity": "Common"

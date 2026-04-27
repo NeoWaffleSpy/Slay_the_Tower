@@ -1,0 +1,24 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Leaves_Palm_Oasis.name"
+  },
+  "Icon": "Icons/ItemsGenerated/Plant_Palm_Giant_Leaves_Green.png",
+  "Parent": "Plant_Leaves_Oak",
+  "BlockType": {
+    "CustomModel": "Blocks/Retry_Exit.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Retry_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "RandomRotation": "None",
+    "ParticleColor": "#00ebff",
+    "Light": {
+      "Color": "#0ff",
+      "Radius": 1
+    },
+    "CubeShadingMode": "Fullbright",
+    "VariantRotation": "NESW"
+  }
+}

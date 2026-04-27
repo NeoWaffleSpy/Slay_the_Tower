@@ -37,9 +37,14 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.asset.type.model.config.Model;
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
+import com.hypixel.hytale.server.core.cosmetics.CosmeticsModule;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
+import com.hypixel.hytale.server.core.modules.entity.player.PlayerSkinComponent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
@@ -68,7 +73,9 @@ public class GameManager {
     private static final String SFX_ROOM_START = "SFX_Room_Start";
     private static final String RELICS_CHEST = "Relics_Chest";
     private static final int TELEPORT_DELAY = 7;
-
+    private static final List<String> STARTING_MODELS = Arrays.asList(
+            "Skeleton", "Skeleton_Fighter", "Skeleton_Mage", "Skeleton_Pirate_Striker", "Skeleton_Knight"
+    );
     private final GameState gameState;
     private final RoomCodec lobby;
     private final RoomCodec postgameRoom;
@@ -85,6 +92,7 @@ public class GameManager {
     private final Set<UUID> futureRoomMobs = new HashSet<>();
     private final Map<UUID, Set<BlockPosition>> playerClaimedChests = new HashMap<>();
     private final Map<UUID, BlockPosition> pendingChestClaims = new HashMap<>();
+    private final Set<UUID> pendingCleanup = java.util.concurrent.ConcurrentHashMap.newKeySet();
     private World world;
     private UUID currentRoomObjectiveId = null;
     private boolean pendingMilestoneTransition = false;
@@ -131,6 +139,16 @@ public class GameManager {
         cleanupLeftoverObjectives();
 
         this.searchEffectApplied = false;
+
+        if (!currentRoomMobs.isEmpty()) {
+            log("Cleaning up leftover current room mobs...");
+            cleanRoom(currentRoomMobs);
+        }
+
+        if (!futureRoomMobs.isEmpty()) {
+            log("Cleaning up old future room mobs before milestone initialization...");
+            cleanRoom(futureRoomMobs);
+        }
 
         this.currentRoom = prepareRoom(null, currentRoomMobs);
         this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
@@ -185,21 +203,59 @@ public class GameManager {
     public void cleanRoom(Set<UUID> mobTracker) {
         if (mobTracker.isEmpty()) return;
 
-        List<UUID> mobsToDelete = new ArrayList<>(mobTracker);
-        mobTracker.clear();
+        world.execute(() -> {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+            Set<UUID> foundMobs = new HashSet<>();
+
+            store.forEachChunk(UUIDComponent.getComponentType(), (chunk, commandBuffer) -> {
+                for (int i = 0; i < chunk.size(); i++) {
+                    UUIDComponent uuidComp = (UUIDComponent) chunk.getComponent(i, UUIDComponent.getComponentType());
+
+                    if (uuidComp != null && mobTracker.contains(uuidComp.getUuid())) {
+                        commandBuffer.removeEntity(chunk.getReferenceTo(i), RemoveReason.REMOVE);
+                        foundMobs.add(uuidComp.getUuid());
+                    }
+                }
+            });
+
+            for (UUID id : mobTracker) {
+                if (!foundMobs.contains(id)) {
+                    pendingCleanup.add(id);
+                }
+            }
+
+            log("Room cleaned. " + foundMobs.size() + " active mobs evaporated. " +
+                    (mobTracker.size() - foundMobs.size()) + " asleep mobs sent to pending cleanup.");
+
+            mobTracker.clear();
+        });
+    }
+
+    private void processPendingCleanup() {
+        if (pendingCleanup.isEmpty()) return;
 
         world.execute(() -> {
             Store<EntityStore> store = world.getEntityStore().getStore();
-            int deletedCount = 0;
+            Set<UUID> foundMobs = new HashSet<>();
 
-            for (UUID mobId : mobsToDelete) {
-                Ref<EntityStore> ref = getRefByUUID(store, mobId);
-                if (ref != null && ref.isValid()) {
-                    store.removeEntity(ref, RemoveReason.REMOVE);
-                    deletedCount++;
+            store.forEachChunk(UUIDComponent.getComponentType(), (chunk, commandBuffer) -> {
+                for (int i = 0; i < chunk.size(); i++) {
+                    UUIDComponent uuidComp = (UUIDComponent) chunk.getComponent(i, UUIDComponent.getComponentType());
+
+                    if (uuidComp != null && pendingCleanup.contains(uuidComp.getUuid())) {
+                        commandBuffer.removeEntity(chunk.getReferenceTo(i), RemoveReason.REMOVE);
+                        foundMobs.add(uuidComp.getUuid());
+                    }
                 }
+            });
+
+            for (UUID id : foundMobs) {
+                pendingCleanup.remove(id);
             }
-            log("Room cleaned. " + deletedCount + " remaining mobs deleted.");
+
+            if (!foundMobs.isEmpty()) {
+                log("Late Cleanup: Successfully  removed " + foundMobs.size() + " sleeping mobs that just loaded in.");
+            }
         });
     }
 
@@ -277,6 +333,7 @@ public class GameManager {
 
             teleportPlayerToSpawn(playerRef);
             forceSurvivalMode(playerRef);
+            applyRandomStartingModel(playerRef);
         }
 
         if (!playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
@@ -323,10 +380,19 @@ public class GameManager {
     }
 
     public void removeParticipant(PlayerRef playerRef) {
-        //TODO : Remove the added 50 max health to the player on add participant
 
         log("Player left the party: " + playerRef.getUsername());
 
+        world.execute(() -> {
+            UUID leavingId = playerRef.getUuid();
+            for (PlayerRef otherPlayer : activeParticipants) {
+                if (!otherPlayer.equals(playerRef)) {
+                    otherPlayer.getHiddenPlayersManager().showPlayer(leavingId);
+                    playerRef.getHiddenPlayersManager().showPlayer(otherPlayer.getUuid());
+                }
+            }
+        });
+        resetPlayerModel(playerRef);
         detachPlayerFromObjective(playerRef);
         this.activeParticipants.remove(playerRef);
         this.participantsInRoom.remove(playerRef);
@@ -372,31 +438,30 @@ public class GameManager {
 
     public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef, @Nullable UUID deadMobId) {
         if (currentRoom == null || currentRoom.right() == null) return;
+        Quest currentQuest = currentRoom.right();
 
         if (questUpdate == QuestUpdate.MOB_DEATH && deadMobId != null) {
 
             if (currentRoomMobs.remove(deadMobId)) {
-                Quest currentQuest = currentRoom.right();
                 currentQuest.incrementDeadMobs();
                 log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
-
-                //TODO validateRemainingMobs();
-
-                updateSharedRoomObjective();
-
-                if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
-                    searchEffectApplied = true;
-                    broadcastMessage("The remaining monsters have been revealed!");
-                    applyEffectToMobs(currentRoomMobs, MOB_SEARCH_EFFECT);
-                }
-
-                if (currentQuest.isComplete()) {
-                    log("Room Quest successfully completed.");
-                    endStage(EndStageResult.SUCCESS);
-                }
             } else if (futureRoom != null && futureRoom.right() != null && futureRoomMobs.remove(deadMobId)) {
                 futureRoom.right().incrementDeadMobs();
                 log("A Future Room Mob died prematurely! Lowered future quest requirements.");
+            }
+
+            validateRemainingMobs();
+            updateSharedRoomObjective();
+
+            if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
+                searchEffectApplied = true;
+                broadcastMessage("The remaining monsters have been revealed!");
+                applyEffectToMobs(currentRoomMobs, MOB_SEARCH_EFFECT);
+            }
+
+            if (currentQuest.isComplete()) {
+                log("Room Quest successfully completed.");
+                endStage(EndStageResult.SUCCESS);
             }
 
         } else if (questUpdate == QuestUpdate.PLAYER_DEATH && playerRef != null) {
@@ -534,6 +599,11 @@ public class GameManager {
 
         playerRef.sendMessage(Message.raw("You remembered a part of yourself!"));
         log(playerRef.getUsername() + " successfully claimed a skill reward: " + claimedSkillId);
+        int currentSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
+        if (currentSkills >= 4) {
+            resetPlayerModel(playerRef);
+            broadcastEventTitle("You have regained your humanity !", "You feel much better...", true, null);
+        }
     }
 
     public void onPlayerClaimedArtefactReward(PlayerRef playerRef, String artefactId) {
@@ -623,6 +693,7 @@ public class GameManager {
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
         completeSharedRoomObjective();
+
         broadcastEventTitle("DEFEATED", "The kweebecs still need you... Try again !", true, null);
 
 
@@ -658,11 +729,21 @@ public class GameManager {
     private void tpParticipantsToLobby() {
         if (this.lobby != null) {
             log("Teleporting participants to Lobby asset: " + lobby.worldName);
-            for (PlayerRef participant : activeParticipants) {
-                RoomTeleporter.teleportToRoom(participant, lobby, this.world);
-                healPlayerToFull(participant);
-            }
+            world.execute(() -> {
+                for (PlayerRef participant : activeParticipants) {
+                    RoomTeleporter.teleportToRoom(participant, lobby, this.world);
+                    healPlayerToFull(participant);
+
+                    for (PlayerRef other : activeParticipants) {
+                        if (!participant.equals(other)) {
+                            participant.getHiddenPlayersManager().showPlayer(other.getUuid());
+                        }
+                    }
+                }
+            });
         }
+
+
         setLobbyWeather();
     }
 
@@ -683,6 +764,8 @@ public class GameManager {
 
         RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
         // playSoundToPlayers(playersToTeleport, SFX_ROOM_START);
+
+        scheduler.schedule("late_cleanup_" + world.getName(), this::processPendingCleanup, 1, TimeUnit.SECONDS);
     }
 
     public List<RoomCodec> findValidRooms() {
@@ -1205,6 +1288,7 @@ public class GameManager {
 
                     Ref<EntityStore> ref = participant.getReference();
                     if (ref != null && ref.isValid()) {
+                        resetPlayerModel(participant);
                         PlayerInventory.clearPlayerInventory(ref, ref.getStore());
                         log("Cleared end-of-run inventory for: " + participant.getUsername());
                     }
@@ -1299,5 +1383,51 @@ public class GameManager {
                 log("Anti-Softlock: Detected and cleared vanished mob UUID: " + id);
             }
         }
+    }
+
+    private void applyRandomStartingModel(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+
+                String randomModelId = STARTING_MODELS.get(ThreadLocalRandom.current().nextInt(STARTING_MODELS.size()));
+
+                ModelAsset modelAsset = ModelAsset.getAssetMap().getAsset(randomModelId);
+                if (modelAsset != null) {
+                    Model model = Model.createScaledModel(modelAsset, 1.0f);
+                    store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(model));
+                    log("Applied starting model '" + randomModelId + "' to " + playerRef.getUsername());
+                } else {
+                    log("Warning: Could not find ModelAsset for ID: " + randomModelId);
+                }
+            }
+        });
+    }
+
+    private void resetPlayerModel(PlayerRef playerRef) {
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+
+                PlayerSkinComponent skinComponent = store.getComponent(ref, PlayerSkinComponent.getComponentType());
+                if (skinComponent != null) {
+                    Model newModel = CosmeticsModule.get().createModel(skinComponent.getPlayerSkin());
+                    store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(newModel));
+                    skinComponent.setNetworkOutdated();
+
+                    EventTitleUtil.showEventTitleToPlayer(
+                            playerRef,
+                            Message.raw("HUMANITY REGAINED !"),
+                            Message.raw("Your true form has been restored."),
+                            true,
+                            null,
+                            2.0F, 0.5F, 0.5F
+                    );
+                    log("Restored original player skin for: " + playerRef.getUsername());
+                }
+            }
+        });
     }
 }

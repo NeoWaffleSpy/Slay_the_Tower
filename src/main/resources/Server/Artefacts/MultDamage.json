@@ -2,7 +2,7 @@
   "Stats": [
     "MultDamage"
   ],
-  "Icon": "UI/Custom/ArtefactIcons/Speed.png",
+  "Icon": "UI/Custom/ArtefactIcons/Strength.png",
   "TranslationProperties": {
     "Name": "MultDamage",
     "Description": "MultDamage.description"

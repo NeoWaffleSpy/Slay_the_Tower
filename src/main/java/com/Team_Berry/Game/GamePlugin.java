@@ -14,12 +14,16 @@ import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.asset.type.model.config.Model;
+import com.hypixel.hytale.server.core.cosmetics.CosmeticsModule;
 import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
 import com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
+import com.hypixel.hytale.server.core.modules.entity.player.PlayerSkinComponent;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -157,7 +161,7 @@ public class GamePlugin extends JavaPlugin {
 
             } else {
 
-
+                resetPlayerModel(ref, store);
                 LOGGER.atInfo().log("Player reconnected mid-run, keeping current SlayTheTower inventory: " + playerRef.getUsername());
 
             }
@@ -227,6 +231,25 @@ public class GamePlugin extends JavaPlugin {
                     LOGGER.atInfo().log("Restored inventory for " + playerRef.getUsername());
                 }
             }
+        });
+    }
+
+    public void resetPlayerModel(Ref<EntityStore> ref, Store<EntityStore> store) {
+        store.getExternalData().getWorld().execute(() -> {
+            PlayerSkinComponent skinComponent = store.getComponent(ref, PlayerSkinComponent.getComponentType());
+
+            if (skinComponent != null) {
+                Model newModel =
+                        CosmeticsModule.get().createModel(skinComponent.getPlayerSkin());
+
+                store.putComponent(ref, ModelComponent.getComponentType(),
+                        new com.hypixel.hytale.server.core.modules.entity.component.ModelComponent(newModel));
+
+                skinComponent.setNetworkOutdated();
+
+                LOGGER.atInfo().log("Successfully reset model for returning player.");
+            }
+
         });
     }
 }

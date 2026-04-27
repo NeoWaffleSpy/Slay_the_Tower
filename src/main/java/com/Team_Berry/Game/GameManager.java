@@ -155,11 +155,17 @@ public class GameManager {
             cleanRoom(futureRoomMobs);
         }
 
-        this.currentRoom = prepareRoom(null, currentRoomMobs);
-        this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
-
-        log(String.format("Buffer Ready. Current: %s | Future: %s",
-                currentRoom.left().worldName, futureRoom.left().worldName));
+        if (this.gameState.isRunComplete()) {
+            this.isBossStage = true;
+            this.currentRoom = prepareBossRoom(currentRoomMobs);
+            this.futureRoom = null;
+            log("Boss Buffer Ready. Current: " + (currentRoom != null ? currentRoom.left().worldName : "ERROR"));
+        } else {
+            this.currentRoom = prepareRoom(null, currentRoomMobs);
+            this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
+            log(String.format("Buffer Ready. Current: %s | Future: %s",
+                    currentRoom.left().worldName, futureRoom.left().worldName));
+        }
     }
 
     public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, Set<UUID> targetMobTracker) {
@@ -497,6 +503,13 @@ public class GameManager {
 
     private void handleStageSuccess() {
         completeSharedRoomObjective();
+
+        if (this.isBossStage) {
+            log("VICTORY! The Boss has been defeated.");
+            handleRunVictory();
+            return;
+        }
+
         SkillMilestoneCodec.MilestoneEntry oldMilestone = this.gameState.getCurrentMilestone();
         this.gameState.incrementClearedStages();
         SkillMilestoneCodec.MilestoneEntry newMilestone = this.gameState.getCurrentMilestone();
@@ -504,12 +517,9 @@ public class GameManager {
         reviveDeadPlayers();
 
         if (this.gameState.isRunComplete()) {
-            log("VICTORY! The final milestone has been cleared.");
-            handleRunVictory();
-            return;
-        }
-
-        if (oldMilestone != newMilestone) {
+            log("FINAL MILESTONE REACHED. Preparing for the Boss!");
+            this.pendingMilestoneTransition = true;
+        } else if (oldMilestone != newMilestone) {
             this.pendingMilestoneTransition = true;
 
             if (this.globalMaxSkills < 4) {
@@ -522,8 +532,8 @@ public class GameManager {
         } else {
             this.pendingMilestoneTransition = false;
         }
+
         completeRewardPhase();
-//        grantArtifactRewards();
     }
 
     private void handleRunVictory() {
@@ -774,7 +784,11 @@ public class GameManager {
     private void tpParticipantsToRoom() {
         if (currentRoom == null) return;
 
-        log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
+        if (isBossStage) {
+            log("Teleporting participants to Boss Room asset: " + currentRoom.left().worldName + " <<<");
+        } else {
+            log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
+        }
 
         List<PlayerRef> playersToTeleport = new ArrayList<>();
         for (PlayerRef p : activeParticipants) {
@@ -787,7 +801,6 @@ public class GameManager {
         }
 
         RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
-        // playSoundToPlayers(playersToTeleport, SFX_ROOM_START);
 
         scheduler.schedule("late_cleanup_" + world.getName(), this::processPendingCleanup, 1, TimeUnit.SECONDS);
     }

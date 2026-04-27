@@ -131,8 +131,21 @@ public class StatEffectSystem {
                 float damageValue = damage.getAmount();
                 Ref<EntityStore> attackerRef = entitySource.getRef();
                 Ref<EntityStore> targetRef = archetypeChunk.getReferenceTo(i);
+                if (attackerRef == targetRef)
+                    return;
                 EntityStatMap statMapAttack = commandBuffer.getComponent(attackerRef, EntityStatMap.getComponentType());
                 EntityStatMap statMapTarget = commandBuffer.getComponent(targetRef, EntityStatMap.getComponentType());
+
+                StatEffectComponent statComp = commandBuffer.getComponent(attackerRef, StatEffectComponent.getComponentType());
+                if (statComp != null) {
+                    ArtefactCodec bleedArtefact = ArtefactCodec.getAssetMap().getAsset("Bleed_Artefact");
+                    if (bleedArtefact != null) {
+                        int stacks = statComp.getAmount(bleedArtefact);
+                        if (stacks > 0)
+                            ArtefactPlugin.LOGGER.atSevere().log("Flat damage = " + damageValue);
+                    }
+                }
+
                 damageValue = applyBonusAttack(damageValue, statMapAttack);
                 damageValue = applyCritical(damageValue, statMapAttack);
                 damageValue = applyArmor(damageValue, statMapTarget);
@@ -274,11 +287,10 @@ public class StatEffectSystem {
                         else
                             statMap.putModifier(getEntityIndex(stat.getType()), key, new StaticModifier(Modifier.ModifierTarget.MAX, stat.calc, stat.value * comp.getAmount(artefact)));
                     }
+                }
 
-                    if (Objects.equals(artefact.getId(), "Shield_Artefact")) {
-                        comp.shieldHud.displayShield(true);
-
-                    }
+                if (Objects.equals(artefact.getId(), "Shield_Artefact")) {
+                    comp.shieldHud.displayShield(comp.getAmount(artefact) > 0);
                 }
             });
 
@@ -378,6 +390,11 @@ public class StatEffectSystem {
 
             Damage.Source source = damage.getSource();
             Ref<EntityStore> targetRef = archetypeChunk.getReferenceTo(i);
+            if (source instanceof Damage.EntitySource entitySource) {
+                Ref<EntityStore> attackerRef = entitySource.getRef();
+                if (attackerRef == targetRef)
+                    return;
+            }
             StatEffectComponent statComp = commandBuffer.getComponent(targetRef, StatEffectComponent.getComponentType());
             handleShieldArtefact(targetRef, statComp, commandBuffer, damage);
             if (source instanceof Damage.ProjectileSource projectileSource) {

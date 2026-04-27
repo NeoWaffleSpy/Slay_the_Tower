@@ -65,7 +65,8 @@ import java.util.stream.Collectors;
 
 public class GameManager {
     private static final KeyedScheduler scheduler = new KeyedScheduler();
-
+    private static final String LOBBY_HEAL_ITEM = "Life";
+    private static final String invisibleHpArtefact = "Invisible_Hp_Artefact";
     private static final List<String> RANDOM_WEATHERS = Arrays.asList(
             "Weather_Red", "Weather_Blue", "Weather_Purple", "Weather_Green"
     );
@@ -83,6 +84,7 @@ public class GameManager {
     private final Set<PlayerRef> activeParticipants = new HashSet<>();
     private final Set<PlayerRef> deadParticipants = new HashSet<>();
     private final Set<PlayerRef> participantsInRoom = new HashSet<>();
+    private final Set<UUID> claimedLobbyHeal = new HashSet<>();
     private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
     private final Map<UUID, String> playerClasses = new HashMap<>();
     private final Map<UUID, Set<String>> playerOwnedSkills = new HashMap<>();
@@ -337,7 +339,8 @@ public class GameManager {
         }
 
         if (!playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
-            playerOwnedArtefacts.put(playerRef.getUuid(), new ArrayList<>(List.of("Invisible_Hp_Artefact")));
+
+            playerOwnedArtefacts.put(playerRef.getUuid(), new ArrayList<>(List.of(invisibleHpArtefact)));
             log("Granted starting Invisible_Hp_Artefact to new participant: " + playerRef.getUsername());
         }
 
@@ -365,7 +368,9 @@ public class GameManager {
         if (playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
             StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
             if (statComp != null) {
+
                 DefaultAssetMap<String, ArtefactCodec> artefactMap = ArtefactCodec.getAssetMap();
+                statComp.addStackToArtifact(artefactMap.getAsset(invisibleHpArtefact), 0);
                 List<String> savedArtefacts = playerOwnedArtefacts.get(playerRef.getUuid());
 
                 for (String artefactId : savedArtefacts) {
@@ -735,6 +740,8 @@ public class GameManager {
 
     private void tpParticipantsToLobby() {
         if (this.lobby != null) {
+            claimedLobbyHeal.clear();
+
             log("Teleporting participants to Lobby asset: " + lobby.worldName);
             world.execute(() -> {
                 for (PlayerRef participant : activeParticipants) {
@@ -1433,6 +1440,42 @@ public class GameManager {
                             2.0F, 0.5F, 0.5F
                     );
                     log("Restored original player skin for: " + playerRef.getUsername());
+                }
+            }
+        });
+    }
+
+    public void kweebecMerchantInteraction(PlayerRef playerRef) {
+        if (!activeParticipants.contains(playerRef)) return;
+
+        UUID playerId = playerRef.getUuid();
+
+        if (claimedLobbyHeal.contains(playerId)) {
+            playerRef.sendMessage(Message.raw("My supplies are exhausted! Come back later!"));
+            healPlayerToFull(playerRef);
+            return;
+        }
+
+        world.execute(() -> {
+            Ref<EntityStore> ref = playerRef.getReference();
+            if (ref != null && ref.isValid()) {
+                Store<EntityStore> store = ref.getStore();
+                Player playerComponent = store.getComponent(ref, Player.getComponentType());
+
+                if (playerComponent != null) {
+                    claimedLobbyHeal.add(playerId);
+
+                    healPlayerToFull(playerRef);
+
+                    com.hypixel.hytale.server.core.inventory.ItemStack stack =
+                            new com.hypixel.hytale.server.core.inventory.ItemStack(LOBBY_HEAL_ITEM, 2, null);
+
+                    com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction transaction =
+                            playerComponent.giveItem(stack, ref, store);
+
+
+                    playerRef.sendMessage(Message.raw("Here take some of this! On the house."));
+                    log(playerRef.getUsername() + " claimed their lobby supplies.");
                 }
             }
         });

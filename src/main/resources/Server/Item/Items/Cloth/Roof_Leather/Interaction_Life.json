@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Interaction_Weapons"
+    "Name": "Interaction_Life"
   },
   "Categories": [
     "Blocks.Cloth"
@@ -21,13 +21,7 @@
     "RandomRotation": "YawStep90",
     "HitboxType": "Cage_Trork",
     "Interactions": {
-      "Use": {
-        "Interactions": [
-          {
-            "Type": "ClaimStartWeaponInteraction"
-          }
-        ]
-      }
+      "Use": {}
     },
     "InteractionHitboxType": "Cage_Trork",
     "Light": {
@@ -47,7 +41,7 @@
       -4.8
     ]
   },
-  "Icon": "Icons/ItemsGenerated/Sword_Kweebec.png",
+  "Icon": "Icons/ItemsGenerated/Life.png",
   "Tags": {
     "Type": [
       "Cloth"

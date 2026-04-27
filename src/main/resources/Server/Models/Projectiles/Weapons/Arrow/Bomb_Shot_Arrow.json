@@ -67,5 +67,9 @@
       "TargetNodeName": "Fuse_Lit",
       "Scale": 2
     }
-  ]
+  ],
+  "Light": {
+    "Color": "#fc3",
+    "Radius": 1
+  }
 }

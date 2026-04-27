@@ -614,7 +614,14 @@ public class GameManager {
         int currentSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
         if (currentSkills >= 4) {
             resetPlayerModel(playerRef);
-            broadcastEventTitle("You have regained your humanity !", "You feel much better...", true, null);
+            EventTitleUtil.showEventTitleToPlayer(
+                    playerRef,
+                    Message.raw("HUMANITY REGAINED !"),
+                    Message.raw("Your true form has been restored."),
+                    true,
+                    null,
+                    2.0F, 0.5F, 0.5F
+            );
         }
     }
 
@@ -1431,14 +1438,7 @@ public class GameManager {
                     store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(newModel));
                     skinComponent.setNetworkOutdated();
 
-                    EventTitleUtil.showEventTitleToPlayer(
-                            playerRef,
-                            Message.raw("HUMANITY REGAINED !"),
-                            Message.raw("Your true form has been restored."),
-                            true,
-                            null,
-                            2.0F, 0.5F, 0.5F
-                    );
+
                     log("Restored original player skin for: " + playerRef.getUsername());
                 }
             }

@@ -1348,7 +1348,6 @@ public class GameManager {
                 log(playerRef.getUsername() + " already has a weapon class. Teleporting to Lobby.");
                 if (this.lobby != null) {
                     RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
-                    setLobbyWeather();
                 }
             } else {
                 log(playerRef.getUsername() + " has no weapon. Opening Weapon Selection UI.");

@@ -3,7 +3,7 @@
     "Name": "BombShot.name",
     "Description": "BombShot.description"
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Fire_Goblin.png",
+  "Icon": "Icons/ItemsGenerated/bomb_shot.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [

@@ -3,7 +3,7 @@
     "Name": "WolfForm.name",
     "Description": "WolfForm.description"
   },
-  "Icon": "Icons/Items/EditorTools/Revolve.png",
+  "Icon": "Icons/ItemsGenerated/wolf.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "Quality": "Uncommon",
   "Categories": [

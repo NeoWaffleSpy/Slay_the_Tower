@@ -138,5 +138,13 @@
     }
   },
   "MaxDurability": 180,
-  "DurabilityLossOnHit": 0.45
+  "DurabilityLossOnHit": 0.45,
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        "Kweebec_Boss_Projectile_Assault"
+      ]
+    },
+    "Secondary": "Root_Kweebec_Boss_Punch_Aoe"
+  }
 }

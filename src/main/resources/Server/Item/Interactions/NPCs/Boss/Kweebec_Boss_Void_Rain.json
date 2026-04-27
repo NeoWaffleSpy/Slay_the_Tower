@@ -1,0 +1,62 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Repeat",
+    "Repeat": 4,
+    "ForkInteractions": {
+      "Interactions": [
+        {
+          "Type": "Parallel",
+          "Interactions": [
+            {
+              "Interactions": [
+                {
+                  "Type": "LaunchProjectile",
+                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile",
+                  "RunTime": 0.3
+                }
+              ]
+            },
+            {
+              "Interactions": [
+                {
+                  "Type": "LaunchProjectile",
+                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile2",
+                  "RunTime": 0.3
+                }
+              ]
+            },
+            {
+              "Interactions": [
+                {
+                  "Type": "LaunchProjectile",
+                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile3",
+                  "RunTime": 0.3
+                }
+              ]
+            },
+            {
+              "Interactions": [
+                {
+                  "Type": "LaunchProjectile",
+                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile4",
+                  "RunTime": 0.3
+                }
+              ]
+            },
+            {
+              "Interactions": [
+                {
+                  "Type": "LaunchProjectile",
+                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile5",
+                  "RunTime": 0.4
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

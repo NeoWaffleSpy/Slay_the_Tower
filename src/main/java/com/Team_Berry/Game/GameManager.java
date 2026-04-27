@@ -22,7 +22,6 @@ import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.builtin.adventure.objectives.Objective;
 import com.hypixel.hytale.builtin.adventure.objectives.ObjectivePlugin;
 import com.hypixel.hytale.builtin.adventure.objectives.task.ObjectiveTask;
-import com.hypixel.hytale.builtin.ambience.resources.AmbienceResource;
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.builtin.weather.resources.WeatherResource;
 import com.hypixel.hytale.component.ComponentAccessor;
@@ -117,7 +116,6 @@ public class GameManager {
         this.gameState.initialize(milestoneData);
         this.lobby = findLobbyRoom();
         this.prisonSpawnRoom = findPrisonSpawnRoom();
-        //setForcedMusic(TREE_MUSIC);
         log("Manager initialized for world.");
     }
 
@@ -1486,22 +1484,4 @@ public class GameManager {
         });
     }
 
-    private void setForcedMusic(@Nullable String ambienceFxId) {
-        world.execute(() -> {
-            Store<EntityStore> store = world.getEntityStore().getStore();
-            AmbienceResource ambienceResource = (AmbienceResource) store.getResource(AmbienceResource.getResourceType());
-
-            if (ambienceResource != null) {
-                ambienceResource.setForcedMusicAmbience(ambienceFxId);
-
-                if (ambienceFxId != null) {
-                    log("World music changed to: " + ambienceFxId);
-                } else {
-                    log("World music cleared (returned to default).");
-                }
-            } else {
-                log("Warning: AmbienceResource not found on this world.");
-            }
-        });
-    }
 }

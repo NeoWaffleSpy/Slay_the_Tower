@@ -1,0 +1,40 @@
+{
+  "Appearance": "Fireball_BOSS",
+  "SticksVertically": true,
+  "MuzzleVelocity": 20,
+  "TerminalVelocity": 20,
+  "Gravity": 2,
+  "ImpactSlowdown": 0.05,
+  "TimeToLive": 1,
+  "Damage": 25,
+  "DeathEffectsOnHit": true,
+  "DeadTime": 0.01,
+  "HitParticles": {
+    "SystemId": "Stone_Death"
+  },
+  "DepthShot": 1,
+  "PitchAdjustShot": true,
+  "BounceParticles": {
+    "SystemId": "Explosion_Medium",
+    "Scale": 0.5
+  },
+  "Radius": 0,
+  "Height": 0,
+  "BounceSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
+  "DeadTimeMiss": 0.01,
+  "DeathSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
+  "DeathParticles": {
+    "SystemId": "Explosion_Medium"
+  },
+  "MissParticles": {
+    "SystemId": "Fireball_Charge_To_4"
+  },
+  "Density": 2000,
+  "WaterHitImpulseLoss": 0.7,
+  "SwimmingDampingFactor": 50,
+  "ComputePitch": true,
+  "VerticalCenterShot": -0.5,
+  "HitSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
+  "ComputeRoll": true,
+  "ComputeYaw": true
+}

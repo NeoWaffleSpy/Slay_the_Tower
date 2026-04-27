@@ -1,0 +1,20 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Repeat",
+    "Repeat": 10,
+    "ForkInteractions": {
+      "Interactions": [
+        {
+          "Type": "LaunchProjectile",
+          "ProjectileId": "Kweebec_Boss_Projectile_Fire",
+          "RunTime": 0.4,
+          "Effects": {
+            "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Impact"
+          }
+        }
+      ]
+    }
+  }
+}

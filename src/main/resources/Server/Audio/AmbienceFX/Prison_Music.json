@@ -1,1 +1,24 @@
-{}
+{
+  "Music": {
+    "Tracks": [
+      "Music/Oceans/ZO-SolemnTides.ogg"
+    ],
+    "Volume": 10
+  },
+  "Conditions": {
+    "WeatherIds": [
+      "Weather_Prison"
+    ],
+    "Never": false,
+    "EnvironmentIds": [
+      "Default"
+    ]
+  },
+  "SoundEffect": {
+    "ReverbEffectId": "Rev_Default",
+    "EqualizerEffectId": "EQ_Default",
+    "IsInstant": true
+  },
+  "Priority": 999,
+  "AudioCategory": "AudioCat_Music"
+}

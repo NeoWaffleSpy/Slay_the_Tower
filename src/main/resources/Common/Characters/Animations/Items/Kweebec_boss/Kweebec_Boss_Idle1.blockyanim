@@ -46,13 +46,19 @@
       "shapeUvOffset": []
     },
     "Skulls": {
-      "position": [],
-      "orientation": [
+      "position": [
         {
-          "time": 0,
-          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "time": 8,
+          "delta": {"x": 0, "y": -8, "z": 5},
           "interpolationType": "linear"
         },
+        {
+          "time": 59,
+          "delta": {"x": 0, "y": -6.46, "z": 10.29},
+          "interpolationType": "linear"
+        }
+      ],
+      "orientation": [
         {
           "time": 23,
           "delta": {"x": -0.10887, "y": 0, "z": 0, "w": 0.99406},
@@ -306,35 +312,6 @@
           "time": 60,
           "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
           "interpolationType": "smooth"
-        }
-      ],
-      "shapeStretch": [],
-      "shapeVisible": [],
-      "shapeUvOffset": []
-    },
-    "Chest": {
-      "position": [
-        {
-          "time": 21,
-          "delta": {"x": 0, "y": 0, "z": 20},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 60,
-          "delta": {"x": 0, "y": 0, "z": 20},
-          "interpolationType": "linear"
-        }
-      ],
-      "orientation": [
-        {
-          "time": 21,
-          "delta": {"x": -0.08716, "y": 0, "z": 0, "w": 0.99619},
-          "interpolationType": "linear"
-        },
-        {
-          "time": 60,
-          "delta": {"x": -0.08716, "y": 0, "z": 0, "w": 0.99619},
-          "interpolationType": "linear"
         }
       ],
       "shapeStretch": [],

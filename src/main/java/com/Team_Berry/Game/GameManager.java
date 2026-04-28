@@ -396,7 +396,7 @@ public class GameManager {
 
         log("Player left the party: " + playerRef.getUsername());
 
-        world.execute(() -> {
+        /*world.execute(() -> {
             UUID leavingId = playerRef.getUuid();
             for (PlayerRef otherPlayer : activeParticipants) {
                 if (!otherPlayer.equals(playerRef)) {
@@ -404,7 +404,7 @@ public class GameManager {
                     playerRef.getHiddenPlayersManager().showPlayer(otherPlayer.getUuid());
                 }
             }
-        });
+        });*/
         resetPlayerModel(playerRef);
         detachPlayerFromObjective(playerRef);
         this.activeParticipants.remove(playerRef);
@@ -782,12 +782,12 @@ public class GameManager {
                 for (PlayerRef participant : activeParticipants) {
                     RoomTeleporter.teleportToRoom(participant, lobby, this.world);
                     healPlayerToFull(participant);
-
+/*
                     for (PlayerRef other : activeParticipants) {
                         if (!participant.equals(other)) {
                             participant.getHiddenPlayersManager().showPlayer(other.getUuid());
                         }
-                    }
+                    }*/
                 }
             });
         }
@@ -925,7 +925,7 @@ public class GameManager {
                 endStage(EndStageResult.FAILURE);
             } else {
                 teleportToSpectatorPosition(playerRef);
-                hidePlayer(playerRef);
+                //hidePlayer(playerRef);
             }
         }
     }
@@ -938,7 +938,7 @@ public class GameManager {
 
     private void reviveDeadPlayers() {
         if (deadParticipants.isEmpty()) return;
-        showAllDeadPlayers();
+        //showAllDeadPlayers();
         log("Reviving " + deadParticipants.size() + " dead participants.");
         deadParticipants.clear();
     }
@@ -1354,7 +1354,7 @@ public class GameManager {
     }
 
     private void tpParticipantsToPostgame() {
-        showAllDeadPlayers();
+        //showAllDeadPlayers();
 
         world.execute(() -> {
             if (this.postgameRoom != null) {

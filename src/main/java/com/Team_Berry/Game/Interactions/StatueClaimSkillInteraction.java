@@ -29,7 +29,6 @@ public class StatueClaimSkillInteraction extends SimpleInstantInteraction {
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
         if (manager != null) {
             manager.grantSkillRewards(playerRef);
-            manager.setStatueSpawn();
         }
     }
 }

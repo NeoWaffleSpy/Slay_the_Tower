@@ -7,58 +7,22 @@
     "ForkInteractions": {
       "Interactions": [
         {
-          "Type": "Parallel",
-          "Interactions": [
-            {
-              "Interactions": [
-                {
-                  "Type": "LaunchProjectile",
-                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile",
-                  "RunTime": 0.3
-                }
-              ]
-            },
-            {
-              "Interactions": [
-                {
-                  "Type": "LaunchProjectile",
-                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile2",
-                  "RunTime": 0.3
-                }
-              ]
-            },
-            {
-              "Interactions": [
-                {
-                  "Type": "LaunchProjectile",
-                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile3",
-                  "RunTime": 0.3
-                }
-              ]
-            },
-            {
-              "Interactions": [
-                {
-                  "Type": "LaunchProjectile",
-                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile4",
-                  "RunTime": 0.3
-                }
-              ]
-            },
-            {
-              "Interactions": [
-                {
-                  "Type": "LaunchProjectile",
-                  "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile5",
-                  "RunTime": 0.4
-                }
-              ]
-            }
-          ]
+          "Type": "ProjectileRainInteraction",
+          "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile2",
+          "Projectile Count": 100,
+          "Angle Offset": 0.8,
+          "HorizontalSpeedMultiplier": 1,
+          "RunTime": 0.5,
+          "Minimum Angle Offset": 0.6,
+          "Maximum Angle Offset": 2
         }
       ]
     },
-    "RunTime": 1.6
+    "RunTime": 5,
+    "Next": {
+      "Type": "Simple",
+      "RunTime": 5
+    }
   },
   "Effects": {
     "ItemPlayerAnimationsId": "Kweebec_Boss",

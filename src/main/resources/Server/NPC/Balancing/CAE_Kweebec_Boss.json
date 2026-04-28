@@ -9,7 +9,7 @@
           "ResponseCurve": "Linear",
           "XRange": [
             0,
-            1
+            10
           ]
         }
       }
@@ -24,11 +24,11 @@
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 10
+              "SwitchPoint": 7
             }
           }
         ],
-        "WeightCoefficient": 5
+        "WeightCoefficient": 100
       },
       "FireballAssault": {
         "Type": "Ability",
@@ -44,14 +44,14 @@
         "AbilityType": "Primary",
         "AttackDistanceRange": [
           0,
-          100
+          150
         ],
         "Ability": {
           "Interactions": [
             "Kweebec_Boss_Projectile_Assault"
           ]
         },
-        "WeightCoefficient": 5,
+        "WeightCoefficient": 20,
         "Target": "Hostile"
       },
       "VoidRain": {
@@ -61,7 +61,7 @@
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 20
+              "SwitchPoint": 10
             }
           }
         ],
@@ -75,7 +75,7 @@
             "Kweebec_Boss_Void_Rain"
           ]
         },
-        "WeightCoefficient": 100,
+        "WeightCoefficient": 10,
         "Target": "Hostile"
       },
       "Summon": {
@@ -88,21 +88,41 @@
           0,
           100
         ],
-        "PostExecuteDistanceRange": [
-          6,
-          10
-        ],
         "ChargeFor": 1,
-        "WeightCoefficient": 1000,
+        "WeightCoefficient": 10,
         "Conditions": [
           {
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 20
+              "SwitchPoint": 15
             }
           }
         ]
+      },
+      "RandomExplosions": {
+        "Type": "Ability",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 10
+            }
+          }
+        ],
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          100
+        ],
+        "Ability": {
+          "Interactions": [
+            "Kweebec_Boss_Random_Explosions"
+          ]
+        },
+        "WeightCoefficient": 10,
+        "Target": "Hostile"
       }
     },
     "MinActionUtility": 0.01,
@@ -113,7 +133,7 @@
             "Root_Kweebec_Boss_Punch_Aoe"
           ],
           "Randomise": false,
-          "MaxRange": 10,
+          "MaxRange": 12,
           "Timeout": 2,
           "CooldownRange": [
             4,
@@ -141,7 +161,8 @@
         "Actions": [
           "SelectTarget",
           "FireballAssault",
-          "VoidRain"
+          "VoidRain",
+          "RandomExplosions"
         ]
       }
     }

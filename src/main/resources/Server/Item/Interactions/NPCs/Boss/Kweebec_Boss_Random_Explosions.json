@@ -1,0 +1,34 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.2,
+  "Next": {
+    "Type": "Repeat",
+    "Repeat": 1,
+    "ForkInteractions": {
+      "Interactions": [
+        {
+          "Type": "SpawnAOEInteraction",
+          "Radius": 30,
+          "Occurences": 35,
+          "Particle Preview": "Fire_AoE_Grow2_Boss",
+          "Particle Explosion": "Explosion_Big",
+          "RunTime": 4,
+          "Damage": 15,
+          "Vertical Offset": 1,
+          "Explosion Radius": 4,
+          "Delay": 1500
+        }
+      ]
+    },
+    "RunTime": 5,
+    "Next": {
+      "Type": "Simple",
+      "RunTime": 5
+    }
+  },
+  "Effects": {
+    "ItemPlayerAnimationsId": "Kweebec_Boss",
+    "ItemAnimationId": "Wave",
+    "WaitForAnimationToFinish": false
+  }
+}

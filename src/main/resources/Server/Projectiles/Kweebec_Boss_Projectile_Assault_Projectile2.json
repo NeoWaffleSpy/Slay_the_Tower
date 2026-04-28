@@ -29,9 +29,9 @@
     "EntityDamageRadius": 5,
     "EntityDamage": 0,
     "Knockback": {
-      "Force": -3,
+      "Force": -2,
       "Duration": 0.1,
-      "VelocityY": 5,
+      "VelocityY": 3.5,
       "VelocityConfig": {
         "Style": "Exp"
       }

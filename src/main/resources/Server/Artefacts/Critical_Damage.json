@@ -2,7 +2,7 @@
   "Stats": [
     "Crit_Damage"
   ],
-  "Icon": "UI/Custom/ArtefactIcons/test.png",
+  "Icon": "UI/Custom/ArtefactIcons/CritRate.png",
   "HudUI": [
     {}
   ],

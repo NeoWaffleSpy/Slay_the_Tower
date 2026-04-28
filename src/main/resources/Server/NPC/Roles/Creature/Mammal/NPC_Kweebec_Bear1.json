@@ -7,7 +7,7 @@
       "Description": "Model to be used."
     },
     "DropList": {
-      "Value": "",
+      "Value": "Empty",
       "Description": "Drop Items."
     },
     "Attack": {

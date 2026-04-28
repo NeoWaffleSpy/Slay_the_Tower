@@ -42,6 +42,7 @@ public class WeaponSelection {
         this.store = store;
     }
 
+
     private ArrayList<Item> getSkillsFromItemList() {
         ArrayList<Item> items = new ArrayList<>();
         DefaultAssetMap<String, Item> itemMap = Item.getAssetMap();

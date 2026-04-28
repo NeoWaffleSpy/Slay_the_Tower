@@ -4,8 +4,12 @@ import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -13,21 +17,28 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
 
-public class ClaimStartWeaponInteraction extends SimpleInstantInteraction {
+public class SetLobbyWeatherInteraction extends SimpleInstantInteraction {
 
-    public static final BuilderCodec<ClaimStartWeaponInteraction> CODEC = BuilderCodec.builder(ClaimStartWeaponInteraction.class, ClaimStartWeaponInteraction::new, SimpleInstantInteraction.CODEC).build();
+    public static final BuilderCodec<SetLobbyWeatherInteraction> CODEC = BuilderCodec.builder(SetLobbyWeatherInteraction.class, SetLobbyWeatherInteraction::new, SimpleInstantInteraction.CODEC).build();
 
     @Override
     protected void firstRun(@NotNull InteractionType interactionType, @NotNull InteractionContext interactionContext, @NotNull CooldownHandler cooldownHandler) {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
-        PlayerRef playerRef = commandBuffer.getComponent(interactionContext.getOwningEntity(), PlayerRef.getComponentType());
+        Ref<EntityStore> entityRef = interactionContext.getOwningEntity();
+        PlayerRef playerRef = commandBuffer.getComponent(entityRef, PlayerRef.getComponentType());
 
         if (playerRef == null || !playerRef.getReference().isValid()) return;
         World world = playerRef.getReference().getStore().getExternalData().getWorld();
 
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
         if (manager != null) {
-            manager.startingKweebecInteraction(playerRef, commandBuffer);
+            manager.setLobbyWeather();
+            TransformComponent transformComponent = commandBuffer.getComponent(entityRef, TransformComponent.getComponentType());
+            if (transformComponent != null) {
+                Transform currentTransform = new Transform(transformComponent.getPosition());
+                Teleport teleport = Teleport.createForPlayer(world, currentTransform);
+                commandBuffer.addComponent(entityRef, Teleport.getComponentType(), teleport);
+            }
         }
     }
 }

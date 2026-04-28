@@ -24,10 +24,7 @@ import com.hypixel.hytale.builtin.adventure.objectives.ObjectivePlugin;
 import com.hypixel.hytale.builtin.adventure.objectives.task.ObjectiveTask;
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.builtin.weather.resources.WeatherResource;
-import com.hypixel.hytale.component.ComponentAccessor;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.RemoveReason;
-import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.BlockPosition;
@@ -439,7 +436,7 @@ public class GameManager {
 
     public boolean canPlayerPickSkill(PlayerRef playerRef) {
         int possessedSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
-        return possessedSkills <= globalMaxSkills;
+        return possessedSkills < globalMaxSkills;
     }
 
     public Set<PlayerRef> getActiveParticipants() {
@@ -521,6 +518,12 @@ public class GameManager {
         if (this.gameState.isRunComplete()) {
             log("FINAL MILESTONE REACHED. Preparing for the Boss!");
             this.pendingMilestoneTransition = true;
+
+            if (this.globalMaxSkills < 4) {
+                this.globalMaxSkills++;
+                this.pendingSkillBroadcast = true;
+                log("BOSS REACHED. Skill capacity increased to max (4).");
+            }
         } else if (oldMilestone != newMilestone) {
             this.pendingMilestoneTransition = true;
 
@@ -557,6 +560,16 @@ public class GameManager {
 //    }
 
     public void grantSkillRewards(PlayerRef playerRef) {
+        if (!playerClasses.containsKey(playerRef.getUuid())) {
+            log(playerRef.getUsername() + " interacted with the statue but has no weapon. Opening Weapon Selection UI.");
+
+            WeaponSelection ui = new WeaponSelection(playerRef, world.getEntityStore().getStore());
+            ui.buildPage();
+            playerRef.sendMessage(Message.raw("Since you didn't talk to the kweebec back in prison, here's your weapon. Talk to the statue again to get something else!"));
+
+            return;
+        }
+
         if (!canPlayerPickSkill(playerRef)) {
             log("Player " + playerRef.getUsername() + " attempted to claim a skill, but is already at their cap.");
             playerRef.sendMessage(Message.raw("You have already remembered all you can right now..."));
@@ -787,7 +800,7 @@ public class GameManager {
         if (currentRoom == null) return;
 
         if (isBossStage) {
-            log("Teleporting participants to Boss Room asset: " + currentRoom.left().worldName + " <<<");
+            log(">>> TELEPORTING PARTICIPANTS TO FINAL BOSS ARENA: " + currentRoom.left().worldName + " <<<");
         } else {
             log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
         }
@@ -797,14 +810,23 @@ public class GameManager {
             if (!participantsInRoom.contains(p)) {
                 playersToTeleport.add(p);
                 this.participantsInRoom.add(p);
-                startSharedRoomObjective();
-                setRandomRoomWeather();
             }
         }
 
-        RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
+        if (!playersToTeleport.isEmpty()) {
+            startSharedRoomObjective();
+
+            if (isBossStage) {
+                setBossWeather();
+            } else {
+                setRandomRoomWeather();
+            }
+
+            RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
+        }
 
         scheduler.schedule("late_cleanup_" + world.getName(), this::processPendingCleanup, 1, TimeUnit.SECONDS);
+
         if (isBossStage) {
             scheduler.schedule("boss_hitbox_" + world.getName(), this::makeBossHitboxHard, 1, TimeUnit.SECONDS);
         }
@@ -959,9 +981,20 @@ public class GameManager {
         log("Weather changed to random state: " + randomWeather);
     }
 
-    private void setLobbyWeather() {
-        setForcedWeather("Weather_Transition", world.getEntityStore().getStore());
-        log("Weather changed to Prison state for the Lobby.");
+    public void setLobbyWeather() {
+        setForcedWeather("Weather_Tree", world.getEntityStore().getStore());
+        log("Weather changed to Lobby.");
+    }
+
+    public void setPrisonWeather() {
+        setForcedWeather("Weather_Prison", world.getEntityStore().getStore());
+        log("Weather changed to Prison.");
+    }
+
+
+    private void setBossWeather() {
+        setForcedWeather("Weather_Boss", world.getEntityStore().getStore());
+        log("Weather changed to Boss.");
     }
 
     private void startSharedRoomObjective() {
@@ -1345,15 +1378,13 @@ public class GameManager {
         GamePlugin.get().destroyGameInstance(this.world);
     }
 
-    public void startingKweebecInteraction(PlayerRef playerRef) {
+    public void startingKweebecInteraction(PlayerRef playerRef, CommandBuffer<EntityStore> commandBuffer) {
         if (!activeParticipants.contains(playerRef)) return;
 
         world.execute(() -> {
             if (playerClasses.containsKey(playerRef.getUuid())) {
-                log(playerRef.getUsername() + " already has a weapon class. Teleporting to Lobby.");
-                if (this.lobby != null) {
-                    RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
-                }
+                log(playerRef.getUsername() + " already has a weapon class.");
+                playerRef.sendMessage(Message.raw("You are already geared up! Come find me in the tree!"));
             } else {
                 log(playerRef.getUsername() + " has no weapon. Opening Weapon Selection UI.");
                 WeaponSelection ui = new WeaponSelection(playerRef, world.getEntityStore().getStore());
@@ -1367,26 +1398,14 @@ public class GameManager {
 
         setPlayerClass(playerRef, weaponClassId);
         playerRef.sendMessage(Message.raw("Weapon acquired!"));
-        log(playerRef.getUsername() + " selected weapon: " + weaponClassId + ". Teleporting to Prisonspawn.");
+        log(playerRef.getUsername() + " selected weapon: " + weaponClassId + ".");
 
-        world.execute(() -> {
-            if (this.prisonSpawnRoom != null) {
-                scheduler.schedule("tp_after_weapon_" + world.getName(), () -> {
-                    world.execute(() -> {
-                        RoomTeleporter.teleportToRoom(playerRef, this.prisonSpawnRoom, this.world);
-                        EventTitleUtil.showEventTitleToPlayer(
-                                playerRef,
-                                Message.raw("Save the kweebecs !"),
-                                Message.raw("Good luck, adventurer..."),
-                                true
-                        );
-                    });
-                }, 1000, TimeUnit.MILLISECONDS);
-
-            } else {
-                log("Error: Prisonspawn room not found!");
-            }
-        });
+        EventTitleUtil.showEventTitleToPlayer(
+                playerRef,
+                Message.raw("Save the kweebecs !"),
+                Message.raw("Good luck, adventurer..."),
+                true
+        );
     }
 
     private void healPlayerToFull(PlayerRef playerRef) {

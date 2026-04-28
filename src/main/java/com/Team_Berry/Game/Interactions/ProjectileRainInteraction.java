@@ -40,6 +40,7 @@ public class ProjectileRainInteraction extends SimpleInstantInteraction implemen
     protected String projectileId;
     protected int projectileCount = 0;
     protected float angleOffset = 0.1f;
+    protected float minAngleOffset = 0.1f;
 
     private final float MAX_PITCH_ANGLE = 1.5607964f;
 
@@ -92,7 +93,7 @@ public class ProjectileRainInteraction extends SimpleInstantInteraction implemen
         var rng = RandomGenerator.getDefault();
         var directions = new Vector3f[projectileCount];
 
-        float pitch = MAX_PITCH_ANGLE - rng.nextFloat() * angleOffset;
+        float pitch = MAX_PITCH_ANGLE - rng.nextFloat() * (angleOffset - minAngleOffset) + minAngleOffset;
         for (int i = 0; i < projectileCount; i++) {
             float yaw   = (float) (Math.PI - (2 * Math.PI * i / projectileCount));
 
@@ -118,9 +119,12 @@ public class ProjectileRainInteraction extends SimpleInstantInteraction implemen
                 .append(new KeyedCodec<>("Projectile Count", Codec.INTEGER),
                         (i, o) -> i.projectileCount = o,
                         (i) -> i.projectileCount).add()
-                .append(new KeyedCodec<>("Angle Offset", Codec.FLOAT),
+                .append(new KeyedCodec<>("Maximum Angle Offset", Codec.FLOAT),
                         (i, o) -> i.angleOffset = o,
                         (i) -> i.angleOffset).add()
+                .append(new KeyedCodec<>("Minimum Angle Offset", Codec.FLOAT),
+                        (i, o) -> i.angleOffset = o,
+                        (i) -> i.minAngleOffset).add()
                 .build();
     }
 }

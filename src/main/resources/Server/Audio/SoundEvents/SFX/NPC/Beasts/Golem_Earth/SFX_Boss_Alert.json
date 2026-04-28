@@ -1,0 +1,23 @@
+{
+  "Volume": 10,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/SFX_Boss_Alert1.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -3,
+        "MinVolume": -3,
+        "MaxPitch": 3
+      },
+      "StartDelay": 0.2,
+      "Volume": 5.0
+    }
+  ],
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_NPC_Golem_Earth",
+  "Parent": "SFX_Attn_Moderate",
+  "SpatialBlend": 0.456,
+  "Pitch": -2.592,
+  "MusicDuckingVolume": 0
+}

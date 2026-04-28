@@ -12,7 +12,9 @@
           "Projectile Count": 100,
           "Angle Offset": 0.8,
           "HorizontalSpeedMultiplier": 1,
-          "RunTime": 0.5
+          "RunTime": 0.5,
+          "Minimum Angle Offset": 0.6,
+          "Maximum Angle Offset": 2
         }
       ]
     },

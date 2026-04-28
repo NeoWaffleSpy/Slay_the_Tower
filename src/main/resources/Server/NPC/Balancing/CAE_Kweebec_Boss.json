@@ -133,7 +133,7 @@
             "Root_Kweebec_Boss_Punch_Aoe"
           ],
           "Randomise": false,
-          "MaxRange": 20,
+          "MaxRange": 12,
           "Timeout": 2,
           "CooldownRange": [
             4,

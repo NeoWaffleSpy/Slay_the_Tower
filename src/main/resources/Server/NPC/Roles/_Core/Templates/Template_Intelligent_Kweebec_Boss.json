@@ -277,15 +277,15 @@
       "Description": "The distance the target needs to be within to maintain priority over other targets while in combat"
     },
     "ChaseRelativeSpeed": {
-      "Value": 0.67,
+      "Value": 0.1,
       "Description": "Relative chasing speed when pursuing a target."
     },
     "CombatMovingRelativeSpeed": {
-      "Value": 0.6,
+      "Value": 0.1,
       "Description": "Relative speed to use during combat specific movement (e.g. to achieve slower strafing)."
     },
     "CombatBackwardsRelativeSpeed": {
-      "Value": 0.3,
+      "Value": 0.1,
       "Description": "Relative speed to use during combat when backing away from target."
     },
     "AttitudeGroup": {

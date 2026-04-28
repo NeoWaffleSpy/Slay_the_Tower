@@ -40,6 +40,7 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
     protected String particleExplosion;
     protected Integer damage = 20;
     protected float verticalOffset = 0.0f;
+    protected float explosionRadius = 5.0f;
     @Override
     protected void firstRun(@Nonnull InteractionType interactionType, @Nonnull InteractionContext interactionContext, @Nonnull CooldownHandler cooldownHandler) {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
@@ -54,8 +55,8 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
             ParticleUtil.spawnParticleEffect(particlePreview, point, commandBuffer);
         }
 
-        float EXPLOSION_RADIUS = 5.0f;
-        ExplosionConfig config = new StatEffectSystem.StatEffectDeathSystem.ArtefactExplosionConfig(EXPLOSION_RADIUS, damage);
+
+        ExplosionConfig config = new StatEffectSystem.StatEffectDeathSystem.ArtefactExplosionConfig(explosionRadius, damage);
         World world = store.getExternalData().getWorld();
         ComponentAccessor<ChunkStore> chunkStore = world.getChunkStore().getStore();
         if (scheduler == null)
@@ -90,6 +91,9 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
                         (interaction, o) -> interaction.radius = o,
                         (interaction) -> interaction.radius)
                 .documentation("Radius to randomly set interaction around").add()
+                .append(new KeyedCodec<>("Explosion Radius", Codec.FLOAT),
+                        (interaction, o) -> interaction.explosionRadius = o,
+                        (interaction) -> interaction.explosionRadius).add()
                 .append(new KeyedCodec<>("Occurences", Codec.INTEGER),
                         (interaction, o) -> interaction.occurences = o,
                         (interaction) -> interaction.occurences).add()

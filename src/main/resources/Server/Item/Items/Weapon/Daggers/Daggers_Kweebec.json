@@ -1,7 +1,8 @@
 {
   "Parent": "Template_Weapon_Daggers_Kweebec",
   "TranslationProperties": {
-    "Name": "server.items.Weapon_Daggers_Iron.name"
+    "Name": "Daggers_Kweebec.name",
+    "Description": "Daggers_Kweebec.description"
   },
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",

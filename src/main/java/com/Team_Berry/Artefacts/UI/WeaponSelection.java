@@ -96,7 +96,7 @@ public class WeaponSelection {
         }
         if (description == null || description.isEmpty())
             description = "Template";
-        String icon = item.getIcon().replace("icons/ItemsGenerated/", "");
+        String icon = item.getIcon().replace("Icons/ItemsGenerated/", "WeaponIcons/");
         return new WeaponInfos(
                 name,
                 icon,

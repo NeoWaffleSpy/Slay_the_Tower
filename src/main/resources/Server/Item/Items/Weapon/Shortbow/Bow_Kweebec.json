@@ -1,6 +1,7 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Weapon_Shortbow_Iron.name"
+    "Name": "Bow_Kweebec.name",
+    "Description": "Bow_Kweebec.description"
   },
   "Parent": "Template_Weapon_Shortbow_Kweebec",
   "Quality": "Uncommon",

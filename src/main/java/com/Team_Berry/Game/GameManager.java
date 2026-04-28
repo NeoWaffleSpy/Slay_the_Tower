@@ -44,6 +44,8 @@ import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
+import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollision;
+import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollisionConfig;
 import com.hypixel.hytale.server.core.modules.entity.player.PlayerSkinComponent;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -437,7 +439,7 @@ public class GameManager {
 
     public boolean canPlayerPickSkill(PlayerRef playerRef) {
         int possessedSkills = historicalSkillCounts.getOrDefault(playerRef.getUuid(), 0);
-        return possessedSkills < globalMaxSkills;
+        return possessedSkills <= globalMaxSkills;
     }
 
     public Set<PlayerRef> getActiveParticipants() {
@@ -803,6 +805,9 @@ public class GameManager {
         RoomTeleporter.teleportGroupToRoom(playersToTeleport, currentRoom.left(), this.world);
 
         scheduler.schedule("late_cleanup_" + world.getName(), this::processPendingCleanup, 1, TimeUnit.SECONDS);
+        if (isBossStage) {
+            scheduler.schedule("boss_hitbox_" + world.getName(), this::makeBossHitboxHard, 1, TimeUnit.SECONDS);
+        }
     }
 
     public List<RoomCodec> findValidRooms() {
@@ -1557,4 +1562,30 @@ public class GameManager {
         return Pair.of(bossRoom, quest);
     }
 
+    private void makeBossHitboxHard() {
+        if (currentRoomMobs.isEmpty()) return;
+        UUID bossUuid = currentRoomMobs.iterator().next();
+
+        world.execute(() -> {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+            Ref<EntityStore> bossRef = getRefByUUID(store, bossUuid);
+
+            if (bossRef != null && bossRef.isValid()) {
+
+                HitboxCollisionConfig hardConfig = HitboxCollisionConfig.getAssetMap().getAsset("HardCollision");
+                if (hardConfig != null) {
+                    if (!store.getArchetype(bossRef).contains(HitboxCollision.getComponentType())) {
+                        store.addComponent(bossRef, HitboxCollision.getComponentType(), new HitboxCollision(hardConfig));
+                    } else {
+                        store.putComponent(bossRef, HitboxCollision.getComponentType(), new HitboxCollision(hardConfig));
+                    }
+                    log("Successfully made the Boss HARD. :p");
+                } else {
+                    log("Warning: Could not find hard collision config in the Asset Store.");
+                }
+            } else {
+                log("Warning: Could not find Boss entity reference to apply hard hitbox.");
+            }
+        });
+    }
 }

@@ -6,10 +6,6 @@
       "Value": "Kweebec_Bear",
       "Description": "Model to be used."
     },
-    "DropList": {
-      "Value": "Drop_Bear_Grizzly",
-      "Description": "Drop Items."
-    },
     "Attack": {
       "Value": "Root_NPC_Bear_Grizzly_Attack",
       "Description": "Attack Root Interaction."

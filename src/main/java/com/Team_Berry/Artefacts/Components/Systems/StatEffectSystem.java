@@ -113,6 +113,10 @@ public class StatEffectSystem {
     public static class StatEffectDamageSystem extends DamageEventSystem {
         public StatEffectDamageSystem() {
         }
+        @Override
+        public SystemGroup<EntityStore> getGroup() {
+            return DamageModule.get().getFilterDamageGroup();
+        }
 
         @Nonnull
         public Query<EntityStore> getQuery() {

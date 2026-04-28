@@ -2,7 +2,7 @@
   "SkyTopColors": [
     {
       "Hour": 0,
-      "Color": "#ff6700ff"
+      "Color": "#dc791eff"
     }
   ],
   "SkyBottomColors": [
@@ -14,13 +14,13 @@
   "SkySunsetColors": [
     {
       "Hour": 0,
-      "Color": "#ff0000ff"
+      "Color": "#b90000ff"
     }
   ],
   "FogColors": [
     {
       "Hour": 0,
-      "Color": "#ff6500"
+      "Color": "#ff0000"
     }
   ],
   "FogDensities": [
@@ -47,7 +47,7 @@
   "SunScales": [
     {
       "Hour": 0,
-      "Value": 3.5
+      "Value": 5
     }
   ],
   "MoonScales": [
@@ -59,7 +59,8 @@
   "Particle": {
     "SystemId": "Embers",
     "OvergroundOnly": false,
-    "Color": "#ff6b00"
+    "Color": "#ff6b00",
+    "Scale": 2
   },
   "Clouds": [
     {
@@ -81,28 +82,33 @@
   "SunGlowColors": [
     {
       "Hour": 0,
-      "Color": "#ffeb00ff"
+      "Color": "#fd6a00ff"
     }
   ],
   "SunColors": [
     {
       "Hour": 0,
-      "Color": "#ffbe6d"
+      "Color": "#ffb248"
     }
   ],
   "ScreenEffectColors": null,
-  "SunlightDampingMultipliers": null,
+  "SunlightDampingMultipliers": [
+    {
+      "Hour": 0,
+      "Value": 1
+    }
+  ],
   "SunlightColors": [
     {
       "Hour": 0,
-      "Color": "#ffaeae"
+      "Color": "#ff6600"
     }
   ],
   "ColorFilters": null,
   "MoonColors": [
     {
       "Hour": 0,
-      "Color": "#ff0000ff"
+      "Color": "#da1717ff"
     }
   ],
   "MoonGlowColors": [

@@ -27,7 +27,7 @@
         {
           "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Death.blockyanim",
           "Looping": false,
-          "SoundEventId": "SFX_Golem_Earth_Death"
+          "SoundEventId": "SFX_Boss_Death"
         }
       ]
     },
@@ -50,9 +50,9 @@
     "Alerted": {
       "Animations": [
         {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Default/Alerted.blockyanim",
           "Looping": false,
-          "SoundEventId": "SFX_Golem_Earth_Alerted"
+          "SoundEventId": "SFX_Boss_Alert",
+          "Animation": "Characters/Animations/Items/Kweebec_boss/Kweebec_Boss_Idle1.blockyanim"
         }
       ]
     }
@@ -69,5 +69,9 @@
   "PhysicsValues": {
     "Mass": 1000,
     "DragCoefficient": 100
+  },
+  "Light": {
+    "Color": "#f0b",
+    "Radius": 15
   }
 }

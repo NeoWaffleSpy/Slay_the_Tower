@@ -39,6 +39,8 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
     protected String particlePreview;
     protected String particleExplosion;
     protected Integer damage = 20;
+    protected float verticalOffset = 0.0f;
+    protected float explosionRadius = 5.0f;
     @Override
     protected void firstRun(@Nonnull InteractionType interactionType, @Nonnull InteractionContext interactionContext, @Nonnull CooldownHandler cooldownHandler) {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
@@ -53,8 +55,8 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
             ParticleUtil.spawnParticleEffect(particlePreview, point, commandBuffer);
         }
 
-        float EXPLOSION_RADIUS = 5.0f;
-        ExplosionConfig config = new StatEffectSystem.StatEffectDeathSystem.ArtefactExplosionConfig(EXPLOSION_RADIUS, damage);
+
+        ExplosionConfig config = new StatEffectSystem.StatEffectDeathSystem.ArtefactExplosionConfig(explosionRadius, damage);
         World world = store.getExternalData().getWorld();
         ComponentAccessor<ChunkStore> chunkStore = world.getChunkStore().getStore();
         if (scheduler == null)
@@ -74,7 +76,7 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
         for (int i = 0; i < this.occurences; i++) {
             points[i] = new Vector3d(
                     origin.x + (rng.nextDouble() * 2 - 1) * this.radius,
-                    origin.y,
+                    origin.y + verticalOffset,
                     origin.z + (rng.nextDouble() * 2 - 1) * this.radius
             );
         }
@@ -89,28 +91,29 @@ public class SpawnAOEInteraction extends SimpleInstantInteraction {
                         (interaction, o) -> interaction.radius = o,
                         (interaction) -> interaction.radius)
                 .documentation("Radius to randomly set interaction around").add()
+                .append(new KeyedCodec<>("Explosion Radius", Codec.FLOAT),
+                        (interaction, o) -> interaction.explosionRadius = o,
+                        (interaction) -> interaction.explosionRadius).add()
                 .append(new KeyedCodec<>("Occurences", Codec.INTEGER),
                         (interaction, o) -> interaction.occurences = o,
-                        (interaction) -> interaction.occurences)
-                .documentation("Radius to randomly set interaction around").add()
+                        (interaction) -> interaction.occurences).add()
                 .append(new KeyedCodec<>("Delay", Codec.INTEGER),
                         (interaction, o) -> interaction.delay = o,
-                        (interaction) -> interaction.delay)
-                .documentation("Radius to randomly set interaction around").add()
+                        (interaction) -> interaction.delay).add()
                 .append(new KeyedCodec<>("Damage", Codec.INTEGER),
                         (interaction, o) -> interaction.damage = o,
-                        (interaction) -> interaction.damage)
-                .documentation("Radius to randomly set interaction around").add()
+                        (interaction) -> interaction.damage).add()
+                .append(new KeyedCodec<>("Vertical Offset", Codec.FLOAT),
+                        (interaction, o) -> interaction.verticalOffset = o,
+                        (interaction) -> interaction.verticalOffset).add()
                 .append(new KeyedCodec<>("Particle Preview", Codec.STRING),
                         (interaction, o) -> interaction.particlePreview = o,
                         (interaction) -> interaction.particlePreview)
-                .addValidator(ParticleSystem.VALIDATOR_CACHE.getValidator())
-                .documentation("Radius to randomly set interaction around").add()
+                .addValidator(ParticleSystem.VALIDATOR_CACHE.getValidator()).add()
                 .append(new KeyedCodec<>("Particle Explosion", Codec.STRING),
                         (interaction, o) -> interaction.particleExplosion = o,
                         (interaction) -> interaction.particleExplosion)
-                .addValidator(ParticleSystem.VALIDATOR_CACHE.getValidator())
-                .documentation("Radius to randomly set interaction around").add()
+                .addValidator(ParticleSystem.VALIDATOR_CACHE.getValidator()).add()
                 .build();
     }
 }

@@ -81,7 +81,6 @@ public class ProjectileRainInteraction extends SimpleInstantInteraction implemen
                             return;
                         }
                     }
-                    GamePlugin.LOGGER.atSevere().log(lookRotation.getYaw() + " - " + lookRotation.getPitch());
                     projectileComponent.shoot(holder, sourceUuid, lookPosition.getX(), lookPosition.getY(), lookPosition.getZ(), lookRotation.getYaw(), lookRotation.getPitch());
                     commandBuffer.addEntity(holder, AddReason.SPAWN);
                 }

@@ -119,12 +119,12 @@ public class ProjectileRainInteraction extends SimpleInstantInteraction implemen
                 .append(new KeyedCodec<>("Projectile Count", Codec.INTEGER),
                         (i, o) -> i.projectileCount = o,
                         (i) -> i.projectileCount).add()
+                .append(new KeyedCodec<>("Minimum Angle Offset", Codec.FLOAT),
+                        (i, o) -> i.minAngleOffset = o,
+                        (i) -> i.minAngleOffset).add()
                 .append(new KeyedCodec<>("Maximum Angle Offset", Codec.FLOAT),
                         (i, o) -> i.angleOffset = o,
                         (i) -> i.angleOffset).add()
-                .append(new KeyedCodec<>("Minimum Angle Offset", Codec.FLOAT),
-                        (i, o) -> i.angleOffset = o,
-                        (i) -> i.minAngleOffset).add()
                 .build();
     }
 }

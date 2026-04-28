@@ -137,16 +137,6 @@ public class StatEffectSystem {
                 EntityStatMap statMapAttack = commandBuffer.getComponent(attackerRef, EntityStatMap.getComponentType());
                 EntityStatMap statMapTarget = commandBuffer.getComponent(targetRef, EntityStatMap.getComponentType());
 
-                StatEffectComponent statComp = commandBuffer.getComponent(attackerRef, StatEffectComponent.getComponentType());
-                if (statComp != null) {
-                    ArtefactCodec bleedArtefact = ArtefactCodec.getAssetMap().getAsset("Bleed_Artefact");
-                    if (bleedArtefact != null) {
-                        int stacks = statComp.getAmount(bleedArtefact);
-                        if (stacks > 0)
-                            ArtefactPlugin.LOGGER.atSevere().log("Flat damage = " + damageValue);
-                    }
-                }
-
                 damageValue = applyBonusAttack(damageValue, statMapAttack);
                 damageValue = applyCritical(damageValue, statMapAttack);
                 damageValue = applyArmor(damageValue, statMapTarget);

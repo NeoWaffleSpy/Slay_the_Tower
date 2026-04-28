@@ -16,6 +16,10 @@
         }
       ]
     },
-    "RunTime": 6
+    "RunTime": 6,
+    "Next": {
+      "Type": "Simple",
+      "RunTime": 5
+    }
   }
 }

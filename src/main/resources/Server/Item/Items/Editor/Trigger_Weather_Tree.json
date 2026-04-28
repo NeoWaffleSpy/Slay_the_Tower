@@ -25,12 +25,7 @@
       "CollisionEnter": {
         "Interactions": [
           {
-            "Type": "Command",
-            "Command": "weather set Weather_Tree"
-          },
-          {
-            "Type": "Command",
-            "Command": "tp ~ ~ ~"
+            "Type": "SetLobbyWeatherInteraction"
           }
         ]
       }

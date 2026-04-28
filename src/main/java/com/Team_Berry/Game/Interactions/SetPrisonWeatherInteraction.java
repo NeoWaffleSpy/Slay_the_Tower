@@ -5,11 +5,8 @@ import com.Team_Berry.Game.GamePlugin;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
-import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -33,12 +30,6 @@ public class SetPrisonWeatherInteraction extends SimpleInstantInteraction {
         GameManager manager = GamePlugin.get().getGameManagers().get(world);
         if (manager != null) {
             manager.setPrisonWeather();
-            TransformComponent transformComponent = commandBuffer.getComponent(entityRef, TransformComponent.getComponentType());
-            if (transformComponent != null) {
-                Transform currentTransform = new Transform(transformComponent.getPosition());
-                Teleport teleport = Teleport.createForPlayer(world, currentTransform);
-                commandBuffer.addComponent(entityRef, Teleport.getComponentType(), teleport);
-            }
         }
     }
 }

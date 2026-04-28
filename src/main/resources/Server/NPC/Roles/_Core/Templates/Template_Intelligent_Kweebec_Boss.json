@@ -171,8 +171,8 @@
     },
     "DesiredAttackDistanceRange": {
       "Value": [
-        1.5,
-        1.5
+        0,
+        100
       ],
       "Description": "The distance within which the NPC wants to be from its target while attacking. The max value should be lower than AttackDistance."
     },
@@ -192,7 +192,7 @@
       "Description": "The distance within which to switch from smart chasing to combat-oriented movement behavior."
     },
     "CombatDirectWeight": {
-      "Value": 10,
+      "Value": 0,
       "Description": "Weight for the direct combat movement behavior (i.e. just going straight at the target, maintaining a close distance and attacking. Set to 0 to disable."
     },
     "CombatAlwaysMovingWeight": {
@@ -200,7 +200,7 @@
       "Description": "Weight for the combat movement behavior where the NPC will always charge at you while attacking. Set to 0 to disable."
     },
     "CombatStrafeWeight": {
-      "Value": 10,
+      "Value": 0,
       "Description": "Weight for the combat strafing movement behavior. Set to 0 to disable."
     },
     "CombatStrafingDurationRange": {
@@ -232,7 +232,7 @@
       "Description": "The time delay range after the NPC performs an attack, provided it's in attack range."
     },
     "CombatBackOffAfterAttack": {
-      "Value": true,
+      "Value": false,
       "Description": "Whether to back off after performing an attack."
     },
     "CombatBackOffDistanceRange": {
@@ -419,12 +419,12 @@
       "MaxWalkSpeed": {
         "Compute": "MaxSpeed"
       },
-      "Gravity": 100,
+      "Gravity": 200,
       "RunThreshold": {
         "Compute": "RunThreshold"
       },
       "MaxFallSpeed": 15,
-      "MaxRotationSpeed": 90,
+      "MaxRotationSpeed": 360,
       "Acceleration": 1
     }
   ],

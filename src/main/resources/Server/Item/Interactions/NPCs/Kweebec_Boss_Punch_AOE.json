@@ -12,30 +12,29 @@
   "Next": {
     "Type": "Selector",
     "Selector": {
-      "Id": "AOECircle",
-      "Offset": {
-        "Z": -10
-      },
-      "Range": 5
+      "Id": "Stab",
+      "EndDistance": 15,
+      "ExtendLeft": 5,
+      "ExtendBottom": 10
     },
-    "Effects": {
-      "Particles": [
-        {
-          "SystemId": "Explosion_Big",
-          "Scale": 10,
-          "PositionOffset": {
-            "Z": 10,
-            "X": 5
-          }
-        }
-      ]
-    },
-    "RunTime": 0.3,
+    "RunTime": 0.1,
     "HitEntity": {
       "Interactions": [
-        "NPC_Attack_Melee_Damage"
+        "Boss_Attack_Melee_Damage"
       ]
-    }
+    },
+    "Next": {
+      "Type": "Simple",
+      "RunTime": 1
+    },
+    "Effects": {
+      "WorldSoundEventId": "SFX_Mace_T2_Signature_Impact",
+      "LocalSoundEventId": "SFX_Mace_T2_Signature_Impact_Local",
+      "MovementEffects": {
+        "DisableAll": true
+      }
+    },
+    "HorizontalSpeedMultiplier": 0
   },
   "RunTime": 0.8
 }

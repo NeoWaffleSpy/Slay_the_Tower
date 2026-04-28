@@ -25,8 +25,7 @@
       "CollisionEnter": {
         "Interactions": [
           {
-            "Type": "Command",
-            "Command": "weather set Weather_Prison"
+            "Type": "SetPrisonWeatherInteraction"
           }
         ]
       }

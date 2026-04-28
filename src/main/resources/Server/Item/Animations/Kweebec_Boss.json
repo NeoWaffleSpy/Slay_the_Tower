@@ -12,6 +12,9 @@
     "VoidRain": {
       "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Void_Rain.blockyanim",
       "Looping": false
+    },
+    "Wave": {
+      "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Wave_Aoe.blockyanim"
     }
   },
   "WiggleWeights": {

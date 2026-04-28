@@ -33,8 +33,23 @@
   "WaterHitImpulseLoss": 0.7,
   "SwimmingDampingFactor": 50,
   "ComputePitch": true,
-  "VerticalCenterShot": -0.3,
+  "VerticalCenterShot": 1,
   "HitSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
   "ComputeRoll": true,
-  "ComputeYaw": true
+  "ComputeYaw": true,
+  "ExplosionConfig": {
+    "DamageBlocks": false,
+    "DamageEntities": true,
+    "BlockDamageRadius": 3,
+    "Knockback": {
+      "Force": -10,
+      "Duration": 0.1,
+      "VelocityY": 2,
+      "VelocityConfig": {
+        "Style": "Exp"
+      }
+    },
+    "EntityDamage": 0,
+    "EntityDamageRadius": 5
+  }
 }

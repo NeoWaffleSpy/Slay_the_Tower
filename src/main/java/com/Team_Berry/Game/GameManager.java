@@ -1,3 +1,5 @@
+//TODO : I plan on coming back here in the very near future to rework all of this. I'm not going to lie this is my first time doing this kind of thing and I did not know how far a game manager could go. I need to go much more horizontally to make this monster more maintanable.
+
 package com.Team_Berry.Game;
 
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;

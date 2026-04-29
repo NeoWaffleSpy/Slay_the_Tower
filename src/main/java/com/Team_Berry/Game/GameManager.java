@@ -1509,7 +1509,7 @@ public class GameManager {
                     healPlayerToFull(playerRef);
 
                     com.hypixel.hytale.server.core.inventory.ItemStack stack =
-                            new com.hypixel.hytale.server.core.inventory.ItemStack(LOBBY_HEAL_ITEM, 2, null);
+                            new com.hypixel.hytale.server.core.inventory.ItemStack(LOBBY_HEAL_ITEM, 3, null);
 
                     com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction transaction =
                             playerComponent.giveItem(stack, ref, store);

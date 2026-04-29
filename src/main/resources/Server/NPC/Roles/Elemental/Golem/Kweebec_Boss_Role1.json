@@ -2,8 +2,9 @@
   "Type": "Variant",
   "Reference": "Template_Intelligent_Kweebec_Boss",
   "Modify": {
-    "MaxHealth": 2000,
+    "MaxHealth": 3500,
     "MaxSpeed": 0.1,
+    "CombatRelativeTurnSpeed": 1.0,
     "DropList": "",
     "AbsoluteDetectionRange": 200,
     "Appearance": "Kweebec_Boss1",

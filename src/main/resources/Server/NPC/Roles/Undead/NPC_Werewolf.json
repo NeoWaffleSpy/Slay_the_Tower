@@ -2,7 +2,7 @@
   "Type": "Variant",
   "Reference": "Template_Predator",
   "Modify": {
-    "Appearance": "Werewolf",
+    "Appearance": "Model_Kweebec_Werewolf",
     "WanderRadius": 6,
     "ViewRange": 12,
     "HearingRange": 8,

@@ -1,19 +1,19 @@
 {
   "Mobs": [
     {
-      "NPCRole": "NPC_Outlander_Berserker",
+      "NPCRole": "NPC_Hedera",
       "Quantity": 3
     },
     {
-      "NPCRole": "NPC_Outlander_Hunter",
+      "NPCRole": "NPC_ToadRhino",
       "Quantity": 4
     },
     {
-      "NPCRole": "NPC_Kweebec_Outlander_Cultist",
+      "NPCRole": "NPC_Emberwulf",
       "Quantity": 2
     },
     {
-      "NPCRole": "NPC_Kweebec_Outlander_Brut",
+      "NPCRole": "NPC_Wraith",
       "Quantity": 2
     },
     {

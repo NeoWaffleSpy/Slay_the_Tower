@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Rogue Kweebec Portal",
+    "Name": "Save The Kweebecs Portal",
     "Description": "server.items.Forgotten_Temple_Portal_Exit.description"
   },
   "Icon": "Icons/ItemsGenerated/Portal_Return.png",
@@ -53,7 +53,7 @@
       "Portal"
     ]
   },
-  "Quality": "Technical",
+  "Quality": "Epic",
   "IconProperties": {
     "Scale": 0.35,
     "Rotation": [

@@ -4,7 +4,7 @@
   },
   "Icon": "Icons/ItemsGenerated/ice_smoke.png",
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
-  "Quality": "Uncommon",
+  "Quality": "Developer",
   "Categories": [
     "Slay_The_Tower.Weapons"
   ],

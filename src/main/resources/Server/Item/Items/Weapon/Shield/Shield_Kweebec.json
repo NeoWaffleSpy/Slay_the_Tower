@@ -9,7 +9,7 @@
   "Model": "Items/Weapons/Shield_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Shield_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Shield_Kweebec.png",
-  "Quality": "Common",
+  "Quality": "Technical",
   "ItemLevel": 40,
   "Scale": 1.1,
   "IconProperties": {

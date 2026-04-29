@@ -9,7 +9,7 @@
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Sword_Riven",
   "Reticle": "DefaultMelee",
-  "Quality": "Legendary",
+  "Quality": "Developer",
   "ItemLevel": 15,
   "Interactions": {
     "SwapTo": "Root_Greatsword_Riven_Ability"

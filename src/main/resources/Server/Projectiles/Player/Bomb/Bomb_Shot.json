@@ -24,20 +24,17 @@
   "ExplosionConfig": {
     "DamageEntities": true,
     "DamageBlocks": false,
-    "BlockDamageRadius": 10,
+    "BlockDamageRadius": 15,
     "EntityDamageRadius": 6,
     "EntityDamageFalloff": 0,
     "Knockback": {
-      "Type": "Point",
+      "Type": "Directional",
+      "VelocityY": 7,
+      "Force": -15,
+      "Duration": 0.1,
       "VelocityConfig": {
-        "AirResistance": 0.97,
-        "AirResistanceMax": 0.96,
-        "GroundResistance": 0.94,
-        "GroundResistanceMax": 0.3,
-        "Threshold": 3.0
-      },
-      "Force": 5,
-      "VelocityType": "Set"
+        "Style": "Exp"
+      }
     },
     "EntityDamage": 25
   },

@@ -6,7 +6,7 @@
   "Model": "Items/Weapons/Sword_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Sword_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Sword_Kweebec.png",
-  "Quality": "Common",
+  "Quality": "Technical",
   "ItemLevel": 45,
   "IconProperties": {
     "Scale": 0.43,

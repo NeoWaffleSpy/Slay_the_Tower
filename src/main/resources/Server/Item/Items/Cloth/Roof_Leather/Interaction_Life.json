@@ -59,5 +59,6 @@
       "Roof"
     ]
   },
-  "ItemSoundSetId": "ISS_Items_Cloth"
+  "ItemSoundSetId": "ISS_Items_Cloth",
+  "Quality": "Developer"
 }

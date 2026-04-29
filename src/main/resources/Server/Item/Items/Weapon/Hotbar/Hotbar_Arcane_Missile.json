@@ -3,7 +3,7 @@
     "Name": "server.items.Weapon_Staff_Wizard.name"
   },
   "Icon": "Icons/ItemsGenerated/Weapon_Staff_Wizard.png",
-  "Quality": "Common",
+  "Quality": "Developer",
   "PlayerAnimationsId": "Staff",
   "Interactions": {
     "SwapTo": "Root_Arcane_Missile",

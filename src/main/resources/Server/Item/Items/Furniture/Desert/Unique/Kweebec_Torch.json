@@ -178,5 +178,6 @@
       "Desert"
     ]
   },
-  "ItemSoundSetId": "ISS_Blocks_Wood"
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Developer"
 }

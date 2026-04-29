@@ -11,7 +11,7 @@
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Sword_Riven",
   "Reticle": "DefaultMelee",
-  "Quality": "Template",
+  "Quality": "Developer",
   "ItemLevel": 15,
   "Interactions": {
     "Primary": "Root_Weapon_Battleaxe_Primary",

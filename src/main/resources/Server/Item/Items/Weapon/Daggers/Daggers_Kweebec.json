@@ -7,7 +7,7 @@
   "Model": "Items/Weapons/Daggers_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Daggers_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Daggers_Kweebec.png",
-  "Quality": "Uncommon",
+  "Quality": "Technical",
   "ItemLevel": 20,
   "Recipe": {
     "TimeSeconds": 3.5,

@@ -20,5 +20,6 @@
     },
     "CubeShadingMode": "Fullbright",
     "VariantRotation": "NESW"
-  }
+  },
+  "Quality": "Developer"
 }

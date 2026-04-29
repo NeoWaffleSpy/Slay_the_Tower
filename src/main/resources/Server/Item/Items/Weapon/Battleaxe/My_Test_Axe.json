@@ -7,7 +7,7 @@
   "Model": "Items/Weapons/Battleaxe/Adamantite.blockymodel",
   "Texture": "Items/Weapons/Battleaxe/Adamantite_Texture.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Battleaxe_Adamantite.png",
-  "Quality": "Rare",
+  "Quality": "Developer",
   "ItemLevel": 40,
   "Recipe": {
     "TimeSeconds": 4.5,

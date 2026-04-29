@@ -9,7 +9,7 @@
   "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
   "PlayerAnimationsId": "Axe",
   "Reticle": "DefaultMelee",
-  "Quality": "Common",
+  "Quality": "Developer",
   "Interactions": {
     "SwapTo": "Root_Lacerate"
   },

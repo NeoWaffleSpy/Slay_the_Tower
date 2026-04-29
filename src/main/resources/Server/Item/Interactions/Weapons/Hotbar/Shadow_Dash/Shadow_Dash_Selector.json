@@ -37,7 +37,7 @@
   "CancelOnItemChange": false,
   "Selector": {
     "Id": "AOECircle",
-    "Range": 3
+    "Range": 3.5
   },
   "RunTime": 0.2
 }

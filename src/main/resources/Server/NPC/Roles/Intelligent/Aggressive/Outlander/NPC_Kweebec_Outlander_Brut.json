@@ -28,10 +28,10 @@
       "Outlander"
     ],
     "AttitudeGroup": "Outlander",
-    "MaxSpeed": 5,
+    "MaxSpeed": 6.5,
     "RelativeChaseSpeed": 0.4,
     "IdleMotionComponent": "$Null",
-    "MaxHealth": 124,
+    "MaxHealth": 135,
     "IsMemory": true,
     "MemoriesCategory": "Outlander",
     "_InteractionVars": {

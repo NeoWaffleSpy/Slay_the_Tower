@@ -106,7 +106,18 @@
       "shapeUvOffset": []
     },
     "bone6": {
-      "position": [],
+      "position": [
+        {
+          "time": 0,
+          "delta": {"x": 0, "y": 0, "z": 0},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 35,
+          "delta": {"x": 0, "y": 0, "z": -7},
+          "interpolationType": "linear"
+        }
+      ],
       "orientation": [
         {
           "time": 0,

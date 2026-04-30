@@ -6,7 +6,7 @@
   "Gravity": 2,
   "ImpactSlowdown": 0.05,
   "TimeToLive": 1,
-  "Damage": 15,
+  "Damage": 35,
   "DeathEffectsOnHit": true,
   "DeadTime": 0.01,
   "HitParticles": {
@@ -24,9 +24,9 @@
   "ExplosionConfig": {
     "DamageEntities": true,
     "DamageBlocks": false,
-    "BlockDamageRadius": 3,
+    "BlockDamageRadius": 0,
     "EntityDamageRadius": 5,
-    "EntityDamage": 15,
+    "EntityDamage": 0,
     "Knockback": {
       "Force": -10,
       "VelocityY": 5,
@@ -34,7 +34,9 @@
       "VelocityConfig": {
         "Style": "Exp"
       }
-    }
+    },
+    "BlockDamageFalloff": 0,
+    "BlockDropChance": 0
   },
   "DeadTimeMiss": 0.01,
   "DeathSoundEventId": "SFX_Staff_Flame_Fireball_Launch",

@@ -71,7 +71,7 @@
     "DragCoefficient": 100
   },
   "Light": {
-    "Color": "#f0b",
-    "Radius": 15
+    "Color": "#d0f",
+    "Radius": 10
   }
 }

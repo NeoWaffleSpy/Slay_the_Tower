@@ -3,12 +3,12 @@
   "Parent": "DamageEntityParent",
   "DamageCalculator": {
     "BaseDamage": {
-      "Physical": 15
+      "Physical": 35
     }
   },
   "DamageEffects": {
     "Knockback": {
-      "Force": -15,
+      "Force": -17,
       "RelativeX": 0,
       "VelocityY": 3.5,
       "VelocityType": "Add",

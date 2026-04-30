@@ -1,7 +1,7 @@
 {
   "Parent": "Template_Weapon_Sword",
   "TranslationProperties": {
-    "Name": "server.items.Weapon_Sword_Silversteel.name"
+    "Name": "Kweebec Sword"
   },
   "Model": "Items/Weapons/Sword_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Sword_Kweebec_Texture.png",

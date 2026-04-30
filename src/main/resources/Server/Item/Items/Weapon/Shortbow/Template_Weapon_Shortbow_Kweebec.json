@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Template_Weapon_Shortbow.name"
+    "Name": "proute"
   },
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
@@ -51,20 +51,6 @@
     }
   },
   "InteractionVars": {
-    "Primary_Shoot_Charge": {
-      "Interactions": [
-        {
-          "$Comment": "Charging up a standard primary shot",
-          "Parent": "Weapon_Shortbow_Primary_Shoot_Charge",
-          "Effects": {
-            "ClearSoundEventOnFinish": true,
-            "WorldSoundEventId": "SFX_Bow_T2_Draw",
-            "LocalSoundEventId": "SFX_Bow_T2_Draw_Local"
-          },
-          "HorizontalSpeedMultiplier": 0.667
-        }
-      ]
-    },
     "Primary_Shoot_Strength_0": {
       "Interactions": [
         {

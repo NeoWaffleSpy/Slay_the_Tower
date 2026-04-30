@@ -55,6 +55,6 @@ public class PlayerDeathSystem extends RefChangeSystem<EntityStore, DeathCompone
     @Override
     public void onComponentRemoved(@NonNull Ref<EntityStore> ref, @NonNull DeathComponent death, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer) {
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        playerRef.sendMessage(Message.raw("you have respanwed"));
+        playerRef.sendMessage(Message.raw("Your journey continues"));
     }
 }

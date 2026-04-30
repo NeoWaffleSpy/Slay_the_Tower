@@ -18,7 +18,7 @@
         "Texture": "Blocks/_Debug/TextureEmpty.png"
       }
     ],
-    "HitboxType": "Pad_Portal",
+    "HitboxType": "Door",
     "BlockParticleSetId": "Stone",
     "BlockSoundSetId": "Stone",
     "VariantRotation": "NESW",
@@ -44,8 +44,10 @@
       }
     },
     "Light": {
-      "Color": "#f77"
-    }
+      "Color": "#0ef",
+      "Radius": 1
+    },
+    "InteractionHitboxType": "Door"
   },
   "PlayerAnimationsId": "Block",
   "Tags": {

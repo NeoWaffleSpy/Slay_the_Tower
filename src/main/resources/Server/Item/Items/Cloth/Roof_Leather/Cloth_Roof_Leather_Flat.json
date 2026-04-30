@@ -17,7 +17,7 @@
       }
     ],
     "Group": "Roof",
-    "HitboxType": "Block_Flat",
+    "HitboxType": "Plant_Seed",
     "VariantRotation": "UpDown",
     "Flags": {},
     "Gathering": {
@@ -30,7 +30,8 @@
     "Supporting": {},
     "BlockSoundSetId": "Cloth",
     "RandomRotation": "YawStep90",
-    "ParticleColor": "#75402c"
+    "ParticleColor": "#75402c",
+    "Opacity": "Solid"
   },
   "PlayerAnimationsId": "Block",
   "IconProperties": {

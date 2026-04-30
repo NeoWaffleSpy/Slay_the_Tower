@@ -9,7 +9,7 @@
     "Var": "Primary_Shoot_Charge",
     "DefaultValue": {
       "Interactions": [
-        "Weapon_Shortbow_Primary_Shoot_Charge"
+        "Kweebec_Bow_Primary_Shoot_Charge"
       ]
     }
   }

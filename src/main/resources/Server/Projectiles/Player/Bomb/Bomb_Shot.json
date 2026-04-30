@@ -29,8 +29,8 @@
     "EntityDamageFalloff": 0,
     "Knockback": {
       "Type": "Directional",
-      "VelocityY": 7,
-      "Force": -15,
+      "VelocityY": 5,
+      "Force": -10,
       "Duration": 0.1,
       "VelocityConfig": {
         "Style": "Exp"

@@ -9,7 +9,7 @@
     "MaxSpeed": 10,
     "Attack": "Root_NPC_Attack_Melee",
     "AlwaysSleepAtNight": false,
-    "MaxHealth": 283,
+    "MaxHealth": 250,
     "IsMemory": true,
     "MemoriesCategory": "Undead",
     "_InteractionVars": {

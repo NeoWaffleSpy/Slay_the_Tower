@@ -3,11 +3,11 @@
   "SticksVertically": true,
   "MuzzleVelocity": 25,
   "TerminalVelocity": 35,
-  "Gravity": 25,
+  "Gravity": 35,
   "Bounciness": 0,
-  "ImpactSlowdown": 1,
+  "ImpactSlowdown": 0.5,
   "TimeToLive": 1,
-  "Damage": 35,
+  "Damage": 30,
   "DeathEffectsOnHit": true,
   "DeadTime": 0.01,
   "HitParticles": {
@@ -37,7 +37,7 @@
     }
   },
   "DeadTimeMiss": 0.01,
-  "DeathSoundEventId": "SFX_Staff_Flame_Fireball_Launch",
+  "DeathSoundEventId": "SFX_Eye_Void_Attack_Blast",
   "DeathParticles": {
     "SystemId": "Explosion_Medium",
     "Color": "#ff00ff"

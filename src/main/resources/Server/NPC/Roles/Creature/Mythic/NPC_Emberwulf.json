@@ -4,7 +4,7 @@
   "Modify": {
     "Appearance": "Kweebec_Emberwulf_Model",
     "AttitudeGroup": "PredatorsBig",
-    "MaxHealth": 193,
+    "MaxHealth": 210,
     "MaxSpeed": 8,
     "WanderRadius": 15,
     "ViewRange": 10,

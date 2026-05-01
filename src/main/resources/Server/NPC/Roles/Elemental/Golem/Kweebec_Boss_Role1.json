@@ -10,7 +10,7 @@
     "Appearance": "Kweebec_Boss1",
     "WanderRadius": 5,
     "ViewRange": 10,
-    "HearingRange": 5,
+    "HearingRange": 8,
     "CombatBackOffAfterAttack": false,
     "Weapons": [],
     "UseCombatActionEvaluator": true,

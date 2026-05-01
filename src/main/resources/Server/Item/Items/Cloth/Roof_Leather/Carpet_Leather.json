@@ -1,0 +1,73 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Grass_Lush.name"
+  },
+  "Icon": "Icons/ItemsGenerated/Carpet_Leather.png",
+  "Categories": [
+    "Blocks.Plants"
+  ],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "DrawType": "Model",
+    "CustomModel": "Blocks/Structures/Roofs/Cloth_Roof_Horizontal.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Structures/Roofs/Cloth_Roof_Textures/Tent_Hide.png",
+        "Weight": 1
+      }
+    ],
+    "PlacementSettings": {
+      "AllowBreakReplace": true
+    },
+    "Opacity": "Transparent",
+    "HitboxType": "Plant_Small",
+    "Gathering": {
+      "Tools": [
+        {
+          "Type": "Shears"
+        }
+      ],
+      "Soft": {
+        "DropList": "Empty"
+      },
+      "UseDefaultDropWhenPlaced": true
+    },
+    "Support": {
+      "Down": [
+        {
+          "TagId": "Type=Soil",
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "RandomRotation": "YawStep90",
+    "BlockParticleSetId": "Grass",
+    "BlockSoundSetId": "Plant"
+  },
+  "PlayerAnimationsId": "Item",
+  "Tags": {
+    "Type": [
+      "Plant"
+    ],
+    "Family": [
+      "Grass"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Items_Foliage",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  },
+  "Quality": "Developer"
+}

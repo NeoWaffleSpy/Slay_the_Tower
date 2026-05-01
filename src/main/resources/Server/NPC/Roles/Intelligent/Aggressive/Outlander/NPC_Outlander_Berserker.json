@@ -7,7 +7,7 @@
       "Weapon_Axe_Doomed",
       "Weapon_Axe_Doomed"
     ],
-    "ViewSector": 180,
+    "ViewSector": 200,
     "HearingRange": 8,
     "AttackSequence": "Component_Instruction_Attack_Sequence_Outlander_Berserker",
     "TargetGroups": [

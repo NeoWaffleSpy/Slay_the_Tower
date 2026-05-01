@@ -3,18 +3,18 @@
   "Texture": "Items/Projectiles/Projectile_default.png",
   "HitBox": {
     "Max": {
-      "X": 0.1,
-      "Y": 0.1,
-      "Z": 0.1
+      "X": 1,
+      "Y": 1,
+      "Z": 1
     },
     "Min": {
-      "X": -0.1,
-      "Y": -0.1,
-      "Z": -0.1
+      "X": -1,
+      "Y": -1,
+      "Z": -1
     }
   },
-  "MinScale": 1.2,
-  "MaxScale": 1.4,
+  "MinScale": 1.5,
+  "MaxScale": 1.5,
   "AnimationSets": {
     "Idle": {
       "Animations": [
@@ -47,7 +47,7 @@
     }
   ],
   "Light": {
-    "Radius": 1,
-    "Color": "#95f"
+    "Radius": 2,
+    "Color": "#d0f"
   }
 }

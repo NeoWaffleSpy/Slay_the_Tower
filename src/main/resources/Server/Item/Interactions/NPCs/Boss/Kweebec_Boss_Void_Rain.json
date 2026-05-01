@@ -3,18 +3,18 @@
   "RunTime": 0.2,
   "Next": {
     "Type": "Repeat",
-    "Repeat": 5,
+    "Repeat": 10,
     "ForkInteractions": {
       "Interactions": [
         {
           "Type": "ProjectileRainInteraction",
           "ProjectileId": "Kweebec_Boss_Projectile_Assault_Projectile2",
-          "Projectile Count": 50,
+          "Projectile Count": 25,
           "Angle Offset": 0.8,
           "HorizontalSpeedMultiplier": 1,
           "RunTime": 0.5,
           "Minimum Angle Offset": 1,
-          "Maximum Angle Offset": 2
+          "Maximum Angle Offset": 1.45
         }
       ]
     },

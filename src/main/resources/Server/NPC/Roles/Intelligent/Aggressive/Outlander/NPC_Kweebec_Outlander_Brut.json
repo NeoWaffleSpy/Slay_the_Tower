@@ -6,7 +6,7 @@
     "Weapons": [
       "Weapon_Battleaxe_Doomed"
     ],
-    "ViewSector": 180,
+    "ViewSector": 200,
     "HearingRange": 8,
     "CombatRelativeTurnSpeed": 0.25,
     "AttackSequence": "Component_Instruction_Attack_Sequence_Outlander_Brute",

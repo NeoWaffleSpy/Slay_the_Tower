@@ -3,7 +3,7 @@
   "Reference": "Template_Trork_Mage",
   "Modify": {
     "HearingRange": 8,
-    "ViewSector": 180,
+    "ViewSector": 200,
     "Weapons": [
       "Weapon_Staff_Doomed",
       "Weapon_Staff_Doomed"

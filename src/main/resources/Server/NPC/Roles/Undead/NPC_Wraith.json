@@ -2,7 +2,7 @@
   "Type": "Variant",
   "Reference": "Template_Intelligent",
   "Modify": {
-    "MaxHealth": 193,
+    "MaxHealth": 200,
     "HearingRange": 8,
     "WakingPeriod": [
       0,

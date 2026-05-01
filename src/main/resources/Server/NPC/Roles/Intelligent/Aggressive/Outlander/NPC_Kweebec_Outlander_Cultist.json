@@ -3,7 +3,7 @@
   "Reference": "Template_Trork_Hybrid",
   "Modify": {
     "HearingRange": 8,
-    "ViewSector": 180,
+    "ViewSector": 200,
     "Weapons": [
       "Weapon_Daggers_Doomed",
       "Weapon_Daggers_Doomed"

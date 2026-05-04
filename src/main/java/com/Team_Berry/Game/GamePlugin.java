@@ -44,7 +44,7 @@ public class GamePlugin extends JavaPlugin {
     public static GamePlugin instance;
     private static ComponentType<EntityStore, QuestNPCComponent> questNPCComponentType;
     private final Map<World, GameManager> gameManagers = new HashMap<>();
-    private final Map<java.util.UUID, com.Team_Berry.Game.Utils.PlayerInventory> savedInventories = new java.util.concurrent.ConcurrentHashMap<>();
+    private final Map<java.util.UUID, PlayerInventory> savedInventories = new java.util.concurrent.ConcurrentHashMap<>();
     private SkillMilestoneCodec cachedMilestoneData;
     private PacketFilter inboundDropFilter;
 
@@ -140,7 +140,6 @@ public class GamePlugin extends JavaPlugin {
             }, 1, java.util.concurrent.TimeUnit.SECONDS);
         }
     }
-
     private void onPlayerReady(PlayerReadyEvent event) {
         Ref<EntityStore> ref = event.getPlayerRef();
         Store<EntityStore> store = ref.getStore();
@@ -158,16 +157,11 @@ public class GamePlugin extends JavaPlugin {
         if (worldName.contains("SlayTheTower")) {
 
             if (!savedInventories.containsKey(playerRef.getUuid())) {
-
                 savedInventories.put(playerRef.getUuid(), PlayerInventory.fromPlayer(ref, store));
                 PlayerInventory.clearPlayerInventory(ref, store);
                 LOGGER.atInfo().log("Saved inventory to bank and cleared for new run: " + playerRef.getUsername());
-
             } else {
-
-                resetPlayerModel(ref, store);
-                LOGGER.atInfo().log("Player reconnected mid-run, keeping current SlayTheTower inventory: " + playerRef.getUsername());
-
+                LOGGER.atInfo().log("Player reconnected mid-run, keeping current SlayTheTower inventory & model: " + playerRef.getUsername());
             }
 
             GameManager manager = gameManagers.get(currentWorld);
@@ -176,9 +170,9 @@ public class GamePlugin extends JavaPlugin {
             }
 
         } else {
+            resetPlayerModel(ref, store);
 
-
-            com.Team_Berry.Game.Utils.PlayerInventory inv = savedInventories.remove(playerRef.getUuid());
+            PlayerInventory inv = savedInventories.remove(playerRef.getUuid());
             if (inv != null) {
                 inv.applyToPlayer(ref, store);
                 LOGGER.atInfo().log("Restored inventory from bank for " + playerRef.getUsername());
@@ -227,7 +221,7 @@ public class GamePlugin extends JavaPlugin {
 
     public void restorePlayerInventory(PlayerRef playerRef) {
         playerRef.getReference().getStore().getExternalData().getWorld().execute(() -> {
-            com.Team_Berry.Game.Utils.PlayerInventory inv = savedInventories.remove(playerRef.getUuid());
+            PlayerInventory inv = savedInventories.remove(playerRef.getUuid());
             if (inv != null) {
                 Ref<EntityStore> ref = playerRef.getReference();
                 if (ref != null && ref.isValid()) {
@@ -247,7 +241,7 @@ public class GamePlugin extends JavaPlugin {
                         CosmeticsModule.get().createModel(skinComponent.getPlayerSkin());
 
                 store.putComponent(ref, ModelComponent.getComponentType(),
-                        new com.hypixel.hytale.server.core.modules.entity.component.ModelComponent(newModel));
+                        new ModelComponent(newModel));
 
                 skinComponent.setNetworkOutdated();
 

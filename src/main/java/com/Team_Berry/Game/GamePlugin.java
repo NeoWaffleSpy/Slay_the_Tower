@@ -159,8 +159,8 @@ public class GamePlugin extends JavaPlugin {
 
             if (!savedInventories.containsKey(playerRef.getUuid())) {
 
-                savedInventories.put(playerRef.getUuid(), com.Team_Berry.Game.Utils.PlayerInventory.fromPlayer(ref, store));
-                com.Team_Berry.Game.Utils.PlayerInventory.clearPlayerInventory(ref, store);
+                savedInventories.put(playerRef.getUuid(), PlayerInventory.fromPlayer(ref, store));
+                PlayerInventory.clearPlayerInventory(ref, store);
                 LOGGER.atInfo().log("Saved inventory to bank and cleared for new run: " + playerRef.getUsername());
 
             } else {

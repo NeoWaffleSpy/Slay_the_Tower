@@ -343,7 +343,7 @@ public class GameManager {
             Store<EntityStore> store = ref.getStore();
             EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
 
-            teleportPlayerToSpawn(playerRef);
+            //teleportPlayerToSpawn(playerRef);
             forceSurvivalMode(playerRef);
             applyRandomStartingModel(playerRef);
         }

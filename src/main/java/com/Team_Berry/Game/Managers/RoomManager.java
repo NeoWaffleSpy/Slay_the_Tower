@@ -1,15 +1,15 @@
 package com.Team_Berry.Game.Managers;
 
 import com.Team_Berry.Game.GamePlugin;
-import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
+import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.server.core.universe.world.World;
+import it.unimi.dsi.fastutil.Pair;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -20,139 +20,59 @@ public class RoomManager {
     private final RoomCodec postgameRoom;
     private final RoomCodec prisonSpawnRoom;
 
+    private Pair<RoomCodec, Quest> currentRoom;
+    private Pair<RoomCodec, Quest> futureRoom;
+
     public RoomManager(World world) {
         this.world = world;
-        this.lobbyRoom = findLobbyRoom();
-        this.postgameRoom = findPostgameRoom();
-        this.prisonSpawnRoom = findPrisonSpawnRoom();
+        this.lobbyRoom = findRoomByCategory("Lobby");
+        this.postgameRoom = findRoomByCategory("Postgame");
+        this.prisonSpawnRoom = findRoomByCategory("Prisonspawn");
     }
 
     private void log(String message) {
         GamePlugin.LOGGER.atInfo().log(String.format("[SLAY THE TOWER] - [%s] - %s", world.getName(), message));
     }
 
-    public RoomCodec getLobbyRoom() {
-        return lobbyRoom;
+    public Pair<RoomCodec, Quest> getCurrentRoom() { return currentRoom; }
+    public Pair<RoomCodec, Quest> getFutureRoom() { return futureRoom; }
+    public void setCurrentRoom(Pair<RoomCodec, Quest> room) { this.currentRoom = room; }
+    public void setFutureRoom(Pair<RoomCodec, Quest> room) { this.futureRoom = room; }
+
+    public void shiftRooms() {
+        this.currentRoom = this.futureRoom;
+        this.futureRoom = null;
     }
 
-    public RoomCodec getPostgameRoom() {
-        return postgameRoom;
-    }
+    public RoomCodec getLobbyRoom() { return lobbyRoom; }
+    public RoomCodec getPostgameRoom() { return postgameRoom; }
+    public RoomCodec getPrisonSpawnRoom() { return prisonSpawnRoom; }
 
-    public RoomCodec getPrisonSpawnRoom() {
-        return prisonSpawnRoom;
-    }
-
-    public List<RoomCodec> findValidRooms() {
+    public RoomCodec findRoomByCategory(String category) {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Room");
+        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=" + category);
         Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
 
-        if (roomKeys == null || roomKeys.isEmpty()) return Collections.emptyList();
+        if (roomKeys == null || roomKeys.isEmpty()) {
+            log("SEVERE: No room found with tag 'Category=" + category + "'.");
+            return null;
+        }
 
         List<RoomCodec> validRooms = new ArrayList<>();
         for (String key : roomKeys) {
             RoomCodec room = roomMap.getAsset(key);
-            if (RoomTeleporter.canTeleportToRoom(room)) {
+
+            // If it's a standard room, we must check if we can teleport to it
+            if (category.equals("Room")) {
+                if (RoomTeleporter.canTeleportToRoom(room)) {
+                    validRooms.add(room);
+                }
+            } else {
                 validRooms.add(room);
             }
         }
-        return validRooms;
-    }
 
-    public List<MobGroupCodec> findValidMobGroups(int difficulty) {
-        DefaultAssetMap<String, MobGroupCodec> map = MobGroupCodec.getAssetMap();
-        String tagSearch = "Difficulty=" + difficulty;
-        log("Looking for Mob Groups with tag: " + tagSearch);
-        int tagIndex = AssetRegistry.getOrCreateTagIndex(tagSearch);
-        Set<String> groupKeys = map.getKeysForTag(tagIndex);
-
-        if (groupKeys == null || groupKeys.isEmpty()) return null;
-
-        List<MobGroupCodec> validGroups = new ArrayList<>();
-        for (String key : groupKeys) {
-            MobGroupCodec group = map.getAsset(key);
-            if (group != null) {
-                validGroups.add(group);
-                log("Pulled group: " + key);
-            }
-        }
-        return validGroups.isEmpty() ? null : validGroups;
-    }
-
-    private RoomCodec findLobbyRoom() {
-        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Lobby");
-        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
-
-        if (roomKeys == null || roomKeys.isEmpty()) return null;
-
-        List<String> keyList = new ArrayList<>(roomKeys);
-        String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
-
-        return roomMap.getAsset(randomKey);
-    }
-
-    private RoomCodec findPostgameRoom() {
-        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Postgame");
-        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
-
-        if (roomKeys == null || roomKeys.isEmpty()) {
-            log("Warning: No Postgame room found with tag 'Category=Postgame'.");
-            return null;
-        }
-
-        List<String> keyList = new ArrayList<>(roomKeys);
-        String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
-
-        return roomMap.getAsset(randomKey);
-    }
-
-    private RoomCodec findPrisonSpawnRoom() {
-        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Prisonspawn");
-        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
-
-        if (roomKeys == null || roomKeys.isEmpty()) {
-            log("Warning: No Prisonspawn room found with tag 'Category=Prisonspawn'.");
-            return null;
-        }
-
-        List<String> keyList = new ArrayList<>(roomKeys);
-        String randomKey = keyList.get(ThreadLocalRandom.current().nextInt(keyList.size()));
-
-        return roomMap.getAsset(randomKey);
-    }
-
-    public RoomCodec findBossRoom() {
-        DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=Boss");
-        Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
-
-        if (roomKeys == null || roomKeys.isEmpty()) {
-            log("SEVERE: No Boss room found with tag 'Category=Boss'.");
-            return null;
-        }
-
-        List<String> keyList = new ArrayList<>(roomKeys);
-        return roomMap.getAsset(keyList.get(ThreadLocalRandom.current().nextInt(keyList.size())));
-    }
-
-    public List<MobGroupCodec> findBossMobGroups() {
-        DefaultAssetMap<String, MobGroupCodec> map = MobGroupCodec.getAssetMap();
-        int tagIndex = AssetRegistry.getOrCreateTagIndex("Difficulty=Boss");
-        Set<String> groupKeys = map.getKeysForTag(tagIndex);
-
-        if (groupKeys == null || groupKeys.isEmpty()) {
-            log("SEVERE: No Boss mob groups found with tag 'Difficulty=Boss'.");
-            return null;
-        }
-
-        List<MobGroupCodec> validGroups = new ArrayList<>();
-        for (String key : groupKeys) {
-            validGroups.add(map.getAsset(key));
-        }
-        return validGroups;
+        if (validRooms.isEmpty()) return null;
+        return validRooms.get(ThreadLocalRandom.current().nextInt(validRooms.size()));
     }
 }

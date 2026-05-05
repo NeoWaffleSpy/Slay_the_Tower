@@ -18,7 +18,11 @@ import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import java.util.*;
 
 public class RewardManager {
+
     private final World world;
+
+    private static final String INVISIBLE_HP_ARTEFACT = "Invisible_Hp_Artefact";
+
     private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
     private final Map<UUID, String> playerClasses = new HashMap<>();
     private final Map<UUID, Set<String>> playerOwnedSkills = new HashMap<>();
@@ -192,20 +196,19 @@ public class RewardManager {
         log("Reset chest claim and pending histories for the new room.");
     }
 
-    public void grantStartingArtefact(PlayerRef playerRef, String invisibleHpArtefact) {
+    public void grantStartingArtefact(PlayerRef playerRef) {
         if (!playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
-            playerOwnedArtefacts.put(playerRef.getUuid(), new ArrayList<>(List.of(invisibleHpArtefact)));
+            playerOwnedArtefacts.put(playerRef.getUuid(), new ArrayList<>(List.of(INVISIBLE_HP_ARTEFACT)));
             log("Granted starting Invisible_Hp_Artefact to new participant: " + playerRef.getUsername());
         }
     }
 
-    public void restorePlayerArtefacts(PlayerRef playerRef, String invisibleHpArtefact) {
+    public void restorePlayerArtefacts(PlayerRef playerRef) {
         if (playerOwnedArtefacts.containsKey(playerRef.getUuid())) {
             StatEffectComponent statComp = StatEffectComponent.getPlayerStatComp(playerRef);
             if (statComp != null) {
-
                 DefaultAssetMap<String, ArtefactCodec> artefactMap = ArtefactCodec.getAssetMap();
-                statComp.addStackToArtifact(artefactMap.getAsset(invisibleHpArtefact), 0);
+                statComp.addStackToArtifact(artefactMap.getAsset(INVISIBLE_HP_ARTEFACT), 0);
                 List<String> savedArtefacts = playerOwnedArtefacts.get(playerRef.getUuid());
 
                 for (String artefactId : savedArtefacts) {

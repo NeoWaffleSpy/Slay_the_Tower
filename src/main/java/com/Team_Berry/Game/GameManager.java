@@ -2,10 +2,7 @@
 
 package com.Team_Berry.Game;
 
-import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.WeaponSelection;
-import com.Team_Berry.Game.Data.GameState;
 import com.Team_Berry.Game.Data.Quest;
 import com.Team_Berry.Game.Enums.EndStageResult;
 import com.Team_Berry.Game.Enums.QuestUpdate;
@@ -14,15 +11,13 @@ import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Codecs.SkillMilestoneCodec;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
-import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
-import com.hypixel.hytale.component.*;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollision;
-import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollisionConfig;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.WorldConfig;
@@ -35,68 +30,50 @@ import org.jspecify.annotations.Nullable;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class GameManager {
     private static final KeyedScheduler scheduler = new KeyedScheduler();
-    private static final String LOBBY_HEAL_ITEM = "Life";
-    private static final String invisibleHpArtefact = "Invisible_Hp_Artefact";
-    private static final String MOB_SEARCH_EFFECT = "Mob_Search_Effect";
     private static final int TELEPORT_DELAY = 7;
-    private final GameState gameState;
+
+    private final RunStateManager runStateManager;
     private final PlayerModelManager playerModelManager;
     private final WeatherManager weatherManager;
     private final RoomManager roomManager;
     private final RoomChestsManager roomChestsManager;
     private final TeleportManager teleportManager;
-    private final PlayerVisibilityManager playerVisibilityManager;
     private final RewardManager rewardManager;
     private final RoomMobManager roomMobManager;
     private final PlayerStateManager playerStateManager;
     private final ObjectiveManager objectiveManager;
     private final PartyManager partyManager;
-    private final Set<UUID> claimedLobbyHeal = new HashSet<>();
-    private final Set<UUID> currentRoomMobs = new HashSet<>();
-    private final Set<UUID> futureRoomMobs = new HashSet<>();
-    private boolean isBossStage = false;
+
     private final World world;
-    private UUID currentRoomObjectiveId = null;
-    private boolean pendingMilestoneTransition = false;
-    private boolean pendingSkillBroadcast = false;
-    private Pair<RoomCodec, Quest> currentRoom;
-    private Pair<RoomCodec, Quest> futureRoom;
-    private int globalMaxSkills = 1;
-    private boolean statueSpawn = false;
-    private boolean searchEffectApplied = false;
-    private boolean runEnded = false;
 
     public GameManager(World world, SkillMilestoneCodec milestoneData) {
         this.world = world;
-        this.gameState = new GameState();
-        this.gameState.initialize(milestoneData);
+        this.runStateManager = new RunStateManager(world, milestoneData);
         this.playerModelManager = new PlayerModelManager(scheduler);
         this.weatherManager = new WeatherManager(world);
         this.roomManager = new RoomManager(world);
         this.roomChestsManager = new RoomChestsManager(world);
         this.teleportManager = new TeleportManager(world);
-        this.playerVisibilityManager = new PlayerVisibilityManager(world);
         this.rewardManager = new RewardManager(world);
         this.roomMobManager = new RoomMobManager(world);
         this.playerStateManager = new PlayerStateManager(world);
         this.objectiveManager = new ObjectiveManager(world);
-        this.partyManager = new PartyManager();
+        this.partyManager = new PartyManager(world);
         log("Manager initialized for world.");
     }
 
     public void setStatueSpawn() {
-        if (!statueSpawn) {
+        if (!runStateManager.isStatueSpawnSet()) {
             WorldConfig config = world.getWorldConfig();
             RoomCodec lobby = roomManager.getLobbyRoom();
             if (lobby != null && lobby.getFirstSpawnPosition() != null) {
                 Transform transform = new Transform(lobby.getFirstSpawnPosition());
                 config.setSpawnProvider(new GlobalSpawnProvider(transform));
                 config.markChanged();
-                statueSpawn = true;
+                runStateManager.setStatueSpawn(true);
                 log("Statue spawn set!");
             } else {
                 log("Could not set statue spawn because there is no lobby or lobby SpawnPoint");
@@ -113,76 +90,79 @@ public class GameManager {
         log("Initializing Milestone buffer...");
         objectiveManager.cleanupLeftoverObjectives();
 
-        this.searchEffectApplied = false;
+        roomMobManager.resetSearchEffect();
 
-        if (!currentRoomMobs.isEmpty()) {
+        if (roomMobManager.hasCurrentMobs()) {
             log("Cleaning up leftover current room mobs...");
-            roomMobManager.cleanRoom(currentRoomMobs);
+            roomMobManager.cleanCurrentRoom();
         }
 
-        if (!futureRoomMobs.isEmpty()) {
+        if (roomMobManager.hasFutureMobs()) {
             log("Cleaning up old future room mobs before milestone initialization...");
-            roomMobManager.cleanRoom(futureRoomMobs);
+            roomMobManager.cleanFutureRoom();
         }
 
-        if (this.gameState.isRunComplete()) {
-            this.isBossStage = true;
-            this.currentRoom = prepareBossRoom(currentRoomMobs);
-            this.futureRoom = null;
-            log("Boss Buffer Ready. Current: " + (currentRoom != null ? currentRoom.left().worldName : "ERROR"));
+        if (runStateManager.isRunComplete()) {
+            runStateManager.setBossStage(true);
+        }
+
+        roomManager.setCurrentRoom(prepareRoom(null, true));
+
+        if (runStateManager.isBossStage()) {
+            roomManager.setFutureRoom(null);
+            log("Boss Buffer Ready. Current: " + (roomManager.getCurrentRoom() != null ? roomManager.getCurrentRoom().left().worldName : "ERROR"));
         } else {
-            this.currentRoom = prepareRoom(null, currentRoomMobs);
-            this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
+            roomManager.setFutureRoom(prepareRoom(roomManager.getCurrentRoom().left(), false));
             log(String.format("Buffer Ready. Current: %s | Future: %s",
-                    currentRoom.left().worldName, futureRoom.left().worldName));
+                    roomManager.getCurrentRoom().left().worldName, roomManager.getFutureRoom().left().worldName));
         }
     }
 
-    public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, Set<UUID> targetMobTracker) {
-        log("Preparing a new room...");
-        List<RoomCodec> validRooms = roomManager.findValidRooms();
+    public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, boolean isCurrentRoom) {
+        return generateRoomLogic(runStateManager.isBossStage(), isCurrentRoom);
+    }
 
-        if (exclude != null && validRooms.size() > 1) {
-            validRooms.removeIf(room -> room.equals(exclude));
-        }
+    private Pair<RoomCodec, Quest> generateRoomLogic(boolean isBoss, boolean isCurrentRoom) {
+        log(isBoss ? "Preparing the Final Boss Room..." : "Preparing a new regular room...");
 
-        if (validRooms.isEmpty()) {
-            log("FAILED: No valid rooms found in AssetMap.");
-            return null;
-        }
+        RoomCodec selectedRoom = roomManager.findRoomByCategory(isBoss ? "Boss" : "Room");
+        if (selectedRoom == null) return null;
 
-        RoomCodec selectedRoom = validRooms.get(ThreadLocalRandom.current().nextInt(validRooms.size()));
-        int difficulty = this.gameState.getCurrentMilestone().difficulty;
-        List<MobGroupCodec> mobGroups = roomManager.findValidMobGroups(difficulty);
+        int difficulty = runStateManager.getCurrentDifficulty();
+        List<MobGroupCodec> mobGroups = roomMobManager.findMobGroups(difficulty, isBoss);
         Quest quest;
 
         if (mobGroups != null && !mobGroups.isEmpty()) {
             MobGroupCodec selectedGroup = mobGroups.get(ThreadLocalRandom.current().nextInt(mobGroups.size()));
             quest = new Quest(selectedGroup.getTotalMobCount());
 
-            log(String.format("Room selected: %s. Spawning %d mobs (Difficulty: %d)",
-                    selectedRoom.worldName, quest.getSpawnedMobs(), difficulty));
+            log(String.format("Room selected: %s. Spawning %d mobs (Boss: %b)",
+                    selectedRoom.worldName, quest.getSpawnedMobs(), isBoss));
 
             world.execute(() -> {
                 List<UUID> spawnedMobs = roomMobManager.spawnMobGroup(selectedRoom, selectedGroup);
-                targetMobTracker.clear();
-                targetMobTracker.addAll(spawnedMobs);
-                log("Successfully registered " + spawnedMobs.size() + " mob UUIDs for room.");
+                if (isCurrentRoom) {
+                    roomMobManager.registerCurrentMobs(spawnedMobs);
+                } else {
+                    roomMobManager.registerFutureMobs(spawnedMobs);
+                }
+                log("Successfully registered " + spawnedMobs.size() + " UUIDs.");
             });
-            roomChestsManager.setupRoomChests(selectedRoom);
 
+            if (!isBoss) {
+                roomChestsManager.setupRoomChests(selectedRoom);
+            }
 
         } else {
             quest = new Quest(0);
-            log("Room selected: " + selectedRoom.worldName + " (Empty: No mob groups found).");
+            log("Room Error: " + selectedRoom.worldName + " (No mob groups found).");
         }
 
-        log("Room preparation complete.");
         return Pair.of(selectedRoom, quest);
     }
 
     public Pair<RoomCodec, Quest> getCurrentRoom() {
-        return this.currentRoom;
+        return roomManager.getCurrentRoom();
     }
 
     public void advanceToNextRoom() {
@@ -192,22 +172,20 @@ public class GameManager {
         scheduler.schedule("advance_room_" + world.getName(), () -> world.execute(() -> {
             log("Advancing tower. Shifting buffer...");
             partyManager.clearParticipantsInRoom();
-            roomMobManager.cleanRoom(currentRoomMobs);
+            roomMobManager.cleanCurrentRoom();
 
-            this.searchEffectApplied = false;
+            roomMobManager.resetSearchEffect();
 
-            this.currentRoom = this.futureRoom;
+            roomManager.shiftRooms();
 
-            this.currentRoomMobs.clear();
-            this.currentRoomMobs.addAll(this.futureRoomMobs);
-            this.futureRoomMobs.clear();
+            roomMobManager.shiftMobsToCurrent();
 
             rewardManager.resetClaimedChests();
 
             tpParticipantsToRoom();
 
-            this.futureRoom = prepareRoom(this.currentRoom.left(), futureRoomMobs);
-            log("Advance complete. Current Room is now: " + currentRoom.left().worldName);
+            roomManager.setFutureRoom(prepareRoom(roomManager.getCurrentRoom().left(), false));
+            log("Advance complete. Current Room is now: " + roomManager.getCurrentRoom().left().worldName);
         }), TELEPORT_DELAY, TimeUnit.SECONDS);
     }
 
@@ -230,8 +208,8 @@ public class GameManager {
             playerModelManager.applyRandomStartingModel(playerRef);
         }
 
-        rewardManager.grantStartingArtefact(playerRef, invisibleHpArtefact);
-        rewardManager.restorePlayerArtefacts(playerRef, invisibleHpArtefact);
+        rewardManager.grantStartingArtefact(playerRef);
+        rewardManager.restorePlayerArtefacts(playerRef);
 
 
         if (rewardManager.getPlayerSkillCount(playerRef) == 0) {
@@ -252,7 +230,7 @@ public class GameManager {
         log("Player left the party: " + playerRef.getUsername());
 
         playerModelManager.resetPlayerModel(playerRef);
-        objectiveManager.detachPlayerFromObjective(playerRef, currentRoomObjectiveId);
+        objectiveManager.detachPlayerFromObjective(playerRef);
         partyManager.removeParticipant(playerRef);
 
         if (!partyManager.getActiveParticipants().isEmpty() && partyManager.getPlayersReady().size() >= partyManager.getActiveParticipants().size()) {
@@ -266,7 +244,7 @@ public class GameManager {
     }
 
     public boolean canPlayerPickSkill(PlayerRef playerRef) {
-        return rewardManager.canPlayerPickSkill(playerRef, globalMaxSkills);
+        return rewardManager.canPlayerPickSkill(playerRef, runStateManager.getGlobalMaxSkills());
     }
 
     public Set<PlayerRef> getActiveParticipants() {
@@ -278,49 +256,30 @@ public class GameManager {
     }
 
     public void updateQuest(QuestUpdate questUpdate, @Nullable PlayerRef playerRef, @Nullable UUID deadMobId) {
-        if (currentRoom == null || currentRoom.right() == null) return;
-        Quest currentQuest = currentRoom.right();
+        if (questUpdate == QuestUpdate.PLAYER_DEATH && playerRef != null) {
+            log("Player Death event: " + playerRef.getUsername());
+            resolvePlayerDeath(playerRef);
+            return;
+        }
 
         if (questUpdate == QuestUpdate.MOB_DEATH && deadMobId != null) {
+            Quest currentQuest = roomManager.getCurrentRoom() != null ? roomManager.getCurrentRoom().right() : null;
+            Quest futureQuest = roomManager.getFutureRoom() != null ? roomManager.getFutureRoom().right() : null;
 
-            boolean isQuestMob = false;
+            if (roomMobManager.handleMobDeath(deadMobId, currentQuest, futureQuest)) {
+                objectiveManager.updateSharedRoomObjective(roomManager.getCurrentRoom());
+                roomMobManager.checkAndApplySearchEffect(currentQuest, partyManager.getActiveParticipants());
 
-            if (currentRoomMobs.remove(deadMobId)) {
-                currentQuest.incrementDeadMobs();
-                log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
-                isQuestMob = true;
-            } else if (futureRoom != null && futureRoom.right() != null && futureRoomMobs.remove(deadMobId)) {
-                futureRoom.right().incrementDeadMobs();
-                log("A Future Room Mob died prematurely! Lowered future quest requirements.");
-            }
-
-
-            if (isQuestMob) {
-
-                roomMobManager.validateRemainingMobs(currentRoomMobs, currentQuest);
-                objectiveManager.updateSharedRoomObjective(currentRoomObjectiveId, currentRoom);
-
-                if (!searchEffectApplied && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
-                    searchEffectApplied = true;
-                    broadcastMessage("The remaining monsters have been revealed!");
-                    roomMobManager.applyEffectToMobs(currentRoomMobs, MOB_SEARCH_EFFECT);
-                }
-
-                if (currentQuest.isComplete()) {
+                if (currentQuest != null && currentQuest.isComplete()) {
                     log("Room Quest successfully completed.");
                     endStage(EndStageResult.SUCCESS);
                 }
             }
-
-        } else if (questUpdate == QuestUpdate.PLAYER_DEATH && playerRef != null) {
-            log("Player Death event: " + playerRef.getUsername());
-            resolvePlayerDeath(playerRef);
         }
     }
 
     public void endStage(EndStageResult result) {
-        objectiveManager.completeSharedRoomObjective(currentRoomObjectiveId);
-        currentRoomObjectiveId = null;
+        objectiveManager.completeSharedRoomObjective();
         log("Triggering EndStage with result: " + result);
         if (result == EndStageResult.SUCCESS) {
             handleStageSuccess();
@@ -330,61 +289,36 @@ public class GameManager {
     }
 
     private void handleStageSuccess() {
-        objectiveManager.completeSharedRoomObjective(currentRoomObjectiveId);
-        currentRoomObjectiveId = null;
+        objectiveManager.completeSharedRoomObjective();
 
-        if (this.isBossStage) {
+        if (runStateManager.isBossStage()) {
             log("VICTORY! The Boss has been defeated.");
             handleRunVictory();
             return;
         }
 
-        SkillMilestoneCodec.MilestoneEntry oldMilestone = this.gameState.getCurrentMilestone();
-        this.gameState.incrementClearedStages();
-        SkillMilestoneCodec.MilestoneEntry newMilestone = this.gameState.getCurrentMilestone();
+        SkillMilestoneCodec.MilestoneEntry oldMilestone = runStateManager.getCurrentMilestone();
+        runStateManager.incrementClearedStages();
 
+        runStateManager.handleMilestoneProgression(oldMilestone);
         reviveDeadPlayers();
-
-        if (this.gameState.isRunComplete()) {
-            log("FINAL MILESTONE REACHED. Preparing for the Boss!");
-            this.pendingMilestoneTransition = true;
-
-            if (this.globalMaxSkills < 4) {
-                this.globalMaxSkills++;
-                this.pendingSkillBroadcast = true;
-                log("BOSS REACHED. Skill capacity increased to max (4).");
-            }
-        } else if (oldMilestone != newMilestone) {
-            this.pendingMilestoneTransition = true;
-
-            if (this.globalMaxSkills < 4) {
-                this.globalMaxSkills++;
-                this.pendingSkillBroadcast = true;
-                log("MILESTONE REACHED. Skill capacity increased to: " + globalMaxSkills);
-            } else {
-                log("MILESTONE REACHED. Skill capacity is already at max (4).");
-            }
-        } else {
-            this.pendingMilestoneTransition = false;
-        }
-
         completeRewardPhase();
     }
 
     private void handleRunVictory() {
         log("Ending successful run and ejecting players.");
         broadcastEventTitle("MISSION COMPLETE !", "You have saved the kweebecs !");
-        this.runEnded = true;
+        runStateManager.setRunEnded(true);
         tpParticipantsToPostgame();
     }
 
     public void grantSkillRewards(PlayerRef playerRef) {
-        rewardManager.grantSkillRewards(playerRef, globalMaxSkills);
+        rewardManager.grantSkillRewards(playerRef, runStateManager.getGlobalMaxSkills());
     }
 
     public void onPlayerClaimedSkillReward(PlayerRef playerRef, String claimedSkillId) {
         if (!partyManager.isParticipantActive(playerRef)) return;
-        rewardManager.onPlayerClaimedSkillReward(playerRef, claimedSkillId, globalMaxSkills, playerModelManager);
+        rewardManager.onPlayerClaimedSkillReward(playerRef, claimedSkillId, runStateManager.getGlobalMaxSkills(), playerModelManager);
     }
 
     public void onPlayerClaimedArtefactReward(PlayerRef playerRef, String artefactId) {
@@ -393,8 +327,8 @@ public class GameManager {
     }
 
     public void completeRewardPhase() {
-        log("Completing Reward Phase. Path: " + (pendingMilestoneTransition ? "Lobby" : "Next Room"));
-        if (pendingMilestoneTransition) {
+        log("Completing Reward Phase. Path: " + (runStateManager.hasPendingMilestoneTransition() ? "Lobby" : "Next Room"));
+        if (runStateManager.hasPendingMilestoneTransition()) {
             transitionToLobby();
         } else {
             advanceToNextRoom();
@@ -404,7 +338,7 @@ public class GameManager {
 
     public void startRoomFromLobby() {
         log("Request to start run from Lobby received.");
-        if (currentRoom == null) return;
+        if (roomManager.getCurrentRoom() == null) return;
 
         List<String> unpreparedPlayers = new ArrayList<>();
 
@@ -430,16 +364,15 @@ public class GameManager {
         weatherManager.setTransitionWeather();
 
         scheduler.schedule("tp_lobby_" + world.getName(), () -> world.execute(() -> {
-            objectiveManager.completeSharedRoomObjective(currentRoomObjectiveId);
-            currentRoomObjectiveId = null;
+            objectiveManager.completeSharedRoomObjective();
             partyManager.clearParticipantsInRoom();
-            roomMobManager.cleanRoom(currentRoomMobs);
-            roomMobManager.cleanRoom(futureRoomMobs);
+            roomMobManager.cleanCurrentRoom();
+            roomMobManager.cleanFutureRoom();
 
-            this.searchEffectApplied = false;
+            roomMobManager.resetSearchEffect();
             rewardManager.resetClaimedChests();
 
-            if (runEnded) {
+            if (runStateManager.isRunEnded()) {
                 log("Run has ended. Moving party to Postgame Room and queueing world destruction.");
                 tpParticipantsToPostgame();
 
@@ -447,14 +380,14 @@ public class GameManager {
                 log("Moving party to Lobby.");
                 tpParticipantsToLobby();
                 initializeMilestone();
-                this.pendingMilestoneTransition = false;
+                runStateManager.setPendingMilestoneTransition(false);
 
-                if (this.pendingSkillBroadcast) {
+                if (runStateManager.hasPendingSkillBroadcast()) {
                     broadcastEventTitle(
                             "MILESTONE REACHED",
-                            "Skill capacity increased to " + globalMaxSkills
+                            "Skill capacity increased to " + runStateManager.getGlobalMaxSkills()
                     );
-                    this.pendingSkillBroadcast = false;
+                    runStateManager.clearPendingSkillBroadcast();
                 }
             }
         }), TELEPORT_DELAY, TimeUnit.SECONDS);
@@ -462,12 +395,11 @@ public class GameManager {
 
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
-        objectiveManager.completeSharedRoomObjective(currentRoomObjectiveId);
-        currentRoomObjectiveId = null;
+        objectiveManager.completeSharedRoomObjective();
 
         broadcastEventTitle("DEFEATED", "The kweebecs still need you... Try again !");
 
-        this.runEnded = true;
+        runStateManager.setRunEnded(true);
         tpParticipantsToPostgame();
     }
 
@@ -498,7 +430,7 @@ public class GameManager {
     private void tpParticipantsToLobby() {
         RoomCodec lobby = roomManager.getLobbyRoom();
         if (lobby != null) {
-            claimedLobbyHeal.clear();
+            playerStateManager.clearLobbyHeals();
 
             world.execute(() -> {
                 for (PlayerRef participant : partyManager.getActiveParticipants()) {
@@ -513,12 +445,12 @@ public class GameManager {
     }
 
     private void tpParticipantsToRoom() {
-        if (currentRoom == null) return;
+        if (roomManager.getCurrentRoom() == null) return;
 
-        if (isBossStage) {
-            log(">>> TELEPORTING PARTICIPANTS TO FINAL BOSS ARENA: " + currentRoom.left().worldName + " <<<");
+        if (runStateManager.isBossStage()) {
+            log(">>> TELEPORTING PARTICIPANTS TO FINAL BOSS ARENA: " + roomManager.getCurrentRoom().left().worldName + " <<<");
         } else {
-            log("Teleporting participants to Room asset: " + currentRoom.left().worldName);
+            log("Teleporting participants to Room asset: " + roomManager.getCurrentRoom().left().worldName);
         }
 
         List<PlayerRef> playersToTeleport = new ArrayList<>();
@@ -530,21 +462,21 @@ public class GameManager {
         }
 
         if (!playersToTeleport.isEmpty()) {
-            currentRoomObjectiveId = objectiveManager.startSharedRoomObjective(partyManager.getActiveParticipants(), currentRoomObjectiveId);
+            objectiveManager.startSharedRoomObjective(partyManager.getActiveParticipants(), roomManager.getCurrentRoom());
 
-            if (isBossStage) {
+            if (runStateManager.isBossStage()) {
                 weatherManager.setBossWeather();
             } else {
                 weatherManager.setRandomRoomWeather();
             }
 
-            teleportManager.teleportParticipantsToRoom(playersToTeleport, currentRoom.left());
+            teleportManager.teleportParticipantsToRoom(playersToTeleport, roomManager.getCurrentRoom().left());
         }
 
         scheduler.schedule("late_cleanup_" + world.getName(), roomMobManager::processPendingCleanup, 1, TimeUnit.SECONDS);
 
-        if (isBossStage) {
-            scheduler.schedule("boss_hitbox_" + world.getName(), this::makeBossHitboxHard, 1, TimeUnit.SECONDS);
+        if (runStateManager.isBossStage()) {
+            scheduler.schedule("boss_hitbox_" + world.getName(), roomMobManager::makeBossHitboxHard, 1, TimeUnit.SECONDS);
         }
     }
 
@@ -559,14 +491,14 @@ public class GameManager {
                 endStage(EndStageResult.FAILURE);
             } else {
                 teleportToSpectatorPosition(playerRef);
-                playerVisibilityManager.hidePlayer(playerRef, partyManager.getActiveParticipants());
+                // partyManager.hidePlayer(playerRef);
             }
         }
     }
 
     private void reviveDeadPlayers() {
         if (partyManager.getDeadParticipants().isEmpty()) return;
-        playerVisibilityManager.showAllDeadPlayers(partyManager.getDeadParticipants(), partyManager.getActiveParticipants());
+        // partyManager.showAllDeadPlayers();
         log("Reviving " + partyManager.getDeadParticipants().size() + " dead participants.");
         partyManager.clearDeadParticipants();
     }
@@ -630,12 +562,12 @@ public class GameManager {
     }
 
     private void teleportToSpectatorPosition(PlayerRef playerRef) {
-        teleportManager.teleportToSpectatorPosition(playerRef, currentRoom != null ? currentRoom.left() : null);
+        teleportManager.teleportToSpectatorPosition(playerRef, roomManager.getCurrentRoom() != null ? roomManager.getCurrentRoom().left() : null);
     }
 
 
     private void tpParticipantsToPostgame() {
-        playerVisibilityManager.showAllDeadPlayers(partyManager.getDeadParticipants(), partyManager.getActiveParticipants());
+        //  partyManager.showAllDeadPlayers();
 
         world.execute(() -> {
             RoomCodec postgameRoom = roomManager.getPostgameRoom();
@@ -673,7 +605,7 @@ public class GameManager {
     public void onPlayerSelectedWeapon(PlayerRef playerRef, String weaponClassId) {
         if (!partyManager.isParticipantActive(playerRef)) return;
 
-        setPlayerClass(playerRef, weaponClassId);
+        rewardManager.setPlayerClass(playerRef, weaponClassId);
         playerRef.sendMessage(Message.raw("Weapon acquired!"));
         log(playerRef.getUsername() + " selected weapon: " + weaponClassId + ".");
 
@@ -691,93 +623,7 @@ public class GameManager {
 
     public void kweebecMerchantInteraction(PlayerRef playerRef) {
         if (!partyManager.isParticipantActive(playerRef)) return;
-
-        UUID playerId = playerRef.getUuid();
-
-        if (claimedLobbyHeal.contains(playerId)) {
-            playerRef.sendMessage(Message.raw("My supplies are exhausted! Come back later!"));
-            playerStateManager.healPlayerToFull(playerRef);
-            return;
-        }
-
-        world.execute(() -> {
-            Ref<EntityStore> ref = playerRef.getReference();
-            if (ref != null && ref.isValid()) {
-                Store<EntityStore> store = ref.getStore();
-                Player playerComponent = store.getComponent(ref, Player.getComponentType());
-
-                if (playerComponent != null) {
-                    claimedLobbyHeal.add(playerId);
-
-                    playerStateManager.healPlayerToFull(playerRef);
-
-                    com.hypixel.hytale.server.core.inventory.ItemStack stack =
-                            new com.hypixel.hytale.server.core.inventory.ItemStack(LOBBY_HEAL_ITEM, 3, null);
-
-                    playerComponent.giveItem(stack, ref, store);
-
-
-                    playerRef.sendMessage(Message.raw("Here take some of this! On the house."));
-                    log(playerRef.getUsername() + " claimed their lobby supplies.");
-                }
-            }
-        });
+        playerStateManager.kweebecMerchantInteraction(playerRef);
     }
 
-    public Pair<RoomCodec, Quest> prepareBossRoom(Set<UUID> targetMobTracker) {
-        log("Preparing the Final Boss Room...");
-        RoomCodec bossRoom = roomManager.findBossRoom();
-
-        if (bossRoom == null) return null;
-
-        List<MobGroupCodec> bossGroups = roomManager.findBossMobGroups();
-        Quest quest;
-
-        if (bossGroups != null && !bossGroups.isEmpty()) {
-            MobGroupCodec selectedGroup = bossGroups.get(ThreadLocalRandom.current().nextInt(bossGroups.size()));
-            quest = new Quest(selectedGroup.getTotalMobCount());
-
-            log(String.format("Boss Room selected: %s. Spawning %d BOSS mobs.", bossRoom.worldName, quest.getSpawnedMobs()));
-
-            world.execute(() -> {
-                List<UUID> spawnedMobs = roomMobManager.spawnMobGroup(bossRoom, selectedGroup);
-                targetMobTracker.clear();
-                targetMobTracker.addAll(spawnedMobs);
-                log("Successfully registered " + spawnedMobs.size() + " Boss UUIDs.");
-            });
-
-        } else {
-            quest = new Quest(0);
-            log("Boss Room selected: " + bossRoom.worldName + " (Error: No boss groups found).");
-        }
-
-        return Pair.of(bossRoom, quest);
-    }
-
-    private void makeBossHitboxHard() {
-        if (currentRoomMobs.isEmpty()) return;
-        UUID bossUuid = currentRoomMobs.iterator().next();
-
-        world.execute(() -> {
-            Store<EntityStore> store = world.getEntityStore().getStore();
-            Ref<EntityStore> bossRef = roomMobManager.getRefByUUID(store, bossUuid);
-
-            if (bossRef != null && bossRef.isValid()) {
-
-                HitboxCollisionConfig hardConfig = HitboxCollisionConfig.getAssetMap().getAsset("HardCollision");
-                if (hardConfig != null) {
-                    if (!store.getArchetype(bossRef).contains(HitboxCollision.getComponentType())) {
-                        store.addComponent(bossRef, HitboxCollision.getComponentType(), new HitboxCollision(hardConfig));
-                    } else {
-                        store.putComponent(bossRef, HitboxCollision.getComponentType(), new HitboxCollision(hardConfig));
-                    }
-                    log("Successfully made the Boss HARD. :p");
-                } else {
-                    log("Warning: Could not find hard collision config in the Asset Store.");
-                }
-            } else {
-                log("Warning: Could not find Boss entity reference to apply hard hitbox.");
-            }
-        });
-    }
 }

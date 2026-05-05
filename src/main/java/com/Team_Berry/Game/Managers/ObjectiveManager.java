@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class ObjectiveManager {
     private final World world;
+    private UUID currentRoomObjectiveId = null;
 
     public ObjectiveManager(World world) {
         this.world = world;
@@ -30,14 +31,14 @@ public class ObjectiveManager {
         GamePlugin.LOGGER.atInfo().log(String.format("[SLAY THE TOWER] - [%s] - %s", world.getName(), message));
     }
 
-    public UUID startSharedRoomObjective(Set<PlayerRef> activeParticipants, UUID currentRoomObjectiveId) {
-        completeSharedRoomObjective(currentRoomObjectiveId);
+    public void startSharedRoomObjective(Set<PlayerRef> activeParticipants, Pair<RoomCodec, Quest> currentRoom) {
+        completeSharedRoomObjective();
 
         Set<UUID> playerUUIDs = activeParticipants.stream()
                 .map(PlayerRef::getUuid)
                 .collect(Collectors.toSet());
 
-        if (playerUUIDs.isEmpty()) return null;
+        if (playerUUIDs.isEmpty()) return;
 
         Objective obj = ObjectivePlugin.get().startObjective(
                 "Slay_The_Tower_Room_Quest",
@@ -48,13 +49,13 @@ public class ObjectiveManager {
         );
 
         if (obj != null) {
-            log("Started shared UI objective for party: " + obj.getObjectiveUUID());
-            return obj.getObjectiveUUID();
+            this.currentRoomObjectiveId = obj.getObjectiveUUID();
+            updateSharedRoomObjective(currentRoom);
+            log("Started shared UI objective for party: " + currentRoomObjectiveId);
         }
-        return null;
     }
 
-    public void updateSharedRoomObjective(UUID currentRoomObjectiveId, Pair<RoomCodec, Quest> currentRoom) {
+    public void updateSharedRoomObjective(Pair<RoomCodec, Quest> currentRoom) {
         if (currentRoomObjectiveId == null || currentRoom == null || currentRoom.right() == null) return;
 
         Objective obj = ObjectivePlugin.get().getObjectiveDataStore().getObjective(currentRoomObjectiveId);
@@ -73,7 +74,7 @@ public class ObjectiveManager {
         }
     }
 
-    public void completeSharedRoomObjective(UUID currentRoomObjectiveId) {
+    public void completeSharedRoomObjective() {
         if (currentRoomObjectiveId == null) return;
 
         Objective obj = ObjectivePlugin.get().getObjectiveDataStore().getObjective(currentRoomObjectiveId);
@@ -88,9 +89,10 @@ public class ObjectiveManager {
             obj.checkTaskSetCompletion(store);
             log("Cleared shared UI objective.");
         }
+        currentRoomObjectiveId = null;
     }
 
-    public void detachPlayerFromObjective(PlayerRef playerRef, UUID currentRoomObjectiveId) {
+    public void detachPlayerFromObjective(PlayerRef playerRef) {
         if (currentRoomObjectiveId != null) {
             ObjectivePlugin.get().removePlayerFromExistingObjective(
                     world.getEntityStore().getStore(),

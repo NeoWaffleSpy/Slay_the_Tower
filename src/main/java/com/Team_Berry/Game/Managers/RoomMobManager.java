@@ -4,26 +4,39 @@ import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Utils.RoomNPCSpawner;
-import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.assetstore.AssetRegistry;
+import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollision;
+import com.hypixel.hytale.server.core.modules.entity.hitboxcollision.HitboxCollisionConfig;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class RoomMobManager {
     private final World world;
-    private final Set<UUID> pendingCleanup = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    private static final String MOB_SEARCH_EFFECT = "Mob_Search_Effect";
+
+    private final Set<UUID> currentRoomMobs = new HashSet<>();
+    private final Set<UUID> futureRoomMobs = new HashSet<>();
+    private final Set<UUID> pendingCleanup = ConcurrentHashMap.newKeySet();
+    private boolean searchEffectApplied = false;
 
     public RoomMobManager(World world) {
         this.world = world;
@@ -33,11 +46,73 @@ public class RoomMobManager {
         GamePlugin.LOGGER.atInfo().log(String.format("[SLAY THE TOWER] - [%s] - %s", world.getName(), message));
     }
 
+    public boolean hasCurrentMobs() { return !currentRoomMobs.isEmpty(); }
+    public boolean hasFutureMobs() { return !futureRoomMobs.isEmpty(); }
+
+    public void registerCurrentMobs(Collection<UUID> mobs) {
+        currentRoomMobs.clear();
+        currentRoomMobs.addAll(mobs);
+    }
+
+    public void registerFutureMobs(Collection<UUID> mobs) {
+        futureRoomMobs.clear();
+        futureRoomMobs.addAll(mobs);
+    }
+
+    public void shiftMobsToCurrent() {
+        currentRoomMobs.clear();
+        currentRoomMobs.addAll(futureRoomMobs);
+        futureRoomMobs.clear();
+    }
+
+    public void resetSearchEffect() {
+        this.searchEffectApplied = false;
+    }
+
+
     public List<UUID> spawnMobGroup(RoomCodec room, MobGroupCodec group) {
         return RoomNPCSpawner.spawnMobGroup(world.getEntityStore().getStore(), room, group);
     }
 
-    public void cleanRoom(Set<UUID> mobTracker) {
+    public boolean handleMobDeath(UUID deadMobId, com.Team_Berry.Game.Data.Quest currentQuest, com.Team_Berry.Game.Data.Quest futureQuest) {
+        if (currentRoomMobs.remove(deadMobId)) {
+            if (currentQuest != null) {
+                currentQuest.incrementDeadMobs();
+                log(String.format("Current Room Mob Death. Progress: %d/%d", currentQuest.getDeadMobs(), currentQuest.getSpawnedMobs()));
+                validateRemainingMobs(currentQuest);
+            }
+            return true;
+        } else if (futureRoomMobs.remove(deadMobId)) {
+            if (futureQuest != null) {
+                futureQuest.incrementDeadMobs();
+                log("A Future Room Mob died prematurely! Lowered future quest requirements.");
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public void checkAndApplySearchEffect(com.Team_Berry.Game.Data.Quest currentQuest, Set<PlayerRef> activeParticipants) {
+        if (!searchEffectApplied && currentQuest != null && currentQuest.getMobsLeft() <= (currentQuest.getSpawnedMobs() / 3)) {
+            searchEffectApplied = true;
+            for (PlayerRef p : activeParticipants) {
+                p.sendMessage(Message.raw("The remaining monsters have been revealed!"));
+            }
+            applyEffectToCurrentMobs(MOB_SEARCH_EFFECT); // Uses its own constant now
+        }
+    }
+
+    public void cleanCurrentRoom() {
+        cleanRoomInternal(currentRoomMobs);
+        currentRoomMobs.clear();
+    }
+
+    public void cleanFutureRoom() {
+        cleanRoomInternal(futureRoomMobs);
+        futureRoomMobs.clear();
+    }
+
+    private void cleanRoomInternal(Set<UUID> mobTracker) {
         if (mobTracker.isEmpty()) return;
 
         world.execute(() -> {
@@ -63,8 +138,6 @@ public class RoomMobManager {
 
             log("Room cleaned. " + foundMobs.size() + " active mobs evaporated. " +
                     (mobTracker.size() - foundMobs.size()) + " asleep mobs sent to pending cleanup.");
-
-            mobTracker.clear();
         });
     }
 
@@ -116,7 +189,7 @@ public class RoomMobManager {
         return foundRef.get();
     }
 
-    public void applyEffectToMobs(Set<UUID> mobTracker, String effectId) {
+    public void applyEffectToCurrentMobs(String effectId) {
         world.execute(() -> {
             Store<EntityStore> store = world.getEntityStore().getStore();
             EntityEffect effect = EntityEffect.getAssetMap().getAsset(effectId);
@@ -127,7 +200,7 @@ public class RoomMobManager {
             }
 
             int appliedCount = 0;
-            for (UUID mobId : mobTracker) {
+            for (UUID mobId : currentRoomMobs) {
                 Ref<EntityStore> ref = getRefByUUID(store, mobId);
                 if (ref != null && ref.isValid()) {
                     EffectControllerComponent effectController = store.getComponent(ref, EffectControllerComponent.getComponentType());
@@ -142,7 +215,7 @@ public class RoomMobManager {
         });
     }
 
-    public void validateRemainingMobs(Set<UUID> currentRoomMobs, com.Team_Berry.Game.Data.Quest currentQuest) {
+    public void validateRemainingMobs(com.Team_Berry.Game.Data.Quest currentQuest) {
         if (currentRoomMobs.isEmpty()) return;
 
         Store<EntityStore> store = world.getEntityStore().getStore();
@@ -162,5 +235,51 @@ public class RoomMobManager {
                 log("Anti-Softlock: Detected and cleared vanished mob UUID: " + id);
             }
         }
+    }
+
+    public void makeBossHitboxHard() {
+        if (currentRoomMobs.isEmpty()) return;
+        UUID bossUuid = currentRoomMobs.iterator().next();
+
+        world.execute(() -> {
+            Store<EntityStore> store = world.getEntityStore().getStore();
+            Ref<EntityStore> bossRef = getRefByUUID(store, bossUuid);
+
+            if (bossRef != null && bossRef.isValid()) {
+                HitboxCollisionConfig hardConfig = HitboxCollisionConfig.getAssetMap().getAsset("HardCollision");
+                if (hardConfig != null) {
+                    if (!store.getArchetype(bossRef).contains(HitboxCollision.getComponentType())) {
+                        store.addComponent(bossRef, HitboxCollision.getComponentType(), new HitboxCollision(hardConfig));
+                    } else {
+                        store.putComponent(bossRef, HitboxCollision.getComponentType(), new HitboxCollision(hardConfig));
+                    }
+                    log("Successfully made the Boss HARD. :p");
+                } else {
+                    log("Warning: Could not find hard collision config in the Asset Store.");
+                }
+            } else {
+                log("Warning: Could not find Boss entity reference to apply hard hitbox.");
+            }
+        });
+    }
+
+    public List<MobGroupCodec> findMobGroups(int difficulty, boolean isBoss) {
+        DefaultAssetMap<String, MobGroupCodec> map = MobGroupCodec.getAssetMap();
+        String tagSearch = isBoss ? "Difficulty=Boss" : "Difficulty=" + difficulty;
+        log("Looking for Mob Groups with tag: " + tagSearch);
+
+        int tagIndex = AssetRegistry.getOrCreateTagIndex(tagSearch);
+        Set<String> groupKeys = map.getKeysForTag(tagIndex);
+
+        if (groupKeys == null || groupKeys.isEmpty()) return null;
+
+        List<MobGroupCodec> validGroups = new ArrayList<>();
+        for (String key : groupKeys) {
+            MobGroupCodec group = map.getAsset(key);
+            if (group != null) {
+                validGroups.add(group);
+            }
+        }
+        return validGroups.isEmpty() ? null : validGroups;
     }
 }

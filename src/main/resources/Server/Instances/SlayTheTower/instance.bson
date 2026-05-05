@@ -30,7 +30,7 @@
   "IsBlockTicking": true,
   "IsPvpEnabled": false,
   "IsFallDamageEnabled": true,
-  "IsGameTimePaused": false,
+  "IsGameTimePaused": true,
   "GameTime": "0001-01-01T05:30:00Z",
   "ForcedWeather": "Weather_Prison",
   "ClientEffects": {

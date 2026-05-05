@@ -49,12 +49,13 @@
     },
     "Particles": [
       {
-        "SystemId": "Statue_Particles",
         "Scale": 2,
         "PositionOffset": {
-          "Y": -2
+          "Y": -2,
+          "Z": -0.35
         },
-        "Color": "#ffb500"
+        "Color": "#ffb500",
+        "SystemId": "Statue_Particles"
       }
     ],
     "Interactions": {

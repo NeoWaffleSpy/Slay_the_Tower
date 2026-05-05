@@ -1,6 +1,5 @@
 package com.Team_Berry.Game;
 
-import com.Team_Berry.Game.Commands.GetParticipantsIndices;
 import com.Team_Berry.Game.Components.QuestNPCComponent;
 import com.Team_Berry.Game.Interactions.*;
 import com.Team_Berry.Game.Objectives.CustomRoomTaskAsset;
@@ -94,8 +93,6 @@ public class GamePlugin extends JavaPlugin {
         this.getCodecRegistry(Interaction.CODEC).register("ProjectileRainInteraction", ProjectileRainInteraction.class, ProjectileRainInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("SetLobbyWeatherInteraction", SetLobbyWeatherInteraction.class, SetLobbyWeatherInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("SetPrisonWeatherInteraction", SetPrisonWeatherInteraction.class, SetPrisonWeatherInteraction.CODEC);
-
-        this.getCommandRegistry().registerCommand(new GetParticipantsIndices("getparticipantsindices", "get all indexes of all active participants"));
 
         CustomRoomTaskAsset.registerCodecs();
 

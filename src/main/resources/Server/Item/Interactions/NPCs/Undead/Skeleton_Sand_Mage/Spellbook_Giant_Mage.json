@@ -1,0 +1,38 @@
+{
+  "Type": "Simple",
+  "Effects": {
+    "ItemPlayerAnimationsId": "Skeleton_Spellbook",
+    "ItemAnimationId": "CastHurlCharging",
+    "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge"
+  },
+  "$Comment": "Prepare Delay",
+  "RunTime": 1,
+  "Next": {
+    "Type": "LaunchProjectile",
+    "RunTime": 0.2,
+    "Effects": {
+      "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+      "Particles": [
+        {
+          "SystemId": "GreenOrbTrail",
+          "TargetEntityPart": "Entity",
+          "TargetNodeName": "L-Hand",
+          "Color": "#ff0000"
+        },
+        {
+          "SystemId": "GreenOrbTrail",
+          "TargetEntityPart": "PrimaryItem",
+          "Color": "#fb0000",
+          "TargetNodeName": "Handle",
+          "PositionOffset": {
+            "X": 0.25
+          }
+        }
+      ]
+    },
+    "ProjectileId": "Projectile_Giant_Mage",
+    "Tags": {
+      "AimingReference": []
+    }
+  }
+}

@@ -39,7 +39,7 @@
       0,
       24
     ],
-    "Appearance": "Kweebec_Mage_Model",
+    "Appearance": "Kweebec_Giant_Mage_Model",
     "Weapons": [
       "Weapon_Spellbook_Fire"
     ],
@@ -55,7 +55,7 @@
     "WanderRadius": {
       "Compute": "WanderRadius"
     },
-    "Attack": "Skeleton_Sand_Mage_Spellbook_Corruption_Orb",
+    "Attack": "Old_Giant_Mage_Spellbook",
     "CombatBackOffAfterAttack": false,
     "AttackDistance": 20,
     "CombatStrafeWeight": 3,

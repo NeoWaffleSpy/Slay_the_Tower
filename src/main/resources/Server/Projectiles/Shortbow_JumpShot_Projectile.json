@@ -16,7 +16,7 @@
   "DeadTime": 0,
   "ExplosionConfig": {
     "DamageEntities": true,
-    "EntityDamageRadius": 7,
+    "EntityDamageRadius": 5,
     "EntityDamageFalloff": 0,
     "BlockDamageRadius": 0,
     "BlockDamageFalloff": 0,
@@ -24,7 +24,7 @@
     "DamageBlocks": false,
     "EntityDamage": 15,
     "Knockback": {
-      "Force": 10,
+      "Force": 12,
       "Duration": 0.1,
       "VelocityConfig": {
         "Style": "Exp"

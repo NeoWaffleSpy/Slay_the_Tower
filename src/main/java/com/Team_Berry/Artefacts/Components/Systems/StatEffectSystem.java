@@ -393,7 +393,15 @@ public class StatEffectSystem {
             StatEffectComponent statComp = commandBuffer.getComponent(targetRef, StatEffectComponent.getComponentType());
             handleShieldArtefact(targetRef, statComp, commandBuffer, damage);
             if (source instanceof Damage.ProjectileSource projectileSource) {
-                handleProjectileReflection(targetRef, commandBuffer, projectileSource, damage);
+                int projectileCauseIndex = -1;
+                DamageCause projectileDamageCause = DamageCause.getAssetMap().getAsset("PROJECTILE");
+                if (projectileDamageCause != null) {
+                    projectileCauseIndex = DamageCause.getAssetMap().getIndex(projectileDamageCause.getId());
+                }
+
+                if (projectileCauseIndex != -1 && damage.getDamageCauseIndex() == projectileCauseIndex) {
+                    handleProjectileReflection(targetRef, commandBuffer, projectileSource, damage);
+                }
             }
         }
 

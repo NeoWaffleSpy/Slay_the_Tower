@@ -27,7 +27,10 @@ import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import it.unimi.dsi.fastutil.Pair;
 import org.jspecify.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -397,6 +400,9 @@ public class GameManager {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
         objectiveManager.completeSharedRoomObjective();
 
+        scheduler.cancel("advance_room_" + world.getName());
+        scheduler.cancel("tp_lobby_" + world.getName());
+        weatherManager.setPrisonWeather();
         broadcastEventTitle("DEFEATED", "The kweebecs still need you... Try again !");
 
         runStateManager.setRunEnded(true);

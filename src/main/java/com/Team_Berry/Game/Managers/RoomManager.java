@@ -1,13 +1,14 @@
 package com.Team_Berry.Game.Managers;
 
-import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Game.Data.Quest;
+import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.Utils.RoomTeleporter;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.server.core.universe.world.World;
 import it.unimi.dsi.fastutil.Pair;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,30 +26,49 @@ public class RoomManager {
 
     public RoomManager(World world) {
         this.world = world;
-        this.lobbyRoom = findRoomByCategory("Lobby");
-        this.postgameRoom = findRoomByCategory("Postgame");
-        this.prisonSpawnRoom = findRoomByCategory("Prisonspawn");
+        this.lobbyRoom = findRoomByCategory("Lobby", null);
+        this.postgameRoom = findRoomByCategory("Postgame", null);
+        this.prisonSpawnRoom = findRoomByCategory("Prisonspawn", null);
     }
 
     private void log(String message) {
         GamePlugin.LOGGER.atInfo().log(String.format("[SLAY THE TOWER] - [%s] - %s", world.getName(), message));
     }
 
-    public Pair<RoomCodec, Quest> getCurrentRoom() { return currentRoom; }
-    public Pair<RoomCodec, Quest> getFutureRoom() { return futureRoom; }
-    public void setCurrentRoom(Pair<RoomCodec, Quest> room) { this.currentRoom = room; }
-    public void setFutureRoom(Pair<RoomCodec, Quest> room) { this.futureRoom = room; }
+    public Pair<RoomCodec, Quest> getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Pair<RoomCodec, Quest> room) {
+        this.currentRoom = room;
+    }
+
+    public Pair<RoomCodec, Quest> getFutureRoom() {
+        return futureRoom;
+    }
+
+    public void setFutureRoom(Pair<RoomCodec, Quest> room) {
+        this.futureRoom = room;
+    }
 
     public void shiftRooms() {
         this.currentRoom = this.futureRoom;
         this.futureRoom = null;
     }
 
-    public RoomCodec getLobbyRoom() { return lobbyRoom; }
-    public RoomCodec getPostgameRoom() { return postgameRoom; }
-    public RoomCodec getPrisonSpawnRoom() { return prisonSpawnRoom; }
+    public RoomCodec getLobbyRoom() {
+        return lobbyRoom;
+    }
 
-    public RoomCodec findRoomByCategory(String category) {
+    public RoomCodec getPostgameRoom() {
+        return postgameRoom;
+    }
+
+    public RoomCodec getPrisonSpawnRoom() {
+        return prisonSpawnRoom;
+    }
+
+    public RoomCodec findRoomByCategory(String category, @Nullable RoomCodec exclude) {
         DefaultAssetMap<String, RoomCodec> roomMap = RoomCodec.getAssetMap();
         int tagIndex = AssetRegistry.getOrCreateTagIndex("Category=" + category);
         Set<String> roomKeys = roomMap.getKeysForTag(tagIndex);
@@ -62,7 +82,10 @@ public class RoomManager {
         for (String key : roomKeys) {
             RoomCodec room = roomMap.getAsset(key);
 
-            // If it's a standard room, we must check if we can teleport to it
+            if (exclude != null && room.equals(exclude)) {
+                continue;
+            }
+
             if (category.equals("Room")) {
                 if (RoomTeleporter.canTeleportToRoom(room)) {
                     validRooms.add(room);
@@ -71,8 +94,15 @@ public class RoomManager {
                 validRooms.add(room);
             }
         }
+        
+        if (validRooms.isEmpty()) {
+            if (exclude != null) {
+                log("Warning: Only 1 room available in category '" + category + "'. Forced to reuse it.");
+                return exclude;
+            }
+            return null;
+        }
 
-        if (validRooms.isEmpty()) return null;
         return validRooms.get(ThreadLocalRandom.current().nextInt(validRooms.size()));
     }
 }

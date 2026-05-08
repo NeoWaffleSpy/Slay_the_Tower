@@ -122,13 +122,13 @@ public class GameManager {
     }
 
     public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, boolean isCurrentRoom) {
-        return generateRoomLogic(runStateManager.isBossStage(), isCurrentRoom);
+        return generateRoomLogic(runStateManager.isBossStage(), isCurrentRoom, exclude);
     }
 
-    private Pair<RoomCodec, Quest> generateRoomLogic(boolean isBoss, boolean isCurrentRoom) {
+    private Pair<RoomCodec, Quest> generateRoomLogic(boolean isBoss, boolean isCurrentRoom, @Nullable RoomCodec exclude) {
         log(isBoss ? "Preparing the Final Boss Room..." : "Preparing a new regular room...");
 
-        RoomCodec selectedRoom = roomManager.findRoomByCategory(isBoss ? "Boss" : "Room");
+        RoomCodec selectedRoom = roomManager.findRoomByCategory(isBoss ? "Boss" : "Room", exclude);
         if (selectedRoom == null) return null;
 
         int difficulty = runStateManager.getCurrentDifficulty();

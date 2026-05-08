@@ -19,20 +19,13 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class RoomMobManager {
-    private final World world;
-
     private static final String MOB_SEARCH_EFFECT = "Mob_Search_Effect";
-
+    private final World world;
     private final Set<UUID> currentRoomMobs = new HashSet<>();
     private final Set<UUID> futureRoomMobs = new HashSet<>();
     private final Set<UUID> pendingCleanup = ConcurrentHashMap.newKeySet();
@@ -46,8 +39,13 @@ public class RoomMobManager {
         GamePlugin.LOGGER.atInfo().log(String.format("[SLAY THE TOWER] - [%s] - %s", world.getName(), message));
     }
 
-    public boolean hasCurrentMobs() { return !currentRoomMobs.isEmpty(); }
-    public boolean hasFutureMobs() { return !futureRoomMobs.isEmpty(); }
+    public boolean hasCurrentMobs() {
+        return !currentRoomMobs.isEmpty();
+    }
+
+    public boolean hasFutureMobs() {
+        return !futureRoomMobs.isEmpty();
+    }
 
     public void registerCurrentMobs(Collection<UUID> mobs) {
         currentRoomMobs.clear();
@@ -104,12 +102,10 @@ public class RoomMobManager {
 
     public void cleanCurrentRoom() {
         cleanRoomInternal(currentRoomMobs);
-        currentRoomMobs.clear();
     }
 
     public void cleanFutureRoom() {
         cleanRoomInternal(futureRoomMobs);
-        futureRoomMobs.clear();
     }
 
     private void cleanRoomInternal(Set<UUID> mobTracker) {
@@ -138,6 +134,8 @@ public class RoomMobManager {
 
             log("Room cleaned. " + foundMobs.size() + " active mobs evaporated. " +
                     (mobTracker.size() - foundMobs.size()) + " asleep mobs sent to pending cleanup.");
+
+            mobTracker.clear();
         });
     }
 

@@ -122,13 +122,13 @@ public class GameManager {
     }
 
     public Pair<RoomCodec, Quest> prepareRoom(@Nullable RoomCodec exclude, boolean isCurrentRoom) {
-        return generateRoomLogic(runStateManager.isBossStage(), isCurrentRoom);
+        return generateRoomLogic(runStateManager.isBossStage(), isCurrentRoom, exclude);
     }
 
-    private Pair<RoomCodec, Quest> generateRoomLogic(boolean isBoss, boolean isCurrentRoom) {
+    private Pair<RoomCodec, Quest> generateRoomLogic(boolean isBoss, boolean isCurrentRoom, @Nullable RoomCodec exclude) {
         log(isBoss ? "Preparing the Final Boss Room..." : "Preparing a new regular room...");
 
-        RoomCodec selectedRoom = roomManager.findRoomByCategory(isBoss ? "Boss" : "Room");
+        RoomCodec selectedRoom = roomManager.findRoomByCategory(isBoss ? "Boss" : "Room", exclude);
         if (selectedRoom == null) return null;
 
         int difficulty = runStateManager.getCurrentDifficulty();
@@ -292,8 +292,6 @@ public class GameManager {
     }
 
     private void handleStageSuccess() {
-        objectiveManager.completeSharedRoomObjective();
-
         if (runStateManager.isBossStage()) {
             log("VICTORY! The Boss has been defeated.");
             handleRunVictory();
@@ -398,8 +396,6 @@ public class GameManager {
 
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
-        objectiveManager.completeSharedRoomObjective();
-
         scheduler.cancel("advance_room_" + world.getName());
         scheduler.cancel("tp_lobby_" + world.getName());
         weatherManager.setPrisonWeather();

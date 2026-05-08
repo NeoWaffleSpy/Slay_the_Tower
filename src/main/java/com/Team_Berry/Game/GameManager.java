@@ -292,8 +292,6 @@ public class GameManager {
     }
 
     private void handleStageSuccess() {
-        objectiveManager.completeSharedRoomObjective();
-
         if (runStateManager.isBossStage()) {
             log("VICTORY! The Boss has been defeated.");
             handleRunVictory();
@@ -398,8 +396,6 @@ public class GameManager {
 
     private void handleStageFailure() {
         log("CRITICAL: Party Fall. Resetting milestone progress.");
-        objectiveManager.completeSharedRoomObjective();
-
         scheduler.cancel("advance_room_" + world.getName());
         scheduler.cancel("tp_lobby_" + world.getName());
         weatherManager.setPrisonWeather();

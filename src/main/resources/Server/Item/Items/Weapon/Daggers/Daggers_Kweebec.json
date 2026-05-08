@@ -39,10 +39,11 @@
     "Swing_Left_Damage": {
       "Interactions": [
         {
+          "Type": "DamageEntity",
           "Parent": "Weapon_Daggers_Primary_Swing_Left_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 6
+              "Basic_Attack": 6
             }
           },
           "DamageEffects": {
@@ -59,7 +60,7 @@
           "Parent": "Weapon_Daggers_Primary_Swing_Right_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 6
+              "Basic_Attack": 6
             }
           },
           "DamageEffects": {
@@ -76,7 +77,7 @@
           "Parent": "Weapon_Daggers_Primary_Stab_Left_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 10
+              "Basic_Attack": 10
             }
           },
           "DamageEffects": {
@@ -93,7 +94,7 @@
           "Parent": "Weapon_Daggers_Primary_Stab_Right_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 10
+              "Basic_Attack": 10
             }
           },
           "DamageEffects": {
@@ -110,7 +111,7 @@
           "Parent": "Weapon_Daggers_Primary_Pounce_Sweep_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 15
+              "Basic_Attack": 15
             }
           },
           "EntityStatsOnHit": [
@@ -162,7 +163,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 17
+                  "Basic_Attack": 17
                 }
               }
             }
@@ -176,7 +177,7 @@
           "Parent": "Weapon_Daggers_Primary_Pounce_Stab_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 18
+              "Basic_Attack": 18
             }
           },
           "EntityStatsOnHit": [
@@ -228,7 +229,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 20
+                  "Basic_Attack": 20
                 }
               }
             }
@@ -242,7 +243,7 @@
           "Parent": "Weapon_Daggers_Signature_Razorstrike_Slash_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 25
+              "Basic_Attack": 25
             }
           },
           "EntityStatsOnHit": [],
@@ -289,7 +290,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 28
+                  "Basic_Attack": 28
                 }
               }
             }
@@ -303,7 +304,7 @@
           "Parent": "Weapon_Daggers_Signature_Razorstrike_Sweep_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 31
+              "Basic_Attack": 31
             }
           },
           "EntityStatsOnHit": [],
@@ -350,7 +351,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 47
+                  "Basic_Attack": 47
                 }
               }
             }
@@ -364,7 +365,7 @@
           "Parent": "Weapon_Daggers_Signature_Razorstrike_Lunge_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 37
+              "Basic_Attack": 37
             }
           },
           "EntityStatsOnHit": [],
@@ -411,7 +412,7 @@
               },
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Physical": 56
+                  "Basic_Attack": 56
                 }
               }
             }

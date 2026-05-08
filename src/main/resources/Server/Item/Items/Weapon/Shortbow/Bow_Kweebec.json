@@ -76,7 +76,7 @@
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_0",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 3
+              "Basic_Attack": 3
             }
           }
         }
@@ -89,7 +89,7 @@
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_1",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 7
+              "Basic_Attack": 7
             }
           }
         }
@@ -102,7 +102,7 @@
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_2",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 11
+              "Basic_Attack": 11
             }
           }
         }
@@ -115,7 +115,7 @@
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_3",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 12
+              "Basic_Attack": 12
             }
           }
         }
@@ -128,14 +128,14 @@
           "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_4",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 15
+              "Basic_Attack": 15
             }
           },
           "TargetedDamage": {
             "Head": {
               "DamageCalculator": {
                 "BaseDamage": {
-                  "Projectile": 17
+                  "Basic_Attack": 17
                 }
               },
               "DamageEffects": {
@@ -180,7 +180,7 @@
           "Parent": "Weapon_Shortbow_Signature_Volley_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Projectile": 14
+              "Basic_Attack": 14
             }
           }
         }

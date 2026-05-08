@@ -5,7 +5,9 @@ import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
 import com.Team_Berry.Artefacts.Commandes.ArtefactCommand;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.Systems.ArtefactCooldownSystem;
 import com.Team_Berry.Artefacts.Components.Systems.StatEffectSystem;
+import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.component.ComponentType;
@@ -24,26 +26,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArtefactPlugin extends JavaPlugin {
-    public static ArtefactPlugin instance;
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    public static ArtefactPlugin instance;
     private final List<CommandRegistration> commands = new ArrayList<>();
     private ComponentType<EntityStore, StatEffectComponent> statEffectComponentType;
 
-    public static ArtefactPlugin get() {
-        return instance;
+    public ArtefactPlugin(JavaPluginInit init) {
+        super(init);
+        instance = this;
     }
 
-    public ComponentType<EntityStore, StatEffectComponent> getStatEffectComponentType() {
-        return this.statEffectComponentType;
+    public static ArtefactPlugin get() {
+        return instance;
     }
 
     public static IndexedLookupTableAssetMap<String, EntityStatType> getEntityStatTypeAssetStore() {
         return AssetRegistry.getAssetStore(EntityStatType.class).getAssetMap();
     }
 
-    public ArtefactPlugin(JavaPluginInit init) {
-        super(init);
-        instance = this;
+    private static void addComponent(PlayerReadyEvent event) {
+        Ref<EntityStore> ref = event.getPlayerRef();
+        Store<EntityStore> store = ref.getStore();
+        StatEffectComponent comp = store.getComponent(ref, StatEffectComponent.getComponentType());
+        if (comp != null)
+            comp.flush();
+        else
+            store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
+    }
+
+    public ComponentType<EntityStore, StatEffectComponent> getStatEffectComponentType() {
+        return this.statEffectComponentType;
     }
 
     @Override
@@ -51,10 +63,12 @@ public class ArtefactPlugin extends JavaPlugin {
         this.statEffectComponentType = this.getEntityStoreRegistry().registerComponent(StatEffectComponent.class, () -> {
             throw new UnsupportedOperationException("Not implemented!");
         });
+        ArtefactLogicRegistry.registerAll();
         StatusEffectCodec.register();
         StatCodec.register();
         ArtefactCodec.register();
         StatEffectSystem.register();
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new ArtefactCooldownSystem());
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
         this.getCommandRegistry().registerCommand(new ArtefactCommand());
     }
@@ -66,15 +80,5 @@ public class ArtefactPlugin extends JavaPlugin {
         commands.forEach(Registration::unregister);
         commands.clear();
         super.shutdown();
-    }
-
-    private static void addComponent(PlayerReadyEvent event) {
-        Ref<EntityStore> ref = event.getPlayerRef();
-        Store<EntityStore> store = ref.getStore();
-        StatEffectComponent comp = store.getComponent(ref, StatEffectComponent.getComponentType());
-        if (comp != null)
-            comp.flush();
-        else
-            store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
     }
 }

@@ -1,11 +1,15 @@
 package com.Team_Berry.Artefacts.Components.Systems;
 
+import com.Team_Berry.Artefacts.Artefact.IArtefactLogic;
+import com.Team_Berry.Artefacts.Artefact.IOnArtefactUpdate;
+import com.Team_Berry.Artefacts.Artefact.IOnTakeDamage;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
 import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Artefacts.UI.ShieldHud;
 import com.Team_Berry.Utils.Scheduler.KeyedScheduler;
@@ -43,7 +47,6 @@ import org.jspecify.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class StatEffectSystem {
@@ -55,8 +58,6 @@ public class StatEffectSystem {
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectRefChangeSystem());
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectPreDamageSystem());
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new StatEffectDeathSystem());
-
-
     }
 
     public static void stop() {
@@ -113,6 +114,7 @@ public class StatEffectSystem {
     public static class StatEffectDamageSystem extends DamageEventSystem {
         public StatEffectDamageSystem() {
         }
+
         @Override
         public SystemGroup<EntityStore> getGroup() {
             return DamageModule.get().getFilterDamageGroup();
@@ -261,16 +263,21 @@ public class StatEffectSystem {
             if (comp == null) return;
 
 
-            long now = store.getResource(TimeResource.getResourceType()).getNow().toEpochMilli();
-            checkShieldCooldown(i, archetypeChunk, comp, now, commandBuffer);
-
-
             if (comp.artefactUpdated.isEmpty()) return;
 
             EntityStatMap statMap = (EntityStatMap) archetypeChunk.getComponent(i, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return;
 
+            Ref<EntityStore> targetRef = archetypeChunk.getReferenceTo(i);
+
             comp.artefactUpdated.forEach(artefact -> {
+
+                IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact.getId());
+                if (logic instanceof IOnArtefactUpdate) {
+                    int currentStacks = comp.getAmount(artefact);
+                    ((IOnArtefactUpdate) logic).onStackChange(artefact, targetRef, comp, commandBuffer, currentStacks);
+                }
+
                 ArrayList<StatCodec> list = artefact.getStatArray();
                 for (int j = 0; j < list.size(); j++) {
                     StatCodec stat = list.get(j);
@@ -284,44 +291,9 @@ public class StatEffectSystem {
                     }
                 }
 
-                if (Objects.equals(artefact.getId(), "Shield_Artefact")) {
-                    comp.shieldHud.displayShield(comp.getAmount(artefact) > 0);
-                }
             });
 
             comp.artefactUpdated.clear();
-        }
-
-        private void checkShieldCooldown(int index, ArchetypeChunk<EntityStore> archetypeChunk, StatEffectComponent comp, long now, CommandBuffer<EntityStore> commandBuffer) {
-            ArtefactCodec shield = ArtefactCodec.getAssetMap().getAsset("Shield_Artefact");
-            if (shield == null) return;
-
-            int stacks = comp.getAmount(shield);
-            if (stacks <= 0) return;
-
-            long lastUsed = comp.artefactCooldowns.getOrDefault(shield, 0L);
-            long lastNotified = comp.lastNotifiedReady.getOrDefault(shield, 0L);
-
-            if (lastUsed == 0 || lastNotified >= lastUsed) return;
-
-            double baseCooldownMs = 60000.0;
-            double calculatedCooldown = baseCooldownMs * Math.pow(0.9, stacks);
-            long finalCooldown = (long) Math.max(10000.0, calculatedCooldown);
-
-            if (now - lastUsed >= finalCooldown) {
-                Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
-                EffectControllerComponent effectController = (EffectControllerComponent) commandBuffer.getComponent(ref, EffectControllerComponent.getComponentType());
-                EntityEffect readyEffect = EntityEffect.getAssetMap().getAsset("Artefact_Shield_Ready");
-
-                if (effectController != null && readyEffect != null) {
-                    effectController.addEffect(ref, readyEffect, commandBuffer);
-
-                    comp.lastNotifiedReady.put(shield, now);
-                }
-
-                comp.shieldHud.displayShield(true);
-
-            }
         }
 
         @Override
@@ -391,7 +363,17 @@ public class StatEffectSystem {
                     return;
             }
             StatEffectComponent statComp = commandBuffer.getComponent(targetRef, StatEffectComponent.getComponentType());
-            handleShieldArtefact(targetRef, statComp, commandBuffer, damage);
+
+            for (ArtefactCodec artefact : statComp.artefactList.keySet()) {
+                if (statComp.getAmount(artefact) > 0) {
+                    IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact.getId());
+                    if (logic instanceof IOnTakeDamage) {
+                        ((IOnTakeDamage) logic).onTakeDamage(artefact, targetRef, damage, statComp, commandBuffer);
+                    }
+                }
+            }
+
+
             if (source instanceof Damage.ProjectileSource projectileSource) {
                 int projectileCauseIndex = -1;
                 DamageCause projectileDamageCause = DamageCause.getAssetMap().getAsset("PROJECTILE");
@@ -487,37 +469,6 @@ public class StatEffectSystem {
             }
 
             commandBuffer.addEntity(holder, AddReason.SPAWN);
-        }
-
-        private void handleShieldArtefact(Ref<EntityStore> targetRef, StatEffectComponent statComp, CommandBuffer<EntityStore> commandBuffer, Damage damage) {
-            ArtefactCodec shieldArtefact = ArtefactCodec.getAssetMap().getAsset("Shield_Artefact");
-            if (shieldArtefact == null) return;
-
-            int stacks = statComp.getAmount(shieldArtefact);
-            if (stacks <= 0) return;
-
-
-            double baseCooldownMs = 60000.0;
-            double calculatedCooldown = baseCooldownMs * Math.pow(0.9, stacks);
-            long finalCooldown = (long) Math.max(10000.0, calculatedCooldown);
-
-            long now = commandBuffer.getResource(TimeResource.getResourceType()).getNow().toEpochMilli();
-            long lastUsed = statComp.artefactCooldowns.getOrDefault(shieldArtefact, 0L);
-
-            if (now - lastUsed >= finalCooldown) {
-                damage.setCancelled(true);
-
-                statComp.artefactCooldowns.put(shieldArtefact, now);
-                EffectControllerComponent effectController = commandBuffer.getComponent(targetRef, EffectControllerComponent.getComponentType());
-
-                EntityEffect effect = EntityEffect.getAssetMap().getAsset("Artefact_Shield_Break");
-
-                if (effectController != null && effect != null) {
-                    effectController.addEffect(targetRef, effect, commandBuffer);
-                }
-
-                statComp.shieldHud.displayShield(false);
-            }
         }
 
     }

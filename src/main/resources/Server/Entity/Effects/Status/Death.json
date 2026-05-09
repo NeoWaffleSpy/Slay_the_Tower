@@ -1,32 +1,38 @@
 {
-  "Parent": "Burn_Template",
   "ApplicationEffects": {
-    "EntityBottomTint": "#100600",
-    "EntityTopTint": "#cf2302",
-    "ScreenEffect": "ScreenEffects/Fire.png",
-    "WorldSoundEventId": "SFX_Effect_Burn_World",
-    "LocalSoundEventId": "SFX_Effect_Burn_Local",
+    "EntityBottomTint": "#ff0000",
+    "EntityTopTint": "#ff0000",
+    "EntityAnimationId": "Hurt",
+    "WorldSoundEventId": "SFX_Rex_Death",
+    "LocalSoundEventId": "SFX_Rex_Death",
     "Particles": [
       {
-        "SystemId": "Effect_Fire"
+        "SystemId": "Explosion_Big"
       }
     ],
-    "ModelVFXId": "Burn"
+    "ScreenEffect": "ScreenEffects/Burst_ScreenEffect.png",
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Explosion_Big"
+      }
+    ]
   },
-  "DamageCalculatorCooldown": 1,
   "DamageCalculator": {
     "BaseDamage": {
-      "Fire": 9999999
+      "Poison": 99999999
     }
   },
   "DamageEffects": {
-    "WorldSoundEventId": "SFX_Effect_Burn_World",
-    "PlayerSoundEventId": "SFX_Effect_Burn_Local"
+    "WorldSoundEventId": "SFX_Effect_Poison_World",
+    "PlayerSoundEventId": "SFX_Effect_Poison_Local"
   },
-  "OverlapBehavior": "Overwrite",
+  "OverlapBehavior": "Extend",
+  "RemovalBehavior": "Duration",
   "Infinite": false,
   "Debuff": true,
-  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
   "Duration": 5,
-  "DeathMessageKey": "Congrats, you've escaped the map. Too bad the developers didn't build a 'survival' floor out here."
+  "DeathMessageKey": "...",
+  "DamageCalculatorCooldown": 0,
+  "Invulnerable": true
 }

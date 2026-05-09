@@ -1,0 +1,125 @@
+{
+  "SkyTopColors": [
+    {
+      "Hour": 0,
+      "Color": "#c1a601ff"
+    }
+  ],
+  "SkyBottomColors": [
+    {
+      "Hour": 0,
+      "Color": "#d3a714ff"
+    }
+  ],
+  "SkySunsetColors": [
+    {
+      "Hour": 0,
+      "Color": "#b16b00ff"
+    }
+  ],
+  "FogColors": [
+    {
+      "Hour": 0,
+      "Color": "#724d2d"
+    }
+  ],
+  "FogDensities": [
+    {
+      "Hour": 0,
+      "Value": 0.15
+    }
+  ],
+  "FogHeightFalloffs": [
+    {
+      "Hour": 0,
+      "Value": 3.05
+    }
+  ],
+  "FogDistance": [
+    -125,
+    325
+  ],
+  "FogOptions": {
+    "FogHeightCameraFixed": 0.017,
+    "EffectiveViewDistanceMultiplier": 1,
+    "IgnoreFogLimits": false
+  },
+  "SunScales": [
+    {
+      "Hour": 0,
+      "Value": 3.5
+    }
+  ],
+  "MoonScales": [
+    {
+      "Hour": 0,
+      "Value": 5.5
+    }
+  ],
+  "Particle": {
+    "SystemId": "Sand_Storm",
+    "OvergroundOnly": false,
+    "Color": "#ffffff",
+    "Scale": 1
+  },
+  "Clouds": [
+    {
+      "Texture": "Sky/Clouds/Medium_Base.png",
+      "Colors": [
+        {
+          "Hour": 0,
+          "Color": "#ffffff"
+        }
+      ],
+      "Speeds": [
+        {
+          "Hour": 0,
+          "Value": 10
+        }
+      ]
+    }
+  ],
+  "SunGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff7c00ff"
+    }
+  ],
+  "SunColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffff"
+    }
+  ],
+  "ScreenEffectColors": null,
+  "SunlightDampingMultipliers": null,
+  "SunlightColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffc84d"
+    }
+  ],
+  "ColorFilters": [
+    {
+      "Hour": 0,
+      "Color": "#ffe100"
+    }
+  ],
+  "MoonColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffffffff"
+    }
+  ],
+  "MoonGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#ffd500ff"
+    }
+  ],
+  "Moons": [
+    {
+      "Texture": "Sky/MoonCycle/Moon_Full.png"
+    }
+  ]
+}

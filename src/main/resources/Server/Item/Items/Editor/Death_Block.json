@@ -23,15 +23,16 @@
       }
     ],
     "Interactions": {
-      "Collision": {
+      "CollisionEnter": {
         "Interactions": [
           {
             "Type": "ApplyEffect",
-            "EffectId": {
-              "Parent": "Death"
-            }
+            "EffectId": "Death"
           }
-        ]
+        ],
+        "Cooldown": {
+          "Cooldown": 0.1
+        }
       }
     }
   },

@@ -39,28 +39,6 @@
     "ParticleColor": "#655d5d",
     "AmbientSoundEventId": "SFX_Flame_Default_Loop",
     "Looping": true,
-    "Interactions": {
-      "Collision": {
-        "Cooldown": {
-          "Id": "BurnEffect",
-          "Cooldown": 1
-        },
-        "Interactions": [
-          {
-            "Type": "Condition",
-            "RequiredGameMode": "Adventure",
-            "Next": {
-              "Type": "Simple",
-              "RunTime": 0.1,
-              "Next": {
-                "Type": "ApplyEffect",
-                "EffectId": "Burn"
-              }
-            }
-          }
-        ]
-      }
-    },
     "Material": "Empty"
   },
   "PlayerAnimationsId": "Block",

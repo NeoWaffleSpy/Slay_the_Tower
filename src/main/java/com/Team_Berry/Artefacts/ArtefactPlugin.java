@@ -4,10 +4,9 @@ import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
 import com.Team_Berry.Artefacts.Commandes.ArtefactCommand;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
-import com.Team_Berry.Artefacts.Components.Systems.ArtefactCooldownSystem;
-import com.Team_Berry.Artefacts.Components.Systems.StatEffectSystem;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
+import com.Team_Berry.Artefacts.Systems.*;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.component.ComponentType;
@@ -69,6 +68,9 @@ public class ArtefactPlugin extends JavaPlugin {
         ArtefactCodec.register();
         StatEffectSystem.register();
         ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new ArtefactCooldownSystem());
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new ArtefactLogicPreDamageSystem());
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new ArtefactLogicPostDamageSystem());
+        ArtefactPlugin.get().getEntityStoreRegistry().registerSystem(new ArtefactLogicDeathSystem());
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
         this.getCommandRegistry().registerCommand(new ArtefactCommand());
     }

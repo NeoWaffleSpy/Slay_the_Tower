@@ -1,9 +1,10 @@
-package com.Team_Berry.Artefacts.Components.Data;
+package com.Team_Berry.Artefacts.Components;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.Interfaces.IArtefactLogic;
+import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
 import com.Team_Berry.Artefacts.UI.ArtefactHud;
-import com.Team_Berry.Artefacts.UI.ShieldHud;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
@@ -16,14 +17,15 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class StatEffectComponent implements Component<EntityStore> {
     public Map<ArtefactCodec, Integer> artefactList = new HashMap<>();
     public ArrayList<ArtefactCodec> artefactUpdated = new ArrayList<>();
     public ArtefactHud artefactHud;
-    public ShieldHud shieldHud;
     public Map<ArtefactCodec, Long> artefactCooldowns = new HashMap<>();
     public Map<ArtefactCodec, Long> lastNotifiedReady = new HashMap<>();
+    public Map<String, Object> customArtefactData = new HashMap<>();
 
     public StatEffectComponent() {
         this.flush();
@@ -74,8 +76,7 @@ public class StatEffectComponent implements Component<EntityStore> {
         artefactUpdated.addAll(artefactList.keySet());
         if (artefactHud != null)
             artefactHud.refresh();
-        if (shieldHud != null)
-            shieldHud.displayShield(false);
+        customArtefactData.clear();
     }
 
     public int getAmount(ArtefactCodec artefact) {
@@ -86,5 +87,17 @@ public class StatEffectComponent implements Component<EntityStore> {
     public @Nullable Component<EntityStore> clone() {
         return null;
     }
+
+    public <T extends IArtefactLogic> void triggerLogic(Class<T> logicClass, BiConsumer<ArtefactCodec, T> action) {
+        for (ArtefactCodec artefact : this.artefactList.keySet()) {
+            if (this.getAmount(artefact) > 0) {
+                IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact);
+                if (logicClass.isInstance(logic)) {
+                    action.accept(artefact, logicClass.cast(logic));
+                }
+            }
+        }
+    }
+
 
 }

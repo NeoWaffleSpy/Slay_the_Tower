@@ -7,5 +7,6 @@
   "TranslationProperties": {
     "Name": "Explosion_On_Kill_Artefact.name",
     "Description": "Explosion_On_Kill_Artefact.description"
-  }
+  },
+  "LogicId": "ExplosionOnKill"
 }

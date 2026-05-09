@@ -4,5 +4,15 @@
   "TranslationProperties": {
     "Name": "Shield_Artefact.name",
     "Description": "Shield_Artefact.description"
+  },
+  "LogicId": "Shield",
+  "LogicNumbers": {
+    "baseCooldown": 60000,
+    "minCooldown": 10000,
+    "stackMultiplier": 0.9
+  },
+  "LogicStrings": {
+    "readyEffect": "Artefact_Shield_Ready",
+    "Artefact_Shield_Ready": "Artefact_Shield_Break"
   }
 }

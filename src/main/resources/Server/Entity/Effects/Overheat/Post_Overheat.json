@@ -1,0 +1,14 @@
+{
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "SystemId": "Overheat_Explosion",
+        "Scale": 2
+      }
+    ],
+    "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Impact"
+  },
+  "Duration": 0.1
+}

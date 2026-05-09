@@ -1,0 +1,30 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Overheat_Heat_Wave"
+    },
+    {
+      "SpawnerId": "Explosion_Small_Flash_Glow"
+    },
+    {
+      "SpawnerId": "Explosion_Small_Sparks_Out",
+      "FixedRotation": false
+    },
+    {
+      "SpawnerId": "Explosion_Small_Sparks_Linger",
+      "FixedRotation": false
+    },
+    {
+      "SpawnerId": "Explosion_Small_Hot"
+    },
+    {
+      "SpawnerId": "Explosion_Small_Shockwave"
+    },
+    {
+      "SpawnerId": "Explosion_Small_Glow"
+    }
+  ],
+  "BoundingRadius": 100.0,
+  "CullDistance": 100.0,
+  "IsImportant": false
+}

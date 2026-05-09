@@ -4,7 +4,7 @@ import au.ellie.hyui.builders.HyUIPage;
 import au.ellie.hyui.builders.PageBuilder;
 import au.ellie.hyui.html.TemplateProcessor;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;

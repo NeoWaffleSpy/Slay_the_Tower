@@ -7,7 +7,7 @@ import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Codecs.Enums.TargetType;
 import com.Team_Berry.Artefacts.Codecs.Enums.TriggerType;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Game.GameManager;
 import com.Team_Berry.Game.GamePlugin;
 import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;

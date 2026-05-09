@@ -1,9 +1,8 @@
 package com.Team_Berry.Artefacts.Commandes;
 
-import com.Team_Berry.Artefacts.UI.ArtefactHud;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -22,6 +21,7 @@ import java.awt.*;
 public class GiveArtefactCommand extends AbstractPlayerCommand {
     private final RequiredArg<String> artefactName;
     private final DefaultArg<Integer> artefactCount;
+
     public GiveArtefactCommand() {
         super("give", "Give an artefact to a player");
         this.artefactName = this.withRequiredArg("ArtefactName", "The name of the artefact to give", ArgTypes.STRING);

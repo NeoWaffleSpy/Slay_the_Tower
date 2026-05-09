@@ -1,10 +1,10 @@
-package com.Team_Berry.Artefacts.Components.Systems;
+package com.Team_Berry.Artefacts.Systems;
 
-import com.Team_Berry.Artefacts.Artefact.IArtefactLogic;
-import com.Team_Berry.Artefacts.Artefact.ICooldownArtefact;
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
+import com.Team_Berry.Artefacts.Interfaces.IArtefactLogic;
+import com.Team_Berry.Artefacts.Interfaces.ICooldownArtefact;
 import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -34,7 +34,7 @@ public class ArtefactCooldownSystem extends EntityTickingSystem<EntityStore> {
 
         for (ArtefactCodec artefact : comp.artefactList.keySet()) {
             if (comp.getAmount(artefact) > 0) {
-                IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact.getId());
+                IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact);
                 if (logic instanceof ICooldownArtefact) {
                     ICooldownArtefact cdLogic = (ICooldownArtefact) logic;
 
@@ -42,7 +42,7 @@ public class ArtefactCooldownSystem extends EntityTickingSystem<EntityStore> {
                     long lastNotified = comp.lastNotifiedReady.getOrDefault(artefact, 0L);
 
                     if (lastUsed != 0 && lastNotified < lastUsed) {
-                        long finalCooldown = cdLogic.getCooldownDuration(comp.getAmount(artefact));
+                        long finalCooldown = cdLogic.getCooldownDuration(artefact, comp.getAmount(artefact));
 
                         if (now - lastUsed >= finalCooldown) {
                             cdLogic.onCooldownReady(artefact, targetRef, comp, commandBuffer);

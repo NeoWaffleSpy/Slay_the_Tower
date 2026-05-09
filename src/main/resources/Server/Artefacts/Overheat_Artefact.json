@@ -1,0 +1,19 @@
+{
+  "LogicId": "Overheat",
+  "LogicNumbers": {
+    "explosionDamage": 10,
+    "explosionRadius": 5
+  },
+  "LogicStrings": {
+    "overheatEffect1": "Overheat1",
+    "overheatEffect2": "Overheat2",
+    "overheatEffect3": "Overheat3",
+    "overheatEffect4": "Overheat4",
+    "postOverheatEffect": "Post_Overheat"
+  },
+  "Icon": "UI/Custom/ArtefactIcons/CritDamage.png",
+  "Stats": [
+    "Bonus_Overheat_Damage"
+  ],
+  "Rarity": "Rare"
+}

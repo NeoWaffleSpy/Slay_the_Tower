@@ -1,6 +1,7 @@
 package com.Team_Berry.Artefacts.Codecs;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
+import com.Team_Berry.Artefacts.Codecs.Enums.ArtefactLogicEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
@@ -21,6 +22,7 @@ import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
+import com.hypixel.hytale.codec.codecs.map.MapCodec;
 import com.hypixel.hytale.codec.validation.ValidatorCache;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.core.asset.common.CommonAssetValidator;
@@ -28,7 +30,9 @@ import com.hypixel.hytale.server.core.asset.type.item.config.ItemTranslationProp
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<String, ArtefactCodec>> {
     public static final AssetBuilderCodec<String, ArtefactCodec> CODEC;
@@ -40,6 +44,10 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         CODEC = AssetBuilderCodec.builder(ArtefactCodec.class, ArtefactCodec::new, Codec.STRING,
                         (t, k) -> t.artefactName = k, (t) -> t.artefactName,
                         (asset, data) -> asset.data = data, (asset) -> asset.data)
+                .append(new KeyedCodec<>("LogicId", new EnumCodec<>(ArtefactLogicEnum.class)),
+                        (artefact, val) -> artefact.logicId = val,
+                        (artefact) -> artefact.logicId)
+                .documentation("Select the logic to attach to this artefact.").add()
                 /*.metadata(new UIEditorPreview(UIEditorPreview.PreviewType.ITEM))
                 .metadata(new UITypeIcon("Item.png"))
                 .metadata(new UIRebuildCaches(false, UIRebuildCaches.ClientCache.ITEM_ICONS))*/
@@ -60,6 +68,12 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
                 .append(new KeyedCodec<>("Rarity", new EnumCodec<>(RarityEnum.class)),
                         (obj, val) -> obj.rarity = val,
                         obj -> obj.rarity).add()
+                .append(new KeyedCodec<>("LogicNumbers", new MapCodec<>(Codec.FLOAT, HashMap::new)),
+                        (artefact, map) -> artefact.logicNumbers = (Map<String, Float>) map,
+                        (artefact) -> artefact.logicNumbers).add()
+                .append(new KeyedCodec<>("LogicStrings", new MapCodec<>(Codec.STRING, HashMap::new)),
+                        (artefact, map) -> artefact.logicStrings = (Map<String, String>) map,
+                        (artefact) -> artefact.logicStrings).add()
                 .append(new KeyedCodec<>("TranslationProperties", ItemTranslationProperties.CODEC),
                         (artefact, s) -> artefact.translationProperties = s,
                         (artefact) -> artefact.translationProperties)
@@ -69,11 +83,14 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
     }
 
     public String artefactName = "Template";
+    public ArtefactLogicEnum logicId = ArtefactLogicEnum.NONE;
     public String icon = null;
     public String shortIconPath = null;
     public String[] statusList;
     public String[] statList;
     public RarityEnum rarity = RarityEnum.DEBUG;
+    public Map<String, Float> logicNumbers = null;
+    public Map<String, String> logicStrings = null;
     public ItemTranslationProperties translationProperties = new ItemTranslationProperties("server.artefact." + this.artefactName + ".name", "server.artefact." + this.artefactName + ".description");
     private AssetExtraInfo.Data data;
 
@@ -169,5 +186,19 @@ public class ArtefactCodec implements JsonAssetWithMap<String, DefaultAssetMap<S
         ArrayList<StatCodec> list = new ArrayList<>();
         statStringArray().forEach((s) -> list.add(map.getAsset(s)));
         return list;
+    }
+
+    public float getLogicNumber(String key, float defaultValue) {
+        if (logicNumbers == null || !logicNumbers.containsKey(key)) {
+            return defaultValue;
+        }
+        return logicNumbers.get(key);
+    }
+
+    public String getLogicString(String key, String defaultValue) {
+        if (logicStrings == null || !logicStrings.containsKey(key)) {
+            return defaultValue;
+        }
+        return logicStrings.get(key);
     }
 }

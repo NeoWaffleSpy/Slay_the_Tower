@@ -4,5 +4,6 @@
   "TranslationProperties": {
     "Name": "Speed_On_Kill_Artefact.name",
     "Description": "Speed_On_Kill_Artefact.description"
-  }
+  },
+  "LogicId": "SpeedOnKill"
 }

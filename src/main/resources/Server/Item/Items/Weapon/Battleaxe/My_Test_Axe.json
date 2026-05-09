@@ -7,7 +7,7 @@
   "Model": "Items/Weapons/Battleaxe/Adamantite.blockymodel",
   "Texture": "Items/Weapons/Battleaxe/Adamantite_Texture.png",
   "Icon": "Icons/ItemsGenerated/Weapon_Battleaxe_Adamantite.png",
-  "Quality": "Developer",
+  "Quality": "Legendary",
   "ItemLevel": 40,
   "Recipe": {
     "TimeSeconds": 4.5,
@@ -145,6 +145,14 @@
         "Kweebec_Boss_Projectile_Assault"
       ]
     },
-    "Secondary": "Root_Kweebec_Boss_Punch_Aoe"
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Overheat4"
+        }
+      ]
+    }
   }
 }

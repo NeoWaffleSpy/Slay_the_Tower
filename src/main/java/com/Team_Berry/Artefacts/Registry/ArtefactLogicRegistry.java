@@ -1,23 +1,33 @@
 package com.Team_Berry.Artefacts.Registry;
 
-import com.Team_Berry.Artefacts.Artefact.IArtefactLogic;
-import com.Team_Berry.Artefacts.Artefact.ShieldArtefact;
+import com.Team_Berry.Artefacts.ArtefactLogic.*;
+import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
+import com.Team_Berry.Artefacts.Codecs.Enums.ArtefactLogicEnum;
+import com.Team_Berry.Artefacts.Interfaces.IArtefactLogic;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class ArtefactLogicRegistry {
-    private static final Map<String, IArtefactLogic> logicMap = new HashMap<>();
+    private static final Map<ArtefactLogicEnum, IArtefactLogic> logicMap = new EnumMap<>(ArtefactLogicEnum.class);
 
     public static void registerAll() {
-        register("Shield_Artefact", new ShieldArtefact());
+        register(ArtefactLogicEnum.SHIELD, new ShieldArtefact());
+        register(ArtefactLogicEnum.REFLECT, new ProjectileReflectArtefact());
+        register(ArtefactLogicEnum.EXPLOSION_ON_KILL, new ExplosionOnKillArtefact());
+        register(ArtefactLogicEnum.SPEED_ON_KILL, new SpeedOnKillArtefact());
+        register(ArtefactLogicEnum.OVERHEAT, new OverheatArtefact());
+
     }
 
-    private static void register(String assetId, IArtefactLogic logic) {
-        logicMap.put(assetId, logic);
+    private static void register(ArtefactLogicEnum logicId, IArtefactLogic logic) {
+        logicMap.put(logicId, logic);
     }
 
-    public static IArtefactLogic getLogic(String assetId) {
-        return logicMap.get(assetId);
+    public static IArtefactLogic getLogic(ArtefactCodec codec) {
+        if (codec.logicId != null && codec.logicId != ArtefactLogicEnum.NONE) {
+            return logicMap.get(codec.logicId);
+        }
+        return null;
     }
 }

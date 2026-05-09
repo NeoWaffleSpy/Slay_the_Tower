@@ -7,5 +7,6 @@
   },
   "Stats": [
     "Bonus_Projectile_Reflect_Damage"
-  ]
+  ],
+  "LogicId": "Reflect"
 }

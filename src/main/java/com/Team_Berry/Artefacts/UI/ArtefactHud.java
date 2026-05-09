@@ -4,7 +4,7 @@ import au.ellie.hyui.builders.HudBuilder;
 import au.ellie.hyui.builders.HyUIHud;
 import au.ellie.hyui.html.TemplateProcessor;
 import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 
 import java.util.ArrayList;
@@ -42,5 +42,6 @@ public class ArtefactHud {
         hud.refreshOrRerender(true, true);
     }
 
-    private record ImageClass(String image, int count) {}
+    private record ImageClass(String image, int count) {
+    }
 }

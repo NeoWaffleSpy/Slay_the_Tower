@@ -1,7 +1,7 @@
 package com.Team_Berry.Game.Managers;
 
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
-import com.Team_Berry.Artefacts.Components.Data.StatEffectComponent;
+import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Artefacts.UI.ArtefactSelection;
 import com.Team_Berry.Artefacts.UI.SkillSelection;
 import com.Team_Berry.Artefacts.UI.WeaponSelection;
@@ -19,10 +19,8 @@ import java.util.*;
 
 public class RewardManager {
 
-    private final World world;
-
     private static final String INVISIBLE_HP_ARTEFACT = "Invisible_Hp_Artefact";
-
+    private final World world;
     private final Map<UUID, Integer> historicalSkillCounts = new HashMap<>();
     private final Map<UUID, String> playerClasses = new HashMap<>();
     private final Map<UUID, Set<String>> playerOwnedSkills = new HashMap<>();

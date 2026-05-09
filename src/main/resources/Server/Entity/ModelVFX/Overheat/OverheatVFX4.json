@@ -1,0 +1,20 @@
+{
+  "SwitchTo": "Transparency",
+  "EffectDirection": "BottomUp",
+  "AnimationDuration": 1,
+  "AnimationRange": {
+    "Y": 1,
+    "X": 0.6
+  },
+  "UseBloomOnHighlight": true,
+  "NoiseScale": {
+    "X": 29.0,
+    "Y": 25.0
+  },
+  "PostColorOpacity": 0.792,
+  "UseProgessiveHighlight": false,
+  "HighlightThickness": 3,
+  "LoopOption": "PlayOnce",
+  "PostColor": "#390000",
+  "HighlightColor": "#ff9021"
+}

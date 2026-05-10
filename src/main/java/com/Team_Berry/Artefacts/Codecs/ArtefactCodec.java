@@ -1,10 +1,10 @@
 package com.Team_Berry.Artefacts.Codecs;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
-import com.Team_Berry.Artefacts.Codecs.Enums.ArtefactLogicEnum;
 import com.Team_Berry.Artefacts.Codecs.Enums.RarityEnum;
 import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Codecs.StatusEffect.StatusEffectCodec;
+import com.Team_Berry.Artefacts.Registry.ArtefactLogicEnum;
 import com.Team_Berry.Utils.Codecs.AssetWrapperCodec;
 import com.Team_Berry.Utils.TooltipInjector.StringFormatter;
 import com.Team_Berry.Utils.TooltipInjector.TooltipInjector;

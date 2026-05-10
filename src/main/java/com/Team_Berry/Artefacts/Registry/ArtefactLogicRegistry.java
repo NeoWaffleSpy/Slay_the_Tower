@@ -2,7 +2,6 @@ package com.Team_Berry.Artefacts.Registry;
 
 import com.Team_Berry.Artefacts.ArtefactLogic.*;
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
-import com.Team_Berry.Artefacts.Codecs.Enums.ArtefactLogicEnum;
 import com.Team_Berry.Artefacts.Interfaces.IArtefactLogic;
 
 import java.util.EnumMap;
@@ -17,6 +16,8 @@ public class ArtefactLogicRegistry {
         register(ArtefactLogicEnum.EXPLOSION_ON_KILL, new ExplosionOnKillArtefact());
         register(ArtefactLogicEnum.SPEED_ON_KILL, new SpeedOnKillArtefact());
         register(ArtefactLogicEnum.OVERHEAT, new OverheatArtefact());
+        register(ArtefactLogicEnum.BLEED, new BleedArtefact());
+
 
     }
 

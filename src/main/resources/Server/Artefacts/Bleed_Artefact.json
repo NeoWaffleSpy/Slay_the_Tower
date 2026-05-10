@@ -4,5 +4,6 @@
   "TranslationProperties": {
     "Name": "Bleed_Artefact.name",
     "Description": "Bleed_Artefact.description"
-  }
+  },
+  "LogicId": "Bleed"
 }

@@ -1,4 +1,4 @@
-package com.Team_Berry.Artefacts.Codecs.Enums;
+package com.Team_Berry.Artefacts.Registry;
 
 public enum ArtefactLogicEnum {
     NONE,
@@ -6,5 +6,6 @@ public enum ArtefactLogicEnum {
     REFLECT,
     EXPLOSION_ON_KILL,
     SPEED_ON_KILL,
-    OVERHEAT
+    OVERHEAT,
+    BLEED
 }

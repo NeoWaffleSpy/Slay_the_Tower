@@ -1,4 +1,7 @@
 {
+  "OverlapBehavior": "Overwrite",
+  "Duration": 2,
+  "Infinite": false,
   "ApplicationEffects": {
     "ScreenEffect": "ScreenEffects/Fire.png",
     "WorldSoundEventId": "SFX_Effect_Burn_World",
@@ -6,14 +9,5 @@
     "ModelVFXId": "OverheatVFX2",
     "EntityTopTint": "#cf2302",
     "EntityBottomTint": "#100600"
-  },
-  "DamageEffects": {
-    "WorldSoundEventId": "SFX_Effect_Burn_World",
-    "PlayerSoundEventId": "SFX_Effect_Burn_Local"
-  },
-  "OverlapBehavior": "Overwrite",
-  "Infinite": false,
-  "Debuff": true,
-  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
-  "Duration": 2
+  }
 }

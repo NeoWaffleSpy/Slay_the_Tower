@@ -13,7 +13,7 @@
       }
     ]
   },
-  "DamageCalculatorCooldown": 2,
+  "DamageCalculatorCooldown": 2.5,
   "DamageCalculator": {
     "BaseDamage": {
       "Fire": 1

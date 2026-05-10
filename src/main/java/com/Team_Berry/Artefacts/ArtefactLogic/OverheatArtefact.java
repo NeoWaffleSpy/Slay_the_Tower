@@ -81,7 +81,9 @@ public class OverheatArtefact implements IOnDealPreDamage {
         int currentStage = 0;
         for (int i = finalMaxStages; i >= 1; i--) {
             String effectName = codec.getLogicString("overheatEffect" + i, "");
-            EntityEffect effect = EntityEffect.getAssetMap().getAsset(effectName);
+            String nonVisualName = effectName + "_Non_Visual";
+            EntityEffect effect = EntityEffect.getAssetMap().getAsset(nonVisualName);
+
             if (effect != null && effectController.hasEffect(effect)) {
                 currentStage = i;
                 break;
@@ -118,55 +120,104 @@ public class OverheatArtefact implements IOnDealPreDamage {
 
             for (int i = 1; i <= finalMaxStages; i++) {
                 String effectName = codec.getLogicString("overheatEffect" + i, "");
+
                 EntityEffect effect = EntityEffect.getAssetMap().getAsset(effectName);
                 if (effect != null && effectController.hasEffect(effect)) {
                     int effectIndex = EntityEffect.getAssetMap().getIndex(effect.getId());
                     effectController.removeEffect(targetRef, effectIndex, cmds);
+                }
+
+                String nonVisualName = effectName + "_Non_Visual";
+                EntityEffect nonVisualEffect = EntityEffect.getAssetMap().getAsset(nonVisualName);
+                if (nonVisualEffect != null && effectController.hasEffect(nonVisualEffect)) {
+                    int nonVisIndex = EntityEffect.getAssetMap().getIndex(nonVisualEffect.getId());
+                    effectController.removeEffect(targetRef, nonVisIndex, cmds);
                 }
             }
 
             triggerOverheatExplosion(codec, attackerRef, targetRef, cmds, damageMultiplier);
         } else {
 
-            if (currentStage > 0) {
-                String oldEffectName = codec.getLogicString("overheatEffect" + currentStage, "");
-                EntityEffect oldEffect = EntityEffect.getAssetMap().getAsset(oldEffectName);
-                if (oldEffect != null) {
-                    int oldIndex = EntityEffect.getAssetMap().getIndex(oldEffect.getId());
-                    effectController.removeEffect(targetRef, oldIndex, cmds);
+            if (currentStage >= finalMaxStages) {
+                for (int i = 1; i <= finalMaxStages; i++) {
+                    String effectName = codec.getLogicString("overheatEffect" + i, "");
+
+                    EntityEffect effect = EntityEffect.getAssetMap().getAsset(effectName);
+                    if (effect != null && effectController.hasEffect(effect)) {
+                        int effectIndex = EntityEffect.getAssetMap().getIndex(effect.getId());
+                        effectController.removeEffect(targetRef, effectIndex, cmds);
+                    }
+
+                    String nonVisualName = effectName + "_Non_Visual";
+                    EntityEffect nonVisualEffect = EntityEffect.getAssetMap().getAsset(nonVisualName);
+                    if (nonVisualEffect != null && effectController.hasEffect(nonVisualEffect)) {
+                        int nonVisIndex = EntityEffect.getAssetMap().getIndex(nonVisualEffect.getId());
+                        effectController.removeEffect(targetRef, nonVisIndex, cmds);
+                    }
                 }
             }
 
             if (currentStage < finalMaxStages) {
                 int nextStage = currentStage + 1;
-                String newEffectName = codec.getLogicString("overheatEffect" + nextStage, "");
-                EntityEffect newEffect = EntityEffect.getAssetMap().getAsset(newEffectName);
+                String baseEffectName = codec.getLogicString("overheatEffect" + nextStage, "");
 
-                if (newEffect != null) {
-                    overheatScheduler.schedule("Visuals_" + targetRef.toString() + "_" + System.currentTimeMillis(), () -> {
-                        if (targetRef.isValid()) {
-                            removeRedFlash(targetRef, cmds, effectController);
-                            EffectControllerComponent asyncEffectController = cmds.getComponent(targetRef, EffectControllerComponent.getComponentType());
-                            if (asyncEffectController != null) {
-                                asyncEffectController.addEffect(targetRef, newEffect, cmds);
+                EntityEffect visualEffect = EntityEffect.getAssetMap().getAsset(baseEffectName);
+                EntityEffect nonVisualEffect = EntityEffect.getAssetMap().getAsset(baseEffectName + "_Non_Visual");
+
+                if (visualEffect != null || nonVisualEffect != null) {
+
+                    if (targetRef.isValid()) {
+                        EffectControllerComponent asyncEffectController = cmds.getComponent(targetRef, EffectControllerComponent.getComponentType());
+                        if (asyncEffectController != null) {
+
+                            if (nonVisualEffect != null) {
+                                asyncEffectController.addEffect(targetRef, nonVisualEffect, cmds);
+                            }
+
+                            if (visualEffect != null) {
+                                int finalCurrentStage = currentStage;
+                                overheatScheduler.schedule("Visuals_" + targetRef + "_" + System.currentTimeMillis(), () -> {
+                                    removeRedFlash(targetRef, cmds, effectController);
+
+                                    if (finalCurrentStage > 0) {
+                                        String oldVisualName = codec.getLogicString("overheatEffect" + finalCurrentStage, "");
+                                        EntityEffect oldVisualEffect = EntityEffect.getAssetMap().getAsset(oldVisualName);
+                                        if (oldVisualEffect != null) {
+                                            int oldIndex = EntityEffect.getAssetMap().getIndex(oldVisualEffect.getId());
+                                            asyncEffectController.removeEffect(targetRef, oldIndex, cmds);
+                                        }
+                                    }
+
+                                    asyncEffectController.addEffect(targetRef, visualEffect, cmds);
+                                }, 10, TimeUnit.MILLISECONDS);
                             }
                         }
-                    }, 10, TimeUnit.MILLISECONDS);
+                    }
+
                 }
             } else {
                 if (!postEffectName.isEmpty()) {
                     EntityEffect postEffect = EntityEffect.getAssetMap().getAsset(postEffectName);
 
                     if (postEffect != null) {
-                        overheatScheduler.schedule("Charred_" + targetRef.toString() + "_" + System.currentTimeMillis(), () -> {
-                            if (targetRef.isValid()) {
-                                removeRedFlash(targetRef, cmds, effectController);
-                                EffectControllerComponent asyncEffectController = cmds.getComponent(targetRef, EffectControllerComponent.getComponentType());
-                                if (asyncEffectController != null) {
+                        if (targetRef.isValid()) {
+                            EffectControllerComponent asyncEffectController = cmds.getComponent(targetRef, EffectControllerComponent.getComponentType());
+                            if (asyncEffectController != null) {
+
+                                asyncEffectController.addEffect(targetRef, postEffect, cmds);
+                                overheatScheduler.schedule("Charred_" + targetRef.toString() + "_" + System.currentTimeMillis(), () -> {
+                                    removeRedFlash(targetRef, cmds, effectController);
+                                    String oldVisualName = codec.getLogicString("overheatEffect" + finalMaxStages, "");
+                                    EntityEffect oldVisualEffect = EntityEffect.getAssetMap().getAsset(oldVisualName);
+                                    if (oldVisualEffect != null) {
+                                        int oldIndex = EntityEffect.getAssetMap().getIndex(oldVisualEffect.getId());
+                                        asyncEffectController.removeEffect(targetRef, oldIndex, cmds);
+                                    }
+
                                     asyncEffectController.addEffect(targetRef, postEffect, cmds);
-                                }
+                                }, 10, TimeUnit.MILLISECONDS);
                             }
-                        }, 10, TimeUnit.MILLISECONDS);
+                        }
                     }
                 }
                 triggerOverheatExplosion(codec, attackerRef, targetRef, cmds, 1.0f);

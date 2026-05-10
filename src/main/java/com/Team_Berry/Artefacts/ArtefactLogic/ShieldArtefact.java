@@ -71,6 +71,8 @@ public class ShieldArtefact implements IOnTakePreDamage, ICooldownArtefact, IOnA
 
     @Override
     public void onTakePreDamage(ArtefactCodec codec, Ref<EntityStore> targetRef, Damage damage, StatEffectComponent statComp, CommandBuffer<EntityStore> cmds) {
+        if (damage.getAmount() <= 0) return;
+
         long now = cmds.getResource(TimeResource.getResourceType()).getNow().toEpochMilli();
         long lastUsed = statComp.artefactCooldowns.getOrDefault(codec, 0L);
         long finalCooldown = getCooldownDuration(codec, statComp.getAmount(codec));

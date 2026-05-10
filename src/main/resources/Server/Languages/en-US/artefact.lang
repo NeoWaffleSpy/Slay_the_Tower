@@ -30,3 +30,6 @@ Speed_On_Kill_Artefact.description=Gain a burst of speed after killing an enemy.
 
 Stamina_Artefact.name=Stamina Boost
 Stamina_Artefact.description=Increases your maximum stamina.
+
+Overheat_Artefact.name=Overheat
+Overheat_Artefact.description=Attacks heat up the enemy. Attack fast to make them Overheat and explode!

@@ -52,7 +52,7 @@ public class ArtefactLogicPreDamageSystem extends DamageEventSystem {
             StatEffectComponent attackerStatComp = commandBuffer.getComponent(attackerRef, StatEffectComponent.getComponentType());
             if (attackerStatComp != null) {
                 attackerStatComp.triggerLogic(IOnDealPreDamage.class, (artefact, logic) -> {
-                    logic.onDealDamage(artefact, attackerRef, targetRef, damage, attackerStatComp, commandBuffer);
+                    logic.onDealPreDamage(artefact, attackerRef, targetRef, damage, attackerStatComp, commandBuffer);
                 });
             }
         }

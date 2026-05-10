@@ -9,11 +9,16 @@
     "overheatEffect2": "Overheat2",
     "overheatEffect3": "Overheat3",
     "overheatEffect4": "Overheat4",
-    "postOverheatEffect": "Post_Overheat"
+    "postOverheatEffect": "Post_Overheat",
+    "explosionParticle": "Overheat_Explosion"
   },
   "Icon": "UI/Custom/ArtefactIcons/Overheat_Artefact.png",
   "Stats": [
     "Bonus_Overheat_Damage"
   ],
-  "Rarity": "Rare"
+  "Rarity": "Rare",
+  "TranslationProperties": {
+    "Name": "Overheat_Artefact.name",
+    "Description": "Overheat_Artefact.description"
+  }
 }

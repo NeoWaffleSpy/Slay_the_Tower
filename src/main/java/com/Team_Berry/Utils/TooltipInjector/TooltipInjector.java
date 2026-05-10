@@ -289,6 +289,8 @@ public class TooltipInjector {
         registerArtifact("Speed_On_Kill_Artefact", "Effect", "Speed on Kill", colorMobility, "Increases speed gained");
 
         registerArtifact("Stamina_Artefact", "Max Stamina", "+5", colorMobility, null);
+
+        registerArtifact("Overheat_Artefact", "Explosion Damage", "15", colorDamage, "Increases Explosion Damage");
     }
 
     private static void registerArtifact(String id,

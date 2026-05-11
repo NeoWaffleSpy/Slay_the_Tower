@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Rubble_Stone.name",
+    "Name": "KillAura",
     "Description": "server.items.Rubble_Stone.description"
   },
   "Icon": "Icons/ItemsGenerated/Rubble_Stone.png",
@@ -24,7 +24,7 @@
       "Interactions": [
         {
           "Parent": "Item_Throw_Projectile",
-          "ProjectileId": "TEST1_Projectile"
+          "ProjectileId": "KillAura"
         }
       ]
     }

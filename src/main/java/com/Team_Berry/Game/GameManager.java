@@ -59,7 +59,7 @@ public class GameManager {
         this.weatherManager = new WeatherManager(world);
         this.roomManager = new RoomManager(world);
         this.roomChestsManager = new RoomChestsManager(world);
-        this.teleportManager = new TeleportManager(world);
+        this.teleportManager = new TeleportManager(world, scheduler);
         this.rewardManager = new RewardManager(world);
         this.roomMobManager = new RoomMobManager(world);
         this.playerStateManager = new PlayerStateManager(world);

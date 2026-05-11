@@ -280,4 +280,8 @@ public class RoomMobManager {
         }
         return validGroups.isEmpty() ? null : validGroups;
     }
+
+    public Set<UUID> getCurrentMobUUIDs() {
+        return new HashSet<>(currentRoomMobs);
+    }
 }

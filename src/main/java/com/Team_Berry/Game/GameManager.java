@@ -59,7 +59,7 @@ public class GameManager {
         this.weatherManager = new WeatherManager(world);
         this.roomManager = new RoomManager(world);
         this.roomChestsManager = new RoomChestsManager(world);
-        this.teleportManager = new TeleportManager(world);
+        this.teleportManager = new TeleportManager(world, scheduler);
         this.rewardManager = new RewardManager(world);
         this.roomMobManager = new RoomMobManager(world);
         this.playerStateManager = new PlayerStateManager(world);
@@ -472,7 +472,7 @@ public class GameManager {
                 weatherManager.setRandomRoomWeather();
             }
 
-            teleportManager.teleportParticipantsToRoom(playersToTeleport, roomManager.getCurrentRoom().left());
+            teleportManager.teleportParticipantsToRoom(playersToTeleport, roomManager.getCurrentRoom().left(), partyManager.getActiveParticipants(), roomMobManager.getCurrentMobUUIDs());
         }
 
         scheduler.schedule("late_cleanup_" + world.getName(), roomMobManager::processPendingCleanup, 1, TimeUnit.SECONDS);
@@ -564,7 +564,7 @@ public class GameManager {
     }
 
     private void teleportToSpectatorPosition(PlayerRef playerRef) {
-        teleportManager.teleportToSpectatorPosition(playerRef, roomManager.getCurrentRoom() != null ? roomManager.getCurrentRoom().left() : null);
+        teleportManager.teleportToSpectatorPosition(playerRef, roomManager.getCurrentRoom() != null ? roomManager.getCurrentRoom().left() : null, partyManager.getActiveParticipants(), roomMobManager.getCurrentMobUUIDs());
     }
 
 
@@ -579,7 +579,7 @@ public class GameManager {
                     playerModelManager.resetPlayerModel(participant);
                     playerStateManager.clearInventory(participant);
 
-                    teleportManager.teleportParticipantsToRoom(List.of(participant), postgameRoom);
+                    teleportManager.teleportParticipantsToRoom(List.of(participant), postgameRoom, partyManager.getActiveParticipants(), null);
                 }
             } else {
                 log("Error: No postgame room defined! Falling back to immediate instance ejection.");

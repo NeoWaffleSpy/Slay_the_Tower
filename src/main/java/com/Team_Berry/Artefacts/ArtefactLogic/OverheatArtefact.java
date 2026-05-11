@@ -155,6 +155,15 @@ public class OverheatArtefact implements IOnDealPreDamage {
                         effectController.removeEffect(targetRef, nonVisIndex, cmds);
                     }
                 }
+            } else {
+                if (currentStage > 0) {
+                    String oldVisualName = codec.getLogicString("overheatEffect" + currentStage, "");
+                    EntityEffect oldVisualEffect = EntityEffect.getAssetMap().getAsset(oldVisualName);
+                    if (oldVisualEffect != null) {
+                        int oldIndex = EntityEffect.getAssetMap().getIndex(oldVisualEffect.getId());
+                        effectController.removeEffect(targetRef, oldIndex, cmds);
+                    }
+                }
             }
 
             if (currentStage < finalMaxStages) {
@@ -178,16 +187,6 @@ public class OverheatArtefact implements IOnDealPreDamage {
                                 int finalCurrentStage = currentStage;
                                 overheatScheduler.schedule("Visuals_" + targetRef + "_" + System.currentTimeMillis(), () -> {
                                     removeRedFlash(targetRef, cmds, effectController);
-
-                                    if (finalCurrentStage > 0) {
-                                        String oldVisualName = codec.getLogicString("overheatEffect" + finalCurrentStage, "");
-                                        EntityEffect oldVisualEffect = EntityEffect.getAssetMap().getAsset(oldVisualName);
-                                        if (oldVisualEffect != null) {
-                                            int oldIndex = EntityEffect.getAssetMap().getIndex(oldVisualEffect.getId());
-                                            asyncEffectController.removeEffect(targetRef, oldIndex, cmds);
-                                        }
-                                    }
-
                                     asyncEffectController.addEffect(targetRef, visualEffect, cmds);
                                 }, 10, TimeUnit.MILLISECONDS);
                             }

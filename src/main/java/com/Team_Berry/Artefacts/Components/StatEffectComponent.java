@@ -16,6 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -26,6 +27,8 @@ public class StatEffectComponent implements Component<EntityStore> {
     public Map<ArtefactCodec, Long> artefactCooldowns = new HashMap<>();
     public Map<ArtefactCodec, Long> lastNotifiedReady = new HashMap<>();
     public Map<String, Object> customArtefactData = new HashMap<>();
+
+    public Map<Class<? extends IArtefactLogic>, List<ArtefactCodec>> categorizedArtefacts = new HashMap<>();
 
     public StatEffectComponent() {
         this.flush();
@@ -55,16 +58,30 @@ public class StatEffectComponent implements Component<EntityStore> {
     }
 
     public void addStackToArtifact(ArtefactCodec artefact, int amount) {
-        if (artefactList.containsKey(artefact))
-            artefactList.put(artefact, artefactList.get(artefact) + amount);
-        else
-            artefactList.put(artefact, amount);
+        int currentAmount = artefactList.getOrDefault(artefact, 0);
+        int newAmount = currentAmount + amount;
+
+        if (currentAmount == 0 && newAmount > 0) {
+            categorizeArtefact(artefact);
+        } else if (currentAmount > 0 && newAmount <= 0) {
+            uncategorizeArtefact(artefact);
+        }
+
+        artefactList.put(artefact, newAmount);
         artefactUpdated.add(artefact);
         if (artefactHud != null)
             artefactHud.refresh();
     }
 
     public void setStackArtefact(ArtefactCodec artefact, int amount) {
+        int currentAmount = artefactList.getOrDefault(artefact, 0);
+
+        if (currentAmount == 0 && amount > 0) {
+            categorizeArtefact(artefact);
+        } else if (currentAmount > 0 && amount <= 0) {
+            uncategorizeArtefact(artefact);
+        }
+
         artefactList.put(artefact, amount);
         artefactUpdated.add(artefact);
         if (artefactHud != null)
@@ -89,11 +106,39 @@ public class StatEffectComponent implements Component<EntityStore> {
     }
 
     public <T extends IArtefactLogic> void triggerLogic(Class<T> logicClass, BiConsumer<ArtefactCodec, T> action) {
-        for (ArtefactCodec artefact : this.artefactList.keySet()) {
-            if (this.getAmount(artefact) > 0) {
-                IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact);
-                if (logicClass.isInstance(logic)) {
-                    action.accept(artefact, logicClass.cast(logic));
+        List<ArtefactCodec> relevantArtefacts = this.categorizedArtefacts.get(logicClass);
+
+        if (relevantArtefacts == null || relevantArtefacts.isEmpty()) {
+            return;
+        }
+
+        for (ArtefactCodec artefact : relevantArtefacts) {
+            IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact);
+            action.accept(artefact, logicClass.cast(logic));
+        }
+    }
+
+    private void categorizeArtefact(ArtefactCodec artefact) {
+        IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact);
+        if (logic == null) return;
+
+        for (Class<?> iface : logic.getClass().getInterfaces()) {
+            if (IArtefactLogic.class.isAssignableFrom(iface)) {
+                Class<? extends IArtefactLogic> logicClass = (Class<? extends IArtefactLogic>) iface;
+                categorizedArtefacts.computeIfAbsent(logicClass, k -> new ArrayList<>()).add(artefact);
+            }
+        }
+    }
+
+    private void uncategorizeArtefact(ArtefactCodec artefact) {
+        IArtefactLogic logic = ArtefactLogicRegistry.getLogic(artefact);
+        if (logic == null) return;
+
+        for (Class<?> iface : logic.getClass().getInterfaces()) {
+            if (IArtefactLogic.class.isAssignableFrom(iface)) {
+                List<ArtefactCodec> list = categorizedArtefacts.get(iface);
+                if (list != null) {
+                    list.remove(artefact);
                 }
             }
         }

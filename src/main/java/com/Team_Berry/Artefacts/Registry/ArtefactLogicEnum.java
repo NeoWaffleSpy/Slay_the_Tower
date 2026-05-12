@@ -7,5 +7,6 @@ public enum ArtefactLogicEnum {
     EXPLOSION_ON_KILL,
     SPEED_ON_KILL,
     OVERHEAT,
-    BLEED
+    BLEED,
+    HOMING_MISSILE
 }

@@ -90,6 +90,7 @@ public class StatEffectComponent implements Component<EntityStore> {
 
     public void flush() {
         ArtefactCodec.getAssetMap().getAssetMap().forEach((assetName, asset) -> artefactList.put(asset, 0));
+        categorizedArtefacts.clear();
         artefactUpdated.addAll(artefactList.keySet());
         if (artefactHud != null)
             artefactHud.refresh();

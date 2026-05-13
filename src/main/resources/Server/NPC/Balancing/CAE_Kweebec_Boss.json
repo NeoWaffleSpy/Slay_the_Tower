@@ -9,7 +9,7 @@
           "ResponseCurve": "Linear",
           "XRange": [
             0,
-            10
+            2
           ]
         }
       }
@@ -24,23 +24,14 @@
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 7
+              "SwitchPoint": 10
             }
           }
         ],
-        "WeightCoefficient": 100
+        "WeightCoefficient": 5
       },
       "FireballAssault": {
         "Type": "Ability",
-        "Conditions": [
-          {
-            "Type": "TimeSinceLastUsed",
-            "Curve": {
-              "Type": "Switch",
-              "SwitchPoint": 20
-            }
-          }
-        ],
         "AbilityType": "Primary",
         "AttackDistanceRange": [
           0,
@@ -52,19 +43,24 @@
           ]
         },
         "WeightCoefficient": 20,
-        "Target": "Hostile"
-      },
-      "VoidRain": {
-        "Type": "Ability",
+        "Target": "Hostile",
         "Conditions": [
           {
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 10
+              "SwitchPoint": 12
             }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.6,
+            "MaxValue": 1.0
           }
-        ],
+        ]
+      },
+      "VoidRain": {
+        "Type": "Ability",
         "AbilityType": "Primary",
         "AttackDistanceRange": [
           0,
@@ -75,33 +71,8 @@
             "Kweebec_Boss_Void_Rain"
           ]
         },
-        "WeightCoefficient": 10,
-        "Target": "Hostile"
-      },
-      "Summon": {
-        "Type": "Ability",
-        "Description": "Summons minions to assist in combat",
+        "WeightCoefficient": 20,
         "Target": "Hostile",
-        "OffhandSlot": 0,
-        "Ability": "Root_NPC_Skeleton_Burnt_Praetorian_Summon",
-        "AttackDistanceRange": [
-          0,
-          100
-        ],
-        "ChargeFor": 1,
-        "WeightCoefficient": 10,
-        "Conditions": [
-          {
-            "Type": "TimeSinceLastUsed",
-            "Curve": {
-              "Type": "Switch",
-              "SwitchPoint": 15
-            }
-          }
-        ]
-      },
-      "RandomExplosions": {
-        "Type": "Ability",
         "Conditions": [
           {
             "Type": "TimeSinceLastUsed",
@@ -109,8 +80,16 @@
               "Type": "Switch",
               "SwitchPoint": 10
             }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.6,
+            "MaxValue": 1.0
           }
-        ],
+        ]
+      },
+      "RandomExplosions": {
+        "Type": "Ability",
         "AbilityType": "Primary",
         "AttackDistanceRange": [
           0,
@@ -121,8 +100,22 @@
             "Kweebec_Boss_Random_Explosions"
           ]
         },
-        "WeightCoefficient": 10,
-        "Target": "Hostile"
+        "WeightCoefficient": 20,
+        "Target": "Hostile",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 20
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.6,
+            "MaxValue": 1.0
+          }
+        ]
       }
     },
     "MinActionUtility": 0.01,
@@ -132,8 +125,7 @@
           "Attacks": [
             "Root_Kweebec_Boss_Punch_Aoe"
           ],
-          "Randomise": false,
-          "MaxRange": 12,
+          "MaxRange": 10,
           "Timeout": 2,
           "CooldownRange": [
             4,
@@ -143,7 +135,6 @@
             "Melee_Damage": {
               "Interactions": [
                 {
-                  "$Comment": "When NPC overrides the InteractionVars, this info is not applicable anymore",
                   "Parent": "NPC_Attack_Melee_Damage",
                   "DamageCalculator": {
                     "Type": "Absolute",
@@ -160,9 +151,9 @@
         },
         "Actions": [
           "SelectTarget",
+          "RandomExplosions",
           "FireballAssault",
-          "VoidRain",
-          "RandomExplosions"
+          "VoidRain"
         ]
       }
     }

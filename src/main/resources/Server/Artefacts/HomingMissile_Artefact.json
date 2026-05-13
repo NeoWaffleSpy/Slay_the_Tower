@@ -4,13 +4,10 @@
     "projectileAsset": "HomingMissile_Config"
   },
   "Icon": "UI/Custom/ArtefactIcons/HomingMissile_Artefact.png",
-  "Stats": [
-    "Bonus_Overheat_Damage"
-  ],
   "Rarity": "Rare",
   "TranslationProperties": {
-    "Name": "Overheat_Artefact.name",
-    "Description": "Overheat_Artefact.description"
+    "Name": "HomingMissile_Artefact.name",
+    "Description": "HomingMissile_Artefact.description"
   },
   "LogicNumbers": {
     "missileDamage": 5

@@ -1,7 +1,7 @@
 {
   "LogicId": "Overheat",
   "LogicNumbers": {
-    "explosionDamage": 10,
+    "explosionDamage": 5,
     "explosionRadius": 5
   },
   "LogicStrings": {

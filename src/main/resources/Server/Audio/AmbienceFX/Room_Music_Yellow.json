@@ -1,7 +1,7 @@
 {
   "Music": {
     "Tracks": [
-      "Music/zUnused/BattleMarch.ogg"
+      "Music/zUnused/FightorFlight.ogg"
     ],
     "Volume": 10
   },
@@ -20,5 +20,9 @@
     "IsInstant": true
   },
   "Priority": 999,
-  "AudioCategory": "AudioCat_Music"
+  "AudioCategory": "AudioCat_Music",
+  "AmbientBed": {
+    "Track": "Sounds/Environments/Global/Weather/Sandstorm_Stereo_LOOP.ogg",
+    "Volume": 10
+  }
 }

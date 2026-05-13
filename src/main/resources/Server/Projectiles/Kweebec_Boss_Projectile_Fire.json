@@ -49,7 +49,7 @@
         "Style": "Exp"
       }
     },
-    "EntityDamage": 0,
+    "EntityDamage": 15,
     "EntityDamageRadius": 5
   }
 }

@@ -6,14 +6,14 @@
   "Gravity": 2,
   "ImpactSlowdown": 0.05,
   "TimeToLive": 1,
-  "Damage": 40,
+  "Damage": 35,
   "DeathEffectsOnHit": true,
   "DeadTime": 0.01,
   "HitParticles": {
     "SystemId": "Stone_Death"
   },
   "DepthShot": 0,
-  "PitchAdjustShot": false,
+  "PitchAdjustShot": true,
   "BounceParticles": {
     "SystemId": "Explosion_Medium",
     "Scale": 0.5
@@ -25,10 +25,10 @@
     "DamageEntities": true,
     "DamageBlocks": false,
     "BlockDamageRadius": 0,
-    "EntityDamageRadius": 5,
-    "EntityDamage": 0,
+    "EntityDamageRadius": 3.5,
+    "EntityDamage": 15,
     "Knockback": {
-      "Force": -7,
+      "Force": -5.5,
       "VelocityY": 5.5,
       "Duration": 0.1,
       "VelocityConfig": {
@@ -49,6 +49,6 @@
   "Density": 2000,
   "WaterHitImpulseLoss": 0.7,
   "SwimmingDampingFactor": 50,
-  "HorizontalCenterShot": -0.85,
+  "HorizontalCenterShot": 0,
   "VerticalCenterShot": 1
 }

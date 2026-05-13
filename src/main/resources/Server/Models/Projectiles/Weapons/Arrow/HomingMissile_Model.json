@@ -1,14 +1,14 @@
 {
   "HitBox": {
     "Max": {
-      "X": 0.15,
-      "Z": 0.15,
-      "Y": 0.15
+      "X": 0.075,
+      "Y": 0.075,
+      "Z": 0.075
     },
     "Min": {
-      "X": -0.15,
-      "Y": -0.15,
-      "Z": -0.15
+      "X": -0.075,
+      "Y": -0.075,
+      "Z": -0.075
     }
   },
   "MinScale": 1,
@@ -21,7 +21,7 @@
         "Z": 0
       },
       "TargetNodeName": "Handle",
-      "TrailId": "Arrow",
+      "TrailId": "Small_Charged",
       "RotationOffset": {
         "Yaw": 90,
         "Pitch": 0,
@@ -35,7 +35,7 @@
         "Z": 0
       },
       "TargetNodeName": "Handle",
-      "TrailId": "Arrow",
+      "TrailId": "Small_Charged",
       "RotationOffset": {
         "Yaw": 0,
         "Pitch": 45,
@@ -45,8 +45,8 @@
   ],
   "DefaultAttachments": [
     {
-      "Model": "Items/Weapons/BombArrow_Kweebec.blockymodel",
-      "Texture": "Items/Weapons/BombArrow_Kweebec.png"
+      "Model": "Items/Weapons/HomingMissile_Model.blockymodel",
+      "Texture": "Items/Weapons/HomingMissile_Texture.png"
     }
   ],
   "Model": "Items/Projectiles/Projectile.blockymodel",
@@ -60,16 +60,8 @@
       ]
     }
   },
-  "Particles": [
-    {
-      "SystemId": "Fuse_Bomb",
-      "TargetEntityPart": "Entity",
-      "TargetNodeName": "Fuse_Lit",
-      "Scale": 2
-    }
-  ],
   "Light": {
-    "Color": "#fc3",
-    "Radius": 2
+    "Color": "#fd0",
+    "Radius": 1
   }
 }

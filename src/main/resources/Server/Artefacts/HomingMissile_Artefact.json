@@ -3,7 +3,7 @@
   "LogicStrings": {
     "projectileAsset": "HomingMissile_Config"
   },
-  "Icon": "UI/Custom/ArtefactIcons/CritDamage.png",
+  "Icon": "UI/Custom/ArtefactIcons/HomingMissile_Artefact.png",
   "Stats": [
     "Bonus_Overheat_Damage"
   ],

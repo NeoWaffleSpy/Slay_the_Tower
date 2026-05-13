@@ -1,4 +1,7 @@
 {
   "Parent": "Projectile_Config_Arrow_Shortbow_Strength_4",
-  "Model": "Arrow_Kweebec_Burst"
+  "Model": "HomingMissile_Model",
+  "SpawnRotationOffset": {
+    "Pitch": 0
+  }
 }

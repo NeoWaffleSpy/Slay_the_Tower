@@ -8,10 +8,6 @@ import com.Team_Berry.Artefacts.Components.HomingMissileComponent;
 import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
 import com.Team_Berry.Artefacts.Systems.*;
-import com.Team_Berry.Game.Components.QuestNPCComponent;
-import com.Team_Berry.WeaponInteraction.Component.BleedComponent;
-import com.Team_Berry.WeaponInteraction.Component.PiercedCooldownComponent;
-import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.component.ComponentType;
@@ -32,10 +28,9 @@ import java.util.List;
 public class ArtefactPlugin extends JavaPlugin {
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     public static ArtefactPlugin instance;
+    private static ComponentType<EntityStore, HomingMissileComponent> homingMissileComponentType;
     private final List<CommandRegistration> commands = new ArrayList<>();
     private ComponentType<EntityStore, StatEffectComponent> statEffectComponentType;
-    private static ComponentType<EntityStore, HomingMissileComponent> homingMissileComponentType;
-
 
 
     public ArtefactPlugin(JavaPluginInit init) {
@@ -61,6 +56,10 @@ public class ArtefactPlugin extends JavaPlugin {
             store.addComponent(ref, StatEffectComponent.getComponentType(), new StatEffectComponent());
     }
 
+    public static ComponentType<EntityStore, HomingMissileComponent> getHomingMissileComponentType() {
+        return homingMissileComponentType;
+    }
+
     public ComponentType<EntityStore, StatEffectComponent> getStatEffectComponentType() {
         return this.statEffectComponentType;
     }
@@ -83,6 +82,8 @@ public class ArtefactPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new ArtefactLogicPreDamageSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactLogicPostDamageSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactLogicDeathSystem());
+        getEntityStoreRegistry().registerSystem(new ArtefactLogicRegenTickingSystem());
+
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
         this.getCommandRegistry().registerCommand(new ArtefactCommand());
     }
@@ -94,10 +95,6 @@ public class ArtefactPlugin extends JavaPlugin {
         commands.forEach(Registration::unregister);
         commands.clear();
         super.shutdown();
-    }
-
-    public static ComponentType<EntityStore, HomingMissileComponent> getHomingMissileComponentType() {
-        return homingMissileComponentType;
     }
 
 }

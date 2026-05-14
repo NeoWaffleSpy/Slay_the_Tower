@@ -8,5 +8,6 @@ public enum ArtefactLogicEnum {
     SPEED_ON_KILL,
     OVERHEAT,
     BLEED,
-    HOMING_MISSILE
+    HOMING_MISSILE,
+    STAMINA
 }

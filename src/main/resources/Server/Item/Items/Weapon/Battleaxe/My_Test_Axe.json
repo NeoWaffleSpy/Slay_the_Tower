@@ -142,15 +142,9 @@
   "Interactions": {
     "Primary": {
       "Interactions": [
-        "Kweebec_Boss_Projectile_Assault"
-      ]
-    },
-    "Secondary": {
-      "Interactions": [
         {
           "Type": "ApplyEffect",
-          "Entity": "Target",
-          "EffectId": "Overheat4"
+          "EffectId": "Test_Stamina_Regen"
         }
       ]
     }

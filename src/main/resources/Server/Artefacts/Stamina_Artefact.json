@@ -7,5 +7,6 @@
     "Name": "Stamina_Artefact.name",
     "Description": "Stamina_Artefact.description"
   },
-  "Rarity": "Common"
+  "Rarity": "Common",
+  "LogicId": "Stamina"
 }

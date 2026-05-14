@@ -1,56 +1,75 @@
-Save the kweebecs : Gameplay Overview
+# Save the Kweebecs: Gameplay Overview
 
-Save the kweebecs is a rogue-lite adventure game, where the players pick a class, pick their skills and pick up artefacts to build a unique set of abilities each run. The goal is to clear rooms until the players have 4 skills and fight the final boss of the game ending the run.
+**Save the Kweebecs** is a rogue-lite adventure mod for Hytale. Players select a class, curate a build of powerful skills, and collect unique artefacts to survive challenging combat encounters. Every run is a new opportunity to theorycraft the ultimate build and take down the final boss.
 
-Includes :
+> [!IMPORTANT]
+> **Dependency:** This mod requires **Hyui** to function. Please ensure it is installed before playing.
 
-    Custom hotbar skills for a completely different way to approach combat in hytale
-    Artefact that grant passive abilities
-    Custom maps and weathers
-    Custom art for skills and mobs
-    Final boss !
-    Theorycraft builds every run for a custom playstyle for you with up to 4 skills choices per run and a TON of artefact rewards
+---
 
-This mod needs Hyui to work. Please download it! 
+## Getting Started
 
- 
+To begin your adventure, you must bridge the gap between worlds:
 
-Starting the game :
+1. **Craft the Portal:** Locate the **Arcanist Workbench (Tier 0)**.
+2. **Build the Gate:** Craft the **Rogue Kweebec Portal**.
+3. **Enter the Prison:** Upon entering, you will arrive at a (mostly) safe prison.
+4. **Choose Your Path:** A Kweebec merchant will greet you and offer a choice between **two distinct classes** for your run.
+5. **Find the Haven:** Explore the area to reach the **Kweebec Haven** inside the Great Tree—this serves as your central hub.
 
-We added a craftable portal in the arcanist workbench tier 0: the Rogue Kweebec Portal.
+---
 
-The portal brings you to a prison that is (mostly) safe, a Kweebec merchant greets you and gives you the choice of two classes for your run.
+## The Gameplay Loop
 
-Explore the area and reach the Kweebec haven inside the tree. Here is the main area of the game’s loop.
+The game follows a structured cycle of preparation and combat:
 
- 
+* **Phase 1: Preparation**
+* Interact with the **Statue of Recollection** to choose your starting skill.
+* Visit the **Kweebec Merchant** for a free heal and essential healing items.
 
-Gameplay loop :
 
-The game loop always starts by interacting with the statue of recollection and then choosing one of the offered skills.
+* **Phase 2: The Portal**
+* Enter the portal to begin clearing rooms.
+* *Note: All players must select a skill from the Statue before the portal unlocks.*
 
-Then you can talk to the kweebec merchant to get a free heal and some healing items.
 
-Finally, you can hop in the portal to start clearing rooms (this action is locked until all players have chosen a skill from the statue).
+* **Phase 3: Room Clearing**
+* **Objective:** Eliminate all enemies within the arena.
+* **Loot:** Search for up to **5 randomized chests** per room containing powerful artefacts.
 
-Inside rooms, your primary objective is to find and kill all enemies. Furthermore, while inside rooms you will be offered artefact choices that you can get from chests that are available inside the rooms (there are 5 maximum chest per room but their placement is randomized each time you enter the room).
 
-After killing all enemies you will be transferred to another room.
+* **Phase 4: Progression**
+* After clearing **2 arenas**, you return to the Kweebec Tree to rest, heal, and pick a new skill.
+* Complete **3 sets** (6 arenas total) to face the **Final Boss**.
 
-After every two arenas, you will be brought back to the kweebec tree to rest, heal, and get a new skill.
 
-After three sets of two arenas, you will fight the final boss.
 
-Congratulations, you have saved the kweebecs !
+---
 
-Gameplay explanations:
+## Gameplay Mechanics
 
-Active skills : Through out your runs in Save the kweebecs you will have access to 16 different active skills across 2 classes :
+### Active Skills
 
-Active skills can be placed in the slots 1 to 4 of your hotbar, it is advised to use them through the keyboard instead of the mousewheel as they have an instant active effect upon being swapped to.
+The mod features **16 unique active skills** distributed across the two classes.
 
-When swapping to a skill, the game will automatically swap your hotbar back to your main weapon in slot 9 (the weapon cannot be dropped or moved from that slot to allow fluidity in using skills)
+* **Hotbar Management:** Skills occupy slots **1 through 4**.
+* **Instant Casting:** It is highly recommended to use **number keys** rather than the mouse wheel. Skills activate instantly upon being selected.
+* **Fluid Combat:** Once a skill is used, the game automatically swaps your active slot back to **Slot 9** (your main weapon). Your weapon is locked to this slot to ensure combat remains fluid.
 
-Artefacts : Throughout your adventure in Save the kweebecs you can find inside hidden chests artefacts that will give you passive abilities to help you grow in power. They are the main scaling tool of the player.
+### Artefacts
 
-Some artefacts give stat boosts while others give abilities (like reflecting projectiles for example). You can find out more in-game.
+Artefacts are your primary source of scaling and power. Found in hidden chests, these items provide:
+
+* **Stat Boosts:** Direct upgrades to your combat effectiveness.
+* **Passive Abilities:** Unique effects, such as the ability to reflect incoming projectiles.
+
+---
+
+## Features
+
+* **Custom UI:** Dedicated hotbar skills for a fresh Hytale combat experience.
+* **Theorycrafting:** Build unique synergies with 4 skills and dozens of artefacts.
+* **Custom Assets:** Original maps, dynamic weather, and bespoke art for mobs and skills.
+* **Boss Content:** A challenging final encounter to test your build.
+
+**Can you survive the gauntlet and save the Kweebecs?**

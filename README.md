@@ -2,8 +2,7 @@
 
 **Save the Kweebecs** is a rogue-lite adventure mod for Hytale. Players select a class, curate a build of powerful skills, and collect unique artefacts to survive challenging combat encounters. Every run is a new opportunity to theorycraft the ultimate build and take down the final boss.
 
-> [!IMPORTANT]
-> **Dependency:** This mod requires **Hyui** to function. Please ensure it is installed before playing.
+ **Dependency:** This mod requires **Hyui** to function. Please ensure it is installed before playing.
 
 ---
 

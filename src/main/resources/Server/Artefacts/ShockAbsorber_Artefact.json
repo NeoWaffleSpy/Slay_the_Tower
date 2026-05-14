@@ -1,0 +1,15 @@
+{
+  "Stats": [
+    "Bonus_Stamina"
+  ],
+  "Icon": "UI/Custom/ArtefactIcons/Stamina.png",
+  "TranslationProperties": {
+    "Name": "Stamina_Artefact.name",
+    "Description": "Stamina_Artefact.description"
+  },
+  "Rarity": "Common",
+  "LogicId": "ShockAbsorber",
+  "LogicNumbers": {
+    "absorbPercent": 0.5
+  }
+}

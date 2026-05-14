@@ -1,93 +1,56 @@
-# Gamemode API
+Save the kweebecs : Gameplay Overview
 
-This is a basic API to create pseudo gamemodes with custom camera and custom mouse controle and interactions.
-This is still a work in progress.
+Save the kweebecs is a rogue-lite adventure game, where the players pick a class, pick their skills and pick up artefacts to build a unique set of abilities each run. The goal is to clear rooms until the players have 4 skills and fight the final boss of the game ending the run.
 
-## Set up a custom gamemode
-### Custom Camera
-Simply create a new instance of `ServerCameraSettings` with your custom settings (see official [doc](https://hytalemodding.dev/en/docs/guides/plugin/customizing-camera-controls))
+Includes :
 
-Built-in camera modes:
-- topDown
-- sideView
-- isometric
-- isometric2 (functionnaly the same but with a more complete constructor)
+    Custom hotbar skills for a completely different way to approach combat in hytale
+    Artefact that grant passive abilities
+    Custom maps and weathers
+    Custom art for skills and mobs
+    Final boss !
+    Theorycraft builds every run for a custom playstyle for you with up to 4 skills choices per run and a TON of artefact rewards
 
-Example of a top-down view
-```Java
-ServerCameraSettings cameraSettings = new ServerCameraSettings();
-cameraSettings.positionLerpSpeed = 0.2F;
-cameraSettings.rotationLerpSpeed = 0.2F;
-cameraSettings.distance = 20.0F;
-cameraSettings.displayCursor = true;
-cameraSettings.sendMouseMotion = true;
-cameraSettings.isFirstPerson = false;
-cameraSettings.movementForceRotationType = MovementForceRotationType.Custom;
-cameraSettings.eyeOffset = true;
-cameraSettings.positionDistanceOffsetType = PositionDistanceOffsetType.DistanceOffset;
-cameraSettings.rotationType = RotationType.Custom;
-cameraSettings.rotation = new Direction(0.0F, (-(float)Math.PI / 2F), 0.0F);
-cameraSettings.mouseInputType = MouseInputType.LookAtPlane;
-cameraSettings.planeNormal = new Vector3f(0.0F, 1.0F, 0.0F);
-CameraTemplates.set("myCustomTemplate", cameraSettings);
-```
-### Custom Mouse Control
-To create a custom mouse controle, create a new java class that extend `AbstractMouseControl` and override
-the mouse button abstract methods, the default mouse controle is adapted to top-down view
-but not very adapted to the others.
+This mod needs Hyui to work. Please download it! 
 
-the abstract class handle the mouse event dispatch and some data parsing, but you can override it
-if you need more control.
+ 
 
-### Create the camera instance
-Now in the `setup()` of your plugin, create the cameraSetting, the MouseControle class and after that,
-create the camera instance with the code
-```Java
-new CameraInitializer("myInstanceName", new myCustomMouseControle(), false, "myCameraTemplate");
-```
-The `false` is a WIP setting to have the player invisible, it works but crash the client,
-so I recommend keeping it to false.
+Starting the game :
 
-Example with the available default options:
-```Java
-new CameraInitializer("isometricCamera2", new DefaultMouseControl(), false, "isometric");
-```
+We added a craftable portal in the arcanist workbench tier 0: the Rogue Kweebec Portal.
 
-### Apply Camera to a player
-To apply or remove the custom gamemode, simply add the `PlayerPOVComponent` to the player.
-Do not forget to remove it if it was already present as it won't register properly otherwise.
-```Java
-PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-if (pPOV != null)
-    store.removeComponent(ref, PlayerPOVComponent.getComponentType());
-store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent(name));
-```
+The portal brings you to a prison that is (mostly) safe, a Kweebec merchant greets you and gives you the choice of two classes for your run.
 
-### Custom commands
+Explore the area and reach the Kweebec haven inside the tree. Here is the main area of the game’s loop.
 
-- `/camera` *Command group for individual camera management*
-- - `/camera get` *Get the name of the current camera instance*
-- - `/camera reset` *Reset all camera, controls and setting to default*
-- - `/camera set <cameraInstanceName>` *Apply the given camera configuration*
-- `/cameraGroup` *Command group for global camera management*
-- - `/cameraGroup activate <cameraInstanceName>`
-- - `/cameraGroup deactivate <cameraInstanceName>`
+ 
 
-**A disabled camera group reset all players using it to default and player cannot
-use the configuration until reenabled**
+Gameplay loop :
 
-****
+The game loop always starts by interacting with the statue of recollection and then choosing one of the offered skills.
 
-## Technical issues and WIP stuff
-The HidePlayer feature is a setting that exist but is unused in the game to make a kind
-of spectator mode, I tried to use it, and to some extend it works, but it seem to have a bad
-interaction with the MouseControle and consistently crash the client, but not the server.
+Then you can talk to the kweebec merchant to get a free heal and some healing items.
 
-The ECS part is a bit clunky, but if I wanted to use a component, I couldn't find another *cleaner*
-way to do it.
+Finally, you can hop in the portal to start clearing rooms (this action is locked until all players have chosen a skill from the statue).
 
-I am working on a way to automatize the process with some event such as joining a specific instance
-or if you use a specific item, but I need to have a working logic and way to make
-it modular for easy configuration.
+Inside rooms, your primary objective is to find and kill all enemies. Furthermore, while inside rooms you will be offered artefact choices that you can get from chests that are available inside the rooms (there are 5 maximum chest per room but their placement is randomized each time you enter the room).
 
-I welcome any feedback and advices to improve the idea.
+After killing all enemies you will be transferred to another room.
+
+After every two arenas, you will be brought back to the kweebec tree to rest, heal, and get a new skill.
+
+After three sets of two arenas, you will fight the final boss.
+
+Congratulations, you have saved the kweebecs !
+
+Gameplay explanations:
+
+Active skills : Through out your runs in Save the kweebecs you will have access to 16 different active skills across 2 classes :
+
+Active skills can be placed in the slots 1 to 4 of your hotbar, it is advised to use them through the keyboard instead of the mousewheel as they have an instant active effect upon being swapped to.
+
+When swapping to a skill, the game will automatically swap your hotbar back to your main weapon in slot 9 (the weapon cannot be dropped or moved from that slot to allow fluidity in using skills)
+
+Artefacts : Throughout your adventure in Save the kweebecs you can find inside hidden chests artefacts that will give you passive abilities to help you grow in power. They are the main scaling tool of the player.
+
+Some artefacts give stat boosts while others give abilities (like reflecting projectiles for example). You can find out more in-game.

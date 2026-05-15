@@ -1,0 +1,48 @@
+{
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Shield_Block",
+        "TargetEntityPart": "Self",
+        "Color": "#ffe400",
+        "Scale": 1,
+        "PositionOffset": {
+          "Z": 1,
+          "Y": 1
+        }
+      },
+      {
+        "SystemId": "Example_Hit",
+        "PositionOffset": {
+          "Z": 1,
+          "Y": 1
+        },
+        "Scale": 2
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Shield_Block",
+        "PositionOffset": {
+          "Z": 2,
+          "Y": 1
+        },
+        "Color": "#ffe400",
+        "Scale": 2,
+        "TargetEntityPart": "Self"
+      },
+      {
+        "SystemId": "Example_Hit",
+        "Scale": 2,
+        "PositionOffset": {
+          "Y": 1,
+          "Z": 2
+        }
+      }
+    ]
+  },
+  "ValueType": "Percent",
+  "OverlapBehavior": "Overwrite",
+  "Duration": 0.1,
+  "RemovalBehavior": "Duration"
+}

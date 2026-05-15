@@ -2,14 +2,23 @@
   "Stats": [
     "Bonus_Stamina"
   ],
-  "Icon": "UI/Custom/ArtefactIcons/Stamina.png",
+  "Icon": "UI/Custom/ArtefactIcons/Leap.png",
   "TranslationProperties": {
-    "Name": "Stamina_Artefact.name",
-    "Description": "Stamina_Artefact.description"
+    "Name": "ShockAbsorber_Artefact.name",
+    "Description": "ShockAbsorber_Artefact.description"
   },
-  "Rarity": "Common",
+  "Rarity": "Legendary",
   "LogicId": "ShockAbsorber",
   "LogicNumbers": {
-    "absorbPercent": 0.5
+    "baseAbsorb": 0.5,
+    "extraAbsorbPerStack": 0.1,
+    "shockHoldDuration": 5.0,
+    "shockDrainPerSecond": 5.0
+  },
+  "LogicStrings": {
+    "absorbSound": "",
+    "absorbEffect": "ShockAbsorber_Block_Effect",
+    "hitSound": "SFX_Mace_T2_Signature_Impact",
+    "hitParticle": "Explosion_Small"
   }
 }

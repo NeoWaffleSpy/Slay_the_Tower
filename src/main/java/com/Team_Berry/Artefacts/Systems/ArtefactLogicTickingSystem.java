@@ -1,7 +1,7 @@
 package com.Team_Berry.Artefacts.Systems;
 
 import com.Team_Berry.Artefacts.Components.StatEffectComponent;
-import com.Team_Berry.Artefacts.Interfaces.IOnTickRegen;
+import com.Team_Berry.Artefacts.Interfaces.IOnTick;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -12,7 +12,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 
-public class ArtefactLogicRegenTickingSystem extends EntityTickingSystem<EntityStore> {
+public class ArtefactLogicTickingSystem extends EntityTickingSystem<EntityStore> {
 
     @Nonnull
     @Override
@@ -26,10 +26,10 @@ public class ArtefactLogicRegenTickingSystem extends EntityTickingSystem<EntityS
         StatEffectComponent statComp = chunk.getComponent(index, StatEffectComponent.getComponentType());
 
         if (statComp != null) {
-            statComp.triggerLogic(IOnTickRegen.class, (artefact, logic) -> {
+            statComp.triggerLogic(IOnTick.class, (artefact, logic) -> {
                 int stacks = statComp.getAmount(artefact);
                 if (stacks > 0) {
-                    logic.onTickRegen(artefact, stacks, playerRef, store, dt);
+                    logic.onTick(artefact, stacks, playerRef, statComp, store, dt);
                 }
             });
         }

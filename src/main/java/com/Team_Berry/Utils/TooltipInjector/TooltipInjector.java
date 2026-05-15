@@ -194,6 +194,10 @@ public class TooltipInjector {
 
         String[] lines = input.split("\n");
 
+        String currentColor = null;
+        boolean bold = false;
+        boolean italic = false;
+
         for (String line : lines) {
             StringBuilder lineBuilder = new StringBuilder();
 
@@ -201,10 +205,6 @@ public class TooltipInjector {
                     "<color is=\"(#[0-9a-fA-F]{6})\">|</color>|<(b|i)>|</(b|i)>"
             );
             Matcher matcher = pattern.matcher(line);
-
-            String currentColor = null;
-            boolean bold = false;
-            boolean italic = false;
 
             int lastIndex = 0;
 
@@ -293,6 +293,8 @@ public class TooltipInjector {
         registerArtifact("Overheat_Artefact", "Explosion Damage", "10", colorDamage, "Increases Explosion Damage");
 
         registerArtifact("HomingMissile_Artefact", "Effect", "Firework on Kill", colorDamage, "+1 Firework spawned");
+
+        registerArtifact("ShockAbsorber_Artefact", "Base Absorb Rate", "50%", colorUtility, "+10% Absorb Rate & +5 Max Stamina");
     }
 
     private static void registerArtifact(String id,
@@ -306,7 +308,7 @@ public class TooltipInjector {
 
         String originalDesc = getItemTranslation(id + ".description");
         if (originalDesc != null) {
-            sf.color(textWhite).append(originalDesc).endColor().append("\n");
+            sf.color(textWhite).append(originalDesc).endColor().append("\n\n");
         }
 
         if (primaryStatName != null && primaryStatValue != null) {

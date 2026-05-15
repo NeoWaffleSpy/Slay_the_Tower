@@ -290,7 +290,9 @@ public class TooltipInjector {
 
         registerArtifact("Stamina_Artefact", "Max Stamina", "+5", colorMobility, null);
 
-        registerArtifact("Overheat_Artefact", "Explosion Damage", "15", colorDamage, "Increases Explosion Damage");
+        registerArtifact("Overheat_Artefact", "Explosion Damage", "10", colorDamage, "Increases Explosion Damage");
+
+        registerArtifact("HomingMissile_Artefact", "Effect", "Firework on Kill", colorDamage, "+1 Firework spawned");
     }
 
     private static void registerArtifact(String id,

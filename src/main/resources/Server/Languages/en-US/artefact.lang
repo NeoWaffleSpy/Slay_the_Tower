@@ -33,3 +33,6 @@ Stamina_Artefact.description=Increases your maximum stamina.
 
 Overheat_Artefact.name=Overheat
 Overheat_Artefact.description=Attacks heat up the enemy. Attack fast to make them Overheat and explode!
+
+HomingMissile_Artefact.name=Fireworks!
+HomingMissile_Artefact.description=After killing an enemy, a firework spawns seeking the nearest enemy and dealing damage!

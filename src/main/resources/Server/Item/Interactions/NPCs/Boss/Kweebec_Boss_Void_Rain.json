@@ -3,7 +3,7 @@
   "RunTime": 0.2,
   "Next": {
     "Type": "Repeat",
-    "Repeat": 10,
+    "Repeat": 5,
     "ForkInteractions": {
       "Interactions": [
         {
@@ -13,7 +13,7 @@
           "Angle Offset": 0.8,
           "HorizontalSpeedMultiplier": 1,
           "RunTime": 0.5,
-          "Minimum Angle Offset": 1,
+          "Minimum Angle Offset": 0.85,
           "Maximum Angle Offset": 1.45
         }
       ]
@@ -21,7 +21,7 @@
     "RunTime": 5,
     "Next": {
       "Type": "Simple",
-      "RunTime": 5
+      "RunTime": 4
     }
   },
   "Effects": {

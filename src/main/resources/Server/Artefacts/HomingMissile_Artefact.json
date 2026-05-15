@@ -1,18 +1,19 @@
 {
   "LogicId": "HomingMissile",
   "LogicStrings": {
-    "projectileAsset": "HomingMissile_Config"
+    "projectileAsset": "HomingMissile_Config",
+    "hitParticle": "Firework_Mix",
+    "spawnSound": "SFX_Staff_Ice_Shoot",
+    "hitSound": "SFX_Fireball_Bounce"
   },
   "Icon": "UI/Custom/ArtefactIcons/HomingMissile_Artefact.png",
-  "Stats": [
-    "Bonus_Overheat_Damage"
-  ],
-  "Rarity": "Rare",
+  "Rarity": "Common",
   "TranslationProperties": {
-    "Name": "Overheat_Artefact.name",
-    "Description": "Overheat_Artefact.description"
+    "Name": "HomingMissile_Artefact.name",
+    "Description": "HomingMissile_Artefact.description"
   },
   "LogicNumbers": {
-    "missileDamage": 5
+    "missileDamage": 5,
+    "particleScale": 0.5
   }
 }

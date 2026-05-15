@@ -31,7 +31,6 @@ public class ProjectileReflectArtefact implements IOnTakePreDamage {
     public void onTakePreDamage(ArtefactCodec codec, Ref<EntityStore> targetRef, Damage damage, StatEffectComponent statComp, CommandBuffer<EntityStore> cmds) {
         Damage.Source source = damage.getSource();
 
-        // We only care if the damage came from a projectile
         if (source instanceof Damage.ProjectileSource projectileSource) {
             int projectileCauseIndex = -1;
             DamageCause projectileDamageCause = DamageCause.getAssetMap().getAsset("PROJECTILE");
@@ -39,7 +38,6 @@ public class ProjectileReflectArtefact implements IOnTakePreDamage {
                 projectileCauseIndex = DamageCause.getAssetMap().getIndex(projectileDamageCause.getId());
             }
 
-            // Ensure the damage cause matches a projectile
             if (projectileCauseIndex != -1 && damage.getDamageCauseIndex() == projectileCauseIndex) {
                 handleProjectileReflection(targetRef, cmds, projectileSource, damage);
             }

@@ -3,7 +3,5 @@
   "Model": "HomingMissile_Model",
   "SpawnRotationOffset": {
     "Pitch": 0
-  },
-  "LaunchLocalSoundEventId": "SFX_Staff_Flame_Consume_Charge_2_Local",
-  "LaunchWorldSoundEventId": "SFX_Staff_Flame_Consume_Charge_2"
+  }
 }

@@ -2,14 +2,15 @@ package com.Team_Berry.Artefacts.Systems;
 
 import com.Team_Berry.Artefacts.ArtefactPlugin;
 import com.Team_Berry.Artefacts.Components.HomingMissileComponent;
-import com.hypixel.hytale.component.ArchetypeChunk;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.RemoveReason;
-import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.component.spatial.SpatialResource;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.shape.Box;
+import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.protocol.SoundCategory;
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
+import com.hypixel.hytale.server.core.modules.entity.EntityModule;
 import com.hypixel.hytale.server.core.modules.entity.component.BoundingBox;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
@@ -19,10 +20,12 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.projectile.config.StandardPhysicsProvider;
 import com.hypixel.hytale.server.core.modules.projectile.config.StandardPhysicsProvider.STATE;
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
+import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore> {
 
@@ -55,8 +58,7 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
                 missile.reachedApex = true;
                 missile.target = findNearestEnemy(missile.px, missile.py, missile.pz, store, 50.0);
             }
-        }
-        else {
+        } else {
             if (missile.target != null && missile.target.isValid() && store.getComponent(missile.target, DeathComponent.getComponentType()) == null) {
                 TransformComponent ttc = (TransformComponent) store.getComponent(missile.target, TransformComponent.getComponentType());
                 if (ttc != null) {
@@ -77,17 +79,45 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
 
                     if (dist < 1.5) {
                         DamageSystems.executeDamage(missile.target, cb, new Damage(new Damage.EntitySource(missile.ownerRef), DamageCause.PHYSICAL, missile.damage));
-                      //  ParticleUtil.spawnParticleEffect("Explosion_Small", missile.px, missile.py, missile.pz, store);
+
+                        if (missile.hitParticle != null && !missile.hitParticle.isEmpty()) {
+                            SpatialResource<Ref<EntityStore>, EntityStore> playerSpatialResource = (SpatialResource) store.getResource(EntityModule.get().getPlayerSpatialResourceType());
+                            List<Ref<EntityStore>> playerRefs = SpatialResource.getThreadLocalReferenceList();
+                            playerSpatialResource.getSpatialStructure().collect(new Vector3d(missile.px, missile.py, missile.pz), 75.0, playerRefs);
+
+                            ParticleUtil.spawnParticleEffect(
+                                    missile.hitParticle,
+                                    missile.px, missile.py, missile.pz,
+                                    0.0F, 0.0F, 0.0F,
+                                    missile.particleScale,
+                                    null,
+                                    null,
+                                    playerRefs,
+                                    store
+                            );
+                        }
+
+                        if (missile.hitSound != null && !missile.hitSound.isEmpty()) {
+                            int hitSoundIndex = SoundEvent.getAssetMap().getIndex(missile.hitSound);
+                            if (hitSoundIndex != 0) {
+                                SoundUtil.playSoundEvent3d(hitSoundIndex, SoundCategory.SFX, missile.px, missile.py, missile.pz, store);
+                            }
+                        }
+
                         cb.removeEntity(missileRef, RemoveReason.REMOVE);
                         return;
                     }
 
                     if (dist > 0.1) {
-                        double ndx = dx / dist; double ndy = dy / dist; double ndz = dz / dist;
+                        double ndx = dx / dist;
+                        double ndy = dy / dist;
+                        double ndz = dz / dist;
                         double speed = Math.sqrt(missile.vx * missile.vx + missile.vy * missile.vy + missile.vz * missile.vz);
                         if (speed < 1.0) speed = missile.seekSpeed;
 
-                        double cvx = missile.vx / speed; double cvy = missile.vy / speed; double cvz = missile.vz / speed;
+                        double cvx = missile.vx / speed;
+                        double cvy = missile.vy / speed;
+                        double cvz = missile.vz / speed;
 
                         double turn = missile.turnRate;
                         if (dist < 15.0) {

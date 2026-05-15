@@ -1,6 +1,6 @@
 {
   "Type": "CombatActionEvaluator",
-  "TargetMemoryDuration": 10,
+  "TargetMemoryDuration": 30,
   "CombatActionEvaluator": {
     "RunConditions": [
       {
@@ -9,12 +9,16 @@
           "ResponseCurve": "Linear",
           "XRange": [
             0,
-            10
+            3
           ]
         }
+      },
+      {
+        "Type": "Randomiser",
+        "MinValue": 0.8,
+        "MaxValue": 1
       }
     ],
-    "MinRunUtility": 0.5,
     "AvailableActions": {
       "SelectTarget": {
         "Type": "SelectBasicAttackTarget",
@@ -30,17 +34,75 @@
         ],
         "WeightCoefficient": 100
       },
-      "FireballAssault": {
+      "VoidRain": {
         "Type": "Ability",
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          150
+        ],
+        "Ability": {
+          "Interactions": [
+            "Kweebec_Boss_Void_Rain"
+          ]
+        },
+        "WeightCoefficient": 2,
+        "Target": "Hostile",
         "Conditions": [
           {
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 20
+              "SwitchPoint": 8
             }
+          },
+          {
+            "Type": "TargetDistance",
+            "Curve": {
+              "Type": "Switch",
+              "InitialState": 0,
+              "FinalState": 1,
+              "SwitchPoint": 15
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.7,
+            "MaxValue": 1.0
           }
+        ]
+      },
+      "RandomExplosions": {
+        "Type": "Ability",
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          150
         ],
+        "Ability": {
+          "Interactions": [
+            "Kweebec_Boss_Random_Explosions"
+          ]
+        },
+        "WeightCoefficient": 2.0,
+        "Target": "Hostile",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 6
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.6,
+            "MaxValue": 1.0
+          }
+        ]
+      },
+      "FireballAssault": {
+        "Type": "Ability",
         "AbilityType": "Primary",
         "AttackDistanceRange": [
           0,
@@ -51,81 +113,24 @@
             "Kweebec_Boss_Projectile_Assault"
           ]
         },
-        "WeightCoefficient": 20,
-        "Target": "Hostile"
-      },
-      "VoidRain": {
-        "Type": "Ability",
-        "Conditions": [
-          {
-            "Type": "TimeSinceLastUsed",
-            "Curve": {
-              "Type": "Switch",
-              "SwitchPoint": 10
-            }
-          }
-        ],
-        "AbilityType": "Primary",
-        "AttackDistanceRange": [
-          0,
-          100
-        ],
-        "Ability": {
-          "Interactions": [
-            "Kweebec_Boss_Void_Rain"
-          ]
-        },
-        "WeightCoefficient": 10,
-        "Target": "Hostile"
-      },
-      "Summon": {
-        "Type": "Ability",
-        "Description": "Summons minions to assist in combat",
+        "WeightCoefficient": 2,
         "Target": "Hostile",
-        "OffhandSlot": 0,
-        "Ability": "Root_NPC_Skeleton_Burnt_Praetorian_Summon",
-        "AttackDistanceRange": [
-          0,
-          100
-        ],
-        "ChargeFor": 1,
-        "WeightCoefficient": 10,
         "Conditions": [
           {
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 15
+              "SwitchPoint": 5
             }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.5,
+            "MaxValue": 1.0
           }
         ]
-      },
-      "RandomExplosions": {
-        "Type": "Ability",
-        "Conditions": [
-          {
-            "Type": "TimeSinceLastUsed",
-            "Curve": {
-              "Type": "Switch",
-              "SwitchPoint": 10
-            }
-          }
-        ],
-        "AbilityType": "Primary",
-        "AttackDistanceRange": [
-          0,
-          100
-        ],
-        "Ability": {
-          "Interactions": [
-            "Kweebec_Boss_Random_Explosions"
-          ]
-        },
-        "WeightCoefficient": 10,
-        "Target": "Hostile"
       }
     },
-    "MinActionUtility": 0.01,
     "ActionSets": {
       "Default": {
         "BasicAttacks": {
@@ -133,36 +138,35 @@
             "Root_Kweebec_Boss_Punch_Aoe"
           ],
           "Randomise": false,
+          "UseProjectedDistance": true,
           "MaxRange": 12,
-          "Timeout": 2,
+          "Timeout": 1,
           "CooldownRange": [
-            4,
-            4
+            2,
+            3
           ],
           "InteractionVars": {
             "Melee_Damage": {
               "Interactions": [
                 {
-                  "$Comment": "When NPC overrides the InteractionVars, this info is not applicable anymore",
                   "Parent": "NPC_Attack_Melee_Damage",
                   "DamageCalculator": {
                     "Type": "Absolute",
                     "BaseDamage": {
-                      "Physical": 10
+                      "Physical": 15
                     },
                     "RandomPercentageModifier": 0.1
                   }
                 }
               ]
             }
-          },
-          "UseProjectedDistance": true
+          }
         },
         "Actions": [
           "SelectTarget",
-          "FireballAssault",
           "VoidRain",
-          "RandomExplosions"
+          "RandomExplosions",
+          "FireballAssault"
         ]
       }
     }

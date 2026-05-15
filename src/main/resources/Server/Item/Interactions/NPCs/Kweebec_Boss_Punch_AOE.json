@@ -23,10 +23,6 @@
         "Boss_Attack_Melee_Damage"
       ]
     },
-    "Next": {
-      "Type": "Simple",
-      "RunTime": 1
-    },
     "Effects": {
       "WorldSoundEventId": "SFX_Mace_T2_Signature_Impact",
       "LocalSoundEventId": "SFX_Mace_T2_Signature_Impact_Local",
@@ -34,7 +30,11 @@
         "DisableAll": true
       }
     },
-    "HorizontalSpeedMultiplier": 0
+    "HorizontalSpeedMultiplier": 0,
+    "Next": {
+      "Type": "Simple",
+      "RunTime": 1
+    }
   },
   "RunTime": 0.8
 }

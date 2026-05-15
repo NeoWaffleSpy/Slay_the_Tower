@@ -26,7 +26,7 @@
     "DamageEntities": true,
     "DamageBlocks": false,
     "BlockDamageRadius": 3,
-    "EntityDamage": 0,
+    "EntityDamage": 15,
     "Knockback": {
       "Force": -2,
       "Duration": 0.1,

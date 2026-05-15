@@ -18,6 +18,7 @@ public class ArtefactLogicRegistry {
         register(ArtefactLogicEnum.OVERHEAT, new OverheatArtefact());
         register(ArtefactLogicEnum.BLEED, new BleedArtefact());
         register(ArtefactLogicEnum.HOMING_MISSILE, new HomingMissileArtefact());
+        register(ArtefactLogicEnum.STAMINA, new StaminaArtefact());
 
 
     }

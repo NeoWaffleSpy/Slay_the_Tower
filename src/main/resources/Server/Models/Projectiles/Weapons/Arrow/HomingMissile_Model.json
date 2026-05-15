@@ -11,38 +11,6 @@
       "Z": -0.075
     }
   },
-  "MinScale": 1,
-  "MaxScale": 1,
-  "Trails": [
-    {
-      "PositionOffset": {
-        "X": 0.5,
-        "Y": 0,
-        "Z": 0
-      },
-      "TargetNodeName": "Handle",
-      "TrailId": "Small_Charged",
-      "RotationOffset": {
-        "Yaw": 90,
-        "Pitch": 0,
-        "Roll": 45
-      }
-    },
-    {
-      "PositionOffset": {
-        "X": 0.5,
-        "Y": 0,
-        "Z": 0
-      },
-      "TargetNodeName": "Handle",
-      "TrailId": "Small_Charged",
-      "RotationOffset": {
-        "Yaw": 0,
-        "Pitch": 45,
-        "Roll": 90
-      }
-    }
-  ],
   "DefaultAttachments": [
     {
       "Model": "Items/Weapons/HomingMissile_Model.blockymodel",
@@ -63,5 +31,17 @@
   "Light": {
     "Color": "#fd7",
     "Radius": 1
-  }
+  },
+  "Particles": [
+    {
+      "SystemId": "Firework_Fuse",
+      "TargetEntityPart": "Self",
+      "Scale": 3,
+      "PositionOffset": {
+        "Y": -1.2
+      }
+    }
+  ],
+  "MaxScale": 1,
+  "MinScale": 1
 }

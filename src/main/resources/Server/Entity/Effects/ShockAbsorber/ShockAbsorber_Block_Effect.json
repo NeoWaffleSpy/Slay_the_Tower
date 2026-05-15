@@ -4,20 +4,19 @@
       {
         "SystemId": "Shield_Block",
         "TargetEntityPart": "Self",
-        "Color": "#ffe400",
         "Scale": 1,
         "PositionOffset": {
           "Z": 1,
           "Y": 1
-        }
+        },
+        "Color": "#ff0000"
       },
       {
-        "SystemId": "Example_Hit",
-        "PositionOffset": {
-          "Z": 1,
-          "Y": 1
-        },
-        "Scale": 2
+        "SystemId": "ShockAbsorber_Particles",
+        "Scale": 2,
+        "RotationOffset": {
+          "Pitch": 90
+        }
       }
     ],
     "FirstPersonParticles": [
@@ -27,16 +26,15 @@
           "Z": 2,
           "Y": 1
         },
-        "Color": "#ffe400",
-        "Scale": 2,
+        "Color": "#ff0000",
+        "Scale": 1.5,
         "TargetEntityPart": "Self"
       },
       {
-        "SystemId": "Example_Hit",
-        "Scale": 2,
-        "PositionOffset": {
-          "Y": 1,
-          "Z": 2
+        "SystemId": "ShockAbsorber_Particles",
+        "Scale": 1,
+        "RotationOffset": {
+          "Pitch": 90
         }
       }
     ]

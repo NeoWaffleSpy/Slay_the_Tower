@@ -4,7 +4,7 @@
     "Description": "Bow_Kweebec.description"
   },
   "Parent": "Template_Weapon_Shortbow_Kweebec",
-  "Quality": "Uncommon",
+  "Quality": "Technical",
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",

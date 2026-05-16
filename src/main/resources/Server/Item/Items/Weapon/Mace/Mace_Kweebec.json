@@ -1,7 +1,7 @@
 {
   "Parent": "Template_Mace_Kweebec",
   "TranslationProperties": {
-    "Name": "server.items.Weapon_Mace_Thorium.name"
+    "Name": "Kweebec_Mace"
   },
   "Model": "Items/Weapons/Mace_Kweebec_Model.blockymodel",
   "Texture": "Items/Weapons/Mace_Kweebec_Texture.png",
@@ -155,13 +155,13 @@
   "IconProperties": {
     "Scale": 0.3,
     "Rotation": [
-      22.5,
-      71,
-      25
+      42,
+      68,
+      0
     ],
     "Translation": [
-      -13,
-      -45
+      -34,
+      -44
     ]
   },
   "SubCategory": "Weapons",

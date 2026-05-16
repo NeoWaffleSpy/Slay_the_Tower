@@ -2,7 +2,7 @@
   "Stats": [
     "Bonus_Stamina"
   ],
-  "Icon": "UI/Custom/ArtefactIcons/Leap.png",
+  "Icon": "UI/Custom/ArtefactIcons/Sponge_Artefact.png",
   "TranslationProperties": {
     "Name": "ShockAbsorber_Artefact.name",
     "Description": "ShockAbsorber_Artefact.description"
@@ -19,9 +19,11 @@
     "knockbackMultiplier": 0.2
   },
   "LogicStrings": {
-    "absorbSound": "",
+    "absorbSound": "SFX_Absorb",
     "absorbEffect": "ShockAbsorber_Block_Effect",
-    "hitSound": "SFX_Mace_T2_Signature_Impact",
-    "hitParticle": "Explosion_Small"
+    "hitSound": "SFX_Absorb_Hit",
+    "hitParticle": "ShockAbsorber_Hit_Particle",
+    "absorbColor": "#ff0000",
+    "hitColor": "#ff0000"
   }
 }

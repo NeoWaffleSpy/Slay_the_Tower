@@ -17,7 +17,7 @@
   "ParticleRotationInfluence": "BillboardVelocity",
   "LinearFiltering": false,
   "LightInfluence": 0,
-  "MaxConcurrentParticles": 150,
+  "MaxConcurrentParticles": 500,
   "ParticleLifeSpan": {
     "Min": 0.5,
     "Max": 0.75
@@ -26,8 +26,8 @@
   "TrailSpawnerPositionMultiplier": 1,
   "TrailSpawnerRotationMultiplier": 1,
   "SpawnRate": {
-    "Min": 125,
-    "Max": 150
+    "Min": 500,
+    "Max": 500
   },
   "Attractors": [
     {
@@ -100,7 +100,7 @@
         "Min": 0,
         "Max": 0
       },
-      "Color": "#ffe700"
+      "Color": "#ff0000"
     }
   },
   "InitialVelocity": {

@@ -2,12 +2,6 @@
   "Spawners": [
     {
       "SpawnerId": "ShockAbsorber_Particles2"
-    },
-    {
-      "SpawnerId": "Example_Sphere_SparkfallSparks"
-    },
-    {
-      "SpawnerId": "Stick_Slam_Distortion_Medium"
     }
   ],
   "IsImportant": false

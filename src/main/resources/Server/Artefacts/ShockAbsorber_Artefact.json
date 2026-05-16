@@ -13,7 +13,10 @@
     "baseAbsorb": 0.5,
     "extraAbsorbPerStack": 0.1,
     "shockHoldDuration": 5.0,
-    "shockDrainPerSecond": 5.0
+    "shockDrainPerSecond": 5.0,
+    "minKnockbackForce": 18.0,
+    "maxKnockbackForce": 80.0,
+    "knockbackMultiplier": 0.2
   },
   "LogicStrings": {
     "absorbSound": "",

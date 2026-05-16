@@ -42,7 +42,7 @@
     ]
   },
   "ValueType": "Percent",
-  "OverlapBehavior": "Overwrite",
+  "OverlapBehavior": "Ignore",
   "Duration": 0.1,
   "RemovalBehavior": "Duration"
 }

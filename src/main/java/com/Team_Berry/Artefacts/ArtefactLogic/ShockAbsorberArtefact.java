@@ -15,11 +15,13 @@ import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffec
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.entity.knockback.KnockbackComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class ShockAbsorberArtefact implements IOnTakePreDamage, IOnDealPreDamage, IOnTick {
@@ -77,10 +79,56 @@ public class ShockAbsorberArtefact implements IOnTakePreDamage, IOnDealPreDamage
         if (storedDamage > 0.0f) {
             damage.setAmount(damage.getAmount() + storedDamage);
 
+            TransformComponent attackerTransform = cmds.getComponent(attackerRef, TransformComponent.getComponentType());
+            TransformComponent victimTransform = cmds.getComponent(targetRef, TransformComponent.getComponentType());
+
+            if (attackerTransform != null && victimTransform != null) {
+                Vector3d aPos = attackerTransform.getPosition();
+                Vector3d vPos = victimTransform.getPosition();
+
+                Vector3d kbDir = new Vector3d(vPos.x - aPos.x, vPos.y - aPos.y, vPos.z - aPos.z);
+                double len = Math.sqrt(kbDir.x * kbDir.x + kbDir.y * kbDir.y + kbDir.z * kbDir.z);
+                if (len > 0.01) {
+                    kbDir.x /= len;
+                    kbDir.y /= len;
+                    kbDir.z /= len;
+                }
+
+
+                float minForce = codec.getLogicNumber("minKnockbackForce", 18.0f);
+                float maxForce = codec.getLogicNumber("maxKnockbackForce", 80.0f);
+                float kbMultiplier = codec.getLogicNumber("knockbackMultiplier", 0.20f);
+
+                double rawForce = minForce + (storedDamage * kbMultiplier);
+                double force = Math.min(rawForce, maxForce);
+
+                kbDir.x *= force;
+                kbDir.z *= force;
+
+                kbDir.y = 1.0 + (force * 0.12);
+
+                Store<EntityStore> store = targetRef.getStore();
+                World world = store.getExternalData().getWorld();
+                if (world != null) {
+                    world.execute(() -> {
+                        KnockbackComponent existingKb = store.getComponent(targetRef, KnockbackComponent.getComponentType());
+                        if (existingKb != null) {
+                            Vector3d currentVel = existingKb.getVelocity();
+                            currentVel.x += kbDir.x;
+                            currentVel.y += kbDir.y;
+                            currentVel.z += kbDir.z;
+                            existingKb.setVelocity(currentVel);
+                        } else {
+                            KnockbackComponent newKb = new KnockbackComponent();
+                            newKb.setVelocity(kbDir);
+                            store.addComponent(targetRef, KnockbackComponent.getComponentType(), newKb);
+                        }
+                    });
+                }
+            }
+
             statComp.customArtefactData.put("shock_absorber_stored", 0.0f);
             statComp.customArtefactData.put("shock_absorber_idle_time", 0.0f);
-
-            TransformComponent victimTransform = cmds.getComponent(targetRef, TransformComponent.getComponentType());
 
             String hitSound = codec.getLogicString("hitSound", "SFX_Mace_T2_Signature_Impact");
             if (!hitSound.isEmpty() && victimTransform != null) {

@@ -1,93 +1,74 @@
-# Gamemode API
+# Save the Kweebecs: Gameplay Overview
 
-This is a basic API to create pseudo gamemodes with custom camera and custom mouse controle and interactions.
-This is still a work in progress.
+**Save the Kweebecs** is a rogue-lite adventure mod for Hytale. Players select a class, curate a build of powerful skills, and collect unique artefacts to survive challenging combat encounters. Every run is a new opportunity to theorycraft the ultimate build and take down the final boss.
 
-## Set up a custom gamemode
-### Custom Camera
-Simply create a new instance of `ServerCameraSettings` with your custom settings (see official [doc](https://hytalemodding.dev/en/docs/guides/plugin/customizing-camera-controls))
+ **Dependency:** This mod requires **Hyui** to function. Please ensure it is installed before playing.
 
-Built-in camera modes:
-- topDown
-- sideView
-- isometric
-- isometric2 (functionnaly the same but with a more complete constructor)
+---
 
-Example of a top-down view
-```Java
-ServerCameraSettings cameraSettings = new ServerCameraSettings();
-cameraSettings.positionLerpSpeed = 0.2F;
-cameraSettings.rotationLerpSpeed = 0.2F;
-cameraSettings.distance = 20.0F;
-cameraSettings.displayCursor = true;
-cameraSettings.sendMouseMotion = true;
-cameraSettings.isFirstPerson = false;
-cameraSettings.movementForceRotationType = MovementForceRotationType.Custom;
-cameraSettings.eyeOffset = true;
-cameraSettings.positionDistanceOffsetType = PositionDistanceOffsetType.DistanceOffset;
-cameraSettings.rotationType = RotationType.Custom;
-cameraSettings.rotation = new Direction(0.0F, (-(float)Math.PI / 2F), 0.0F);
-cameraSettings.mouseInputType = MouseInputType.LookAtPlane;
-cameraSettings.planeNormal = new Vector3f(0.0F, 1.0F, 0.0F);
-CameraTemplates.set("myCustomTemplate", cameraSettings);
-```
-### Custom Mouse Control
-To create a custom mouse controle, create a new java class that extend `AbstractMouseControl` and override
-the mouse button abstract methods, the default mouse controle is adapted to top-down view
-but not very adapted to the others.
+## Getting Started
 
-the abstract class handle the mouse event dispatch and some data parsing, but you can override it
-if you need more control.
+To begin your adventure, you must bridge the gap between worlds:
 
-### Create the camera instance
-Now in the `setup()` of your plugin, create the cameraSetting, the MouseControle class and after that,
-create the camera instance with the code
-```Java
-new CameraInitializer("myInstanceName", new myCustomMouseControle(), false, "myCameraTemplate");
-```
-The `false` is a WIP setting to have the player invisible, it works but crash the client,
-so I recommend keeping it to false.
+1. **Craft the Portal:** Locate the **Arcanist Workbench (Tier 0)**.
+2. **Build the Gate:** Craft the **Rogue Kweebec Portal**.
+3. **Enter the Prison:** Upon entering, you will arrive at a (mostly) safe prison.
+4. **Choose Your Path:** A Kweebec merchant will greet you and offer a choice between **two distinct classes** for your run.
+5. **Find the Haven:** Explore the area to reach the **Kweebec Haven** inside the Great Tree—this serves as your central hub.
 
-Example with the available default options:
-```Java
-new CameraInitializer("isometricCamera2", new DefaultMouseControl(), false, "isometric");
-```
+---
 
-### Apply Camera to a player
-To apply or remove the custom gamemode, simply add the `PlayerPOVComponent` to the player.
-Do not forget to remove it if it was already present as it won't register properly otherwise.
-```Java
-PlayerPOVComponent pPOV = store.getComponent(ref, PlayerPOVComponent.getComponentType());
-if (pPOV != null)
-    store.removeComponent(ref, PlayerPOVComponent.getComponentType());
-store.addComponent(ref, PlayerPOVComponent.getComponentType(), new PlayerPOVComponent(name));
-```
+## The Gameplay Loop
 
-### Custom commands
+The game follows a structured cycle of preparation and combat:
 
-- `/camera` *Command group for individual camera management*
-- - `/camera get` *Get the name of the current camera instance*
-- - `/camera reset` *Reset all camera, controls and setting to default*
-- - `/camera set <cameraInstanceName>` *Apply the given camera configuration*
-- `/cameraGroup` *Command group for global camera management*
-- - `/cameraGroup activate <cameraInstanceName>`
-- - `/cameraGroup deactivate <cameraInstanceName>`
+* **Phase 1: Preparation**
+* Interact with the **Statue of Recollection** to choose your starting skill.
+* Visit the **Kweebec Merchant** for a free heal and essential healing items.
 
-**A disabled camera group reset all players using it to default and player cannot
-use the configuration until reenabled**
 
-****
+* **Phase 2: The Portal**
+* Enter the portal to begin clearing rooms.
+* *Note: All players must select a skill from the Statue before the portal unlocks.*
 
-## Technical issues and WIP stuff
-The HidePlayer feature is a setting that exist but is unused in the game to make a kind
-of spectator mode, I tried to use it, and to some extend it works, but it seem to have a bad
-interaction with the MouseControle and consistently crash the client, but not the server.
 
-The ECS part is a bit clunky, but if I wanted to use a component, I couldn't find another *cleaner*
-way to do it.
+* **Phase 3: Room Clearing**
+* **Objective:** Eliminate all enemies within the arena.
+* **Loot:** Search for up to **5 randomized chests** per room containing powerful artefacts.
 
-I am working on a way to automatize the process with some event such as joining a specific instance
-or if you use a specific item, but I need to have a working logic and way to make
-it modular for easy configuration.
 
-I welcome any feedback and advices to improve the idea.
+* **Phase 4: Progression**
+* After clearing **2 arenas**, you return to the Kweebec Tree to rest, heal, and pick a new skill.
+* Complete **3 sets** (6 arenas total) to face the **Final Boss**.
+
+
+
+---
+
+## Gameplay Mechanics
+
+### Active Skills
+
+The mod features **16 unique active skills** distributed across the two classes.
+
+* **Hotbar Management:** Skills occupy slots **1 through 4**.
+* **Instant Casting:** It is highly recommended to use **number keys** rather than the mouse wheel. Skills activate instantly upon being selected.
+* **Fluid Combat:** Once a skill is used, the game automatically swaps your active slot back to **Slot 9** (your main weapon). Your weapon is locked to this slot to ensure combat remains fluid.
+
+### Artefacts
+
+Artefacts are your primary source of scaling and power. Found in hidden chests, these items provide:
+
+* **Stat Boosts:** Direct upgrades to your combat effectiveness.
+* **Passive Abilities:** Unique effects, such as the ability to reflect incoming projectiles.
+
+---
+
+## Features
+
+* **Custom UI:** Dedicated hotbar skills for a fresh Hytale combat experience.
+* **Theorycrafting:** Build unique synergies with 4 skills and dozens of artefacts.
+* **Custom Assets:** Original maps, dynamic weather, and bespoke art for mobs and skills.
+* **Boss Content:** A challenging final encounter to test your build.
+
+**Can you survive the gauntlet and save the Kweebecs?**

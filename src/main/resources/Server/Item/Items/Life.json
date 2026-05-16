@@ -165,6 +165,19 @@
     "Light": {
       "Color": "#500",
       "Radius": 1
-    }
+    },
+    "Particles": [
+      {
+        "SystemId": "Life_Model_Particles",
+        "Scale": 0.5,
+        "RotationOffset": {
+          "Yaw": 0,
+          "Pitch": 90
+        },
+        "PositionOffset": {
+          "Y": 0
+        }
+      }
+    ]
   }
 }

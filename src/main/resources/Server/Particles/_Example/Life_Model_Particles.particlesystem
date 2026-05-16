@@ -1,0 +1,11 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Life_Model_Particles2"
+    },
+    {
+      "SpawnerId": "Example_Sphere_SparkfallSparks"
+    }
+  ],
+  "IsImportant": false
+}

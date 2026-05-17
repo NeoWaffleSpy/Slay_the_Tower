@@ -14,7 +14,7 @@
       },
       "StartDelay": 0.2,
       "Volume": 5.0,
-      "Probability": 45
+      "Probability": 35
     }
   ],
   "PreventSoundInterruption": true,
@@ -22,5 +22,5 @@
   "Parent": "SFX_Attn_Moderate",
   "SpatialBlend": 0.4,
   "MaxInstance": 1,
-  "MaxDistance": 35
+  "MaxDistance": 100
 }

@@ -22,5 +22,5 @@
   "Parent": "SFX_Attn_Moderate",
   "SpatialBlend": 0.4,
   "MaxInstance": 1,
-  "MaxDistance": 25
+  "MaxDistance": 100
 }

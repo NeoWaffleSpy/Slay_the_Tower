@@ -19,5 +19,6 @@
   "Parent": "SFX_Attn_Moderate",
   "SpatialBlend": 0.456,
   "Pitch": -2.592,
-  "MusicDuckingVolume": 0
+  "MusicDuckingVolume": 0,
+  "MaxDistance": 100
 }

@@ -6,7 +6,7 @@
     "MaxSpeed": 0.1,
     "CombatRelativeTurnSpeed": 1.0,
     "DropList": "",
-    "AbsoluteDetectionRange": 200,
+    "AbsoluteDetectionRange": 35,
     "Appearance": "Kweebec_Boss1",
     "WanderRadius": 5,
     "ViewRange": 10,
@@ -23,7 +23,7 @@
   },
   "Parameters": {
     "NameTranslationKey": {
-      "Value": "server.npcRoles.Zombie_Kweebecc.name",
+      "Value": "Kweebec Boss",
       "Description": "Translation key for NPC name display"
     }
   }

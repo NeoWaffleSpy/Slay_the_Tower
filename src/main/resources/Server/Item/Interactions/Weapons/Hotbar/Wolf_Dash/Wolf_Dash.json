@@ -1,6 +1,7 @@
 {
   "Type": "Serial",
   "Interactions": [
+    "Set_Shapeshift_Camera",
     {
       "Type": "ApplyEffect",
       "EffectId": "Wolf_Form_Effect"
@@ -14,6 +15,7 @@
     {
       "Type": "ClearEntityEffect",
       "EntityEffectId": "Wolf_Form_Effect"
-    }
+    },
+    "Reset_Camera"
   ]
 }

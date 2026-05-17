@@ -3,6 +3,7 @@
     {
       "Type": "ClearEntityEffect",
       "EntityEffectId": "Wolf_Form_Effect"
-    }
+    },
+    "Reset_Camera"
   ]
 }

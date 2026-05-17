@@ -5,6 +5,7 @@
   "OverlapBehavior": "Overwrite",
   "ApplicationEffects": {
     "LocalSoundEventId": "SFX_Bear_Grizzly_Alerted",
-    "WorldSoundEventId": "SFX_Bear_Grizzly_Alerted"
+    "WorldSoundEventId": "SFX_Bear_Grizzly_Alerted",
+    "HorizontalSpeedMultiplier": 0.1
   }
 }

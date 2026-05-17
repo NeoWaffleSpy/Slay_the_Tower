@@ -7,7 +7,7 @@
     "hitSound": "SFX_Fireball_Bounce"
   },
   "Icon": "UI/Custom/ArtefactIcons/HomingMissile_Artefact.png",
-  "Rarity": "Common",
+  "Rarity": "Rare",
   "TranslationProperties": {
     "Name": "HomingMissile_Artefact.name",
     "Description": "HomingMissile_Artefact.description"

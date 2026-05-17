@@ -2,7 +2,7 @@ package com.Team_Berry.Artefacts.ArtefactLogic;
 
 import com.Team_Berry.Artefacts.Codecs.ArtefactCodec;
 import com.Team_Berry.Artefacts.Components.StatEffectComponent;
-import com.Team_Berry.Artefacts.Interfaces.IOnTickRegen;
+import com.Team_Berry.Artefacts.Interfaces.IOnTick;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
@@ -13,13 +13,12 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-public class StaminaArtefact implements IOnTickRegen {
+public class StaminaArtefact implements IOnTick {
 
     @Override
-    public void onTickRegen(ArtefactCodec codec, int stacks, Ref<EntityStore> playerRef, Store<EntityStore> store, float dt) {
+    public void onTick(ArtefactCodec codec, int stacks, Ref<EntityStore> playerRef, StatEffectComponent statComp, Store<EntityStore> store, float dt) {
 
         EntityStatMap statMap = store.getComponent(playerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        StatEffectComponent statComp = store.getComponent(playerRef, StatEffectComponent.getComponentType());
         if (statMap == null || statComp == null) return;
 
         MovementStatesComponent movementComp = store.getComponent(playerRef, MovementStatesComponent.getComponentType());

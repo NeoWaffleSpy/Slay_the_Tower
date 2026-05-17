@@ -1,0 +1,26 @@
+{
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "ShockAbsorber_Particles",
+        "Scale": 0.78,
+        "RotationOffset": {
+          "Pitch": 90
+        }
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "ShockAbsorber_Particles",
+        "Scale": 1,
+        "RotationOffset": {
+          "Pitch": 90
+        }
+      }
+    ]
+  },
+  "ValueType": "Percent",
+  "OverlapBehavior": "Ignore",
+  "Duration": 0.1,
+  "RemovalBehavior": "Duration"
+}

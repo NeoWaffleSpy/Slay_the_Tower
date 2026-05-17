@@ -1,0 +1,29 @@
+{
+  "Stats": [
+    "Bonus_Stamina"
+  ],
+  "Icon": "UI/Custom/ArtefactIcons/Sponge_Artefact.png",
+  "TranslationProperties": {
+    "Name": "ShockAbsorber_Artefact.name",
+    "Description": "ShockAbsorber_Artefact.description"
+  },
+  "Rarity": "Legendary",
+  "LogicId": "ShockAbsorber",
+  "LogicNumbers": {
+    "baseAbsorb": 0.5,
+    "extraAbsorbPerStack": 0.1,
+    "shockHoldDuration": 5.0,
+    "shockDrainPerSecond": 5.0,
+    "minKnockbackForce": 18.0,
+    "maxKnockbackForce": 80.0,
+    "knockbackMultiplier": 0.2
+  },
+  "LogicStrings": {
+    "absorbSound": "SFX_Absorb",
+    "absorbEffect": "ShockAbsorber_Block_Effect",
+    "hitSound": "SFX_Absorb_Hit",
+    "hitParticle": "ShockAbsorber_Hit_Particle",
+    "absorbColor": "#ff0000",
+    "hitColor": "#ff0000"
+  }
+}

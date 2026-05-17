@@ -1,0 +1,20 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Weapons/Battleaxe/Signature/Battleaxe_T2_Signature_Wind_Stereo_01.ogg"
+      ],
+      "RandomSettings": {
+        "MaxStartOffset": 0.1,
+        "MaxPitch": 1,
+        "MinPitch": -1
+      },
+      "RoundRobinHistorySize": 1
+    }
+  ],
+  "Volume": 5.16,
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_Sword",
+  "Parent": "SFX_Attn_Moderate",
+  "Pitch": -4.512
+}

@@ -82,7 +82,7 @@ public class ArtefactPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new ArtefactLogicPreDamageSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactLogicPostDamageSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactLogicDeathSystem());
-        getEntityStoreRegistry().registerSystem(new ArtefactLogicRegenTickingSystem());
+        getEntityStoreRegistry().registerSystem(new ArtefactLogicTickingSystem());
 
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
         this.getCommandRegistry().registerCommand(new ArtefactCommand());

@@ -19,6 +19,7 @@ public class ArtefactLogicRegistry {
         register(ArtefactLogicEnum.BLEED, new BleedArtefact());
         register(ArtefactLogicEnum.HOMING_MISSILE, new HomingMissileArtefact());
         register(ArtefactLogicEnum.STAMINA, new StaminaArtefact());
+        register(ArtefactLogicEnum.SHOCK_ABSORBER, new ShockAbsorberArtefact());
 
 
     }

@@ -9,5 +9,6 @@ public enum ArtefactLogicEnum {
     OVERHEAT,
     BLEED,
     HOMING_MISSILE,
-    STAMINA
+    STAMINA,
+    SHOCK_ABSORBER
 }

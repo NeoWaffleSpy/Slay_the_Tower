@@ -36,3 +36,6 @@ Overheat_Artefact.description=Attacks heat up the enemy. Attack fast to make the
 
 HomingMissile_Artefact.name=Fireworks!
 HomingMissile_Artefact.description=After killing an enemy, a firework spawns seeking the nearest enemy and dealing damage!
+
+ShockAbsorber_Artefact.name=Damage Sponge
+ShockAbsorber_Artefact.description=Blocking absorbs damage.\nYour next attack releases all absorbed damage as bonus damage.

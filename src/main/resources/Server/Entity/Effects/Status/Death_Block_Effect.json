@@ -1,0 +1,38 @@
+{
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ff0000",
+    "EntityTopTint": "#ff0000",
+    "EntityAnimationId": "Hurt",
+    "WorldSoundEventId": "SFX_Rex_Death",
+    "LocalSoundEventId": "SFX_Rex_Death",
+    "Particles": [
+      {
+        "SystemId": "Explosion_Big"
+      }
+    ],
+    "ScreenEffect": "ScreenEffects/Burst_ScreenEffect.png",
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Explosion_Big"
+      }
+    ]
+  },
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Poison": 99999999
+    }
+  },
+  "DamageEffects": {
+    "WorldSoundEventId": "SFX_Effect_Poison_World",
+    "PlayerSoundEventId": "SFX_Effect_Poison_Local"
+  },
+  "OverlapBehavior": "Extend",
+  "RemovalBehavior": "Duration",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "Duration": 5,
+  "DeathMessageKey": "...",
+  "DamageCalculatorCooldown": 0,
+  "Invulnerable": true
+}

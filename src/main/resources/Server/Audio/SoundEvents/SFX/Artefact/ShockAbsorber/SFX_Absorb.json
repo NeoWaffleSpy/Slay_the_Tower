@@ -1,0 +1,20 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Weapons/Bow/Signature/Bow_T2_Signature_Nock_Stereo_03.ogg"
+      ],
+      "RandomSettings": {
+        "MaxStartOffset": 0.1,
+        "MaxPitch": 1,
+        "MinPitch": -1
+      },
+      "RoundRobinHistorySize": 1
+    }
+  ],
+  "Volume": 2.96,
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_Sword",
+  "Parent": "SFX_Attn_Moderate",
+  "Pitch": -8
+}

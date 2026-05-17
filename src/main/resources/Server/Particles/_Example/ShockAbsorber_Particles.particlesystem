@@ -1,0 +1,8 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "ShockAbsorber_Particles2"
+    }
+  ],
+  "IsImportant": false
+}

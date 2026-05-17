@@ -27,7 +27,7 @@
         "Interactions": [
           {
             "Type": "ApplyEffect",
-            "EffectId": "Death"
+            "EffectId": "Death_Block_Effect"
           }
         ],
         "Cooldown": {

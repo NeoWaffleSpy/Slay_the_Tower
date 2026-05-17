@@ -1,0 +1,68 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Impact_Mace_Basic_Star",
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Charged_Shockwave",
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Charged_Sparks3",
+      "StartDelay": 0.01,
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Charged_Slash",
+      "PositionOffset": {
+        "X": -0.4
+      },
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Basic_Flash3",
+      "PositionOffset": {
+        "Y": -100.0
+      },
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Charged_Sparks_Linger",
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Basic_Glow",
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    },
+    {
+      "SpawnerId": "Impact_Mace_Charged_Sparks4",
+      "RotationOffset": {
+        "Roll": 90,
+        "Pitch": 45
+      }
+    }
+  ],
+  "IsImportant": true
+}

@@ -144,7 +144,7 @@
       "Interactions": [
         {
           "Type": "ApplyEffect",
-          "EffectId": "Test_Stamina_Regen"
+          "EffectId": "ShockAbsorber_Block_Effect"
         }
       ]
     }

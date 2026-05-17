@@ -5,6 +5,8 @@ import com.Team_Berry.WeaponInteraction.Component.BleedComponent;
 import com.Team_Berry.WeaponInteraction.Component.PiercedCooldownComponent;
 import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.Team_Berry.WeaponInteraction.Interactions.BleedInteraction;
+import com.Team_Berry.WeaponInteraction.Interactions.ResetCameraInteraction;
+import com.Team_Berry.WeaponInteraction.Interactions.SetCameraInteraction;
 import com.Team_Berry.WeaponInteraction.Systems.*;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -42,6 +44,8 @@ public class WeaponInteractionPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new SlowBombDamageSystem());
         getEntityStoreRegistry().registerSystem(new PierceProjectileDamageSystem(piercedCooldownComponentType));
 
+        this.getCodecRegistry(Interaction.CODEC).register("SetCameraInteraction", SetCameraInteraction.class, SetCameraInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("ResetCameraInteraction", ResetCameraInteraction.class, ResetCameraInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("BleedInteraction", BleedInteraction.class, BleedInteraction.CODEC);
         BleedInteraction.BLEED_COMPONENT_TYPE = bleedComponentType;
 

@@ -3,12 +3,12 @@
   "Interactions": [
     {
       "Interactions": [
-        "Wolf_Dash_Force"
+        "Wolf_Dash_Selector"
       ]
     },
     {
       "Interactions": [
-        "Wolf_Dash_Selector"
+        "Wolf_Dash_Force"
       ]
     }
   ]

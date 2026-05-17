@@ -1,0 +1,12 @@
+{
+  "IsFirstPerson": false,
+  "EyeOffset": true,
+  "PositionLerpSpeed": 0.672,
+  "Distance": 3,
+  "PositionDistanceOffsetType": "DistanceOffsetRaycast",
+  "RotationType": "AttachedToPlusOffset",
+  "MovementForceRotationType": "AttachedToHead",
+  "RotationLerpSpeed": 0.696,
+  "ApplyLookType": "LocalPlayerLookOrientation",
+  "DisplayReticle": false
+}

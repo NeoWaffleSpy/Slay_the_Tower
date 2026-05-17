@@ -1,15 +1,17 @@
 {
   "Type": "Serial",
   "Interactions": [
+    "Set_Shapeshift_Camera",
     {
       "Type": "ApplyEffect",
       "EffectId": "Bear_Form_Effect",
       "Effects": {}
     },
-    "Bear_Grizzly_Stomp",
+    "Bear_Grizzly_Stomp_No_Parallel",
     {
       "Type": "ClearEntityEffect",
       "EntityEffectId": "Bear_Form_Effect"
-    }
+    },
+    "Reset_Camera"
   ]
 }

@@ -45,7 +45,7 @@
     "StatModifiers": {
       "SignatureEnergy": [
         {
-          "Amount": 27,
+          "Amount": 0,
           "CalculationType": "Additive"
         }
       ]
@@ -56,8 +56,8 @@
     "SignatureEnergy": [
       {
         "Condition": [
-          100,
-          100
+          0,
+          0
         ],
         "ConditionValueType": "Percent",
         "Particles": [

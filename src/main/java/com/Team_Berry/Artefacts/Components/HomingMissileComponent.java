@@ -14,6 +14,9 @@ public class HomingMissileComponent implements Component<EntityStore> {
     public float particleScale = 1.0f;
     public boolean reachedApex = false;
 
+    public boolean isDying = false;
+    public float deathTimer = 0.0f;
+
     public double px, py, pz;
     public double vx, vy, vz;
 

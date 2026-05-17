@@ -46,6 +46,22 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
 
         if (missile == null || tc == null) return;
 
+        if (missile.isDying) {
+            missile.deathTimer -= dt;
+
+            missile.vy -= missile.gravity * dt;
+            missile.px += missile.vx * dt;
+            missile.py += missile.vy * dt;
+            missile.pz += missile.vz * dt;
+            tc.getPosition().assign(missile.px, missile.py, missile.pz);
+
+
+            if (missile.deathTimer <= 0.0f) {
+                triggerExplosion(missile, missileRef, store, cb);
+            }
+            return;
+        }
+
         StandardPhysicsProvider spp = (StandardPhysicsProvider) store.getComponent(missileRef, StandardPhysicsProvider.getComponentType());
         if (spp != null && spp.getState() != STATE.INACTIVE) {
             spp.setState(STATE.INACTIVE);
@@ -79,32 +95,7 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
 
                     if (dist < 1.5) {
                         DamageSystems.executeDamage(missile.target, cb, new Damage(new Damage.EntitySource(missile.ownerRef), DamageCause.PHYSICAL, missile.damage));
-
-                        if (missile.hitParticle != null && !missile.hitParticle.isEmpty()) {
-                            SpatialResource<Ref<EntityStore>, EntityStore> playerSpatialResource = (SpatialResource) store.getResource(EntityModule.get().getPlayerSpatialResourceType());
-                            List<Ref<EntityStore>> playerRefs = SpatialResource.getThreadLocalReferenceList();
-                            playerSpatialResource.getSpatialStructure().collect(new Vector3d(missile.px, missile.py, missile.pz), 75.0, playerRefs);
-
-                            ParticleUtil.spawnParticleEffect(
-                                    missile.hitParticle,
-                                    missile.px, missile.py, missile.pz,
-                                    0.0F, 0.0F, 0.0F,
-                                    missile.particleScale,
-                                    null,
-                                    null,
-                                    playerRefs,
-                                    store
-                            );
-                        }
-
-                        if (missile.hitSound != null && !missile.hitSound.isEmpty()) {
-                            int hitSoundIndex = SoundEvent.getAssetMap().getIndex(missile.hitSound);
-                            if (hitSoundIndex != 0) {
-                                SoundUtil.playSoundEvent3d(hitSoundIndex, SoundCategory.SFX, missile.px, missile.py, missile.pz, store);
-                            }
-                        }
-
-                        cb.removeEntity(missileRef, RemoveReason.REMOVE);
+                        triggerExplosion(missile, missileRef, store, cb);
                         return;
                     }
 
@@ -138,7 +129,9 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
                     }
                 }
             } else {
-                missile.vy -= missile.gravity * dt;
+                missile.isDying = true;
+                missile.deathTimer = (float) (Math.random() * 0.5);
+                return;
             }
         }
 
@@ -155,6 +148,34 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
             tc.getRotation().setYaw(yaw);
             tc.getRotation().setPitch(pitch);
         }
+    }
+
+    private void triggerExplosion(HomingMissileComponent missile, Ref<EntityStore> missileRef, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+        if (missile.hitParticle != null && !missile.hitParticle.isEmpty()) {
+            SpatialResource<Ref<EntityStore>, EntityStore> playerSpatialResource = (SpatialResource) store.getResource(EntityModule.get().getPlayerSpatialResourceType());
+            List<Ref<EntityStore>> playerRefs = SpatialResource.getThreadLocalReferenceList();
+            playerSpatialResource.getSpatialStructure().collect(new Vector3d(missile.px, missile.py, missile.pz), 75.0, playerRefs);
+
+            ParticleUtil.spawnParticleEffect(
+                    missile.hitParticle,
+                    missile.px, missile.py, missile.pz,
+                    0.0F, 0.0F, 0.0F,
+                    missile.particleScale,
+                    null,
+                    null,
+                    playerRefs,
+                    store
+            );
+        }
+
+        if (missile.hitSound != null && !missile.hitSound.isEmpty()) {
+            int hitSoundIndex = SoundEvent.getAssetMap().getIndex(missile.hitSound);
+            if (hitSoundIndex != 0) {
+                SoundUtil.playSoundEvent3d(hitSoundIndex, SoundCategory.SFX, missile.px, missile.py, missile.pz, store);
+            }
+        }
+
+        cb.removeEntity(missileRef, RemoveReason.REMOVE);
     }
 
     private Ref<EntityStore> findNearestEnemy(double x, double y, double z, Store<EntityStore> store, double maxRange) {

@@ -3,7 +3,7 @@
     "Tracks": [
       "Music/Zone1/Z1D-GoblinBossBattle.ogg"
     ],
-    "Volume": 10
+    "Volume": 7
   },
   "Conditions": {
     "WeatherIds": [
@@ -20,5 +20,10 @@
     "IsInstant": true
   },
   "Priority": 999,
-  "AudioCategory": "AudioCat_Music"
+  "AudioCategory": "AudioCat_Music",
+  "AmbientBed": {
+    "Track": "Sounds/Environments/Unique/Forgotten_Temple/Forgotten_Temple_Whispers_Loop_Stereo_01.ogg",
+    "Volume": 10,
+    "TransitionSpeed": "Default"
+  }
 }

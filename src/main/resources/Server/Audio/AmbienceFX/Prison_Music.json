@@ -20,5 +20,9 @@
     "IsInstant": true
   },
   "Priority": 999,
-  "AudioCategory": "AudioCat_Music"
+  "AudioCategory": "AudioCat_Music",
+  "AmbientBed": {
+    "Track": "Sounds/Environments/Zone1/Environments/Forest/Day/Autumn/Emitters/Wind/Emit_Tree_Creak_Stereo_02.ogg",
+    "Volume": 10
+  }
 }

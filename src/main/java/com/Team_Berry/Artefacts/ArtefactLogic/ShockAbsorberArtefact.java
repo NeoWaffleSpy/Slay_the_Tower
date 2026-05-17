@@ -63,7 +63,6 @@ public class ShockAbsorberArtefact implements IOnTakePreDamage, IOnDealPreDamage
             if (hitLoc != null) {
                 Vector3d impactPos = new Vector3d(hitLoc.x, hitLoc.y, hitLoc.z);
 
-                // Calculate angle from shield back to the attacker
                 float yaw = 0.0f;
                 float pitch = 0.0f;
                 if (damage.getSource() instanceof Damage.EntitySource) {

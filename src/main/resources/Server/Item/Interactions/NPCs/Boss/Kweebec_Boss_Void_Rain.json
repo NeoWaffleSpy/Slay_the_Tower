@@ -13,7 +13,7 @@
           "Angle Offset": 0.8,
           "HorizontalSpeedMultiplier": 1,
           "RunTime": 0.5,
-          "Minimum Angle Offset": 0.85,
+          "Minimum Angle Offset": 0.7,
           "Maximum Angle Offset": 1.45
         }
       ]

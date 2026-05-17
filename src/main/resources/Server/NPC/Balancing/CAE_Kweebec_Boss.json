@@ -9,7 +9,7 @@
           "ResponseCurve": "Linear",
           "XRange": [
             0,
-            3
+            1
           ]
         }
       },
@@ -53,50 +53,12 @@
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 8
-            }
-          },
-          {
-            "Type": "TargetDistance",
-            "Curve": {
-              "Type": "Switch",
-              "InitialState": 0,
-              "FinalState": 1,
-              "SwitchPoint": 15
+              "SwitchPoint": 3
             }
           },
           {
             "Type": "Randomiser",
             "MinValue": 0.7,
-            "MaxValue": 1.0
-          }
-        ]
-      },
-      "RandomExplosions": {
-        "Type": "Ability",
-        "AbilityType": "Primary",
-        "AttackDistanceRange": [
-          0,
-          150
-        ],
-        "Ability": {
-          "Interactions": [
-            "Kweebec_Boss_Random_Explosions"
-          ]
-        },
-        "WeightCoefficient": 2.0,
-        "Target": "Hostile",
-        "Conditions": [
-          {
-            "Type": "TimeSinceLastUsed",
-            "Curve": {
-              "Type": "Switch",
-              "SwitchPoint": 6
-            }
-          },
-          {
-            "Type": "Randomiser",
-            "MinValue": 0.6,
             "MaxValue": 1.0
           }
         ]
@@ -120,12 +82,41 @@
             "Type": "TimeSinceLastUsed",
             "Curve": {
               "Type": "Switch",
-              "SwitchPoint": 5
+              "SwitchPoint": 3
             }
           },
           {
             "Type": "Randomiser",
             "MinValue": 0.5,
+            "MaxValue": 1.0
+          }
+        ]
+      },
+      "RandomExplosions": {
+        "Type": "Ability",
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          150
+        ],
+        "Ability": {
+          "Interactions": [
+            "Kweebec_Boss_Random_Explosions"
+          ]
+        },
+        "WeightCoefficient": 2,
+        "Target": "Hostile",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 6
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.6,
             "MaxValue": 1.0
           }
         ]
@@ -165,7 +156,6 @@
         "Actions": [
           "SelectTarget",
           "VoidRain",
-          "RandomExplosions",
           "FireballAssault"
         ]
       }

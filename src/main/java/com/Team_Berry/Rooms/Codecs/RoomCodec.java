@@ -37,6 +37,10 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
                         (obj, val) -> obj.worldName = val,
                         obj -> obj.worldName)
                 .documentation("The World where this room is located.").add()
+                .append(new KeyedCodec<>("Weather", Codec.STRING, false),
+                        (obj, val) -> obj.weather = val,
+                        obj -> obj.weather)
+                .documentation("Forced weather for this room. Leave empty to use random/default weather.").add()
                 .append(new KeyedCodec<>("PlayerSpawns", new ArrayCodec<>(SpawnPoint.CODEC, SpawnPoint[]::new)),
                         (obj, val) -> obj.playerSpawns = val,
                         obj -> obj.playerSpawns)
@@ -62,6 +66,7 @@ public class RoomCodec implements JsonAssetWithMap<String, DefaultAssetMap<Strin
     public Position spectatePosition;
     public String worldName = "default";
     private String roomName = "NewRoom";
+    public String weather = "";
     private AssetExtraInfo.Data data;
 
     public RoomCodec() {

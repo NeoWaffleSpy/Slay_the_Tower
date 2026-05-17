@@ -441,9 +441,16 @@ public class GameManager {
             });
 
             teleportManager.teleportParticipantsToLobby(partyManager.getActiveParticipants(), lobby);
-        }
 
-        weatherManager.setLobbyWeather();
+            if (lobby.weather != null && !lobby.weather.isEmpty()) {
+                weatherManager.setForcedWeather(lobby.weather);
+            } else {
+                weatherManager.setLobbyWeather();
+            }
+        } else {
+            weatherManager.setLobbyWeather();
+
+        }
     }
 
     private void tpParticipantsToRoom() {
@@ -466,7 +473,10 @@ public class GameManager {
         if (!playersToTeleport.isEmpty()) {
             objectiveManager.startSharedRoomObjective(partyManager.getActiveParticipants(), roomManager.getCurrentRoom());
 
-            if (runStateManager.isBossStage()) {
+            RoomCodec currentRoom = roomManager.getCurrentRoom().left();
+            if (currentRoom.weather != null && !currentRoom.weather.isEmpty()) {
+                weatherManager.setForcedWeather(currentRoom.weather);
+            } else if (runStateManager.isBossStage()) {
                 weatherManager.setBossWeather();
             } else {
                 weatherManager.setRandomRoomWeather();
@@ -569,12 +579,16 @@ public class GameManager {
 
 
     private void tpParticipantsToPostgame() {
-        //  partyManager.showAllDeadPlayers();
 
         world.execute(() -> {
             RoomCodec postgameRoom = roomManager.getPostgameRoom();
             if (postgameRoom != null) {
                 log("Teleporting participants to Postgame asset: " + postgameRoom.worldName);
+
+                if (postgameRoom.weather != null && !postgameRoom.weather.isEmpty()) {
+                    weatherManager.setForcedWeather(postgameRoom.weather);
+                }
+
                 for (PlayerRef participant : partyManager.getActiveParticipants()) {
                     playerModelManager.resetPlayerModel(participant);
                     playerStateManager.clearInventory(participant);

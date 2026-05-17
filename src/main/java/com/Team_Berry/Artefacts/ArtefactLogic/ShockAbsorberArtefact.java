@@ -13,6 +13,7 @@ import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector4d;
 import com.hypixel.hytale.protocol.Color;
 import com.hypixel.hytale.protocol.SoundCategory;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
@@ -21,6 +22,7 @@ import com.hypixel.hytale.server.core.entity.knockback.KnockbackComponent;
 import com.hypixel.hytale.server.core.modules.entity.EntityModule;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -32,18 +34,26 @@ public class ShockAbsorberArtefact implements IOnTakePreDamage, IOnDealPreDamage
     public void onTakePreDamage(ArtefactCodec codec, Ref<EntityStore> targetRef, Damage damage, StatEffectComponent statComp, CommandBuffer<EntityStore> cmds) {
 
         DamageDataComponent damageData = cmds.getComponent(targetRef, DamageDataComponent.getComponentType());
-        if (damageData == null || damageData.getCurrentWielding() == null) return;
+        if (damageData == null || damageData.getCurrentWielding() == null) {
+            return;
+        }
 
         int stacks = statComp.getAmount(codec);
-        if (stacks <= 0) return;
+        if (stacks <= 0) {
+            return;
+        }
+        Boolean isBlocked = damage.getMetaObject(Damage.BLOCKED);
+        if (isBlocked == null || !isBlocked) {
+            return;
+        }
 
         float baseAbsorb = codec.getLogicNumber("baseAbsorb", 0.50f);
         float extraPerStack = codec.getLogicNumber("extraAbsorbPerStack", 0.10f);
-
         float absorbPercent = Math.min(1.0f, baseAbsorb + (extraPerStack * (stacks - 1)));
-        float damageToStore = damage.getAmount() * absorbPercent;
-        float currentStored = (float) statComp.customArtefactData.getOrDefault("shock_absorber_stored", 0.0f);
 
+        float damageToStore = damage.getInitialAmount() * absorbPercent;
+
+        float currentStored = (float) statComp.customArtefactData.getOrDefault("shock_absorber_stored", 0.0f);
         float newStored = currentStored + damageToStore;
 
         if (newStored > currentStored) {
@@ -231,7 +241,7 @@ public class ShockAbsorberArtefact implements IOnTakePreDamage, IOnDealPreDamage
             }
         }
 
-        com.hypixel.hytale.component.spatial.SpatialResource<Ref<EntityStore>, EntityStore> playerSpatialResource =
+        SpatialResource<Ref<EntityStore>, EntityStore> playerSpatialResource =
                 (SpatialResource) cmds.getResource(EntityModule.get().getPlayerSpatialResourceType());
 
         java.util.List<Ref<EntityStore>> playerRefs = SpatialResource.getThreadLocalReferenceList();

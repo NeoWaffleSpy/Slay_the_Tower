@@ -4,13 +4,19 @@ import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Artefacts.Interfaces.IOnDealPreDamage;
 import com.Team_Berry.Artefacts.Interfaces.IOnTakePreDamage;
 import com.hypixel.hytale.component.*;
+import com.hypixel.hytale.component.dependency.Dependency;
+import com.hypixel.hytale.component.dependency.Order;
+import com.hypixel.hytale.component.dependency.SystemDependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
+import com.hypixel.hytale.server.core.modules.entity.damage.DamageSystems;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+
+import java.util.Set;
 
 public class ArtefactLogicPreDamageSystem extends DamageEventSystem {
 
@@ -18,6 +24,13 @@ public class ArtefactLogicPreDamageSystem extends DamageEventSystem {
     public SystemGroup<EntityStore> getGroup() {
         return DamageModule.get().getFilterDamageGroup();
     }
+
+//    @Override
+//    public Set<Dependency<EntityStore>> getDependencies() {
+//        return Set.of(
+//                new SystemDependency<>(Order.AFTER, DamageSystems.WieldingDamageReduction.class)
+//        );
+//    }
 
     @Override
     public @Nullable Query<EntityStore> getQuery() {

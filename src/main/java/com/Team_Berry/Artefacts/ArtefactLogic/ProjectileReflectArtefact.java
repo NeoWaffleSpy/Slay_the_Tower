@@ -11,6 +11,7 @@ import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent;
+import com.hypixel.hytale.server.core.modules.entity.component.Intangible;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageCause;
@@ -46,7 +47,8 @@ public class ProjectileReflectArtefact implements IOnTakePreDamage {
 
     private void handleProjectileReflection(Ref<EntityStore> targetRef, CommandBuffer<EntityStore> commandBuffer, Damage.ProjectileSource projectileSource, Damage damage) {
         DamageDataComponent damageData = commandBuffer.getComponent(targetRef, DamageDataComponent.getComponentType());
-        if (damageData == null || damageData.getCurrentWielding() == null) return;
+        Boolean isBlocked = damage.getMetaObject(Damage.BLOCKED);
+        if (damageData == null || damageData.getCurrentWielding() == null || isBlocked == null || !isBlocked) return;
 
         Ref<EntityStore> oldProjectileRef = projectileSource.getProjectile();
         if (!oldProjectileRef.isValid()) return;
@@ -103,13 +105,8 @@ public class ProjectileReflectArtefact implements IOnTakePreDamage {
 
             float baseDamage = (float) newProjComp.getProjectile().getDamage();
             float finalReflectDamage = (baseDamage + bonusReflectDamage) * reflectMult;
-
-            if (baseDamage > 0) {
-                float multiplier = finalReflectDamage / baseDamage;
-                newProjComp.applyBrokenPenalty(1.0f - multiplier);
-            }
-
-            holder.ensureComponent(com.hypixel.hytale.server.core.modules.entity.component.Intangible.getComponentType());
+//TODO : Make a custom comonent that a has the increased damage inside and then up top in ontakepredamage we check for it and if its there we increase damage take its better
+            holder.ensureComponent(Intangible.getComponentType());
 
             UUIDComponent playerUuidComp = commandBuffer.getComponent(targetRef, UUIDComponent.getComponentType());
             if (playerUuidComp != null) {

@@ -1,0 +1,26 @@
+{
+  "Volume": 10,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/SFX_Boss_Hurt.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -11.808,
+        "MinVolume": -3,
+        "MaxPitch": 5.136,
+        "MaxStartOffset": 154618.816,
+        "MaxVolume": 1.84
+      },
+      "StartDelay": 0.2,
+      "Volume": 5.0,
+      "Probability": 45
+    }
+  ],
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_NPC_Golem_Earth",
+  "Parent": "SFX_Attn_Moderate",
+  "SpatialBlend": 0.4,
+  "MaxInstance": 1,
+  "MaxDistance": 35
+}

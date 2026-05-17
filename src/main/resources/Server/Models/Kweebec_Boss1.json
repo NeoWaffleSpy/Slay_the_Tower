@@ -27,7 +27,7 @@
         {
           "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Death.blockyanim",
           "Looping": false,
-          "SoundEventId": "SFX_Boss_Death"
+          "SoundEventId": "SFX_Boss_Alert"
         }
       ]
     },
@@ -37,13 +37,13 @@
           "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Hurt.blockyanim",
           "BlendingDuration": 0.1,
           "Looping": false,
-          "SoundEventId": "SFX_Golem_Earth_Hurt"
+          "SoundEventId": "SFX_Boss_Death"
         },
         {
           "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Hurt2.blockyanim",
           "BlendingDuration": 0.1,
           "Looping": false,
-          "SoundEventId": "SFX_Golem_Earth_Hurt"
+          "SoundEventId": "SFX_Boss_Death"
         }
       ]
     },

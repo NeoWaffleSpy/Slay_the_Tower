@@ -3,7 +3,7 @@
     "Tracks": [
       "Music/zUnused/PreparingArms.ogg"
     ],
-    "Volume": 10
+    "Volume": 7
   },
   "Conditions": {
     "WeatherIds": [
@@ -20,5 +20,9 @@
     "IsInstant": true
   },
   "Priority": 999,
-  "AudioCategory": "AudioCat_Music"
+  "AudioCategory": "AudioCat_Music",
+  "AmbientBed": {
+    "Track": "Sounds/Environments/Zone1/Environments/Mountain/Z1_Mountain_Wind_Stereo_LOOP.ogg",
+    "Volume": 10
+  }
 }

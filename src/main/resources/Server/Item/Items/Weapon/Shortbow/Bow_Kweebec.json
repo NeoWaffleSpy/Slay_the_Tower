@@ -4,44 +4,11 @@
     "Description": "Bow_Kweebec.description"
   },
   "Parent": "Template_Weapon_Shortbow_Kweebec",
-  "Quality": "Uncommon",
+  "Quality": "Technical",
   "Model": "Items/Weapons/Bow_Kweebec.blockymodel",
   "Texture": "Items/Weapons/Bow_Kweebec_Texture.png",
   "Icon": "Icons/ItemsGenerated/Bow_Kweebec.png",
   "ItemLevel": 20,
-  "Recipe": {
-    "TimeSeconds": 3.5,
-    "Input": [
-      {
-        "ItemId": "Ingredient_Bar_Iron",
-        "Quantity": 6
-      },
-      {
-        "ItemId": "Ingredient_Leather_Light",
-        "Quantity": 2
-      },
-      {
-        "ItemId": "Ingredient_Fabric_Scrap_Linen",
-        "Quantity": 3
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Type": "Crafting",
-        "Categories": [
-          "Weapon_Bow"
-        ],
-        "Id": "Weapon_Bench"
-      },
-      {
-        "Type": "DiagramCrafting",
-        "Categories": [
-          "Weapons.Bow"
-        ],
-        "Id": "Armory"
-      }
-    ]
-  },
   "Interactions": {
     "Primary": "Root_Kweebec_Bow_Primary_Shoot",
     "Secondary": "Root_Weapon_Shortbow_Secondary_Guard",

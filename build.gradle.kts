@@ -26,7 +26,7 @@ hytaleTools {
     modDescription.set("Save the Kweebecs rogue-lite mod")
 
     subPlugin("Utils", "com.Team_Berry.Utils.UtilsPlugin")
-    subPlugin("Game", "com.Team_Berry.Game.GamePlugin") // <-- Moved up so managers exist early
+    subPlugin("Game", "com.Team_Berry.Game.GamePlugin")
     subPlugin("Camera", "com.Team_Berry.Camera.CameraPlugin")
     subPlugin("GearAffix", "com.Team_Berry.GearAffix.GearAffixPlugin")
     subPlugin("WeaponInteraction", "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin")

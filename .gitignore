@@ -36,6 +36,7 @@ build/
 
 !/run/config.json
 !/run/mods/
+/run/mods/com_Team_Berry_savethekweebecs/
 
 !/run/universe/
 /run/universe/*

@@ -8,6 +8,7 @@ import com.Team_Berry.Artefacts.Components.HomingMissileComponent;
 import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Artefacts.Registry.ArtefactLogicRegistry;
 import com.Team_Berry.Artefacts.Systems.*;
+import com.Team_Berry.WeaponInteraction.Systems.HotbarManagerTickingSystem;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.map.IndexedLookupTableAssetMap;
 import com.hypixel.hytale.component.ComponentType;
@@ -77,6 +78,13 @@ public class ArtefactPlugin extends JavaPlugin {
         ArtefactCodec.register();
         StatEffectSystem.register();
 
+
+
+        getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
+        this.getCommandRegistry().registerCommand(new ArtefactCommand());
+    }
+    @Override
+    protected void start() {
         getEntityStoreRegistry().registerSystem(new HomingMissileTickingSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactCooldownSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactLogicPreDamageSystem());
@@ -84,10 +92,7 @@ public class ArtefactPlugin extends JavaPlugin {
         getEntityStoreRegistry().registerSystem(new ArtefactLogicDeathSystem());
         getEntityStoreRegistry().registerSystem(new ArtefactLogicTickingSystem());
 
-        getEventRegistry().registerGlobal(PlayerReadyEvent.class, ArtefactPlugin::addComponent);
-        this.getCommandRegistry().registerCommand(new ArtefactCommand());
     }
-
     @Override
     protected void shutdown() {
         LOGGER.atInfo().log("%s shutting down", this.getName());

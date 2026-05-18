@@ -38,11 +38,6 @@ public class WeaponInteractionPlugin extends JavaPlugin {
         piercedCooldownComponentType = getEntityStoreRegistry().registerComponent(PiercedCooldownComponent.class, PiercedCooldownComponent::new);
 
         UltMouseControl.ULT_EXPLOSION_COMPONENT_TYPE = ultExplosionComponentComponentType;
-        getEntityStoreRegistry().registerSystem(new UltExplosionTickingSystem(ultExplosionComponentComponentType));
-        getEntityStoreRegistry().registerSystem(new BleedTickingSystem(bleedComponentType));
-        getEntityStoreRegistry().registerSystem(new HotbarManagerTickingSystem());
-        getEntityStoreRegistry().registerSystem(new SlowBombDamageSystem());
-        getEntityStoreRegistry().registerSystem(new PierceProjectileDamageSystem(piercedCooldownComponentType));
 
         this.getCodecRegistry(Interaction.CODEC).register("SetCameraInteraction", SetCameraInteraction.class, SetCameraInteraction.CODEC);
         this.getCodecRegistry(Interaction.CODEC).register("ResetCameraInteraction", ResetCameraInteraction.class, ResetCameraInteraction.CODEC);
@@ -52,5 +47,12 @@ public class WeaponInteractionPlugin extends JavaPlugin {
 
     }
 
-
+    @Override
+    protected void start() {
+        getEntityStoreRegistry().registerSystem(new UltExplosionTickingSystem(ultExplosionComponentComponentType));
+        getEntityStoreRegistry().registerSystem(new BleedTickingSystem(bleedComponentType));
+        getEntityStoreRegistry().registerSystem(new SlowBombDamageSystem());
+        getEntityStoreRegistry().registerSystem(new PierceProjectileDamageSystem(piercedCooldownComponentType));
+        getEntityStoreRegistry().registerSystem(new HotbarManagerTickingSystem());
+    }
 }

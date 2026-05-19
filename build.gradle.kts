@@ -2,7 +2,7 @@ plugins {
     idea
     java
     `maven-publish`
-    id("com.azuredoom.hytale-tools") version "1.0.27"
+    id("com.azuredoom.hytale-tools") version "1.0.28"
 }
 
 group = "com.Team_Berry"
@@ -24,6 +24,7 @@ hytaleTools {
     modId.set("savethekweebecs")
     mainClass.set("com.Team_Berry.Save_The_Kweebec")
     modDescription.set("Save the Kweebecs rogue-lite mod")
+    includesPack.set(true)
 
     subPlugin("Utils", "com.Team_Berry.Utils.UtilsPlugin")
     subPlugin("Game", "com.Team_Berry.Game.GamePlugin")

@@ -11,14 +11,14 @@
     "Website": "",
     "ServerVersion": "2026.03.26-89796e57b",
     "Dependencies": {
-        
+        "Hytale:AssetModule": "*"
     },
     "OptionalDependencies": {
         
     },
     "DisabledByDefault": false,
     "Main": "com.Team_Berry.Save_The_Kweebec",
-    "IncludesAssetPack": false,
+    "IncludesAssetPack": true,
     "UpdateChecker": {
         "CurseForge": ""
     },

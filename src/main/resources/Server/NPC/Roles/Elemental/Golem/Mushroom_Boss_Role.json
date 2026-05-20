@@ -1,0 +1,30 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Mushroom_Boss_Role",
+  "Modify": {
+    "MaxHealth": 2750,
+    "MaxSpeed": 0.1,
+    "CombatRelativeTurnSpeed": 1.0,
+    "DropList": "",
+    "AbsoluteDetectionRange": 75,
+    "Appearance": "Mushroom_Boss_Model",
+    "WanderRadius": 5,
+    "ViewRange": 10,
+    "HearingRange": 8,
+    "CombatBackOffAfterAttack": false,
+    "Weapons": [],
+    "UseCombatActionEvaluator": true,
+    "_CombatConfig": "CAE_Kweebec_Boss",
+    "OffHand": [],
+    "BlockAbility": "",
+    "LeashDistance": 15,
+    "BlockProbability": 0,
+    "SeparationDistance": 1
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "Kweebec Boss",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

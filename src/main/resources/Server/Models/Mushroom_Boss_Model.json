@@ -1,0 +1,77 @@
+{
+  "Model": "NPC/Mushroom_Boss/Mushroom_Boss_Model.blockymodel",
+  "Texture": "NPC/Mushroom_Boss/Mushroom_Boss_Texture.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.75,
+      "Y": 4,
+      "Z": 0.75
+    },
+    "Min": {
+      "X": -0.75,
+      "Y": 0,
+      "Z": -0.75
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Speed": 0.5,
+          "Animation": "NPC/Kweebec_Boss/Kweebec_Boss_Idle1.blockyanim"
+        }
+      ]
+    },
+    "Death": {
+      "Animations": [
+        {
+          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Death.blockyanim",
+          "Looping": false,
+          "SoundEventId": "SFX_Boss_Alert"
+        }
+      ]
+    },
+    "Hurt": {
+      "Animations": [
+        {
+          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Hurt.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "SoundEventId": "SFX_Boss_Hurt"
+        },
+        {
+          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Hurt2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "SoundEventId": "SFX_Boss_Hurt2"
+        }
+      ]
+    },
+    "Alerted": {
+      "Animations": [
+        {
+          "Looping": false,
+          "SoundEventId": "SFX_Boss_Alert",
+          "Animation": "Characters/Animations/Items/Kweebec_boss/Kweebec_Boss_Idle1.blockyanim"
+        }
+      ]
+    }
+  },
+  "Camera": {
+    "PositionOffset": {
+      "Y": 2,
+      "Z": 5
+    }
+  },
+  "EyeHeight": 2,
+  "MaxScale": 5,
+  "MinScale": 5,
+  "PhysicsValues": {
+    "Mass": 1000,
+    "DragCoefficient": 100
+  },
+  "Light": {
+    "Color": "#d0f",
+    "Radius": 10
+  }
+}

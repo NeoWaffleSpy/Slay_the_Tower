@@ -2,7 +2,6 @@
   "TranslationProperties": {
     "Name": "server.items.Plant_Fern_Giant.name"
   },
-  "Parent": "Plant_Fern",
   "BlockType": {
     "CustomModel": "Blocks/Foliage/Plants/Fern_Giant_Wet.blockymodel",
     "CustomModelTexture": [
@@ -24,9 +23,10 @@
       "Radius": 2,
       "Color": "#f0d"
     },
-    "RequiresAlphaBlending": false
+    "RequiresAlphaBlending": false,
+    "SupportsRequiredFor": "Any"
   },
-  "Icon": "Icons/ItemsGenerated/Plant_Fern_Giant.png",
+  "Icon": "Icons/ItemsGenerated/Kweebec_Fern.png",
   "Scale": 0.65,
   "IconProperties": {
     "Scale": 0.28,
@@ -40,5 +40,6 @@
       -34
     ]
   },
-  "Quality": "Developer"
+  "Quality": "Developer",
+  "Parent": "Plant_Fern"
 }

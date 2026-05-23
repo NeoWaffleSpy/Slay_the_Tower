@@ -18,7 +18,7 @@
       "Animations": [
         {
           "Speed": 0.5,
-          "Animation": "NPC/Kweebec_Boss/Kweebec_Boss_Idle1.blockyanim"
+          "Animation": "Characters/Animations/Items/Mushroom_Boss/Idle_Boss_Mushroom_Anim.blockyanim"
         }
       ]
     },
@@ -34,13 +34,13 @@
     "Hurt": {
       "Animations": [
         {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Hurt.blockyanim",
+          "Animation": "Characters/Animations/Items/Mushroom_Boss/Hurt_Boss_Mushroom_Anim.blockyanim",
           "BlendingDuration": 0.1,
           "Looping": false,
           "SoundEventId": "SFX_Boss_Hurt"
         },
         {
-          "Animation": "NPC/Elemental/Golem_Crystal/Animations/Damage/Hurt2.blockyanim",
+          "Animation": "Characters/Animations/Items/Mushroom_Boss/Hurt2_Boss_Mushroom_Anim.blockyanim",
           "BlendingDuration": 0.1,
           "Looping": false,
           "SoundEventId": "SFX_Boss_Hurt2"
@@ -63,7 +63,7 @@
       "Z": 5
     }
   },
-  "EyeHeight": 2,
+  "EyeHeight": 2.75,
   "MaxScale": 5,
   "MinScale": 5,
   "PhysicsValues": {

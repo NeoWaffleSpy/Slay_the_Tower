@@ -14,7 +14,7 @@
     "CombatBackOffAfterAttack": false,
     "Weapons": [],
     "UseCombatActionEvaluator": true,
-    "_CombatConfig": "CAE_Kweebec_Boss",
+    "_CombatConfig": "CAE_Mushroom_Boss",
     "OffHand": [],
     "BlockAbility": "",
     "LeashDistance": 15,

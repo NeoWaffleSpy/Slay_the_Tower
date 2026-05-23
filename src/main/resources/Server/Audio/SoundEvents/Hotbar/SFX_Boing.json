@@ -1,0 +1,21 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/SFX_Boing1.ogg",
+        "Sounds/SFX_Boing2.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -1.248,
+        "MaxPitch": 1.008,
+        "MinVolume": -3
+      },
+      "StartDelay": 0,
+      "Volume": 0.0
+    }
+  ],
+  "Volume": 10,
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_Footsteps",
+  "MaxInstance": 1
+}

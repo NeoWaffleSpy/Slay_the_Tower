@@ -9,9 +9,10 @@
       "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Kweebec_Boss_Idle1.blockyanim",
       "Looping": true
     },
-    "VoidRain": {
-      "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Void_Rain.blockyanim",
-      "Looping": false
+    "Laser": {
+      "ThirdPerson": "Characters/Animations/Items/Mushroom_Boss/Laser_Mushroom_Boss_Anim.blockyanim",
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": false
     },
     "Wave": {
       "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Wave_Aoe.blockyanim"

@@ -1,0 +1,72 @@
+{
+  "Model": "Items/Laser/Mushroom_Laser_Model.blockymodel",
+  "Texture": "Items/Laser/Mushroom_Laser_Texture.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.25,
+      "Y": 0.25,
+      "Z": 0.25
+    },
+    "Min": {
+      "X": -0.25,
+      "Y": -0.25,
+      "Z": -0.25
+    }
+  },
+  "MinScale": 1.5,
+  "MaxScale": 1.5,
+  "Particles": [
+    {
+      "PositionOffset": {
+        "Z": 6.5
+      },
+      "SystemId": "Fire_ChargeRed",
+      "TargetNodeName": "",
+      "Scale": 2
+    },
+    {
+      "PositionOffset": {
+        "Z": -6.5
+      },
+      "SystemId": "Fire_ChargeRed",
+      "TargetNodeName": "",
+      "Scale": 2
+    }
+  ],
+  "Light": {
+    "Color": "#f00",
+    "Radius": 1
+  },
+  "Trails": [
+    {
+      "TrailId": "Large_Charged_Red",
+      "PositionOffset": {
+        "Z": -6.35
+      }
+    },
+    {
+      "TrailId": "Large_Charged_Red",
+      "PositionOffset": {
+        "Z": -6.35
+      },
+      "RotationOffset": {
+        "Roll": 90
+      }
+    },
+    {
+      "TrailId": "Large_Charged_Red",
+      "PositionOffset": {
+        "Z": 6.35
+      }
+    },
+    {
+      "TrailId": "Large_Charged_Red",
+      "PositionOffset": {
+        "Z": 6.35
+      },
+      "RotationOffset": {
+        "Roll": 90
+      }
+    }
+  ]
+}

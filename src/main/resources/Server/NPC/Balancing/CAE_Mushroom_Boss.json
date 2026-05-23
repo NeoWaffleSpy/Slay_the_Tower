@@ -1,0 +1,164 @@
+{
+  "Type": "CombatActionEvaluator",
+  "TargetMemoryDuration": 30,
+  "CombatActionEvaluator": {
+    "RunConditions": [
+      {
+        "Type": "TimeSinceLastUsed",
+        "Curve": {
+          "ResponseCurve": "Linear",
+          "XRange": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "Type": "Randomiser",
+        "MinValue": 0.8,
+        "MaxValue": 1
+      }
+    ],
+    "AvailableActions": {
+      "SelectTarget": {
+        "Type": "SelectBasicAttackTarget",
+        "Description": "Select a target",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 7
+            }
+          }
+        ],
+        "WeightCoefficient": 100
+      },
+      "VoidRain": {
+        "Type": "Ability",
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          150
+        ],
+        "Ability": {
+          "Interactions": [
+            "Mushroom_Boss_Laser_Assault"
+          ]
+        },
+        "WeightCoefficient": 2,
+        "Target": "Hostile",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 3
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.7,
+            "MaxValue": 1.0
+          }
+        ]
+      },
+      "FireballAssault": {
+        "Type": "Ability",
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          150
+        ],
+        "Ability": {
+          "Interactions": [
+            "Mushroom_Boss_Laser_Assault"
+          ]
+        },
+        "WeightCoefficient": 2,
+        "Target": "Hostile",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 3
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.5,
+            "MaxValue": 1.0
+          }
+        ]
+      },
+      "RandomExplosions": {
+        "Type": "Ability",
+        "AbilityType": "Primary",
+        "AttackDistanceRange": [
+          0,
+          150
+        ],
+        "Ability": {
+          "Interactions": [
+            "Kweebec_Boss_Random_Explosions"
+          ]
+        },
+        "WeightCoefficient": 2,
+        "Target": "Hostile",
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 6
+            }
+          },
+          {
+            "Type": "Randomiser",
+            "MinValue": 0.6,
+            "MaxValue": 1.0
+          }
+        ]
+      }
+    },
+    "ActionSets": {
+      "Default": {
+        "BasicAttacks": {
+          "Attacks": [
+            "Root_Kweebec_Boss_Punch_Aoe"
+          ],
+          "Randomise": false,
+          "UseProjectedDistance": true,
+          "MaxRange": 12,
+          "Timeout": 1,
+          "CooldownRange": [
+            2,
+            3
+          ],
+          "InteractionVars": {
+            "Melee_Damage": {
+              "Interactions": [
+                {
+                  "Parent": "NPC_Attack_Melee_Damage",
+                  "DamageCalculator": {
+                    "Type": "Absolute",
+                    "BaseDamage": {
+                      "Physical": 15
+                    },
+                    "RandomPercentageModifier": 0.1
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "Actions": [
+          "SelectTarget",
+          "VoidRain",
+          "FireballAssault"
+        ]
+      }
+    }
+  }
+}

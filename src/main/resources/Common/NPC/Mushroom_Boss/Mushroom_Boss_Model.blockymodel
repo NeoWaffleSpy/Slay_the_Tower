@@ -22,7 +22,7 @@
         {
           "id": "2",
           "name": "Head",
-          "position": {"x": -1.02166, "y": 65.70058, "z": 26.60203},
+          "position": {"x": -1.02166, "y": 17.69586, "z": 40.30815},
           "orientation": {"x": -0.25882, "y": 0, "z": 0, "w": 0.96593},
           "shape": {
             "type": "none",
@@ -41,7 +41,7 @@
             {
               "id": "3",
               "name": "Face",
-              "position": {"x": 2.56074, "y": -22.71653, "z": -11.84824},
+              "position": {"x": 2.56074, "y": 25.92412, "z": -0.10103},
               "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
               "shape": {
                 "type": "none",
@@ -60,7 +60,7 @@
                 {
                   "id": "4",
                   "name": "Head--C1",
-                  "position": {"x": -0.1611, "y": 13.0144, "z": 2.36661},
+                  "position": {"x": -0.1611, "y": 13.08583, "z": 2.23818},
                   "orientation": {"x": 0.25892, "y": 0, "z": 0, "w": 0.9659},
                   "shape": {
                     "type": "box",
@@ -112,7 +112,7 @@
                 {
                   "id": "5",
                   "name": "BaseHead--C2",
-                  "position": {"x": 0.00705, "y": 17.63659, "z": -29.18521},
+                  "position": {"x": 0.00705, "y": 17.70802, "z": -29.31364},
                   "orientation": {"x": 0.25888, "y": -0.00271, "z": 0.00092, "w": 0.96591},
                   "shape": {
                     "type": "box",
@@ -125,12 +125,12 @@
                     },
                     "textureLayout": {
                       "back": {
-                        "offset": {"x": 375, "y": 582},
+                        "offset": {"x": 380, "y": 582},
                         "mirror": {"x": false, "y": false},
                         "angle": 0
                       },
                       "right": {
-                        "offset": {"x": 320, "y": 582},
+                        "offset": {"x": 323, "y": 582},
                         "mirror": {"x": false, "y": false},
                         "angle": 0
                       },
@@ -164,7 +164,7 @@
                 {
                   "id": "6",
                   "name": "Fronthead",
-                  "position": {"x": -0.31923, "y": -25.63572, "z": 2.24132},
+                  "position": {"x": -0.31923, "y": -25.85, "z": 2.62662},
                   "orientation": {"x": 0.27957, "y": -0.0122, "z": 0.04187, "w": 0.95913},
                   "shape": {
                     "type": "none",
@@ -183,7 +183,7 @@
                     {
                       "id": "7",
                       "name": "Forehead--C1",
-                      "position": {"x": 4.10598, "y": 49.41958, "z": 6.48429},
+                      "position": {"x": 3.33186, "y": 47.39589, "z": 10.46707},
                       "orientation": {"x": -0.00066, "y": -0.00755, "z": -0.04296, "w": 0.99905},
                       "shape": {
                         "type": "box",
@@ -235,7 +235,7 @@
                     {
                       "id": "8",
                       "name": "UpChin--C2",
-                      "position": {"x": 1.3941, "y": 9.4419, "z": -16.12998},
+                      "position": {"x": 0.61998, "y": 7.41821, "z": -12.1472},
                       "orientation": {"x": -0.00066, "y": -0.00755, "z": -0.04296, "w": 0.99905},
                       "shape": {
                         "type": "box",
@@ -287,7 +287,7 @@
                     {
                       "id": "9",
                       "name": "Teeth--C3",
-                      "position": {"x": 1.3884, "y": -1.9968, "z": 3.86842},
+                      "position": {"x": 0.61428, "y": -4.02049, "z": 7.8512},
                       "orientation": {"x": 0, "y": 0, "z": -0.04362, "w": 0.99905},
                       "shape": {
                         "type": "quad",
@@ -334,7 +334,7 @@
                         {
                           "id": "11",
                           "name": "Teeth--C1",
-                          "position": {"x": -33.09124, "y": 20.95355, "z": 18.8497},
+                          "position": {"x": -33.86536, "y": 18.92986, "z": 22.83248},
                           "orientation": {"x": 0.01543, "y": -0.70694, "z": -0.07698, "w": 0.7029},
                           "shape": {
                             "type": "quad",
@@ -362,7 +362,7 @@
                         {
                           "id": "12",
                           "name": "Teeth--C2",
-                          "position": {"x": 35.64634, "y": 14.94152, "z": 18.85067},
+                          "position": {"x": 34.87222, "y": 12.91783, "z": 22.83345},
                           "orientation": {"x": 0.01543, "y": -0.70694, "z": -0.07698, "w": 0.7029},
                           "shape": {
                             "type": "quad",
@@ -390,7 +390,7 @@
                         {
                           "id": "13",
                           "name": "Teeth--C3",
-                          "position": {"x": -1.33755, "y": 17.02143, "z": 43.11814},
+                          "position": {"x": -2.11167, "y": 14.99774, "z": 47.10092},
                           "orientation": {"x": 0.06534, "y": -0.00285, "z": -0.04353, "w": 0.99691},
                           "shape": {
                             "type": "quad",
@@ -418,7 +418,7 @@
                         {
                           "id": "14",
                           "name": "DownChin--C4",
-                          "position": {"x": 0, "y": 0, "z": 0},
+                          "position": {"x": -0.77412, "y": -2.02369, "z": 3.98278},
                           "orientation": {"x": -0.00849, "y": -0.02114, "z": 0.99882, "w": 0.04278},
                           "shape": {
                             "type": "box",
@@ -431,7 +431,7 @@
                             },
                             "textureLayout": {
                               "back": {
-                                "offset": {"x": 639, "y": 366},
+                                "offset": {"x": 640, "y": 366},
                                 "mirror": {"x": false, "y": false},
                                 "angle": 0
                               },
@@ -441,12 +441,12 @@
                                 "angle": 0
                               },
                               "front": {
-                                "offset": {"x": 763, "y": 366},
+                                "offset": {"x": 761, "y": 366},
                                 "mirror": {"x": false, "y": false},
                                 "angle": 0
                               },
                               "left": {
-                                "offset": {"x": 681, "y": 366},
+                                "offset": {"x": 675, "y": 366},
                                 "mirror": {"x": false, "y": false},
                                 "angle": 0
                               },
@@ -474,7 +474,7 @@
                 {
                   "id": "15",
                   "name": "L-Eye",
-                  "position": {"x": 0.47328, "y": -5.01527, "z": 24.57728},
+                  "position": {"x": 0.47328, "y": -4.94384, "z": 24.44885},
                   "orientation": {"x": 0.19509, "y": 0, "z": 0, "w": 0.98079},
                   "shape": {
                     "type": "none",
@@ -525,7 +525,7 @@
             {
               "id": "17",
               "name": "Hat",
-              "position": {"x": -2.56074, "y": 26.71653, "z": -8.15176},
+              "position": {"x": -2.56074, "y": 75.4286, "z": 3.46701},
               "orientation": {"x": 0.23584, "y": -0.01325, "z": 0.02312, "w": 0.97143},
               "shape": {
                 "type": "none",
@@ -1021,22 +1021,22 @@
             },
             "textureLayout": {
               "back": {
-                "offset": {"x": 80, "y": 500},
+                "offset": {"x": 84, "y": 500},
                 "mirror": {"x": false, "y": false},
                 "angle": 0
               },
               "right": {
-                "offset": {"x": 3, "y": 500},
+                "offset": {"x": 5, "y": 500},
                 "mirror": {"x": false, "y": false},
                 "angle": 0
               },
               "front": {
-                "offset": {"x": 240, "y": 500},
+                "offset": {"x": 84, "y": 499},
                 "mirror": {"x": false, "y": false},
                 "angle": 0
               },
               "left": {
-                "offset": {"x": 160, "y": 500},
+                "offset": {"x": 166, "y": 500},
                 "mirror": {"x": false, "y": false},
                 "angle": 0
               },
@@ -1060,6 +1060,58 @@
             {
               "id": "34",
               "name": "Neck--C1",
+              "position": {"x": 1.52375, "y": 109.67848, "z": -1.53616},
+              "orientation": {"x": -0.00019, "y": 1, "z": -0.00006, "w": 0.00285},
+              "shape": {
+                "type": "box",
+                "offset": {"x": 0, "y": 0, "z": 0},
+                "stretch": {"x": 1, "y": 1, "z": 1},
+                "settings": {
+                  "isPiece": false,
+                  "size": {"x": 38, "y": 19, "z": 28},
+                  "isStaticBox": true
+                },
+                "textureLayout": {
+                  "back": {
+                    "offset": {"x": 392, "y": 506},
+                    "mirror": {"x": false, "y": false},
+                    "angle": 0
+                  },
+                  "right": {
+                    "offset": {"x": 335, "y": 506},
+                    "mirror": {"x": false, "y": false},
+                    "angle": 0
+                  },
+                  "front": {
+                    "offset": {"x": 397, "y": 562},
+                    "mirror": {"x": false, "y": false},
+                    "angle": 0
+                  },
+                  "left": {
+                    "offset": {"x": 477, "y": 506},
+                    "mirror": {"x": false, "y": false},
+                    "angle": 0
+                  },
+                  "top": {
+                    "offset": {"x": 430, "y": 463},
+                    "mirror": {"x": true, "y": true},
+                    "angle": 0
+                  },
+                  "bottom": {
+                    "offset": {"x": 500, "y": 435},
+                    "mirror": {"x": true, "y": false},
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": false,
+                "shadingMode": "flat"
+              }
+            },
+            {
+              "id": "35",
+              "name": "Neck--C2",
               "position": {"x": 1.54666, "y": 88.17635, "z": -5.82512},
               "orientation": {"x": 0.00006, "y": -0.00285, "z": 0.00019, "w": 1},
               "shape": {
@@ -1110,8 +1162,8 @@
               }
             },
             {
-              "id": "35",
-              "name": "Neck--C2",
+              "id": "36",
+              "name": "Neck--C3",
               "position": {"x": 0.54097, "y": 60.17584, "z": -3.83085},
               "orientation": {"x": 0.00006, "y": -0.00285, "z": 0.00019, "w": 1},
               "shape": {
@@ -1125,7 +1177,7 @@
                 },
                 "textureLayout": {
                   "back": {
-                    "offset": {"x": 386, "y": 489},
+                    "offset": {"x": 387, "y": 489},
                     "mirror": {"x": false, "y": false},
                     "angle": 0
                   },
@@ -1162,8 +1214,8 @@
               }
             },
             {
-              "id": "36",
-              "name": "Feet--C3",
+              "id": "37",
+              "name": "Feet--C4",
               "position": {"x": -0.46149, "y": -47.82497, "z": 1.65762},
               "orientation": {"x": 0.00006, "y": -0.00285, "z": 0.00019, "w": 1},
               "shape": {
@@ -1177,7 +1229,7 @@
                 },
                 "textureLayout": {
                   "back": {
-                    "offset": {"x": 612, "y": 589},
+                    "offset": {"x": 613, "y": 589},
                     "mirror": {"x": false, "y": false},
                     "angle": 0
                   },
@@ -1187,12 +1239,12 @@
                     "angle": 0
                   },
                   "front": {
-                    "offset": {"x": 744, "y": 589},
+                    "offset": {"x": 752, "y": 589},
                     "mirror": {"x": false, "y": false},
                     "angle": 0
                   },
                   "left": {
-                    "offset": {"x": 682, "y": 589},
+                    "offset": {"x": 685, "y": 589},
                     "mirror": {"x": false, "y": false},
                     "angle": 0
                   },
@@ -1214,7 +1266,7 @@
               }
             },
             {
-              "id": "37",
+              "id": "38",
               "name": "Roots",
               "position": {"x": -0.25564, "y": 10.83333, "z": -1.65465},
               "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
@@ -1233,7 +1285,7 @@
               },
               "children": [
                 {
-                  "id": "38",
+                  "id": "39",
                   "name": "Root--C1",
                   "position": {"x": -4.74436, "y": 18.66667, "z": 2.15465},
                   "orientation": {"x": 0, "y": -0.0654, "z": 0, "w": 0.99786},
@@ -1261,7 +1313,7 @@
                   }
                 },
                 {
-                  "id": "39",
+                  "id": "40",
                   "name": "Root--C2",
                   "position": {"x": -0.50931, "y": 0.66667, "z": -5.71943},
                   "orientation": {"x": 0, "y": -0.55557, "z": 0, "w": 0.83147},
@@ -1289,7 +1341,7 @@
                   }
                 },
                 {
-                  "id": "40",
+                  "id": "41",
                   "name": "Root--C3",
                   "position": {"x": 5.705, "y": -8.33333, "z": 3.31908},
                   "orientation": {"x": 0, "y": 0.83147, "z": 0, "w": -0.55557},
@@ -1317,7 +1369,7 @@
                   }
                 },
                 {
-                  "id": "41",
+                  "id": "42",
                   "name": "Root--C4",
                   "position": {"x": 1.14651, "y": -6.33333, "z": -0.95448},
                   "orientation": {"x": 0, "y": -0.38268, "z": 0, "w": 0.92388},
@@ -1345,7 +1397,7 @@
                   }
                 },
                 {
-                  "id": "42",
+                  "id": "43",
                   "name": "Root--C5",
                   "position": {"x": 1.14651, "y": -6.33333, "z": -0.95448},
                   "orientation": {"x": 0, "y": -0.38268, "z": 0, "w": 0.92388},
@@ -1373,7 +1425,7 @@
                   }
                 },
                 {
-                  "id": "43",
+                  "id": "44",
                   "name": "Root--C6",
                   "position": {"x": -2.74436, "y": 1.66667, "z": 2.15465},
                   "orientation": {"x": 0, "y": 0.32145, "z": 0, "w": 0.94693},

@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.Plant_Crop_Mushroom_Block_Red.name"
+    "Name": "server.items.Plant_Crop_Mushroom_Block_Blue.name"
   },
   "Categories": [
     "Blocks.Plants"
@@ -19,28 +19,13 @@
     "Textures": [
       {
         "Weight": 60,
-        "Sides": "BlockTextures/Plant_Mushroom_Block_Red_Top.png",
-        "Down": "BlockTextures/Plant_Mushroom_Block_Red_Bot.png",
-        "Up": "BlockTextures/Plant_Mushroom_Block_Red_Top.png"
-      },
-      {
-        "Up": "BlockTextures/Plant_Mushroom_Block_Red_Top_2.png",
-        "Down": "BlockTextures/Plant_Mushroom_Block_Red_Bot.png",
-        "Sides": "BlockTextures/Plant_Mushroom_Block_Red_Top_3.png",
-        "Weight": 20
-      },
-      {
-        "Up": "BlockTextures/Plant_Mushroom_Block_Red_Top_3.png",
-        "Down": "BlockTextures/Plant_Mushroom_Block_Red_Bot.png",
-        "Sides": "BlockTextures/Plant_Mushroom_Block_Red_Top_2.png",
-        "Weight": 20
+        "Down": "BlockTextures/Mushroom_Block_Blue_Bot.png",
+        "Up": "BlockTextures/Mushroom_Block_Blue_Top.png",
+        "Sides": "BlockTextures/Mushroom_Block_Blue_Side.png"
       }
     ],
-    "ParticleColor": "#cca567",
+    "ParticleColor": "#5a9bc1",
     "BlockSoundSetId": "Mushroom",
-    "MovementSettings": {
-      "HorizontalSpeedMultiplier": 3.5
-    },
     "Interactions": {
       "CollisionEnter": {
         "Interactions": [
@@ -54,7 +39,7 @@
                     "SystemId": "Block_Land_Hard_Dust",
                     "Scale": 1,
                     "DetachedFromModel": true,
-                    "Color": "#ff8e8e"
+                    "Color": "#7074ff"
                   }
                 ]
               },
@@ -90,7 +75,6 @@
     }
   ],
   "PlayerAnimationsId": "Block",
-  "Icon": "Icons/ItemsGenerated/Plant_Crop_Mushroom_Block_Red.png",
   "Tags": {
     "Type": [
       "Plant"
@@ -99,5 +83,6 @@
       "Crop"
     ]
   },
+  "Icon": "Icons/ItemsGenerated/Plant_Crop_Mushroom_Block_Blue.png",
   "ItemSoundSetId": "ISS_Items_Foliage"
 }

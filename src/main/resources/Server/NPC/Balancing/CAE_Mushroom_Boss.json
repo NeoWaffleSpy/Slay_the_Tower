@@ -43,7 +43,7 @@
         ],
         "Ability": {
           "Interactions": [
-            "Mushroom_Boss_Laser_Assault"
+            "Root_NPC_Hedera_Scream"
           ]
         },
         "WeightCoefficient": 2,

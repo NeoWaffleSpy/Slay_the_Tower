@@ -23,7 +23,7 @@ public class ArtefactHud {
     }
 
     public void buildHudPlayer() {
-        List<ImageClass> imgs = new ArrayList<>();
+        List<ArtefactImage> imgs = new ArrayList<>();
         this.template.setVariable("images", imgs);
         hud = HudBuilder.hudForPlayer(this.playerRef)
                 .loadHtml("HUDs/ArtefactPreview.html", this.template)
@@ -32,16 +32,41 @@ public class ArtefactHud {
     }
 
     public void refresh() {
-        List<ImageClass> imgs = new ArrayList<>();
-        statComp.artefactList.keySet().stream().toList().forEach(artefact -> {
+        List<ArtefactImage> imgs = new ArrayList<>();
+        statComp.artefactList.keySet().forEach(artefact -> {
             if (artefact.rarity == RarityEnum.INVISIBLE || statComp.getAmount(artefact) == 0)
                 return;
-            imgs.add(new ImageClass(artefact.shortIconPath, statComp.getAmount(artefact)));
+            imgs.add(new ArtefactImage(artefact.shortIconPath, statComp.getAmount(artefact)));
         });
         this.template.setVariable("images", imgs);
-        hud.refreshOrRerender(true, true);
+
+
+        if (hud != null) {
+            hud.removeUnsafe();
+        }
+
+        hud = HudBuilder.hudForPlayer(this.playerRef)
+                .loadHtml("HUDs/ArtefactPreview.html", this.template)
+                .enableRuntimeTemplateUpdates(true)
+                .show();
     }
 
-    private record ImageClass(String image, int count) {
+    
+    public static class ArtefactImage {
+        private final String image;
+        private final int count;
+
+        public ArtefactImage(String image, int count) {
+            this.image = image;
+            this.count = count;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public int getCount() {
+            return count;
+        }
     }
 }

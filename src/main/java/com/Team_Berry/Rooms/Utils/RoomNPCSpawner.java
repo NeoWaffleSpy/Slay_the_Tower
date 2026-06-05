@@ -4,8 +4,7 @@ import com.Team_Berry.Rooms.Codecs.MobGroupCodec;
 import com.Team_Berry.Rooms.Codecs.RoomCodec;
 import com.Team_Berry.Rooms.RoomPlugin;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.server.core.asset.type.model.config.Model;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
@@ -14,6 +13,7 @@ import com.hypixel.hytale.server.npc.role.Role;
 import com.hypixel.hytale.server.spawning.ISpawnableWithModel;
 import com.hypixel.hytale.server.spawning.SpawningContext;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class RoomNPCSpawner {
         if (!spawningContext.setSpawnable(spawnable)) return null;
 
         Model model = spawningContext.getModel();
-        Vector3f rotation = new Vector3f(0, (float) (ThreadLocalRandom.current().nextDouble() * Math.PI * 2), 0);
+        Rotation3f rotation = new Rotation3f(0, (float) (ThreadLocalRandom.current().nextDouble() * Math.PI * 2), 0);
 
         // We use a 1-size array to safely extract the UUID from inside the lambda
         UUID[] caughtUuid = new UUID[1];

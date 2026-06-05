@@ -2,8 +2,8 @@ package com.Team_Berry.Utils.Files;
 
 import com.hypixel.hytale.protocol.Direction;
 import com.hypixel.hytale.protocol.Position;
-import com.hypixel.hytale.protocol.Vector2f;
-import com.hypixel.hytale.protocol.Vector3f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import java.util.Map;
 
@@ -29,7 +29,15 @@ public class JSONParser {
         return new Direction(getFloat(myData.get("yaw")), getFloat(myData.get("pitch")), getFloat(myData.get("roll")));
     }
 
-    public static Float getFloat(Object n) { return n != null ? ((Number) n).floatValue() : null; }
-    public static Integer getInt(Object n) { return n != null ? ((Number) n).intValue() : null; }
-    public static Long getLong(Object n) { return n != null ? ((Number) n).longValue() : null; }
+    public static Float getFloat(Object n) {
+        return n != null ? ((Number) n).floatValue() : null;
+    }
+
+    public static Integer getInt(Object n) {
+        return n != null ? ((Number) n).intValue() : null;
+    }
+
+    public static Long getLong(Object n) {
+        return n != null ? ((Number) n).longValue() : null;
+    }
 }

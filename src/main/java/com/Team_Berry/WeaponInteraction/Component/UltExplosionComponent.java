@@ -1,17 +1,18 @@
 package com.Team_Berry.WeaponInteraction.Component;
 
 import com.hypixel.hytale.component.Component;
-import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector3d;
 import org.jspecify.annotations.Nullable;
 
-public class UltExplosionComponent  implements Component<EntityStore> {
+public class UltExplosionComponent implements Component<EntityStore> {
 
     long explosionDelay;
     long explosionDelayStart;
     Vector3d explosionPosition;
 
-    public UltExplosionComponent() {}
+    public UltExplosionComponent() {
+    }
 
     public UltExplosionComponent(long explosionDelay, long explosionDelayStart, Vector3d explosionPosition) {
         this.explosionDelay = explosionDelay;

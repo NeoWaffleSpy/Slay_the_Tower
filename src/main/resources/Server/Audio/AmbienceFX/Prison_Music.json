@@ -1,10 +1,4 @@
 {
-  "Music": {
-    "Tracks": [
-      "Music/Oceans/ZO-SolemnTides.ogg"
-    ],
-    "Volume": 10
-  },
   "Conditions": {
     "WeatherIds": [
       "Weather_Prison"
@@ -24,5 +18,6 @@
   "AmbientBed": {
     "Track": "Sounds/Environments/Zone1/Environments/Forest/Day/Autumn/Emitters/Wind/Emit_Tree_Creak_Stereo_02.ogg",
     "Volume": 10
-  }
+  },
+  "MusicContainer": "Prison_Music"
 }

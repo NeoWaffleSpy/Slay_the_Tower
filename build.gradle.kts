@@ -2,7 +2,7 @@ plugins {
     idea
     java
     `maven-publish`
-    id("com.azuredoom.hytale-tools") version "1.0.28"
+    id("com.azuredoom.hytale-tools") version "1.+"
 }
 
 group = "com.Team_Berry"
@@ -17,7 +17,7 @@ repositories {
 }
 
 hytaleTools {
-    hytaleVersion.set("2026.+")
+    hytaleVersion.set("0.+")
     manifestGroup.set("com.Team_Berry")
     modCredits.set("Light06/Nalo/Varrell/Arc")
     patchline.set("release")
@@ -40,7 +40,7 @@ dependencies {
     compileOnly(libs.jetbrains.annotations)
     compileOnly(libs.jspecify)
 
-    vineImplementation("curse.maven:hyui-1431415:7820303")
+    vineImplementation("curse.maven:hyui-1431415:8151837")
 }
 
 java {

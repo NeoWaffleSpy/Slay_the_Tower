@@ -6,7 +6,7 @@ import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.Holder;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.Packet;
 import com.hypixel.hytale.protocol.packets.inventory.DropItemStack;
 import com.hypixel.hytale.server.core.Message;
@@ -84,7 +84,7 @@ public class DropItemPacketHandler implements PlayerPacketFilter {
                                 store,
                                 List.of(targetItem),
                                 transform.getPosition(),
-                                new Vector3f()
+                                new Rotation3f()
                         );
                         world.getEntityStore().getStore().addEntities(itemDrops, AddReason.SPAWN);
                     }

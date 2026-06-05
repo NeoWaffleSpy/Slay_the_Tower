@@ -9,7 +9,7 @@
         }
     ],
     "Website": "",
-    "ServerVersion": "2026.03.26-89796e57b",
+    "ServerVersion": ">=0.5.4",
     "Dependencies": {
         "Hytale:AssetModule": "*"
     },
@@ -26,49 +26,49 @@
         {
             "Name": "Utils",
             "Main": "com.Team_Berry.Utils.UtilsPlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         },
         {
             "Name": "Game",
             "Main": "com.Team_Berry.Game.GamePlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         },
         {
             "Name": "Camera",
             "Main": "com.Team_Berry.Camera.CameraPlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         },
         {
             "Name": "GearAffix",
             "Main": "com.Team_Berry.GearAffix.GearAffixPlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         },
         {
             "Name": "WeaponInteraction",
             "Main": "com.Team_Berry.WeaponInteraction.WeaponInteractionPlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         },
         {
             "Name": "Artefact",
             "Main": "com.Team_Berry.Artefacts.ArtefactPlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         },
         {
             "Name": "Room",
             "Main": "com.Team_Berry.Rooms.RoomPlugin",
-            "ServerVersion": "2026.03.26-89796e57b",
+            "ServerVersion": ">=0.5.4",
             "DisabledByDefault": false,
             "IncludesAssetPack": false
         }

@@ -16,8 +16,8 @@ import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath;
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.hypixel.hytale.math.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 
 public class PierceProjectileDamageSystem extends DamageEventSystem {
     private static final ComponentType<EntityStore, Velocity> VELOCITY_TYPE = Velocity.getComponentType();
@@ -26,12 +26,9 @@ public class PierceProjectileDamageSystem extends DamageEventSystem {
     private static final ComponentType<EntityStore, NetworkId> NETWORK_ID_TYPE = NetworkId.getComponentType();
     private static final ComponentType<EntityStore, ProjectileComponent> PROJECTILE_TYPE = ProjectileComponent.getComponentType();
     private static final ComponentType<EntityStore, BoundingBox> BOX_TYPE = BoundingBox.getComponentType();
-
-    private final ComponentType<EntityStore, PiercedCooldownComponent> piercedCooldownComponentType;
-
-
     static String PIERCE_PROJECTILE_ASSET_NAME = "Piercing_Arrow";
     static long PIERCE_COOLDOWN_MS = 100;
+    private final ComponentType<EntityStore, PiercedCooldownComponent> piercedCooldownComponentType;
 
     public PierceProjectileDamageSystem(ComponentType<EntityStore, PiercedCooldownComponent> piercedCooldownComponentType) {
         this.piercedCooldownComponentType = piercedCooldownComponentType;
@@ -41,9 +38,11 @@ public class PierceProjectileDamageSystem extends DamageEventSystem {
     public Query<EntityStore> getQuery() {
         return Query.any();
     }
+
     public SystemGroup<EntityStore> getGroup() {
         return DamageModule.get().getFilterDamageGroup();
     }
+
     @Override
     public void handle(int i, @NotNull ArchetypeChunk<EntityStore> archetypeChunk, @NotNull Store<EntityStore> store, @NotNull CommandBuffer<EntityStore> commandBuffer, @NotNull Damage damage) {
         Damage.Source source = damage.getSource();
@@ -63,7 +62,7 @@ public class PierceProjectileDamageSystem extends DamageEventSystem {
             }
             TransformComponent transform = commandBuffer.getComponent(oldProjectileRef, TRANSFORM_TYPE);
             if (transform != null) {
-                if (cooldown == null ) {
+                if (cooldown == null) {
                     cooldown = new PiercedCooldownComponent();
                     cooldown.setLastPierceTime(commandBuffer.getResource(TimeResource.getResourceType()).getNow().toEpochMilli());
 
@@ -88,14 +87,14 @@ public class PierceProjectileDamageSystem extends DamageEventSystem {
         Vector3d direction = new Vector3d();
         Velocity oldVelComp = commandBuffer.getComponent(oldRef, VELOCITY_TYPE);
 
-        if (oldVelComp != null && oldVelComp.getVelocity().squaredLength() > 0.001) {
-            direction.assign(oldVelComp.getVelocity()).normalize();
+        if (oldVelComp != null && oldVelComp.getVelocity().lengthSquared() > 0.001) {
+            direction.set(oldVelComp.getVelocity()).normalize();
         } else {
-            PhysicsMath.vectorFromAngles(oldTransform.getRotation().getYaw(), oldTransform.getRotation().getPitch(), direction);
+            PhysicsMath.vectorFromAngles(oldTransform.getRotation().yaw(), oldTransform.getRotation().pitch(), direction);
         }
 
         double currentSpeed = (oldProj.getProjectile() != null) ? oldProj.getProjectile().getMuzzleVelocity() : 20.0;
-        Vector3d nudgedPos = oldTransform.getPosition().clone().addScaled(direction, 2);
+        Vector3d nudgedPos = new Vector3d(oldTransform.getPosition()).add(direction.x * 2, direction.y * 2, direction.z * 2);
 
         for (int i = oldArchetype.getMinIndex(); i < oldArchetype.length(); i++) {
             ComponentType<EntityStore, ?> type = oldArchetype.get(i);
@@ -106,7 +105,7 @@ public class PierceProjectileDamageSystem extends DamageEventSystem {
             } else if (type.equals(NETWORK_ID_TYPE)) {
                 components[i] = new NetworkId(commandBuffer.getStore().getExternalData().takeNextNetworkId());
             } else if (type.equals(VELOCITY_TYPE)) {
-                components[i] = new Velocity(direction.clone().scale(currentSpeed));
+                components[i] = new Velocity(new Vector3d(direction).mul(currentSpeed));
             } else if (type.equals(TRANSFORM_TYPE)) {
                 components[i] = new TransformComponent(nudgedPos, oldTransform.getRotation());
             } else if (type.equals(PROJECTILE_TYPE)) {
@@ -127,7 +126,7 @@ public class PierceProjectileDamageSystem extends DamageEventSystem {
         if (spp != null) {
             spp.setImpacted(false);
             spp.setResting(false);
-            spp.setVelocity(direction.clone().scale(currentSpeed));
+            spp.setVelocity(new Vector3d(direction).mul(currentSpeed));
             BoundingBox box = commandBuffer.getComponent(oldRef, BOX_TYPE);
             if (box != null && newProjectile.getProjectile() != null) {
                 spp.initialize(newProjectile.getProjectile(), box);

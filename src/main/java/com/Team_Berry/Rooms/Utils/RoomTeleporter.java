@@ -5,13 +5,13 @@ import com.Team_Berry.Rooms.RoomPlugin;
 import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector3d;
 
 import java.util.Collection;
 import java.util.Random;
@@ -32,7 +32,7 @@ public class RoomTeleporter {
         store.getExternalData().getWorld().execute(() -> {
             Vector3d pos = new Vector3d(spawn.pos.x, spawn.pos.y + 1.0, spawn.pos.z);
 
-            Vector3f rot = new Vector3f(
+            Rotation3f rot = new Rotation3f(
                     (float) Math.toDegrees(spawn.rot.yaw),
                     (float) Math.toDegrees(spawn.rot.pitch),
                     (float) Math.toDegrees(spawn.rot.roll)
@@ -52,7 +52,7 @@ public class RoomTeleporter {
 
         targetWorld.execute(() -> {
             Vector3d pos = new Vector3d(spawn.pos.x, spawn.pos.y + 1.0, spawn.pos.z);
-            Vector3f rot = new Vector3f(
+            Rotation3f rot = new Rotation3f(
                     (float) Math.toDegrees(spawn.rot.yaw),
                     (float) Math.toDegrees(spawn.rot.pitch),
                     (float) Math.toDegrees(spawn.rot.roll)

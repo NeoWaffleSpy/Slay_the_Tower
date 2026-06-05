@@ -44,9 +44,6 @@
       "Compute": "Appearance"
     },
     "AttitudeGroup": "PredatorsBig",
-    "DropList": {
-      "Compute": "DropList"
-    },
     "MaxHealth": 124,
     "MaxSpeed": {
       "Compute": "MaxSpeed"

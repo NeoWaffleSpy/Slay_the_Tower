@@ -7,7 +7,6 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.spatial.SpatialResource;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.shape.Box;
-import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.modules.entity.EntityModule;
@@ -23,6 +22,7 @@ import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
+import org.joml.Vector3d;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -53,8 +53,7 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
             missile.px += missile.vx * dt;
             missile.py += missile.vy * dt;
             missile.pz += missile.vz * dt;
-            tc.getPosition().assign(missile.px, missile.py, missile.pz);
-
+            tc.getPosition().set(missile.px, missile.py, missile.pz);
 
             if (missile.deathTimer <= 0.0f) {
                 triggerExplosion(missile, missileRef, store, cb);
@@ -139,7 +138,7 @@ public class HomingMissileTickingSystem extends EntityTickingSystem<EntityStore>
         missile.py += missile.vy * dt;
         missile.pz += missile.vz * dt;
 
-        tc.getPosition().assign(missile.px, missile.py, missile.pz);
+        tc.getPosition().set(missile.px, missile.py, missile.pz);
 
         double hSpeedSq = missile.vx * missile.vx + missile.vz * missile.vz;
         if (hSpeedSq > 1.0E-10) {

@@ -4,19 +4,19 @@ import com.Team_Berry.WeaponInteraction.Component.UltExplosionComponent;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.MouseButtonState;
-import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
+import org.joml.Vector3i;
 
-public class UltMouseControl extends AbstractMouseControl{
-    private long lastClickTime = 0;
+public class UltMouseControl extends AbstractMouseControl {
     public static ComponentType<EntityStore, UltExplosionComponent> ULT_EXPLOSION_COMPONENT_TYPE;
+    private long lastClickTime = 0;
 
     @Override
     protected void sortData(@NotNull PlayerMouseButtonEvent event) {
@@ -34,14 +34,14 @@ public class UltMouseControl extends AbstractMouseControl{
 
         Store<EntityStore> store = event.getPlayerRef().getStore();
         Ref<EntityStore> ref = event.getPlayerRef();
-        if (event.getTargetBlock() == null && event.getTargetEntity() == null) return;
+        if (event.getTargetBlock() == null && event.getTargetEntityRef() == null) return;
 
         Vector3d targetPos = null;
         if (event.getTargetBlock() != null) {
             Vector3i block = event.getTargetBlock();
-            targetPos = new Vector3d(block.getX() + 1, block.getY() + 1, block.getZ() + 1);
-        } else if (event.getTargetEntity() != null) {
-            TransformComponent tc = store.getComponent(event.getTargetEntity().getReference(), TransformComponent.getComponentType());
+            targetPos = new Vector3d(block.x() + 1, block.y() + 1, block.z() + 1);
+        } else if (event.getTargetEntityRef() != null) {
+            TransformComponent tc = store.getComponent(event.getTargetEntityRef(), TransformComponent.getComponentType());
             if (tc != null) targetPos = tc.getPosition();
         }
 
@@ -49,7 +49,6 @@ public class UltMouseControl extends AbstractMouseControl{
             if (store.getComponent(ref, ULT_EXPLOSION_COMPONENT_TYPE) == null) {
                 long now = store.getResource(TimeResource.getResourceType()).getNow().toEpochMilli();
 
-                //UltExplosionComponent ultExplosionComponent = new UltExplosionComponent(500L, now, targetPos);
                 UltExplosionComponent ultExplosionComponent = new UltExplosionComponent(targetPos);
 
                 store.getExternalData().getWorld().execute(() -> {

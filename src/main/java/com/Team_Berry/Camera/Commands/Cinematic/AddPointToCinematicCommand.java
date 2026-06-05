@@ -1,13 +1,11 @@
 package com.Team_Berry.Camera.Commands.Cinematic;
 
-import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Cinematic.CinematicManager;
 import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
 import com.Team_Berry.Camera.Component.Data.PlayerPOVComponent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -20,14 +18,18 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector3d;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nonnull;
 
 public class AddPointToCinematicCommand extends AbstractPlayerCommand {
-    @Nonnull private final RequiredArg<String> nameArg;
-    @Nonnull private final RequiredArg<Integer> transitionTime;
-    @Nonnull private final OptionalArg<Integer> insertPoint;
+    @Nonnull
+    private final RequiredArg<String> nameArg;
+    @Nonnull
+    private final RequiredArg<Integer> transitionTime;
+    @Nonnull
+    private final OptionalArg<Integer> insertPoint;
 
     public AddPointToCinematicCommand() {
         super("addPoint", "Add a keyframe to the cinematic");
@@ -58,7 +60,7 @@ public class AddPointToCinematicCommand extends AbstractPlayerCommand {
         }
         if (cameraSettings.rotationType != RotationType.Custom) {
             cameraSettings.rotationType = RotationType.Custom;
-            Vector3f v = headRotation.getRotation();
+            Rotation3f v = headRotation.getRotation();
             cameraSettings.rotation = new Direction(v.y, v.x, v.z);
         }
         cameraSettings.isFirstPerson = false;

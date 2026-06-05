@@ -1,10 +1,4 @@
 {
-  "Music": {
-    "Tracks": [
-      "Music/Zone1/Z1V-KweebecVillageNight.ogg"
-    ],
-    "Volume": 10
-  },
   "Conditions": {
     "WeatherIds": [
       "Weather_Tree"
@@ -20,5 +14,10 @@
     "IsInstant": true
   },
   "Priority": 999,
-  "AudioCategory": "AudioCat_Music"
+  "AudioCategory": "AudioCat_Music",
+  "MusicContainer": {
+    "Type": "SingleTrack",
+    "Track": "Music/Zone1/Z1V_Kweebec_Village_Night.ogg",
+    "Volume": 10
+  }
 }

@@ -7,7 +7,7 @@ import com.Team_Berry.Utils.Files.JSONParser;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector2i;
+import com.hypixel.hytale.math.vector.Rotation3fc;
 import com.hypixel.hytale.protocol.*;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -20,6 +20,9 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayer
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
 
 import java.awt.Color;
@@ -43,25 +46,25 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
     private final OptionalArg<Boolean> skipCharacterPhysics;
     private final OptionalArg<Boolean> isFirstPerson;
     private final OptionalArg<String> movementForceRotationType;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> movementForceRotation;
+    private final OptionalArg<Rotation3fc> movementForceRotation;
     private final OptionalArg<String> attachedToType;
     private final OptionalArg<Integer> attachedToEntityId;
     private final OptionalArg<Boolean> eyeOffset;
     private final OptionalArg<String> positionDistanceOffsetType;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> positionOffset;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> rotationOffset;
+    private final OptionalArg<Rotation3fc> positionOffset;
+    private final OptionalArg<Rotation3fc> rotationOffset;
     private final OptionalArg<String> positionType;
     private final OptionalArg<RelativeDoublePosition> position;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> positionAdd;
+    private final OptionalArg<Rotation3fc> positionAdd;
     private final OptionalArg<String> rotationType;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> rotation;
+    private final OptionalArg<Rotation3fc> rotation;
     private final OptionalArg<String> canMoveType;
     private final OptionalArg<String> applyMovementType;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> movementMultiplier;
+    private final OptionalArg<Rotation3fc> movementMultiplier;
     private final OptionalArg<String> applyLookType;
     private final OptionalArg<Vector2i> lookMultiplier;
     private final OptionalArg<String> mouseInputType;
-    private final OptionalArg<com.hypixel.hytale.math.vector.Vector3f> planeNormal;
+    private final OptionalArg<Rotation3fc> planeNormal;
 
     public EditCinemaKeyframeCommand() {
         super("edit", "edit your cinema keyframe");
@@ -73,12 +76,15 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         this.positionLerpSpeed = this.withOptionalArg("positionLerpSpeed", "Range: [0,1]\nTranslation Smoothening for the camera", ArgTypes.FLOAT);
         this.rotationLerpSpeed = this.withOptionalArg("rotationLerpSpeed", "Range: [0,1]\nRotation Smoothening for the camera", ArgTypes.FLOAT);
         this.distance = this.withOptionalArg("distance", "Range: No Limit\nDefine camera distance from the player", ArgTypes.FLOAT);
-        /**/this.speedModifier = this.withOptionalArg("speedModifier", "Unsure of what it is used for", ArgTypes.FLOAT);
+        /**/
+        this.speedModifier = this.withOptionalArg("speedModifier", "Unsure of what it is used for", ArgTypes.FLOAT);
         this.allowPitchControls = this.withOptionalArg("allowPitchControls", "spaceship controls: forward allow to go toward look direction even if up in the air", ArgTypes.BOOLEAN);
         this.displayCursor = this.withOptionalArg("displayCursor", "Display the cursor outside of menues, [WARNING: NEED <--rotationType Custom> to be useable]", ArgTypes.BOOLEAN);
-        /**/this.displayReticle = this.withOptionalArg("displayReticle", "Unsure of what it is used for", ArgTypes.BOOLEAN);
+        /**/
+        this.displayReticle = this.withOptionalArg("displayReticle", "Unsure of what it is used for", ArgTypes.BOOLEAN);
         this.mouseInputTargetType = this.withOptionalArg("mouseInputTargetType", "Values: " + Arrays.toString(MouseInputTargetType.VALUES) + "\nDefine valid target for the mouse", ArgTypes.STRING);
-        /**/this.sendMouseMotion = this.withOptionalArg("sendMouseMotion", "Unsure of what it is used for", ArgTypes.BOOLEAN);
+        /**/
+        this.sendMouseMotion = this.withOptionalArg("sendMouseMotion", "Unsure of what it is used for", ArgTypes.BOOLEAN);
         this.skipCharacterPhysics = this.withOptionalArg("skipCharacterPhysics", "Ignore player collision and gravity", ArgTypes.BOOLEAN);
         this.isFirstPerson = this.withOptionalArg("isFirstPerson", "Hide the player model so that in FPS, it does not obstruct vision", ArgTypes.BOOLEAN);
         this.movementForceRotationType = this.withOptionalArg("movementForceRotationType", "Values: " + Arrays.toString(MovementForceRotationType.VALUES) + "\nAttachedToHead: Player move relative to head orientation.\nCameraRotation: Player move relative to the camera.\nCustom: Relative movement direction defined by movementForceRotationType", ArgTypes.STRING);
@@ -94,10 +100,13 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         this.positionAdd = this.withOptionalArg("positionAdd", "offset the current fixed camera position when <--positionType Custom>", ArgTypes.ROTATION);
         this.rotationType = this.withOptionalArg("rotationType", "Values: " + Arrays.toString(RotationType.VALUES) + "\nAttachedToPlusOffset: The camera will rotate along with the player head\nCustom: set a fixed camera rotation defined by <--rotation x y z>", ArgTypes.STRING);
         this.rotation = this.withOptionalArg("rotation", "Range: [-360,360]\nSet a fixed camera rotation when <--rotationType Custom>", ArgTypes.ROTATION);
-        /**/this.canMoveType = this.withOptionalArg("canMoveType", "Values: " + Arrays.toString(CanMoveType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
-        /**/this.applyMovementType = this.withOptionalArg("applyMovementType", "Values: " + Arrays.toString(ApplyMovementType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
+        /**/
+        this.canMoveType = this.withOptionalArg("canMoveType", "Values: " + Arrays.toString(CanMoveType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
+        /**/
+        this.applyMovementType = this.withOptionalArg("applyMovementType", "Values: " + Arrays.toString(ApplyMovementType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
         this.movementMultiplier = this.withOptionalArg("movementMultiplier", "Multiplies movement vector, set to 0 to restrict a movement axis", ArgTypes.ROTATION);
-        /**/this.applyLookType = this.withOptionalArg("applyLookType", "Values: " + Arrays.toString(ApplyLookType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
+        /**/
+        this.applyLookType = this.withOptionalArg("applyLookType", "Values: " + Arrays.toString(ApplyLookType.VALUES) + "\nUnsure of what it is used for", ArgTypes.STRING);
         this.lookMultiplier = this.withOptionalArg("lookMultiplier", "Default value: <--lookMultiplier 100 100>\nChange mouse sensitivity", ArgTypes.VECTOR2I);
         this.mouseInputType = this.withOptionalArg("mouseInputType", "Values: " + Arrays.toString(MouseInputType.VALUES) + "\nDefine a valid raycast target for the mouse cursor", ArgTypes.STRING);
         this.planeNormal = this.withOptionalArg("planeNormal", "if <--mouseInputType LookAtPlane>\nDefine a plane centered on the player model as a valid raycast target (see sideView POV for reference)", ArgTypes.ROTATION);
@@ -124,25 +133,25 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
 
     private CinemaPoint parseSettings(@NonNull CommandContext commandContext, CinemaPoint settings, World world, ComponentAccessor<EntityStore> componentAccessor) {
 
-        MouseInputTargetType mitt = parseEnum((String)this.mouseInputTargetType.get(commandContext), MouseInputTargetType.class, settings.mouseInputTargetType, commandContext);
+        MouseInputTargetType mitt = parseEnum((String) this.mouseInputTargetType.get(commandContext), MouseInputTargetType.class, settings.mouseInputTargetType, commandContext);
         if (mitt == null) return null;
-        MovementForceRotationType mfrt = parseEnum((String)this.movementForceRotationType.get(commandContext), MovementForceRotationType.class, settings.movementForceRotationType, commandContext);
+        MovementForceRotationType mfrt = parseEnum((String) this.movementForceRotationType.get(commandContext), MovementForceRotationType.class, settings.movementForceRotationType, commandContext);
         if (mfrt == null) return null;
-        AttachedToType att = parseEnum((String)this.attachedToType.get(commandContext), AttachedToType.class, settings.attachedToType, commandContext);
+        AttachedToType att = parseEnum((String) this.attachedToType.get(commandContext), AttachedToType.class, settings.attachedToType, commandContext);
         if (att == null) return null;
-        PositionDistanceOffsetType pdot = parseEnum((String)this.positionDistanceOffsetType.get(commandContext), PositionDistanceOffsetType.class, settings.positionDistanceOffsetType, commandContext);
+        PositionDistanceOffsetType pdot = parseEnum((String) this.positionDistanceOffsetType.get(commandContext), PositionDistanceOffsetType.class, settings.positionDistanceOffsetType, commandContext);
         if (pdot == null) return null;
-        PositionType posType = parseEnum((String)this.positionType.get(commandContext), PositionType.class, settings.positionType, commandContext);
+        PositionType posType = parseEnum((String) this.positionType.get(commandContext), PositionType.class, settings.positionType, commandContext);
         if (posType == null) return null;
-        RotationType rotType = parseEnum((String)this.rotationType.get(commandContext), RotationType.class, settings.rotationType, commandContext);
+        RotationType rotType = parseEnum((String) this.rotationType.get(commandContext), RotationType.class, settings.rotationType, commandContext);
         if (rotType == null) return null;
-        CanMoveType cmt = parseEnum((String)this.canMoveType.get(commandContext), CanMoveType.class, settings.canMoveType, commandContext);
+        CanMoveType cmt = parseEnum((String) this.canMoveType.get(commandContext), CanMoveType.class, settings.canMoveType, commandContext);
         if (cmt == null) return null;
-        ApplyMovementType amt = parseEnum((String)this.applyMovementType.get(commandContext), ApplyMovementType.class, settings.applyMovementType, commandContext);
+        ApplyMovementType amt = parseEnum((String) this.applyMovementType.get(commandContext), ApplyMovementType.class, settings.applyMovementType, commandContext);
         if (amt == null) return null;
-        ApplyLookType alt = parseEnum((String)this.applyLookType.get(commandContext), ApplyLookType.class, settings.applyLookType, commandContext);
+        ApplyLookType alt = parseEnum((String) this.applyLookType.get(commandContext), ApplyLookType.class, settings.applyLookType, commandContext);
         if (alt == null) return null;
-        MouseInputType mit = parseEnum((String)this.mouseInputType.get(commandContext), MouseInputType.class, settings.mouseInputType, commandContext);
+        MouseInputType mit = parseEnum((String) this.mouseInputType.get(commandContext), MouseInputType.class, settings.mouseInputType, commandContext);
         if (mit == null) return null;
 
         settings.transitionTime = getVal(settings.transitionTime, JSONParser.getLong(this.transitionTime.get(commandContext)));
@@ -158,24 +167,24 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
         settings.skipCharacterPhysics = getVal(settings.skipCharacterPhysics, this.skipCharacterPhysics.get(commandContext));
         settings.isFirstPerson = getVal(settings.isFirstPerson, this.isFirstPerson.get(commandContext));
         settings.movementForceRotationType = mfrt;
-        settings.movementForceRotation = getDirectionFromCoord(settings.movementForceRotation, this.movementForceRotation.get(commandContext));
+        settings.movementForceRotation = getDirectionFromCoord(settings.movementForceRotation, (Vector3f) this.movementForceRotation.get(commandContext));
         settings.attachedToType = att;
         settings.attachedToEntityId = getVal(settings.attachedToEntityId, this.attachedToEntityId.get(commandContext));
         settings.eyeOffset = getVal(settings.eyeOffset, this.eyeOffset.get(commandContext));
         settings.positionDistanceOffsetType = pdot;
-        settings.positionOffset = getPositionFromCoord(settings.positionOffset, this.positionOffset.get(commandContext));
-        settings.rotationOffset = getDirectionFromCoord(settings.rotationOffset, this.rotationOffset.get(commandContext));
+        settings.positionOffset = getPositionFromCoord(settings.positionOffset, (Vector3f) this.positionOffset.get(commandContext));
+        settings.rotationOffset = getDirectionFromCoord(settings.rotationOffset, (Vector3f) this.rotationOffset.get(commandContext));
         settings.positionType = posType;
         settings.position = getPositionFromRelativeCoord(settings.position, this.position.get(commandContext), commandContext, world, componentAccessor);
-        settings.position = addPositionFromVector(settings.position, this.positionAdd.get(commandContext));
+        settings.position = addPositionFromVector(settings.position, (Vector3f) this.positionAdd.get(commandContext));
         settings.rotationType = rotType;
-        settings.rotation = getDirectionFromCoord(settings.rotation, this.rotation.get(commandContext));
+        settings.rotation = getDirectionFromCoord(settings.rotation, (Vector3f) this.rotation.get(commandContext));
         settings.canMoveType = cmt;
-        settings.movementMultiplier = getVector3FromCoord(settings.movementMultiplier, this.movementMultiplier.get(commandContext));
+        settings.movementMultiplier = getVector3FromCoord((Vector3f) settings.movementMultiplier, (Vector3f) this.movementMultiplier.get(commandContext));
         settings.applyLookType = alt;
-        settings.lookMultiplier = getVector2FromVector2(settings.lookMultiplier, this.lookMultiplier.get(commandContext));
+        settings.lookMultiplier = getVector2FromVector2((Vector2f) settings.lookMultiplier, this.lookMultiplier.get(commandContext));
         settings.mouseInputType = mit;
-        settings.planeNormal = getVector3FromCoord(settings.planeNormal, this.planeNormal.get(commandContext));
+        settings.planeNormal = getVector3FromCoord((Vector3f) settings.planeNormal, (Vector3f) this.planeNormal.get(commandContext));
 
         return settings;
     }
@@ -183,28 +192,28 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
     private Vector2f getVector2FromVector2(Vector2f toAssign, Vector2i vector) {
         if (vector == null)
             return toAssign;
-        return new Vector2f(((float)vector.getX())/100, ((float)vector.getY())/100);
+        return new Vector2f(((float) vector.x()) / 100, ((float) vector.y()) / 100);
     }
 
-    private Vector3f getVector3FromCoord(Vector3f toAssign, com.hypixel.hytale.math.vector.Vector3f pos) {
+    private Vector3f getVector3FromCoord(Vector3f toAssign, Vector3f pos) {
         if (pos == null)
             return toAssign;
         return new Vector3f(pos.x, pos.y, pos.z);
     }
 
-    private Direction getDirectionFromCoord(Direction toAssign, com.hypixel.hytale.math.vector.Vector3f pos) {
+    private Direction getDirectionFromCoord(Direction toAssign, Vector3f pos) {
         if (pos == null)
             return toAssign;
         return new Direction((float) Math.toRadians(pos.x), (float) Math.toRadians(pos.z), (float) Math.toRadians(pos.y));
     }
 
-    private Position getPositionFromCoord(Position toAssign, com.hypixel.hytale.math.vector.Vector3f pos) {
+    private Position getPositionFromCoord(Position toAssign, Vector3f pos) {
         if (pos == null)
             return toAssign;
         return new Position(pos.x, pos.y, pos.z);
     }
 
-    private Position addPositionFromVector(Position coord, com.hypixel.hytale.math.vector.Vector3f offset) {
+    private Position addPositionFromVector(Position coord, Vector3f offset) {
         if (offset == null)
             return coord;
         return new Position(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
@@ -213,7 +222,7 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
     private Position getPositionFromRelativeCoord(Position toAssign, RelativeDoublePosition pos, CommandContext commandContext, World world, ComponentAccessor<EntityStore> accessor) {
         if (pos == null)
             return toAssign;
-        com.hypixel.hytale.math.vector.Vector3d tmp = pos.getRelativePosition(commandContext, world, accessor);
+        org.joml.Vector3d tmp = pos.getRelativePosition(commandContext, world, accessor);
         return new Position((float) tmp.x, (float) tmp.y, (float) tmp.z);
     }
 
@@ -231,14 +240,15 @@ public class EditCinemaKeyframeCommand extends AbstractPlayerCommand {
                 commandContext.sendMessage(Message.raw(name + " is not a valid " + enumClass + " value"));
                 return null;
             }
-        }
-        else
+        } else
             return defaultValue;
         return value;
     }
 
     private <E extends Enum<E>> E getEnumFromString(String value, Class<E> enumClass) {
-        if (value == null || enumClass == null) { return null; }
+        if (value == null || enumClass == null) {
+            return null;
+        }
 
         try {
             return Enum.valueOf(enumClass, value);

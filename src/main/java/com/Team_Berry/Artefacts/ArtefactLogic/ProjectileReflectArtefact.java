@@ -6,8 +6,7 @@ import com.Team_Berry.Artefacts.Codecs.Stats.StatCodec;
 import com.Team_Berry.Artefacts.Components.StatEffectComponent;
 import com.Team_Berry.Artefacts.Interfaces.IOnTakePreDamage;
 import com.hypixel.hytale.component.*;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.damage.DamageDataComponent;
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent;
@@ -23,6 +22,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifie
 import com.hypixel.hytale.server.core.modules.physics.util.PhysicsMath;
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector3d;
 
 import java.util.Map;
 
@@ -86,15 +86,15 @@ public class ProjectileReflectArtefact implements IOnTakePreDamage {
             }
         }
 
-        Vector3f oldRot = oldTransform.getRotation();
-        float newYaw = oldRot.getYaw() + (float) Math.PI;
-        float newPitch = -oldRot.getPitch();
-        Vector3f newRotation = new Vector3f(oldRot.getX(), newYaw, newPitch);
+        Rotation3f oldRot = oldTransform.getRotation();
+        float newYaw = oldRot.yaw() + (float) Math.PI;
+        float newPitch = -oldRot.pitch();
+        Rotation3f newRotation = new Rotation3f(oldRot.x(), newYaw, newPitch);
 
         Vector3d direction = new Vector3d();
         PhysicsMath.vectorFromAngles(newYaw, newPitch, direction);
 
-        Vector3d spawnPos = oldTransform.getPosition().clone().addScaled(direction, 0.5);
+        Vector3d spawnPos = new Vector3d(oldTransform.getPosition()).add(direction.x * 0.5, direction.y * 0.5, direction.z * 0.5);
 
         TimeResource time = commandBuffer.getResource(TimeResource.getResourceType());
         Holder<EntityStore> holder = ProjectileComponent.assembleDefaultProjectile(time, assetName, spawnPos, newRotation);

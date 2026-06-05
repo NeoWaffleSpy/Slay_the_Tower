@@ -17,13 +17,5 @@
   },
   "OverlapBehavior": "Overwrite",
   "RemovalBehavior": "Duration",
-  "Debuff": false,
-  "DamageResistance": {
-    "Physical": [
-      {
-        "CalculationType": "Multiplicative",
-        "Amount": 100
-      }
-    ]
-  }
+  "Debuff": false
 }

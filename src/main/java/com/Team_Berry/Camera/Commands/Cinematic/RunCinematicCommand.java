@@ -18,15 +18,18 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.joml.Vector3d;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nonnull;
 
 public class RunCinematicCommand extends AbstractPlayerCommand {
-    @Nonnull private final RequiredArg<String> nameArg;
+    @Nonnull
+    private final RequiredArg<String> nameArg;
     private final OptionalArg<RelativeDoublePosition> positionArg;
     private final DefaultArg<Boolean> isDebugMode;
     private final DefaultArg<Boolean> fromOrigin;
+
     public RunCinematicCommand() {
         super("run", "Run a cinematic");
         this.nameArg = this.withRequiredArg("Cinematic Name", "The name of the cinematic", ArgTypes.STRING);
@@ -48,12 +51,10 @@ public class RunCinematicCommand extends AbstractPlayerCommand {
         Position p;
         if (this.fromOrigin.get(commandContext)) {
             p = c.origin;
-        }
-        else if (this.positionArg.provided(commandContext)) {
+        } else if (this.positionArg.provided(commandContext)) {
             p = getPositionFromRelativeCoord(this.positionArg.get(commandContext), commandContext, world, store);
-        }
-        else {
-            com.hypixel.hytale.math.vector.Vector3d t = store.getComponent(ref, TransformComponent.getComponentType()).getPosition();
+        } else {
+            Vector3d t = store.getComponent(ref, TransformComponent.getComponentType()).getPosition();
             p = new Position(t.x, t.y, t.z);
         }
         c.runCinematic(playerRef, p, world, this.isDebugMode.get(commandContext) ? commandContext : null);
@@ -61,7 +62,7 @@ public class RunCinematicCommand extends AbstractPlayerCommand {
 
 
     private Position getPositionFromRelativeCoord(RelativeDoublePosition pos, CommandContext commandContext, World world, ComponentAccessor<EntityStore> accessor) {
-        com.hypixel.hytale.math.vector.Vector3d tmp = pos.getRelativePosition(commandContext, world, accessor);
+        Vector3d tmp = pos.getRelativePosition(commandContext, world, accessor);
         return new Position((float) tmp.x, (float) tmp.y, (float) tmp.z);
     }
 }

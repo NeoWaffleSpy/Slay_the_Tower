@@ -1,6 +1,5 @@
 package com.Team_Berry.Camera.Commands.Cinematic;
 
-import com.Team_Berry.Camera.Camera.CameraInitializer;
 import com.Team_Berry.Camera.Cinematic.CinemaPoint;
 import com.Team_Berry.Camera.Cinematic.CinematicManager;
 import com.Team_Berry.Camera.Cinematic.CinematicPlayer;
@@ -32,7 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ExportCinematic extends AbstractPlayerCommand {
-    @Nonnull private final RequiredArg<String> nameArg;
+    @Nonnull
+    private final RequiredArg<String> nameArg;
     private final OptionalArg<String> packName;
     private final OptionalArg<Boolean> force;
 
@@ -53,13 +53,12 @@ public class ExportCinematic extends AbstractPlayerCommand {
         Path path;
         if (pack != null) {
             AssetPack mypack = AssetModule.get().getAssetPack(this.packName.get(commandContext));
-            if  (mypack == null) {
+            if (mypack == null) {
                 commandContext.sendMessage(Message.raw("Invalid Pack Name"));
                 return;
             }
             path = FileUtils.instanceDirCinema(mypack, name + ".json");
-        }
-        else
+        } else
             path = FileUtils.instanceDirCinema(FileUtils.getBasePack(), name + ".json");
         if (!Files.exists(path.getParent(), new LinkOption[0])) {
             try {
@@ -153,23 +152,23 @@ public class ExportCinematic extends AbstractPlayerCommand {
         data.put("applyMovementType", settings.applyMovementType.toString());
 
         Map<String, Object> movementMultiplier = new HashMap<>();
-        movementMultiplier.put("x", settings.movementMultiplier != null ? settings.movementMultiplier.x : 1);
-        movementMultiplier.put("y", settings.movementMultiplier != null ? settings.movementMultiplier.y : 1);
-        movementMultiplier.put("z", settings.movementMultiplier != null ? settings.movementMultiplier.z : 1);
+        movementMultiplier.put("x", settings.movementMultiplier != null ? settings.movementMultiplier.x() : 1);
+        movementMultiplier.put("y", settings.movementMultiplier != null ? settings.movementMultiplier.y() : 1);
+        movementMultiplier.put("z", settings.movementMultiplier != null ? settings.movementMultiplier.z() : 1);
         data.put("movementMultiplier", movementMultiplier);
 
         data.put("applyLookType", settings.applyLookType.toString());
         Map<String, Object> lookMultiplier = new HashMap<>();
-        lookMultiplier.put("x", settings.lookMultiplier != null ? settings.lookMultiplier.x : 0);
-        lookMultiplier.put("y", settings.lookMultiplier != null ? settings.lookMultiplier.y : 0);
+        lookMultiplier.put("x", settings.lookMultiplier != null ? settings.lookMultiplier.x() : 0);
+        lookMultiplier.put("y", settings.lookMultiplier != null ? settings.lookMultiplier.y() : 0);
         data.put("lookMultiplier", lookMultiplier);
 
         data.put("mouseInputType", settings.mouseInputType.toString());
 
         Map<String, Object> planeNormal = new HashMap<>();
-        planeNormal.put("x", settings.planeNormal != null ? settings.planeNormal.x : 0);
-        planeNormal.put("y", settings.planeNormal != null ? settings.planeNormal.y : 0);
-        planeNormal.put("z", settings.planeNormal != null ? settings.planeNormal.z : 0);
+        planeNormal.put("x", settings.planeNormal != null ? settings.planeNormal.x() : 0);
+        planeNormal.put("y", settings.planeNormal != null ? settings.planeNormal.y() : 0);
+        planeNormal.put("z", settings.planeNormal != null ? settings.planeNormal.z() : 0);
         data.put("planeNormal", planeNormal);
 
         return data;

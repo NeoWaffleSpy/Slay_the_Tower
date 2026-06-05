@@ -4,7 +4,10 @@ import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.validation.Validators;
-import com.hypixel.hytale.protocol.*;
+import com.hypixel.hytale.protocol.Direction;
+import com.hypixel.hytale.protocol.Position;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class CodecUtils {
     public static final BuilderCodec<Direction> DIR_CODEC = BuilderCodec.builder(Direction.class, () -> new Direction(0, 0, 0))

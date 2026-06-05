@@ -3,7 +3,7 @@ package com.Team_Berry.WeaponInteraction.Systems;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
@@ -218,7 +218,7 @@ public class HotbarManagerTickingSystem extends EntityTickingSystem<EntityStore>
                             store,
                             java.util.List.of(stack),
                             position,
-                            new Vector3f()
+                            new Rotation3f()
                     );
                     world.execute(() -> {
                         world.getEntityStore().getStore().addEntities(itemEntityHolders, AddReason.SPAWN);

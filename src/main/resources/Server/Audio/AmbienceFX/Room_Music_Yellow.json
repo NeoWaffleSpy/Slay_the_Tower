@@ -1,10 +1,4 @@
 {
-  "Music": {
-    "Tracks": [
-      "Music/zUnused/FightorFlight.ogg"
-    ],
-    "Volume": 7
-  },
   "Conditions": {
     "WeatherIds": [
       "Weather_Yellow"
@@ -24,5 +18,10 @@
   "AmbientBed": {
     "Track": "Sounds/Environments/Global/Weather/Sandstorm_Stereo_LOOP.ogg",
     "Volume": 10
+  },
+  "MusicContainer": {
+    "Type": "SingleTrack",
+    "Track": "Music/zUnused/FightorFlight.ogg",
+    "Volume": 7
   }
 }

@@ -1,0 +1,21 @@
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/SFX_Mushroom_Laser.ogg"
+      ],
+      "RandomSettings": {
+        "MinPitch": -9.12,
+        "MaxPitch": 11.28,
+        "MinVolume": 0,
+        "MaxVolume": 10
+      },
+      "Volume": 10
+    }
+  ],
+  "MaxInstance": 10,
+  "Volume": 10,
+  "PreventSoundInterruption": true,
+  "Parent": "SFX_Attn_Loud",
+  "MaxDistance": 100
+}

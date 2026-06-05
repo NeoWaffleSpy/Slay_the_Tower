@@ -1,0 +1,88 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Crop_Mushroom_Block_Blue.name"
+  },
+  "Categories": [
+    "Blocks.Plants"
+  ],
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "SeaLife",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Woods"
+      }
+    },
+    "BlockParticleSetId": "Dust",
+    "Textures": [
+      {
+        "Weight": 60,
+        "Down": "BlockTextures/Mushroom_Block_Blue_Bot.png",
+        "Up": "BlockTextures/Mushroom_Block_Blue_Top.png",
+        "Sides": "BlockTextures/Mushroom_Block_Blue_Side.png"
+      }
+    ],
+    "ParticleColor": "#5a9bc1",
+    "BlockSoundSetId": "Mushroom",
+    "Interactions": {
+      "CollisionEnter": {
+        "Interactions": [
+          {
+            "Type": "ApplyEffect",
+            "EffectId": {
+              "Parent": "FallDamage_Invulnerability",
+              "ApplicationEffects": {
+                "Particles": [
+                  {
+                    "SystemId": "Block_Land_Hard_Dust",
+                    "Scale": 1,
+                    "DetachedFromModel": true,
+                    "Color": "#7074ff"
+                  }
+                ]
+              },
+              "OverlapBehavior": "Overwrite",
+              "Invulnerable": false,
+              "Duration": 2.5,
+              "RemovalBehavior": "Duration"
+            },
+            "Effects": {},
+            "HorizontalSpeedMultiplier": 2.5
+          },
+          {
+            "Type": "ApplyForce",
+            "Direction": {
+              "Y": 1
+            },
+            "Force": 25,
+            "Effects": {
+              "WorldSoundEventId": "SFX_Boing",
+              "LocalSoundEventId": "SFX_Boing"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "ResourceTypes": [
+    {
+      "Id": "Mushrooms"
+    },
+    {
+      "Id": "Vegetables"
+    }
+  ],
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Type": [
+      "Plant"
+    ],
+    "Family": [
+      "Crop"
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Plant_Crop_Mushroom_Block_Blue.png",
+  "ItemSoundSetId": "ISS_Items_Foliage"
+}

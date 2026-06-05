@@ -1,0 +1,30 @@
+{
+  "Type": "Simple",
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Repeat",
+    "Repeat": 10,
+    "ForkInteractions": {
+      "Interactions": [
+        {
+          "Type": "LaunchProjectile",
+          "ProjectileId": "Mushroom_Boss_Projectile_Laser",
+          "RunTime": 0.4,
+          "Effects": {
+            "WorldSoundEventId": "SFX_Mushroom_Laser"
+          }
+        }
+      ]
+    },
+    "RunTime": 6,
+    "Next": {
+      "Type": "Simple",
+      "RunTime": 5
+    }
+  },
+  "Effects": {
+    "ItemPlayerAnimationsId": "Mushroom_Boss_Animations",
+    "ItemAnimationId": "Laser",
+    "WaitForAnimationToFinish": false
+  }
+}

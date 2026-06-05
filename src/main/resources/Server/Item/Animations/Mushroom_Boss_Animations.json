@@ -1,0 +1,53 @@
+{
+  "Animations": {
+    "PunchAoe": {
+      "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/punch_Aoe.blockyanim",
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": false
+    },
+    "Idle": {
+      "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Kweebec_Boss_Idle1.blockyanim",
+      "Looping": true
+    },
+    "Laser": {
+      "ThirdPerson": "Characters/Animations/Items/Mushroom_Boss/Laser_Mushroom_Boss_Anim.blockyanim",
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": false
+    },
+    "Wave": {
+      "ThirdPerson": "Characters/Animations/Items/Kweebec_boss/Wave_Aoe.blockyanim"
+    }
+  },
+  "WiggleWeights": {
+    "Pitch": 2,
+    "PitchDeceleration": 0.1,
+    "Roll": 0.1,
+    "RollDeceleration": 0.1,
+    "X": 3,
+    "XDeceleration": 0.1,
+    "Y": 0.1,
+    "YDeceleration": 0.1,
+    "Z": 0.1,
+    "ZDeceleration": 0.1
+  },
+  "Camera": {
+    "Pitch": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    }
+  }
+}

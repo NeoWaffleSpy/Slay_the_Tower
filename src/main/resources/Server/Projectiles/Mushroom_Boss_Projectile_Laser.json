@@ -1,0 +1,55 @@
+{
+  "Appearance": "Mushroom_Laser_Model",
+  "SticksVertically": true,
+  "MuzzleVelocity": 50,
+  "TerminalVelocity": 50,
+  "ImpactSlowdown": 1,
+  "TimeToLive": 1,
+  "Damage": 35,
+  "DeathEffectsOnHit": true,
+  "DeadTime": 0.01,
+  "HitParticles": {
+    "SystemId": "Stone_Death"
+  },
+  "DepthShot": -1.5,
+  "PitchAdjustShot": true,
+  "BounceParticles": {
+    "SystemId": "Explosion_Medium",
+    "Scale": 0.5
+  },
+  "BounceSoundEventId": "SFX_Mushroom_Laser",
+  "DeadTimeMiss": 0.01,
+  "DeathSoundEventId": "SFX_Mushroom_Laser",
+  "DeathParticles": {
+    "SystemId": "Explosion_Medium",
+    "Scale": 1.5
+  },
+  "MissParticles": {
+    "SystemId": "Fireball_Charge_To_4",
+    "Scale": 1
+  },
+  "Density": 2000,
+  "WaterHitImpulseLoss": 0.7,
+  "SwimmingDampingFactor": 50,
+  "ComputePitch": true,
+  "HitSoundEventId": "SFX_Mushroom_Laser",
+  "ComputeRoll": true,
+  "ComputeYaw": true,
+  "ExplosionConfig": {
+    "DamageBlocks": false,
+    "DamageEntities": true,
+    "BlockDamageRadius": 3,
+    "Knockback": {
+      "Force": -10,
+      "Duration": 0.1,
+      "VelocityY": 2,
+      "VelocityConfig": {
+        "Style": "Exp"
+      }
+    },
+    "EntityDamage": 15,
+    "EntityDamageRadius": 5
+  },
+  "HorizontalCenterShot": 0,
+  "VerticalCenterShot": 0
+}

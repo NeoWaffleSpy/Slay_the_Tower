@@ -1,0 +1,81 @@
+{
+  "Volumes": {
+    "Weather_Tree": {
+      "Position": {
+        "X": -5.0,
+        "Y": 131.5,
+        "Z": 2.5
+      },
+      "Shape": {
+        "Type": "Box",
+        "Min": {
+          "X": -26.0,
+          "Y": -59.5,
+          "Z": -20.5
+        },
+        "Max": {
+          "X": 26.0,
+          "Y": 59.5,
+          "Z": 20.5
+        }
+      },
+      "Effects": [
+        {
+          "Type": "SetWeather",
+          "Event": "TICK",
+          "Interval": 0.0,
+          "Delay": 0.0,
+          "Weather": "Weather_Tree",
+          "PlayerOnly": true,
+          "ResetWeather": false
+        }
+      ],
+      "TargetTypes": [
+        "Player"
+      ],
+      "Enabled": true,
+      "Color": {
+        "X": 1.0,
+        "Y": 1.0,
+        "Z": 1.0
+      },
+      "KeepLoaded": false
+    },
+    "tv_i1yyrw": {
+      "Position": {
+        "X": -1.5,
+        "Y": 128.0,
+        "Z": 25.5
+      },
+      "Shape": {
+        "Type": "Box",
+        "Min": {
+          "X": -6.5,
+          "Y": -10.0,
+          "Z": -2.5
+        },
+        "Max": {
+          "X": 6.5,
+          "Y": 10.0,
+          "Z": 2.5
+        }
+      },
+      "Effects": [
+        {
+          "Type": "SetWeather",
+          "Event": "ENTER",
+          "Interval": 0.0,
+          "Delay": 0.0,
+          "Weather": "Weather_Prison",
+          "PlayerOnly": true,
+          "ResetWeather": false
+        }
+      ],
+      "TargetTypes": [
+        "Player"
+      ],
+      "Enabled": true,
+      "KeepLoaded": true
+    }
+  }
+}
